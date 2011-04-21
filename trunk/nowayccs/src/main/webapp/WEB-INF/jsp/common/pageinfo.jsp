@@ -14,6 +14,34 @@ ${pageInfo.currentPage}
 /
 ${pageInfo.totalPages}
 页
+<c:if test="${pageInfo.canFirst == true}">
+	[<a href='javascript:gotoPage("${pageInfo.firstPage}")'>首页</a>]
+</c:if>
+<c:if test="${pageInfo.canFirst == false}">
+	[首页]
+</c:if>
+<c:if test="${pageInfo.canPrevious == true}">
+	[<a href='javascript:gotoPage("${pageInfo.previousPage}")'>上一页</a>]
+</c:if>
+<c:if test="${pageInfo.canPrevious == false}">
+	[上一页]
+</c:if>
+<c:if test="${pageInfo.canNext == true}">
+	[<a href='javascript:gotoPage("${pageInfo.nextPage}")'>下一页</a>]
+</c:if>
+<c:if test="${pageInfo.canNext == false}">
+	[下一页]
+</c:if>
+<c:if test="${pageInfo.canNext == true}">
+	[<a href='javascript:gotoPage("${pageInfo.lastPage}")'>尾页</a>]
+</c:if>
+<c:if test="${pageInfo.canNext == false}">
+	[尾页]
+</c:if>
+
+转到:<input type="text" id="goto" size="2"/>页
+<img src="images/button_ok.gif" width="60" height="18" onclick="goPage()" alt="">
+
 <!-- 
 <logic:equal name="pageInfo" property="canFirst" value="true">  [
   <a href='javascript:gotoPage("<bean:write name="pageInfo" property="firstPage" />")'>首页</a>
@@ -40,32 +68,32 @@ ${pageInfo.totalPages}
 </input>页
 <img src="images/button_ok.gif" width="60" height="18" onclick="goPage()" alt="">
  -->
-<script language="Javascript" src="cssandjs/function.js" type=""></script>
-<script language="Javascript" type="">
+<script language="Javascript" src="js/function.js" type=""></script>
+<script type="text/javascript" >
 	function gotoPage(page){
-		  obj = document.<bean:write name="formname"/>;
-		  obj.action = "<bean:write name="actionname" />";
-		  obj.<bean:write name="pagename"/>.value = page;
+		  obj = document.${formname};
+		  obj.action = "${actionname}";
+		  obj.${pagename}.value = page;
                   //obj.target="_self";
 		  obj.submit();
 	}
 	  function goPage() {
 	    if (validator()) {
-	      obj = document.<bean:write name="formname"/>;
-		  obj.action = "<bean:write name="actionname" />";
-	      obj.<bean:write name="pagename"/>.value = document.all.goto.value;
+			obj = document.${formname};
+			obj.action = "${actionname}";
+			obj.${pagename}.value = obj.goto.value;
               //obj.target="_self";
-	      obj.submit();
+	      	obj.submit();
 	     }
 	  }
 	  <%--检查输入的页面是否整数，且值大于等于1，小于等于最大页数--%>
 	  function validator(){
-	    if (!isInteger(document.all.goto.value)) {
+	    if (!isInteger(document.forms[0].goto.value)) {
 			alert("输入的请求页面必须为数字。");
 			return false;
 	    }
-	    if(!(document.all.goto.value >= 1
-	          && document.all.goto.value <= <bean:write name="pageInfo" property="totalPages" /> )) {
+	    if(!(document.forms[0].goto.value >= 1
+	          && document.forms[0].goto.value <= ${pageInfo.totalPages})) {
 			alert("输入的请求页面超出范围。");
 			return false;
 	      }
