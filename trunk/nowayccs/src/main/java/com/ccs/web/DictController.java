@@ -41,7 +41,9 @@ public class DictController {
     
 	@RequestMapping(method=RequestMethod.GET)
 	public String init(ModelMap model) {
-		model.addAttribute(new Dict());
+		Dict dict = new Dict();
+		dict.setDictType(Constants.DICT_DICTTYPE_LLFS);
+		model.addAttribute(dict);
 		List<DictVO> list = dictBO.findByType(Constants.DICT_DICTTYPE_LLFS);
 		model.addAttribute("subDictlist", list);
 		return "dict/dictlist";
@@ -58,7 +60,7 @@ public class DictController {
 	}
 	
 	
-	@RequestMapping(params = "action=add")
+	@RequestMapping(params="action=add")
 	public String addDict(String dictType, ModelMap model) {
 		model.addAttribute(new Dict());
 		return "dict/add";
@@ -71,7 +73,7 @@ public class DictController {
 		vo.setValue(dict.getValue());
 		
 		dictBO.saveOrUpdate(vo);
-		return "dict/dictlist";
+		return "redirect:dict/dictlist";
 	}
 
 }
