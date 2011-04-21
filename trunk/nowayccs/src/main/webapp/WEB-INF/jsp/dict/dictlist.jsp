@@ -20,6 +20,11 @@ function btn_search(){
 	  form.submit();
 }
 
+
+function option_delete(dictId) {
+	document.forms[0].action = "dict.do?action=del&dictId="+dictId;
+	document.forms[0].submit();
+}
 </script>
 
 <body>
@@ -77,7 +82,7 @@ function btn_search(){
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td height="30">
-              <a href="dictadd.do?action=add&dictType=${dict.dictType}">
+              <a href="dict.do?action=add&dictType=${dict.dictType}">
                 <img src="images/button_add.gif" width="60" height="18" border="0" alt="">
               </a>
             </td>
