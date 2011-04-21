@@ -8,13 +8,13 @@ package com.ccs.util;
  */
 public class PageInfo {
     /* 每页显示记录数 */
-    public static int PAGE_COUNT = 15;
+    public static int PAGE_COUNT = 2;
 
     /* 当前页码 */
-    private long currentPage = 0;
+    private int currentPage = 0;
 
     /* 总记录数 */
-    private long totalRecords = 0;
+    private int totalRecords = 0;
 
     /**
      * 得到当前页数 当总记录数为0时，返回0
@@ -23,7 +23,7 @@ public class PageInfo {
      *
      * @return Returns the currentPage.
      */
-    public long getCurrentPage() {
+    public int getCurrentPage() {
         //return this.getTotalRecords() == 0 ? 0 : Math.max(Math.min(this
         //            .getTotalPages(), this.currentPage), this.getFirstPage());
         return this.currentPage;
@@ -33,7 +33,7 @@ public class PageInfo {
      * @Functionality: 返回第一页
      * @return :
      */
-    public long getFirstPage() {
+    public int getFirstPage() {
         return 1;
     }
 
@@ -41,7 +41,7 @@ public class PageInfo {
      * @Functionality: 返回最后一页
      * @return :
      */
-    public long getLastPage() {
+    public int getLastPage() {
         return getTotalPages();
     }
 
@@ -50,7 +50,7 @@ public class PageInfo {
      * @param :
      * @return :
      */
-    public long getNextPage() {
+    public int getNextPage() {
         return Math.min(this.getCurrentPage() + 1, this.getTotalPages());
     }
 
@@ -59,7 +59,7 @@ public class PageInfo {
      * @param :
      * @return :
      */
-    public long getPreviousPage() {
+    public int getPreviousPage() {
         /*
          * 考虑DAO改动较多，故修改此方法 修改后的PageInfo的如果currentPage是1，则previousPage就成0了
          * 而当totalRecords为0时，previousPage就成-1了 所以，有些不合逻辑
@@ -73,7 +73,7 @@ public class PageInfo {
      *
      * @return
      */
-    public long getTotalPages() {
+    public int getTotalPages() {
         if (this.getTotalRecords() <= 0) {
             return 0;
         } else {
@@ -87,8 +87,8 @@ public class PageInfo {
      *
      * @return Returns the total.
      */
-    public long getTotalRecords() {
-        return this.totalRecords;
+    public int getTotalRecords() {
+        return this.totalRecords == 0 ? 1 : this.totalRecords;
     }
 
     public int getPAGE_COUNT() {
@@ -136,7 +136,7 @@ public class PageInfo {
      * @param :
      * @return :
      */
-    public void setCurrentPage(long currentPage) {
+    public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
 
@@ -147,7 +147,7 @@ public class PageInfo {
      * @param :
      * @return :
      */
-    public void setTotalRecords(long totalRecords) {
+    public void setTotalRecords(int totalRecords) {
         this.totalRecords = totalRecords;
     }
 }
