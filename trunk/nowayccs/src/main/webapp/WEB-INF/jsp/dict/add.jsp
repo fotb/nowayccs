@@ -18,7 +18,7 @@ function btnsave_click(){
   if(!isValidStringObj( form.sortIndex,"代码",true)){
 	    return;
 	  }
-	  if(!isValidStringObj( form.value,"值",true)){
+	  if(!isValidStringObj(form.value,"值",true)){
     return;
   }
   form.submit();
@@ -29,7 +29,7 @@ function btnback_click(){
 }
 </script>
 <body>
-<form:form method="post" action="dict.do?action=add" commandName="dict">
+<form:form method="post" action="dict.do?action=save" commandName="dict">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -74,6 +74,7 @@ function btnback_click(){
     </tr>
   </table>
   <form:hidden path="dictType"/>
+    <input type="hidden" name="pageNo" value="${pageNo}"/>
 </form:form>
 </body>
 </html>
