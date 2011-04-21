@@ -15,10 +15,10 @@
 <script language="javascript">
 function btnsave_click(){
   var form = document.forms[0];
-  if(!isValidStringObj( form.code,"代码",true)){
-    return;
-  }
-  if(!isValidStringObj( form.content,"值",true)){
+  if(!isValidStringObj( form.sortIndex,"代码",true)){
+	    return;
+	  }
+	  if(!isValidStringObj( form.value,"值",true)){
     return;
   }
   form.submit();

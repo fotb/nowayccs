@@ -59,7 +59,7 @@ function btn_search(){
           		<td>${dict.sortIndex}</td>
             	<td>${dict.value}</td>
                 <td width="5%">
-                  <a href="dictedit.do?dictID=${dict.dictId}">
+                  <a href="dict.do?action=edit&dictID=${dict.dictId}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
                 </td>
