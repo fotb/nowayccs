@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccs.bo.IDictBO;
 import com.ccs.dao.IDictDAO;
+import com.ccs.util.PageInfo;
 import com.ccs.vo.DictVO;
 
 @Service("dictBO")
@@ -39,6 +40,12 @@ public class DictBOImpl implements IDictBO {
 	@Override
 	public List<DictVO> findByType(String dictType) {
 		return dictDAO.findByType(dictType);
+	}
+
+	@Override
+	public List<DictVO> findByType(String dictType, PageInfo pageInfo) {
+		pageInfo.setTotalRecords(dictDAO.getTotalCountByDictType(dictType));
+		return dictDAO.findByType(dictType, pageInfo);
 	}
 
 }
