@@ -23,7 +23,7 @@ public class DictVO implements Serializable {
 	@Column(name = "DICTTYPE")
 	private String dictType;
 
-	@Column(name = "SORT_INDEX")
+	@Column(name = "SORTINDEX")
 	private String sortIndex;
 
 	@Column(name = "VAL")

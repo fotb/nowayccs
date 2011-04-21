@@ -8,7 +8,7 @@ import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.IAreaSubDAO;
 import com.ccs.vo.AreaSubVO;
 
-@Repository("areaDAO")
+@Repository("areaSubDAO")
 public class AreaSubDAOImpl extends DefaultDAOSupport implements IAreaSubDAO {
 
 	@Override
