@@ -17,6 +17,7 @@ $(document).ready(function(){
 });
 function btn_search(){
 	  var form = document.forms[0];
+	  form.pageNo.value = "1";
 	  form.submit();
 }
 
@@ -64,7 +65,7 @@ function option_delete(dictId) {
           		<td>${dict.sortIndex}</td>
             	<td>${dict.value}</td>
                 <td width="5%">
-                  <a href="dict.do?action=edit&dictID=${dict.dictId}">
+                  <a href="dict.do?action=edit&dictId=${dict.dictId}&pageNo=${pageInfo.currentPage}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
                 </td>
@@ -82,15 +83,15 @@ function option_delete(dictId) {
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td height="30">
-              <a href="dict.do?action=add&dictType=${dict.dictType}">
+              <a href="dict.do?action=add&dictType=${dict.dictType}&pageNo=${pageInfo.currentPage}">
                 <img src="images/button_add.gif" width="60" height="18" border="0" alt="">
               </a>
             </td>
             <td align="right">
             <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
-              <jsp:param name="pagename" value="pageNO"/>
-              <jsp:param name="actionname" value="SysDictAdmin_list.do"/>
+              <jsp:param name="pagename" value="pageNo"/>
+              <jsp:param name="actionname" value="dict.do?action=search"/>
             </jsp:include>
             </td>
           </tr>
@@ -98,7 +99,7 @@ function option_delete(dictId) {
       </td>
     </tr>
   </table>
-  <input type="hidden" name="pageNO" value="${pageInfo.currentPage}">
+  <input type="hidden" name="pageNo" value="${pageInfo.currentPage}">
   </form:form>
 </body>
 </html>

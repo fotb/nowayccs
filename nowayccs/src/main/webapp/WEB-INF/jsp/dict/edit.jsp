@@ -29,7 +29,7 @@ function btnback_click(){
 }
 </script>
 <body>
-<form:form method="post" action="adddict.do?action=add" commandName="dict">
+<form:form method="post" action="dict.do?action=editsave" commandName="dict">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -38,7 +38,7 @@ function btnback_click(){
             <td width="3%" align="center">
               <img src="images/icon_01.gif" width="5" height="17" alt="">
             </td>
-            <td class="font_no">新增数据字典项</td>
+            <td class="font_no">修改数据字典项</td>
           </tr>
         </table>
         <table width="100%" border="0" cellpadding="0" cellspacing="1">
@@ -74,6 +74,8 @@ function btnback_click(){
     </tr>
   </table>
   <form:hidden path="dictType"/>
+  <form:hidden path="dictId"/>
+  <input type="hidden" name="pageNo" value="${pageNo}"/>
 </form:form>
 </body>
 </html>
