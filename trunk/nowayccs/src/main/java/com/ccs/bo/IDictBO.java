@@ -2,6 +2,7 @@ package com.ccs.bo;
 
 import java.util.List;
 
+import com.ccs.util.PageInfo;
 import com.ccs.vo.DictVO;
 
 public interface IDictBO {
@@ -14,4 +15,6 @@ public interface IDictBO {
 	List<DictVO> findAll();
 
 	List<DictVO> findByType(String dictType);
+	
+	List<DictVO> findByType(String dictType, PageInfo pageInfo);
 }
