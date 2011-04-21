@@ -3,11 +3,13 @@ package com.ccs.bo.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ccs.bo.IDictBO;
 import com.ccs.dao.IDictDAO;
 import com.ccs.vo.DictVO;
 
+@Service("dictBO")
 public class DictBOImpl implements IDictBO {
 	
 	@Autowired
