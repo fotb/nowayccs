@@ -26,7 +26,7 @@ public class DictVO implements Serializable {
 	@Column(name = "SORT_INDEX")
 	private String sortIndex;
 
-	@Column(name = "VALUE")
+	@Column(name = "VAL")
 	private String value;
 
 	public String getDictId() {
