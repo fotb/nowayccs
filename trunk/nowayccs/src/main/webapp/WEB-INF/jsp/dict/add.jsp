@@ -29,7 +29,7 @@ function btnback_click(){
 }
 </script>
 <body>
-<form:form method="post" action="adddict.do?action=add" commandName="dict">
+<form:form method="post" action="dict.do?action=add" commandName="dict">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
