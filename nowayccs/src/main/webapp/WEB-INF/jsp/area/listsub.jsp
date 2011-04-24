@@ -14,7 +14,7 @@
   function option_delete(id){
   var form=document.forms[0];
   if(confirm("确定要删除?")){
-    form.action="area.do?action=del&areaId="+id + "&pageNo=" + form.pageNo.value;
+    form.action="area.do?action=delSub&areaSubId="+id;
     form.submit();
   }
 }
@@ -22,31 +22,28 @@
 </head>
 <body>
 <form action="" method="post">
+<input type="hidden" name="areaId" id="areaId" value="${areaId}" />
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr class="table_green">
             <td width="50%">街道名称</td>
-            <td width="40%">所属社区</td>
             <td colspan="2">操作</td>
           </tr>
-          <c:forEach items="${AreaList}" var="area">
+          <c:forEach items="${SubAreaList}" var="area">
           	<tr class='table_blue' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
                 <td>
                   ${area.name}
                 </td>
-                <td>
-                  <a href="area.do?action=subArea&areaId=${area.areaId}&pageNo=${pageInfo.currentPage}">所属社区</a>
-                </td>
                 <td width="5%">
-                  <a href="area.do?action=editArea&areaId=${area.areaId}&pageNo=${pageInfo.currentPage}">
+                  <a href="area.do?action=editSubArea&areaSubId=${area.areaSubId}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
                 </td>
                 <td width="5%">
 
-                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${area.areaId}');" style="cursor:hand">
+                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${area.areaSubId}');" style="cursor:hand">
 
                 </td>
               </tr>
@@ -58,23 +55,19 @@
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td height="30">
-              <a href="area.do?action=addArea&pageNo=${pageInfo.currentPage}">
+              <a href="area.do?action=addSubArea&areaId=${areaId}&pageNo=${pageInfo.currentPage}">
                 <img src="images/button_add.gif" width="60" height="18" border="0" alt="">
               </a>
-            </td>
-            <td align="right">
-            <jsp:include page="../common/pageinfo.jsp" flush="true">
-              <jsp:param name="formname" value="forms[0]"/>
-              <jsp:param name="pagename" value="pageNO"/>
-              <jsp:param name="actionname" value="SysStreet_list.do"/>
-            </jsp:include>
+	          <a href="area.do?pageNo=${pageNo}">
+              <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0"/>
+    	      </a>
             </td>
           </tr>
         </table>
       </td>
     </tr>
   </table>
-  <input type="hidden" name="pageNo" value="${pageInfo.currentPage}">
+  <input type="hidden" name="pageNo" value="${pageNo}">
 </form>
 </body>
 </html>
