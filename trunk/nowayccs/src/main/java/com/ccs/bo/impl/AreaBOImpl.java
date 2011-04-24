@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ccs.bo.IAreaBO;
 import com.ccs.dao.IAreaDAO;
 import com.ccs.dao.IAreaSubDAO;
+import com.ccs.util.PageInfo;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
 
@@ -63,6 +64,11 @@ public class AreaBOImpl implements IAreaBO {
 	@Override
 	public List<AreaSubVO> findAreaSubByAreaId(String areaId) {
 		return areaSubDAO.findByAreaId(areaId);
+	}
+
+	@Override
+	public List<AreaVO> findAllArea(PageInfo pageInfo) {
+		return areaDAO.findAll(pageInfo);
 	}
 
 }

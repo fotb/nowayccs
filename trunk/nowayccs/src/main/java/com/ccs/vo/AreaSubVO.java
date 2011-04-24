@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "HJ_AREA")
+@Table(name = "HJ_AREA_SUB")
 public class AreaSubVO implements Serializable {
 
 	private static final long serialVersionUID = -8238513040674772311L;

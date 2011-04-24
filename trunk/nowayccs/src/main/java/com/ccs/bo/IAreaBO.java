@@ -2,6 +2,7 @@ package com.ccs.bo;
 
 import java.util.List;
 
+import com.ccs.util.PageInfo;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
 
@@ -19,6 +20,8 @@ public interface IAreaBO {
 	AreaSubVO findByAreaSubId(String areaSubId);
 	
 	List<AreaVO> findAllArea();
+	
+	List<AreaVO> findAllArea(PageInfo pageInfo);
 	
 	List<AreaSubVO> findAllAreaSub();
 	
