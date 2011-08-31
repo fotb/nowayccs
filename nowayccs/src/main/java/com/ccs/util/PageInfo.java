@@ -8,7 +8,7 @@ package com.ccs.util;
  */
 public class PageInfo {
     /* 每页显示记录数 */
-    public static int PAGE_COUNT = 2;
+    public static int PAGE_COUNT = 8;
 
     /* 当前页码 */
     private int currentPage = 0;
