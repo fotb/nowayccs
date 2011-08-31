@@ -8,10 +8,13 @@ public class EntCategory implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2234583815197431777L;
-
 	private String categoryId;
 
-	private String subCategoryId;
+	private String parentId;
+
+	private String subParentId;
+
+	private String value;
 
 	public String getCategoryId() {
 		return categoryId;
@@ -21,12 +24,30 @@ public class EntCategory implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public String getSubCategoryId() {
-		return subCategoryId;
+	public String getValue() {
+		return value;
 	}
 
-	public void setSubCategoryId(String subCategoryId) {
-		this.subCategoryId = subCategoryId;
+	public void setValue(String value) {
+		this.value = value;
 	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getSubParentId() {
+		return subParentId;
+	}
+
+	public void setSubParentId(String subParentId) {
+		this.subParentId = subParentId;
+	}
+
+	
 
 }
