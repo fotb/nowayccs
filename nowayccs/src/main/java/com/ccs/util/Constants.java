@@ -28,7 +28,7 @@ public class Constants {
 
 
     /*树型的顶级代码-1*/
-    public static final long TOP_CODE = -1;
+    public static final String TOP_CODE = "-1";
 
     /*数据库字段为空，默认的数字-1*/
     public static final long DATABASE_NULL_NUMBER = -1;
