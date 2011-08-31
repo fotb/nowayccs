@@ -5,16 +5,17 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>嘉兴社区服务中心</title>
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
+<script language="javascript" src="js/function.js"></script>
 </head>
 <script type="text/javascript">
 function btnsave_click(){
   var form = document.forms[0];
-  if(!isValidStringObj( form.entClassName,"企业类别名称",true)){
+  if(!isValidStringObj( form.value,"企业类别名称",true)){
     return;
   }
   form.submit();
@@ -26,7 +27,9 @@ function btnback_click(){
 </script>
 </head>
 <body>
-<html:form  method="post" action="SysEntClass_addsave.do">
+<form:form action="entcategory.do?action=addsave" method="post" commandName="entCategory">
+<form:hidden path="parentId"/>
+<form:hidden path="subParentId"/>
 <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
   <tr>
     <td>
@@ -45,7 +48,7 @@ function btnback_click(){
         <tr class="table_t1">
           <td width="20%">企业类别名称：</td>
           <td>
-            <html:text property="entClassName" styleClass="form" size="70"/>
+          	<form:input path="value" cssClass="form" maxlength="45"/>
           </td>
         </tr>
         <tr class="line">
@@ -53,17 +56,14 @@ function btnback_click(){
         </tr>
         <tr align="center" class="table_t1">
           <td colspan="2">
-            <html:img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()"/>
-            <html:img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()"/>
+            <img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()"/>
+            <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()"/>
           </td>
         </tr>
       </table>
     </td>
   </tr>
 </table>
-<html:hidden property="parentEntClassID"/>
-<input type="hidden" name="bigEntClassID" value="<bean:write name="bigEntClassID"/>">
-<input type="hidden" name="smallEntClassID" value="<bean:write name="smallEntClassID"/>">
-</html:form>
+</form:form>
 </body>
 </html>

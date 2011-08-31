@@ -30,13 +30,13 @@ function btndel_click(entClassID){
 
 function btnedit_click(entClassID){
   var form=document.forms[0];
-  form.action="SysEntClass_edit.do?entClassID="+entClassID;
+  form.action="entcategory.do?action=edit&categoryId=" + entClassID;
   form.submit();
 }
 
 function btnTopSearch_click(){
 	  var form=document.forms[0];
-	  form.subCategoryId.value = "-1";
+	  form.subParentId.value = "-1";
 	  form.submit();
 }
 	
@@ -62,12 +62,12 @@ function btnSearch_click(){
                 <td>请选择企业类别：</td>
                 <td align="left">
                 	大类：
-                <form:select path="categoryId"  onchange="btnTopSearch_click()">
+                <form:select path="parentId"  onchange="btnTopSearch_click()">
                 	<form:option value="-1">--全部--</form:option>
                 	<form:options items="${topCategoryList}" itemLabel="value" itemValue="categoryId"/>
                 </form:select>
 				小类：
-                <form:select path="subCategoryId"  onchange="btnSearch_click()">
+                <form:select path="subParentId"  onchange="btnSearch_click()">
                 	<form:option value="-1">--全部--</form:option>
                 	<form:options items="${subCategoryList}" itemLabel="value" itemValue="categoryId"/>
                 </form:select>
@@ -83,7 +83,7 @@ function btnSearch_click(){
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr class="table_green">
           <td width="50%">企业类别名称</td>
-          <td colspan="2">操作</td>
+          <td colspan="2" width="50%">操作</td>
         </tr>
         <c:forEach items="${categoryList}" var="categoryVO">
             <tr class='table_blue' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
@@ -118,7 +118,7 @@ function btnSearch_click(){
     </td>
   </tr>
 </table>
-<input type="hidden" name="pageNO" value="<bean:write name="pageInfo" property="currentPage"/>">
+<input type="hidden" name="pageNO" value='<bean:write name="pageInfo" property="currentPage"/>' />
 </form:form>
 </body>
 </html>
