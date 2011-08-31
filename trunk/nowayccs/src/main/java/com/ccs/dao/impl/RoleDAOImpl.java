@@ -1,0 +1,56 @@
+package com.ccs.dao.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.stereotype.Repository;
+
+import com.ccs.dao.DefaultDAOSupport;
+import com.ccs.dao.IRoleDAO;
+import com.ccs.util.PageInfo;
+import com.ccs.vo.RoleVO;
+
+@Repository("roleDAO")
+public class RoleDAOImpl extends DefaultDAOSupport implements IRoleDAO {
+
+	@Override
+	public RoleVO findById(String roleId) {
+		return getHibernateTemplate().get(RoleVO.class, roleId);
+	}
+
+	@Override
+	public void saveOrUpdate(RoleVO vo) {
+		getHibernateTemplate().saveOrUpdate(vo);
+	}
+
+	@Override
+	public void delete(RoleVO vo) {
+		getHibernateTemplate().delete(vo);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RoleVO> findAll() {
+		return getHibernateTemplate().find("from roleVO");
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RoleVO> findAll(final PageInfo pageInfo) {
+		return getHibernateTemplate().executeFind(
+				new HibernateCallback<Object>() {
+					public Object doInHibernate(Session s)
+							throws HibernateException, SQLException {
+						Query query = s.createQuery("from roleVO");
+						query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
+						query.setMaxResults(pageInfo.getPAGE_COUNT());
+						return query.list();
+					}
+				});
+	}
+
+}
