@@ -35,7 +35,7 @@ public class RoleDAOImpl extends DefaultDAOSupport implements IRoleDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RoleVO> findAll() {
-		return getHibernateTemplate().find("from roleVO");
+		return getHibernateTemplate().find("from RoleVO");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -45,12 +45,19 @@ public class RoleDAOImpl extends DefaultDAOSupport implements IRoleDAO {
 				new HibernateCallback<Object>() {
 					public Object doInHibernate(Session s)
 							throws HibernateException, SQLException {
-						Query query = s.createQuery("from roleVO");
+						Query query = s.createQuery("from RoleVO");
 						query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
 						query.setMaxResults(pageInfo.getPAGE_COUNT());
 						return query.list();
 					}
 				});
+	}
+
+	@Override
+	public int getTotalCount() {
+		  String hql = "select count(vo.roleId) from RoleVO vo ";
+		  Long count = (Long)getHibernateTemplate().find(hql).listIterator().next();
+		  return count.intValue();
 	}
 
 }

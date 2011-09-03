@@ -8,6 +8,8 @@ import com.ccs.vo.UserVO;
 public interface IUserDAO {
 	void saveOrUpdate(UserVO vo);
 	
+	void update(UserVO vo);
+	
 	void delete(UserVO vo);
 	
 	UserVO findById(String userId);

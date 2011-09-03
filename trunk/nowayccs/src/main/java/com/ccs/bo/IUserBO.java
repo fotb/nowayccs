@@ -3,6 +3,7 @@ package com.ccs.bo;
 import java.util.List;
 
 import com.ccs.util.PageInfo;
+import com.ccs.vo.UserRoleVO;
 import com.ccs.vo.UserVO;
 
 public interface IUserBO {
@@ -16,9 +17,13 @@ public interface IUserBO {
 
 	boolean login(String loginName, String pwd);
 	
-	void addUser(UserVO vo);
+	void addUser(UserVO vo, String[] roleIds);
 	
 	List<UserVO> findByLoginName(String loginName);
 	
 	List<UserVO> findAllOnJob();
+	
+	List<UserRoleVO> findUserRoleByUserId(String userId);
+	
+	void editUser(UserVO vo, String[] roleIds);
 }

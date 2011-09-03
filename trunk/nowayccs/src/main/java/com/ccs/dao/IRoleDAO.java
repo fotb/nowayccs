@@ -16,4 +16,6 @@ public interface IRoleDAO {
 	List<RoleVO> findAll();
 	
 	List<RoleVO> findAll(final PageInfo pageInfo);
+	
+	int getTotalCount();
 }

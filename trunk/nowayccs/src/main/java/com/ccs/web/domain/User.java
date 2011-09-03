@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "HJ_USER")
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = 7819827711639550679L;
 
 	private String userId;
@@ -16,7 +16,7 @@ public class User implements Serializable {
 	private String loginName;
 
 	private String loginPassword;
-	
+
 	private String doublePassword;
 
 	private String userName;
@@ -38,6 +38,16 @@ public class User implements Serializable {
 	private String emailAddr;
 
 	private String onJob;
+
+	private String[] roleIds;
+
+	public String[] getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(String[] roleIds) {
+		this.roleIds = roleIds;
+	}
 
 	@Override
 	public int hashCode() {

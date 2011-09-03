@@ -36,18 +36,28 @@ public class UserRoleDAOImpl extends DefaultDAOSupport implements IUserRoleDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRoleVO> findByUserId(String userId) {
-		return getHibernateTemplate().find("from UserRoleVO vo where vo.userId = ?", userId);
+		return getHibernateTemplate().find("from UserRoleVO vo where vo.id.userId = ?", userId);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRoleVO> findByRoleId(String roleId) {
-		return getHibernateTemplate().find("from UserRoleVO vo where vo.roleId = ?", roleId);
+		return getHibernateTemplate().find("from UserRoleVO vo where vo.id.roleId = ?", roleId);
 	}
 
 	@Override
 	public void delete(final List<UserRoleVO> list) {
 		getHibernateTemplate().deleteAll(list);
+	}
+
+	@Override
+	public void saveOrUpdate(List<UserRoleVO> list) {
+		getHibernateTemplate().saveOrUpdateAll(list);
+	}
+
+	@Override
+	public void merge(UserRoleVO vo) {
+		getHibernateTemplate().merge(vo);
 	}
 
 }

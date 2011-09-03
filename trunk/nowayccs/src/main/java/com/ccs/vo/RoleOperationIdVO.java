@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+
 @Embeddable
 public class RoleOperationIdVO implements Serializable {
 
@@ -14,7 +15,7 @@ public class RoleOperationIdVO implements Serializable {
 	private String roleId;
 
 	@Column(name = "OPERATIONID")
-	private String operationid;
+	private String operationId;
 
 	public String getRoleId() {
 		return roleId;
@@ -24,12 +25,12 @@ public class RoleOperationIdVO implements Serializable {
 		this.roleId = roleId;
 	}
 
-	public String getOperationid() {
-		return operationid;
+	public String getOperationId() {
+		return operationId;
 	}
 
-	public void setOperationid(String operationid) {
-		this.operationid = operationid;
+	public void setOperationId(String operationId) {
+		this.operationId = operationId;
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class RoleOperationIdVO implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((operationid == null) ? 0 : operationid.hashCode());
+				+ ((operationId == null) ? 0 : operationId.hashCode());
 		result = prime * result + ((roleId == null) ? 0 : roleId.hashCode());
 		return result;
 	}
@@ -51,10 +52,10 @@ public class RoleOperationIdVO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		RoleOperationIdVO other = (RoleOperationIdVO) obj;
-		if (operationid == null) {
-			if (other.operationid != null)
+		if (operationId == null) {
+			if (other.operationId != null)
 				return false;
-		} else if (!operationid.equals(other.operationid))
+		} else if (!operationId.equals(other.operationId))
 			return false;
 		if (roleId == null) {
 			if (other.roleId != null)

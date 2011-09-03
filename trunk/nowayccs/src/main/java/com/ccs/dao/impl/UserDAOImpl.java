@@ -23,6 +23,11 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 	}
 
 	@Override
+	public void update(UserVO vo) {
+		getHibernateTemplate().update(vo);
+	}
+	
+	@Override
 	public void delete(UserVO vo) {
 		getHibernateTemplate().delete(vo);
 	}

@@ -17,4 +17,6 @@ public interface IRoleOperationDAO {
 	List<RoleOperationVO> findByRoleId(final String roleId);
 
 	void delete(final List<RoleOperationVO> list);
+	
+	void saveAll(List<RoleOperationVO> list);
 }

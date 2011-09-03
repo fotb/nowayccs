@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccs.bo.IAreaBO;
@@ -23,10 +22,8 @@ public class AreaController {
 	@Autowired
 	private IAreaBO areaBO;
 	
-	@RequestMapping(method=RequestMethod.GET)
-//	public String init(@RequestParam("pageNo") String pageNo, ModelMap model) {
-	public String init(ModelMap model) {
-		String pageNo = "1";
+	@RequestMapping
+	public String init(@RequestParam(value="pageNo", required=false) String pageNo, ModelMap model) {
 		PageInfo pageInfo=new PageInfo();
 		if(Utils.isNull(pageNo)) {
 			pageInfo.setCurrentPage(1);
@@ -46,7 +43,7 @@ public class AreaController {
 	}
 	
 	@RequestMapping(params="action=saveArea")
-	public String SaveArea(@RequestParam("name") String name, @RequestParam("pageNo") String pageNo, ModelMap model) {
+	public String saveArea(@RequestParam("name") String name, @RequestParam("pageNo") String pageNo, ModelMap model) {
 		AreaVO vo = new AreaVO();
 		vo.setName(name);
 		areaBO.saveOrUpdate(vo);		
@@ -63,7 +60,7 @@ public class AreaController {
 	}
 	
 	@RequestMapping(params="action=editSaveArea")
-	public String EditSaveArea(@RequestParam("areaId") String areaId, @RequestParam("name") String name, @RequestParam("pageNo") String pageNo, ModelMap model) {
+	public String editSaveArea(@RequestParam("areaId") String areaId, @RequestParam("name") String name, @RequestParam("pageNo") String pageNo, ModelMap model) {
 		AreaVO vo = areaBO.findByAreaId(areaId);
 		vo.setName(name);
 		areaBO.saveOrUpdate(vo);		
@@ -95,7 +92,7 @@ public class AreaController {
 	}
 	
 	@RequestMapping(params="action=saveSubArea")
-	public String SaveSubArea(@RequestParam("name") String name, @RequestParam("areaId") String areaId, @RequestParam("pageNo") String pageNo, ModelMap model) {
+	public String saveSubArea(@RequestParam("name") String name, @RequestParam("areaId") String areaId, @RequestParam("pageNo") String pageNo, ModelMap model) {
 		AreaSubVO vo = new AreaSubVO();
 		vo.setName(name);
 		vo.setAreaId(areaId);
@@ -113,7 +110,7 @@ public class AreaController {
 	}
 	
 	@RequestMapping(params="action=editSaveSubArea")
-	public String EditSaveSubArea(@RequestParam("areaSubId") String areaSubId, @RequestParam("name") String name, @RequestParam("pageNo") String pageNo, ModelMap model) {
+	public String editSaveSubArea(@RequestParam("areaSubId") String areaSubId, @RequestParam("name") String name, @RequestParam("pageNo") String pageNo, ModelMap model) {
 		AreaSubVO vo = areaBO.findByAreaSubId(areaSubId);
 		vo.setName(name);
 		areaBO.saveOrUpdate(vo);		
