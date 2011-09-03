@@ -41,7 +41,7 @@ public class AreaDAOImpl extends DefaultDAOSupport implements IAreaDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AreaVO> findAll(final PageInfo pageInfo) {
-		   return  getHibernateTemplate().executeFind( new  HibernateCallback<Object>() { 
+		   return getHibernateTemplate().executeFind( new  HibernateCallback<Object>() { 
 			     public  Object doInHibernate(Session s)  throws  HibernateException, SQLException { 
 			           Query query  =  s.createQuery("from AreaVO vo"); 
 			           query.setFirstResult((pageInfo.getCurrentPage()-1)*pageInfo.getPAGE_COUNT()); 
@@ -49,6 +49,12 @@ public class AreaDAOImpl extends DefaultDAOSupport implements IAreaDAO {
 			           return query.list(); 
 			           } 
 			     });
+	}
+
+	@Override
+	public int getTotalCount() {
+		Long count = (Long) getHibernateTemplate().find("select count(areaId) from AreaVO vo").listIterator().next();
+		return count.intValue();
 	}
 
 }

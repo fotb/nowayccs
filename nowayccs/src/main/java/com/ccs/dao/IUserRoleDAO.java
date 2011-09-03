@@ -10,6 +10,10 @@ public interface IUserRoleDAO {
 	
 	void saveOrUpdate(final UserRoleVO vo);
 	
+	void saveOrUpdate(final List<UserRoleVO> list);
+	
+	void merge(final UserRoleVO vo);
+	
 	void delete(final UserRoleVO vo);
 	
 	List<UserRoleVO> findAll();

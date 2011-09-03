@@ -1,5 +1,6 @@
 package com.ccs.dao.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -38,12 +39,21 @@ public class RoleOperationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<RoleOperationVO> findByRoleId(String roleId) {
 		return getHibernateTemplate().find(
-				"from RoleOperationVO vo where vo.roleId = ?", roleId);
+				"from RoleOperationVO vo where vo.id.roleId = ?", roleId);
 	}
 
 	@Override
 	public void delete(List<RoleOperationVO> list) {
-		getHibernateTemplate().delete(list);
+		getHibernateTemplate().deleteAll(list);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void saveAll(List<RoleOperationVO> list) {
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			RoleOperationVO roleOperationVO = (RoleOperationVO) iterator.next();
+			getHibernateTemplate().save(roleOperationVO);
+		}
 	}
 
 }

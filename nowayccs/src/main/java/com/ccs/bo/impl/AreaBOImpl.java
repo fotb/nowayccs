@@ -68,6 +68,7 @@ public class AreaBOImpl implements IAreaBO {
 
 	@Override
 	public List<AreaVO> findAllArea(PageInfo pageInfo) {
+		pageInfo.setTotalRecords(areaDAO.getTotalCount());
 		return areaDAO.findAll(pageInfo);
 	}
 

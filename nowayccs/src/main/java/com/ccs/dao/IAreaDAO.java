@@ -16,4 +16,6 @@ public interface IAreaDAO {
 	List<AreaVO> findAll();
 	
 	List<AreaVO> findAll(PageInfo pageInfo);
+	
+	int getTotalCount();
 }

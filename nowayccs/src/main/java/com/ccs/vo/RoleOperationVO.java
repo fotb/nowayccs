@@ -6,6 +6,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "HJ_ROLEOPERATION")
 public class RoleOperationVO implements Serializable {
