@@ -13,9 +13,11 @@
 <script type="text/javascript">
 function btnsave_click(){
   var form = document.forms[0];
+/*
   if(!isValidStringObj( form.loginName,"登录名",true)){
     return;
   }
+*/
   if(!isValidStringObj( form.loginPassword,"登录密码",true)){
     return;
   }
@@ -31,13 +33,15 @@ function btnsave_click(){
 }
 
 function btnback_click(){
-  history.back();
+  location.href="user.do?action=gotopage&pageNo=${pageNo}";
 }
 </script>
 </head>
 <body>
-<form:form method="post" action="user.do?action=addsave" commandName="user">
+<form:form method="post" action="user.do?action=editsave" commandName="user">
 <input type="hidden" name="pageNo" value="${pageNo}" />
+<form:hidden path="userId"/>
+<form:hidden path="onJob"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -46,7 +50,7 @@ function btnback_click(){
             <td width="3%" align="center">
               <img src="images/icon_01.gif" width="5" height="17" alt="">
             </td>
-            <td class="font_no">新增用户</td>
+            <td class="font_no">修改用户信息</td>
           </tr>
         </table>
         <table width="100%" border="0" cellpadding="0" cellspacing="1">
@@ -56,7 +60,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td width="15%">登录名：</td>
             <td>
-            	<form:input path="loginName" cssClass="form" size="20" maxLength="20"/>&nbsp;&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="loginName"/></font>
+            	${user.loginName}
             </td>
           </tr>
           <tr class="table_t1">
