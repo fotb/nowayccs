@@ -52,7 +52,7 @@ function option_modiOnJob(id, onJob) {
         <c:forEach items="${userList}" var="user">
               <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
                 <td>
-                  <A href="user.do?action=view&userId=${user.userId}">${user.userName}</A>
+                  <A href="user.do?action=view&userId=${user.userId}&pageNo=${pageInfo.currentPage}">${user.userName}</A>
                 </td>
                 <td>
                   ${user.loginName}
@@ -74,7 +74,7 @@ function option_modiOnJob(id, onJob) {
 
 
                 <td width="5%">
-                  <a href="user.do?action=edit&userId=${user.userId}">
+                  <a href="user.do?action=edit&userId=${user.userId}&pageNo=${pageInfo.currentPage}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
                 </td>
