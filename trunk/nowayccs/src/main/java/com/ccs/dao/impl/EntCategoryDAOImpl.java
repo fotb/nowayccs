@@ -1,6 +1,10 @@
 package com.ccs.dao.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -32,5 +36,25 @@ public class EntCategoryDAOImpl extends DefaultDAOSupport implements
 	public List<EntCategoryVO> findByParentId(String parentId) {
 		return getHibernateTemplate().find("from EntCategoryVO vo where vo.parentId = ?", parentId);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, List<EntCategoryVO>> findAll() {
+		List<EntCategoryVO> list = getHibernateTemplate().find("from EntCategoryVO vo");
+		Map<String, List<EntCategoryVO>> map = new HashMap<String, List<EntCategoryVO>>();
+		for (Iterator<EntCategoryVO> iter = list.iterator(); iter.hasNext();) {
+			EntCategoryVO ecVO = (EntCategoryVO) iter.next();
+			if(map.containsKey(ecVO.getParentId())) {
+				List<EntCategoryVO> tempList = map.get(ecVO.getParentId());
+				tempList.add(ecVO);
+			} else {
+				List<EntCategoryVO> tempList = new ArrayList<EntCategoryVO>();
+				tempList.add(ecVO);
+				map.put(ecVO.getParentId(), tempList);
+			}
+		}
+		return map;
+	}
+
 
 }
