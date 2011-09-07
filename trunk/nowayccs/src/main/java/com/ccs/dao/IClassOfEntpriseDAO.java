@@ -15,6 +15,8 @@ public interface IClassOfEntpriseDAO {
 	
 	void delete(ClassOfEntpriseVO vo);
 	
+	void deleteAll(List<ClassOfEntpriseVO> list);
+	
 	void merge(ClassOfEntpriseVO vo);
 	
 	List<ClassOfEntpriseVO> findByEntpriseId(String entpriseId);

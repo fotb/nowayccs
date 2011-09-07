@@ -8,9 +8,11 @@ public class EntSearch implements Serializable {
 	
 	public static final String DEFAULT_VALUE_SELECT = "All";
 
-	private String entpriseNo = "";
+	private String entpriseNo;
 
-	private String entpriseName = "";
+	private String entpriseName;
+	
+	private String servicesType;
 
 	private String parentCategoryId;
 
@@ -57,4 +59,13 @@ public class EntSearch implements Serializable {
 	public final void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
+
+	public String getServicesType() {
+		return servicesType;
+	}
+
+	public void setServicesType(String servicesType) {
+		this.servicesType = servicesType;
+	}
+	
 }

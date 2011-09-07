@@ -44,4 +44,9 @@ public class ClassOfEntpriseDAOImpl extends DefaultDAOSupport implements
 		return getHibernateTemplate().find("from ClassOfEntpriseVO vo where vo.id.entpriseId = ?", entpriseId);
 	}
 
+	@Override
+	public void deleteAll(List<ClassOfEntpriseVO> list) {
+		getHibernateTemplate().deleteAll(list);
+	}
+
 }

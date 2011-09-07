@@ -68,7 +68,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 			+ "From hj_Entprise t, hj_ClassOfEntprise b "
 			+ "Where t.entpriseId = b.entpriseId ";
 	private static final String tempSql2 = "(t.entpriseName like ? or ? is null) and (t.entpriseNo=? or ? is null) "
-			+ "and (t.status=? or ? is null) order by cast(t.entpriseNo as int)";
+			+ "and (t.status=? or ? is null) and (t.servicesType = ? or ? is null) order by cast(t.entpriseNo as int)";
 	private static final String sql = tempSql
 			+ "And b.entclassId In ( "
 			+ "Select entclassid From hj_entclass a Start With a.parententclassid = ? CONNECT BY Prior a.entclassid = a.parententclassid"
@@ -94,7 +94,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<EntpriseVO> findByParams(final String entpriseName,
-			final String entpriseNo, final String bigEntclassId,
+			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
 			final String status, final PageInfo pageInfo) {
 		return getHibernateTemplate().executeFind(
@@ -107,48 +107,34 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 						String targetSql = "";
 						if (entclassId != null && !entclassId.equals("")) {
 							objList.add(entclassId);
-							objList.add("%" + entpriseName + "%");
-							objList.add(entpriseName);
-							objList.add(entpriseNo);
-							objList.add(entpriseNo);
-							objList.add(status);
-							objList.add(status);
 							targetSql = sql2;
 						} else {
 							if (smallEntclassId != null
 									&& !smallEntclassId.equals("")) {
 								objList.add(smallEntclassId);
-								objList.add("%" + entpriseName + "%");
-								objList.add(entpriseName);
-								objList.add(entpriseNo);
-								objList.add(entpriseNo);
-								objList.add(status);
-								objList.add(status);
 								targetSql = sql;
 
 							} else {
 								if (bigEntclassId != null
 										&& !bigEntclassId.equals("")) {
 									objList.add(bigEntclassId);
-									objList.add("%" + entpriseName + "%");
-									objList.add(entpriseName);
-									objList.add(entpriseNo);
-									objList.add(entpriseNo);
-									objList.add(status);
-									objList.add(status);
 									targetSql = sql;
 								} else {
-									objList.add("%" + entpriseName + "%");
-									objList.add(entpriseName);
-									objList.add(entpriseNo);
-									objList.add(entpriseNo);
-									objList.add(status);
-									objList.add(status);
 									targetSql = sql3;
 								}
 							}
 						}
 
+						
+						objList.add("%" + entpriseName + "%");
+						objList.add(entpriseName);
+						objList.add(entpriseNo);
+						objList.add(entpriseNo);
+						objList.add(status);
+						objList.add(status);
+						objList.add(servicesType);
+						objList.add(servicesType);
+						
 						final StringType[] types = new StringType[objList.size()];
 						for (int i = 0; i < objList.size(); i++) {
 							types[i] = StandardBasicTypes.STRING;
@@ -165,7 +151,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 
 	@Override
 	public int getTotalCount(final String entpriseName,
-			final String entpriseNo, final String bigEntclassId,
+			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
 			final String status) {
 		BigDecimal count = (BigDecimal) getHibernateTemplate().execute(
@@ -177,48 +163,34 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 						String targetSql = "";
 						if (entclassId != null && !entclassId.equals("")) {
 							objList.add(entclassId);
-							objList.add("%" + entpriseName + "%");
-							objList.add(entpriseName);
-							objList.add(entpriseNo);
-							objList.add(entpriseNo);
-							objList.add(status);
-							objList.add(status);
 							targetSql = countSql2;
 						} else {
 							if (smallEntclassId != null
 									&& !smallEntclassId.equals("")) {
 								objList.add(smallEntclassId);
-								objList.add("%" + entpriseName + "%");
-								objList.add(entpriseName);
-								objList.add(entpriseNo);
-								objList.add(entpriseNo);
-								objList.add(status);
-								objList.add(status);
 								targetSql = countSql1;
 
 							} else {
 								if (bigEntclassId != null
 										&& !bigEntclassId.equals("")) {
 									objList.add(bigEntclassId);
-									objList.add("%" + entpriseName + "%");
-									objList.add(entpriseName);
-									objList.add(entpriseNo);
-									objList.add(entpriseNo);
-									objList.add(status);
-									objList.add(status);
 									targetSql = countSql1;
 								} else {
-									objList.add("%" + entpriseName + "%");
-									objList.add(entpriseName);
-									objList.add(entpriseNo);
-									objList.add(entpriseNo);
-									objList.add(status);
-									objList.add(status);
 									targetSql = countSql3;
 								}
 							}
 						}
 
+						
+						objList.add("%" + entpriseName + "%");
+						objList.add(entpriseName);
+						objList.add(entpriseNo);
+						objList.add(entpriseNo);
+						objList.add(status);
+						objList.add(status);
+						objList.add(servicesType);
+						objList.add(servicesType);
+						
 						final StringType[] types = new StringType[objList
 								.size()];
 						for (int i = 0; i < objList.size(); i++) {
