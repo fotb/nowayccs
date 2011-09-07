@@ -25,19 +25,20 @@ function btndelete_click(entpriseId) {
 }
 
 function btnactive_click(entpriseId) {
-   var form = document.forms[0];
   if(confirm("是否真的重新开始加盟企业服务？")) {
-    form.action = "entprise.do?action=active&entpriseId = "+entpriseId;
-    form.submit();
+	changeStatus(entpriseId, "Y");
   }
 }
 
 function btnunactive_click(entpriseId) {
-   var form = document.forms[0];
   if(confirm("是否真的停止加盟企业服务？")) {
-    form.action = "entprise.do?action=unactive&entpriseId="+entpriseId;
-    form.submit();
+	changeStatus(entpriseId, "N");
   }
+}
+
+function changeStatus(entpriseId, newStatus) {
+	$("form").attr("action", "entprise.do?action=changestatus&entpriseId=" + entpriseId + "&status=" + newStatus);
+	$("form").submit();
 }
 
 $(document).ready(function(){
@@ -95,12 +96,20 @@ $(document).ready(function(){
                   <td>
                   	<form:input path="entpriseName" size="30" cssStyle="form"/>
                   </td>
-                  <td width="10%" rowspan="2">
+
+					<td width="70">能否派单：</td>
+                  <td>
+                    <form:select path="servicesType">
+                    	<form:option value="All">请选择</form:option>
+                    	<form:option value="Y">可派单</form:option>
+                    	<form:option value="N">不可派单</form:option>
+                    </form:select>
+                  </td>
+				  <td width="10%" rowspan="2">
                     <A href="javascript:btnsearch_click()">
                       <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
                     </A>
                   </td>
-                  
                 </tr>
                 <tr>
                 <td>服务类别：</td>
@@ -145,7 +154,7 @@ $(document).ready(function(){
                   ${entprise.entpriseNo}
                 </td>
                 <td>
-                  <a href="/entprise.do?action=view&entpriseId=${entprise.entpriseId}">
+                  <a href="entprise.do?action=view&entpriseId=${entprise.entpriseId}&pageNo=${pageInfo.currentPage }">
                     ${entprise.entpriseName}
                   </a>
                 </td>
@@ -156,24 +165,24 @@ $(document).ready(function(){
                 	${entprise.address }
                 </td>
                 <td>
-                 <a href="/entprise.do?action=classview&entpriseId=${entprise.entpriseId}">
+                 <a href="entprise.do?action=classview&entpriseId=${entprise.entpriseId}&pageNo=${pageInfo.currentPage }">
                     <img src="images/edit.gif" alt="维护服务项目" width="11" height="14" border="0">
                   </a>
                 </td>
                 <td width="5%">
-                  <a href="/entprise.do?action=editent&priseId=${entprise.entpriseId}">
+                  <a href="entprise.do?action=update&entpriseId=${entprise.entpriseId}&pageNo=${pageInfo.currentPage }">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
                 </td>
                 <td width="5%">
                  	<c:if test="${entprise.status == 'Y'}">
-                  <A href="javascript:btnunactive_click('${entprise.entpriseId}');">
-                    <img src="images/del.gif" alt="停止服务" width="11" height="14" border="0">
+                  <A id="stopLink" href="javascript:btnunactive_click('${entprise.entpriseId}');">
+                    <img src="images/del.gif" title="停止服务" width="11" height="14" border="0">
                   </A>
                   </c:if>
                 	<c:if test="${entprise.status == 'N'}">
-                  <A href="javascript:btnactive_click('${entprise.entpriseId}');">
-                    <img src="images/ok.gif" alt="开始服务" width="11" height="14" border="0">
+                  <A id="activeLink" href="javascript:btnactive_click('${entprise.entpriseId}');">
+                    <img src="images/ok.gif" title="开始服务" width="11" height="14" border="0">
                   </A>
                   </c:if>
                  </td>

@@ -11,19 +11,35 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script language="javascript" src="js/common.js" type=""></script>
 <script language="javascript" type="">
-function btnedit_click() {
-  var form = document.forms[0];
-  form.action = "entprise.do?action=editview";
-  form.submit();
-}
-function btnback_click(){
-  history.back();
-}
+
+$(document).ready(function(){
+	$("input[name=categoryId]").each(function() { 
+		$(this).attr("disabled", true);
+    }); 
+
+	$("#editImg").click(function(){
+		$("input[name=categoryId]").each(function() { 
+			$(this).attr("disabled", false);
+    	}); 
+		$("#editImg").hide();
+		$("#saveImg").show();
+	});
+
+	$("#saveImg").click(function(){
+		$("form").submit();
+	});
+
+	$("#backImg").click(function(){
+		$("form").attr("action", "entprise.do");
+		$("form").submit();
+	});
+});
 </script>
 <body bgcolor="#ffffff">
 
-<html:form method="post" action="entprise.do?action=classview">
-<input type="hidden" name="entpriseID" value="<bean:write name='hjEntprise' property='entpriseId' />"/>
+<form:form method="post" action="entprise.do?action=updateclass">
+<input type="hidden" name="entpriseId" value="${entpriseVO.entpriseId }"/>
+<input type="hidden" name="pageNo" value="${pageNo}" />
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -42,7 +58,7 @@ function btnback_click(){
           <tr class="class_1">
             <td width="10%">企业名称：</td>
             <td >
-            <bean:write name="hjEntprise" property="entpriseName"/>
+            	${entpriseVO.entpriseName}
             </td>
           </tr>
                     <tr class="line">
@@ -51,53 +67,48 @@ function btnback_click(){
           </table>
 
          <table width="100%" border="0" cellpadding="0" cellspacing="1">
-          <logic:iterate id="list" name="coeDTOList">
-          <tr class="table_green">
-            <td colspan="2" align="left">
-              <bean:write name="list" property="hjEntClass.entClassName"/>
-            </td>
-          </tr>
-          <logic:iterate id="list2" name="list" property="coeList">
-          <tr class="class_1">
-            <td width="10%">
-              &nbsp;&nbsp;&nbsp;&nbsp;<bean:write name="list2" property="hjEntClass.entClassName"/>
-            </td>
-            <td>
-            <logic:iterate id="list3" name="list2" property="coeList">
-            <input type="checkbox" name="entClassId" value="<bean:write name='list3' property='entClassId'/>" disabled="disabled"
-            <logic:iterate id="coeList" name="hjcoeList">
-            <c:out value="${coeList.hjEntclass.entClassId}">
-            </c:out>
-            <c:out value="${list3.entClassId}">
-            </c:out>
-            <c:choose>
-            <c:when test="${list3.entClassId == coeList.hjEntclass.entClassId}">
-            checked
-            </c:when>
-            </c:choose>
-            </logic:iterate>
-            /><bean:write name="list3" property="entClassName"/>
-
-            </logic:iterate>
-             </td>
-          </tr>
-          <tr class="line">
-            <td height="1" colspan="2">            </td>
-          </tr>
-          </logic:iterate>
-          </logic:iterate>
-
+         <c:forEach items="${dtoList}" var="dto">
+	          <tr class="table_green">
+	            <td colspan="2" align="left">
+					${dto.entCategoryVO.value}
+	            </td>
+	          </tr>
+         	<c:forEach items="${dto.sonCategoryList}" var="sonDTO">
+		      <tr class="class_1">
+				<td width="10%">
+				  &nbsp;&nbsp;&nbsp;&nbsp;${sonDTO.entCategoryVO.value}
+				</td>
+				<td>
+	            <c:forEach items="${sonDTO.sonCategoryList}" var="thirdDTO">
+	            	<c:choose>
+	            		<c:when test="${not empty coeMap[thirdDTO.entCategoryVO.categoryId]}">
+	            			<input type="checkbox" name="categoryId" id="categoryId" value="${thirdDTO.entCategoryVO.categoryId}" disabled="disabled" checked="checked"/>
+	            		</c:when>
+	            		<c:otherwise>
+	            			<input type="checkbox" name="categoryId" id="categoryId" value="${thirdDTO.entCategoryVO.categoryId}" disabled="disabled" />
+	            		</c:otherwise>
+	            	</c:choose>
+					${thirdDTO.entCategoryVO.value}	            
+	            </c:forEach>
+	            </td>
+	           </tr>
+          	  <tr class="line">
+				<td height="1" colspan="2">            </td>
+              </tr>
+         	</c:forEach>
+         </c:forEach>
           <tr align="center" class="table_t1">
             <td colspan="2">
-              <html:img src="images/button_edit.gif" alt="修改" width="60" height="18" border="0" onclick="btnedit_click()"/>
-              <html:img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()"/>
+              <img src="images/button_edit.gif" id="editImg" alt="修改" width="60" height="18" border="0" style="cursor: pointer;"/>
+              <img src="images/button_save.gif" id="saveImg" alt="保存" width="60" height="18" border="0" style="display: none; cursor: pointer;"/>
+              <img src="images/button_back.gif" id="backImg" alt="返回前一页面" width="60" height="18" border="0" style="cursor: pointer;"/>
             </td>
           </tr>
         </table>
       </td>
     </tr>
   </table>
-</html:form>
+</form:form>
 
 </body>
 </html>
