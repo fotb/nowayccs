@@ -13,12 +13,15 @@
 <script language="javascript" src="js/function.js" type="">
 </script>
 <script language="javascript" type="">
+
 function btnback_click(){
   history.back();
 }
 </script>
 <body>
-<html:form method="post" action="SysEntpriseAdmin_editsave.do">
+<form:form method="post" action="entprise.do?action=save" commandName="entpriseVO">
+<input type="hidden" name="pageNo" id="pageNo" value="${pageNo}"/>
+<form:hidden path="entpriseId"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -32,12 +35,30 @@ function btnback_click(){
         </table>
         <table width="100%" border="0" cellpadding="0" cellspacing="1">
           <tr class="line">
-            <td height="1" colspan="2">            </td>
+            <td height="1" colspan="4">            </td>
+          </tr>
+          <tr class="table_t1">
+            <td width="10%">企业编号：</td>
+            <td>
+            	${entpriseVO.entpriseNo}
+            </td>
+            <td>能否派单：</td>
+            <td>
+            <c:if test="${entpriseVO.servicesType == 'Y'}">
+            	可派单
+            </c:if>
+            <c:if test="${entpriseVO.servicesType == 'N'}">
+            	不可派单
+            </c:if>
+            </td>
+          </tr>
+          <tr class="line">
+            <td height="1" colspan="4">            </td>
           </tr>
           <tr class="table_t1">
             <td width="10%">企业名称：</td>
             <td colspan="3">
-              <bean:write name="sysEntpriseAdminForm" property="entpriseName"/>
+            	${entpriseVO.entpriseName}
             </td>
           </tr>
           <tr class="line">
@@ -46,7 +67,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td>地址：</td>
             <td colspan="3">
-              <bean:write name="sysEntpriseAdminForm" property="address"/>
+            ${entpriseVO.address }
             </td>
           </tr>
           <tr class="line">
@@ -55,7 +76,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td>法定代表人（负责人）：</td>
             <td colspan="3">
-              <bean:write name="sysEntpriseAdminForm" property="lawDeputy"/>
+            	${entpriseVO.lawDeputy }
             </td>
           </tr>
           <tr class="line">
@@ -64,11 +85,11 @@ function btnback_click(){
           <tr class="table_t1">
             <td width="18%">注册资本：</td>
             <td width="32%">
-              <bean:write name="sysEntpriseAdminForm" property="regMoney"/>
+            	${entpriseVO.regMoney })
             </td>
             <td width="18%">服务时间：</td>
             <td width="32%">
-              <bean:write name="sysEntpriseAdminForm" property="serviceTime"/>
+            	${entpriseVO.serviceTime }
             </td>
           </tr>
           <tr class="line">
@@ -77,11 +98,11 @@ function btnback_click(){
           <tr class="table_t1">
             <td>联系电话：</td>
             <td>
-              <bean:write name="sysEntpriseAdminForm" property="linkTel"/>
+            	${entpriseVO.linkTel }
             </td>
             <td>服务电话：</td>
             <td>
-              <bean:write name="sysEntpriseAdminForm" property="serviceTel"/>
+            	${entpriseVO.serviceTel }
             </td>
           </tr>
           <tr class="line">
@@ -90,12 +111,16 @@ function btnback_click(){
           <tr class="table_t1">
             <td>联系人姓名：</td>
             <td>
-              <bean:write name="sysEntpriseAdminForm" property="linkName"/>
+            	${entpriseVO.linkName }
             </td>
             <td>是否愿意加盟：</td>
             <td>
-              <c:out value="${SYS_YESNO_NO[sysEntpriseAdminForm.memberSign]}">
-              </c:out>
+            <c:if test="${entpriseVO.memberSign == 'Y'}">
+            	加盟
+            </c:if>
+            <c:if test="${entpriseVO.memberSign == 'N'}">
+            	不加盟
+            </c:if>
             </td>
           </tr>
           <tr class="line">
@@ -104,21 +129,21 @@ function btnback_click(){
           <tr class="table_t1">
             <td>工商注册号：</td>
             <td>
-              <bean:write name="sysEntpriseAdminForm" property="registerCode"/>
+            ${entpriseVO.registerCode }
             </td>
             <td>税务登记号：</td>
             <td>
-              <bean:write name="sysEntpriseAdminForm" property="taxCode"/>
+            ${entpriseVO.taxCode }
             </td>
           </tr>
-
           <tr class="line">
             <td height="1" colspan="4">            </td>
           </tr>
+
           <tr class="table_t1">
             <td>经营范围：</td>
             <td colspan="3">
-              <textarea  cols="130" rows="5" class="form" readonly><bean:write name="sysEntpriseAdminForm" property="dealRange"/></textarea>
+            	${entpriseVO.dealRange }
             </td>
           </tr>
           <tr class="line">
@@ -126,13 +151,14 @@ function btnback_click(){
           </tr>
           <tr align="center" class="table_t1">
             <td colspan="4">
-              <html:img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()"/>
+              <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()"/>
             </td>
           </tr>
         </table>
       </td>
     </tr>
   </table>
-</html:form>
+</form:form>
 </body>
 </html>
+

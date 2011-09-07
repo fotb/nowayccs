@@ -18,6 +18,10 @@ function btnsave_click(){
     if(!isValidStringObj( form.entpriseNo,"企业编号",true)){
     return;
   }
+	if(!isInteger($("#entpriseNo").val())) {
+		alert("企业编号必须为数字,请修改!");
+		return;
+	}
 
   if(!isValidStringObj( form.entpriseName,"企业名称",true)){
     return;
@@ -67,8 +71,15 @@ function btnback_click(){
           </tr>
           <tr class="table_t1">
             <td width="10%">企业编号：</td>
-            <td colspan="3">
+            <td>
             	<form:input path="entpriseNo" size="30" cssClass="form"/>
+            </td>
+            <td>能否派单：</td>
+            <td>
+              <form:select path="servicesType">
+                <form:option value="Y">可派单</form:option>
+                <form:option value="N">不可派单</form:option>
+              </form:select>
             </td>
           </tr>
           <tr class="line">
