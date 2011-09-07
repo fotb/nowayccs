@@ -64,9 +64,9 @@ public class Constants {
 
 
     /*系统是否标志：0否 1是*/
-    public static final String SYS_YESNO_NO = "0";
-    public static final String SYS_YESNO_YES = "1";
-    public static final HashMap SYS_YESNO_HASHMAP = new HashMap();
+    public static final String SYS_YESNO_NO = "N";
+    public static final String SYS_YESNO_YES = "Y";
+    public static final HashMap<String, String> SYS_YESNO_HASHMAP = new HashMap<String, String>();
     static {
         SYS_YESNO_HASHMAP.put(String.valueOf(SYS_YESNO_NO), "否");
         SYS_YESNO_HASHMAP.put(String.valueOf(SYS_YESNO_YES), "是");

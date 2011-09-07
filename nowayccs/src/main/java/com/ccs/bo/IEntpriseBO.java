@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ccs.util.PageInfo;
+import com.ccs.vo.ClassOfEntpriseVO;
 import com.ccs.vo.EntCategoryVO;
 import com.ccs.vo.EntpriseVO;
 
@@ -13,12 +14,20 @@ public interface IEntpriseBO {
 
 	void addEntprise(EntpriseVO vo);
 
+	void updateEntprise(EntpriseVO vo);
+	
 	List<EntCategoryVO> findEntCategoryByParentId(String parentId);
 
 	List<EntpriseVO> findByParams(final String entpriseName,
-			final String entpriseNo, final String bigEntclassId,
+			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
 			final String status, PageInfo pageInfo);
 	
 	Map<String, List<EntCategoryVO>> findAllCategory();
+	
+	EntpriseVO findEntByEntpriseId(String entpriseId);
+	
+	List<ClassOfEntpriseVO> findCOEByEntpriseId(String entpriseId);
+	
+	void addCategoryToEntprise(String entpriseId, List<String> categoryIdList);
 }

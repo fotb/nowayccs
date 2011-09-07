@@ -2,6 +2,8 @@ package com.ccs.web;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ import com.ccs.bo.IEntpriseBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.util.Utils;
+import com.ccs.vo.ClassOfEntpriseVO;
 import com.ccs.vo.EntCategoryVO;
 import com.ccs.vo.EntpriseVO;
 import com.ccs.web.domain.EntSearch;
@@ -49,28 +52,26 @@ public class EntpriseController {
 			entSearch = new EntSearch();
 		}
 
-		String parentCategoryId = getCategoryValue(entSearch.getParentCategoryId());
-		String subParentCategoryId = getCategoryValue(entSearch.getSubParentCategoryId());
-		String categoryId = getCategoryValue(entSearch.getCategoryId());
-		
+		String parentCategoryId = getSelectedValue(entSearch.getParentCategoryId());
+		String subParentCategoryId = getSelectedValue(entSearch.getSubParentCategoryId());
+		String categoryId = getSelectedValue(entSearch.getCategoryId());
+		String servicesType = getSelectedValue(entSearch.getServicesType());
 				
 		
 		List<EntpriseVO> entpriseList = entpriseBO.findByParams(
-				entSearch.getEntpriseName(), entSearch.getEntpriseNo(),
+				entSearch.getEntpriseName(), entSearch.getEntpriseNo(), servicesType, 
 				parentCategoryId, subParentCategoryId, categoryId,
 				null, pageInfo);
 		model.addAttribute("entpriseList", entpriseList);
 		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute(entSearch);
+		model.addAttribute("entSearch", entSearch);
 		return "ent/list";
 	}
 
-
-
-	private String getCategoryValue(String parentCategoryId) {
+	private String getSelectedValue(String value) {
 		String result = "";
-		if(!EntSearch.DEFAULT_VALUE_SELECT.equals(parentCategoryId)) {
-			result = parentCategoryId;
+		if(!EntSearch.DEFAULT_VALUE_SELECT.equals(value)) {
+			result = value;
 		}
 		return result;
 	}
@@ -92,41 +93,48 @@ public class EntpriseController {
 	}
 	
 	@RequestMapping(params = "action=save")
-	public String save(@ModelAttribute("entpriseVO") EntpriseVO entpriseVO, @RequestParam("pageNo") String pageNo, ModelMap model) {
+	public String save(@ModelAttribute("entpriseVO") EntpriseVO entpriseVO,
+			@RequestParam("pageNo") String pageNo, ModelMap model) {
 		entpriseBO.addEntprise(entpriseVO);
 		return "redirect:entprise.do?pageNo=" + pageNo;
+	}
+	
+	@RequestMapping(params = "action=update")
+	public String update(@RequestParam("entpriseId") String entpriseId,
+			@RequestParam("pageNo") String pageNo, ModelMap model) {
+		EntpriseVO entpriseVO = entpriseBO.findEntByEntpriseId(entpriseId);
+		model.addAttribute(entpriseVO);
+		model.addAttribute("pageNo", pageNo);
+		return "ent/edit";
+	}
+	
+	@RequestMapping(params = "action=view")
+	public String view(@RequestParam("entpriseId") String entpriseId,
+			@RequestParam("pageNo") String pageNo, ModelMap model) {
+		EntpriseVO entpriseVO = entpriseBO.findEntByEntpriseId(entpriseId);
+		model.addAttribute(entpriseVO);
+		model.addAttribute("pageNo", pageNo);
+		return "ent/view";
 	}
 	
 	@RequestMapping(params = "action=classview")
 	public String viewClass(@RequestParam("entpriseId") String entpriseId, @RequestParam("pageNo") String pageNo, ModelMap model) {
 		Map<String, List<EntCategoryVO>> map = entpriseBO.findAllCategory();
-		List<EntpriseCategoryDTO> list = new ArrayList<EntpriseCategoryDTO>();
-		List<EntCategoryVO> parentCategoryList = map.get(Constants.TOP_CODE);
-		for (Iterator<EntCategoryVO> iter = parentCategoryList.iterator(); iter.hasNext();) {
-			EntCategoryVO ecVO = (EntCategoryVO) iter.next();
-			EntpriseCategoryDTO parentDTO = new EntpriseCategoryDTO();
-			parentDTO.setEntCategoryVO(ecVO);
-			List<EntCategoryVO> subParentCategoryList = map.get(ecVO.getCategoryId());
-			List<EntpriseCategoryDTO> subList = new ArrayList<EntpriseCategoryDTO>();
-			for (Iterator<EntCategoryVO> subIter = subParentCategoryList.iterator(); subIter.hasNext();) {
-				EntCategoryVO entCategoryVO = (EntCategoryVO) subIter.next();
-				EntpriseCategoryDTO subParentDTO = new EntpriseCategoryDTO();
-				subParentDTO.setEntCategoryVO(entCategoryVO);
-				List<EntCategoryVO> categoryList = map.get(entCategoryVO.getCategoryId());
-				List<EntpriseCategoryDTO> dtoList = new ArrayList<EntpriseCategoryDTO>();
-				for (Iterator<EntCategoryVO> categoryIter = categoryList.iterator(); categoryIter.hasNext();) {
-					EntCategoryVO categoryVO = (EntCategoryVO) categoryIter.next();
-					EntpriseCategoryDTO dto = new EntpriseCategoryDTO();
-					dto.setEntCategoryVO(categoryVO);
-					dtoList.add(dto);
-				}
-				subParentDTO.setSonCategoryList(dtoList);
-				subList.add(subParentDTO);
-			}
-			parentDTO.setSonCategoryList(subList);
-			list.add(parentDTO);
+		List<EntpriseCategoryDTO> list = getEntCategoryDTO(map, Constants.TOP_CODE);
+		model.addAttribute("dtoList", list);
+		
+		EntpriseVO entpriseVO = entpriseBO.findEntByEntpriseId(entpriseId);
+		model.addAttribute("entpriseVO", entpriseVO);
+		
+		List<ClassOfEntpriseVO> coeVOList = entpriseBO.findCOEByEntpriseId(entpriseId);
+		Map<String, ClassOfEntpriseVO> coeMap = new HashMap<String, ClassOfEntpriseVO>();
+		for (Iterator<ClassOfEntpriseVO> iter = coeVOList.iterator(); iter.hasNext();) {
+			ClassOfEntpriseVO coeVO = (ClassOfEntpriseVO) iter.next();
+			coeMap.put(coeVO.getId().getCategory(), coeVO);
 		}
-		return "";
+		model.addAttribute("coeMap", coeMap);
+		model.addAttribute("pageNo", pageNo);
+		return "ent/classview";
 	}
 	
 	private List<EntpriseCategoryDTO> getEntCategoryDTO(Map<String, List<EntCategoryVO>> map, String parentId) {
@@ -142,5 +150,28 @@ public class EntpriseController {
 			}
 		}
 		return dtoList;
+	}
+	
+	@RequestMapping(params = "action=updateclass")
+	public String updateClass(@RequestParam("entpriseId") String entpriseId, 
+			@RequestParam("pageNo") String pageNo, 
+			@RequestParam(value="categoryId", required=false) String categoryId, ModelMap model) {
+		List<String> categoryIdList = new ArrayList<String>();
+		if(null != categoryId) {
+			String[] categoryIds = categoryId.split(",");
+			categoryIdList = Arrays.asList(categoryIds);
+		}
+		entpriseBO.addCategoryToEntprise(entpriseId, categoryIdList);
+		return "redirect:entprise.do?pageNo=" + pageNo;
+	}
+	
+	@RequestMapping(params = "action=changestatus")
+	public String changeStatus(@RequestParam("entpriseId") String entpriseId, 
+			@RequestParam("pageNo") String pageNo, 
+			@RequestParam("status") String status, ModelMap model) {
+		EntpriseVO vo = entpriseBO.findEntByEntpriseId(entpriseId);
+		vo.setStatus(status);
+		entpriseBO.updateEntprise(vo);
+		return "redirect:entprise.do?pageNo=" + pageNo;
 	}
 }
