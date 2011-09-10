@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IVolunteerBO;
+import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.util.Utils;
 import com.ccs.vo.AreaSubVO;
@@ -68,5 +69,47 @@ public class VolunteerController {
 		List<AreaSubVO> list = volunteerBO.getSubAreaByAreaId(areaId);
 		JSONArray jsonObj = JSONArray.fromObject(list);
 		return jsonObj.toString();
+	}
+	
+	@RequestMapping(params = "action=add")
+	public String add(@RequestParam String pageNo, ModelMap model) {
+		VolunteerVO volunteerVO = new VolunteerVO();
+		model.addAttribute("volunteerVO", volunteerVO);
+		model.addAttribute("pageNo", pageNo);
+		return "volunteer/add";
+	}
+	
+	@RequestMapping(params = "action=saveorupdate")
+	public String save(@ModelAttribute VolunteerVO volunteerVO, @RequestParam String pageNo, ModelMap model) {
+		volunteerVO.setStatus(Constants.SYS_YESNO_YES);
+		
+		volunteerBO.saveOrUpdate(volunteerVO);
+		return "redirect:volunteer.do?pageNo=" + pageNo;
+	}
+	
+	@RequestMapping(params = "action=update")
+	public String update(@RequestParam String volunteerId, @RequestParam String pageNo, ModelMap model) {
+		VolunteerVO volunteerVO = volunteerBO.findById(volunteerId);
+		model.addAttribute("volunteerVO", volunteerVO);
+		model.addAttribute("pageNo", pageNo);
+		return "volunteer/edit";
+	}
+	
+	@RequestMapping(params = "action=view")
+	public String view(@RequestParam String volunteerId, @RequestParam String pageNo, ModelMap model) {
+		VolunteerVO volunteerVO = volunteerBO.findById(volunteerId);
+		model.addAttribute("volunteerVO", volunteerVO);
+		model.addAttribute("pageNo", pageNo);
+		return "volunteer/view";
+	}
+	
+	@RequestMapping(params = "action=changestatus")
+	public String changeStatus(@RequestParam String volunteerId, 
+			@RequestParam String tostatus, 
+			@RequestParam String pageNo, ModelMap model) {
+		VolunteerVO volunteerVO = volunteerBO.findById(volunteerId);
+		volunteerVO.setStatus(tostatus);
+		volunteerBO.saveOrUpdate(volunteerVO);
+		return "redirect:volunteer.do?pageNo=" + pageNo;
 	}
 }

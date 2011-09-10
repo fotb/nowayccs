@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.IVolunteerDAO;
 import com.ccs.util.PageInfo;
+import com.ccs.util.Utils;
 import com.ccs.vo.VolunteerVO;
 
 @Repository("volunteerDAO")
@@ -45,16 +46,16 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 			String areaId, String areaSubId, String volunteerNo,
 			final PageInfo pageInfo) {
 		final List<String> valList = new ArrayList<String>();
-		valList.add(status);
-		valList.add(status);
-		valList.add(serviceType);
-		valList.add(serviceType);
-		valList.add(areaId);
-		valList.add(areaId);
-		valList.add(areaSubId);
-		valList.add(areaSubId);
-		valList.add(volunteerNo);
-		valList.add(volunteerNo);
+		valList.add(Utils.emptyToNull(status));
+		valList.add(Utils.emptyToNull(status));
+		valList.add(Utils.emptyToNull(serviceType));
+		valList.add(Utils.emptyToNull(serviceType));
+		valList.add(Utils.emptyToNull(areaId));
+		valList.add(Utils.emptyToNull(areaId));
+		valList.add(Utils.emptyToNull(areaSubId));
+		valList.add(Utils.emptyToNull(areaSubId));
+		valList.add(Utils.emptyToNull(volunteerNo));
+		valList.add(Utils.emptyToNull(volunteerNo));
 		
 		final StringType[] types = new StringType[valList.size()];
 		for (int i = 0; i < valList.size(); i++) {

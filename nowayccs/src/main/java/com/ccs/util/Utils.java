@@ -494,6 +494,10 @@ public class Utils {
         }
         return str;
     }
+    
+    public static String emptyToNull(String str) {
+    	return isNull(str) ? null : str.trim();
+    }
 
     public static boolean isNull(final String str) {
     	return (str == null || str.trim().equals(""));

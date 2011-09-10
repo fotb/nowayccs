@@ -33,8 +33,8 @@ public class VolunteerVO implements Serializable {
 	@Column(name = "SEX")
 	private String sex;
 
-	@Column(name = "SEVRICENAME")
-	private String sevriceName;
+	@Column(name = "SERVICENAME")
+	private String serviceName;
 
 	@Column(name = "SERVICETIME")
 	private String serviceTime;
@@ -95,12 +95,12 @@ public class VolunteerVO implements Serializable {
 		this.sex = sex;
 	}
 
-	public String getSevriceName() {
-		return sevriceName;
+	public String getServiceName() {
+		return serviceName;
 	}
 
-	public void setSevriceName(String sevriceName) {
-		this.sevriceName = sevriceName;
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
 	}
 
 	public String getServiceTime() {

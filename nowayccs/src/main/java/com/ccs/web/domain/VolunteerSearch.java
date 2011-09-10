@@ -2,6 +2,8 @@ package com.ccs.web.domain;
 
 import java.io.Serializable;
 
+import com.ccs.util.Utils;
+
 public class VolunteerSearch implements Serializable {
 
 	private static final long serialVersionUID = -505989481061719162L;
@@ -17,7 +19,7 @@ public class VolunteerSearch implements Serializable {
 	private String volunteerNo;
 
 	public String getStatus() {
-		return status;
+		return Utils.emptyToNull(status);
 	}
 
 	public void setStatus(String status) {
@@ -25,7 +27,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getServiceType() {
-		return serviceType;
+		return Utils.emptyToNull(serviceType);
 	}
 
 	public void setServiceType(String serviceType) {
@@ -33,7 +35,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getAreaId() {
-		return areaId;
+		return Utils.emptyToNull(areaId);
 	}
 
 	public void setAreaId(String areaId) {
@@ -41,7 +43,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getAreaSubId() {
-		return areaSubId;
+		return Utils.emptyToNull(areaSubId);
 	}
 
 	public void setAreaSubId(String areaSubId) {
@@ -49,7 +51,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getVolunteerNo() {
-		return volunteerNo;
+		return Utils.emptyToNull(volunteerNo);
 	}
 
 	public void setVolunteerNo(String volunteerNo) {

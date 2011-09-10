@@ -1,153 +1,163 @@
 package com.ccs.util;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Constants {
-    /*ÏµÍ³È¨ÏŞ¶¨Òå*/
-    public static long SYS_PERMISSION_YWSL = 10; //ÒµÎñÊÜÀí
-    public static long SYS_PERMISSION_SHYWCL = 20; //Éú»îÒµÎñ´¦Àí
-    public static long SYS_PERMISSION_SHYWCX = 21; //²é¿´Éú»î·şÎñÏêÏ¸ĞÅÏ¢
-    public static long SYS_PERMISSION_SWYWCL = 30; //ÊÂÎñÒµÎñ´¦Àí
-    public static long SYS_PERMISSION_SHKHHF = 40; //Éú»î¿Í»§»Ø·Ã
-    public static long SYS_PERMISSION_SWKHWF = 50; //ÊÂÎñ¿Í»§»Ø·Ã
-    public static long SYS_PERMISSION_BBCX = 60; //±¨±í²éÑ¯
-    public static long SYS_PERMISSION_QZZXXCX = 70; //ÇóÖúÕßĞÅÏ¢²éÑ¯
-    public static long SYS_PERMISSION_ZYZFWHZ = 80; //Ò»¼¼Ö®³¤·şÎñÕß»ã×Ü
-    public static long SYS_PERMISSION_YWZXWH = 90; //ÒµÎñ×ÉÑ¯Î¬»¤
-    public static long SYS_PERMISSION_YWZXCX = 100; //ÒµÎñ×ÉÑ¯²éÑ¯
-    public static long SYS_PERMISSION_YHGL = 110; //ÓÃ»§¹ÜÀí
-    public static long SYS_PERMISSION_JSQXWH = 120; //½ÇÉ«È¨ÏŞÎ¬»¤
-    public static long SYS_PERMISSION_JDSQWH = 130; //½ÖµÀÉçÇøÎ¬»¤
-    public static long SYS_PERMISSION_SQZYZWH = 140; //Ò»¼¼Ö®³¤·şÎñÕßÎ¬»¤
-    public static long SYS_PERMISSION_SQZYZCX = 141; //Ò»¼¼Ö®³¤·şÎñÕß²éÑ¯
-    public static long SYS_PERMISSION_WWQYLBWH = 150; //·şÎñÆóÒµÀà±ğÎ¬»¤
-    public static long SYS_PERMISSION_FWQYWH = 160; //·şÎñÆóÒµÎ¬»¤
-    public static long SYS_PERMISSION_FWQYCX = 161; //·şÎñÆóÒµ²éÑ¯
-    public static long SYS_PERMISSION_SJZDWH = 170; //Êı¾İ×ÖµäÎ¬»¤
-    public static long SYS_PERMISSION_ZQLJSZ = 180; //×ùÏ¯Áª»úÉèÖÃ
+    /*ç³»ç»Ÿæƒé™å®šä¹‰*/
+    public static long SYS_PERMISSION_YWSL = 10; //ä¸šåŠ¡å—ç†
+    public static long SYS_PERMISSION_SHYWCL = 20; //ç”Ÿæ´»ä¸šåŠ¡å¤„ç†
+    public static long SYS_PERMISSION_SHYWCX = 21; //æŸ¥çœ‹ç”Ÿæ´»æœåŠ¡è¯¦ç»†ä¿¡æ¯
+    public static long SYS_PERMISSION_SWYWCL = 30; //äº‹åŠ¡ä¸šåŠ¡å¤„ç†
+    public static long SYS_PERMISSION_SHKHHF = 40; //ç”Ÿæ´»å®¢æˆ·å›è®¿
+    public static long SYS_PERMISSION_SWKHWF = 50; //äº‹åŠ¡å®¢æˆ·å›è®¿
+    public static long SYS_PERMISSION_BBCX = 60; //æŠ¥è¡¨æŸ¥è¯¢
+    public static long SYS_PERMISSION_QZZXXCX = 70; //æ±‚åŠ©è€…ä¿¡æ¯æŸ¥è¯¢
+    public static long SYS_PERMISSION_ZYZFWHZ = 80; //ä¸€æŠ€ä¹‹é•¿æœåŠ¡è€…æ±‡æ€»
+    public static long SYS_PERMISSION_YWZXWH = 90; //ä¸šåŠ¡å’¨è¯¢ç»´æŠ¤
+    public static long SYS_PERMISSION_YWZXCX = 100; //ä¸šåŠ¡å’¨è¯¢æŸ¥è¯¢
+    public static long SYS_PERMISSION_YHGL = 110; //ç”¨æˆ·ç®¡ç†
+    public static long SYS_PERMISSION_JSQXWH = 120; //è§’è‰²æƒé™ç»´æŠ¤
+    public static long SYS_PERMISSION_JDSQWH = 130; //è¡—é“ç¤¾åŒºç»´æŠ¤
+    public static long SYS_PERMISSION_SQZYZWH = 140; //ä¸€æŠ€ä¹‹é•¿æœåŠ¡è€…ç»´æŠ¤
+    public static long SYS_PERMISSION_SQZYZCX = 141; //ä¸€æŠ€ä¹‹é•¿æœåŠ¡è€…æŸ¥è¯¢
+    public static long SYS_PERMISSION_WWQYLBWH = 150; //æœåŠ¡ä¼ä¸šç±»åˆ«ç»´æŠ¤
+    public static long SYS_PERMISSION_FWQYWH = 160; //æœåŠ¡ä¼ä¸šç»´æŠ¤
+    public static long SYS_PERMISSION_FWQYCX = 161; //æœåŠ¡ä¼ä¸šæŸ¥è¯¢
+    public static long SYS_PERMISSION_SJZDWH = 170; //æ•°æ®å­—å…¸ç»´æŠ¤
+    public static long SYS_PERMISSION_ZQLJSZ = 180; //åº§å¸­è”æœºè®¾ç½®
 
 
-    /*Ê÷ĞÍµÄ¶¥¼¶´úÂë-1*/
+    /*æ ‘å‹çš„é¡¶çº§ä»£ç -1*/
     public static final String TOP_CODE = "-1";
 
-    /*Êı¾İ¿â×Ö¶ÎÎª¿Õ£¬Ä¬ÈÏµÄÊı×Ö-1*/
+    /*æ•°æ®åº“å­—æ®µä¸ºç©ºï¼Œé»˜è®¤çš„æ•°å­—-1*/
     public static final long DATABASE_NULL_NUMBER = -1;
 
-    /*ĞÔ±ğ£º  1ÄĞ 2Å®*/
+    /*æ€§åˆ«ï¼š  1ç”· 2å¥³*/
     public static final String SYS_SEX_MAN = "1";
     public static final String SYS_SEX_WOMAN = "2";
     public static final HashMap SYS_SEX_HASHMAP = new HashMap();
     static {
-        SYS_SEX_HASHMAP.put(String.valueOf(SYS_SEX_MAN), "ÄĞ");
-        SYS_SEX_HASHMAP.put(String.valueOf(SYS_SEX_WOMAN), "Å®");
+        SYS_SEX_HASHMAP.put(String.valueOf(SYS_SEX_MAN), "ç”·");
+        SYS_SEX_HASHMAP.put(String.valueOf(SYS_SEX_WOMAN), "å¥³");
     }
 
-    /*·şÎñÕß×´Ì¬£º0Í£Ö¹·şÎñ 1·şÎñÖĞ*/
+    /*æœåŠ¡è€…çŠ¶æ€ï¼š0åœæ­¢æœåŠ¡ 1æœåŠ¡ä¸­*/
     public static final String SYS_VOLUNTEER_STATUS_YES = "1";
     public static final String SYS_VOLUNTEER_STATUS_NO = "0";
     public static final HashMap SYS_VOLUNTEER_STATUS_HASHMAP = new HashMap();
     static {
         SYS_VOLUNTEER_STATUS_HASHMAP.put(String.valueOf(
-                SYS_VOLUNTEER_STATUS_YES), "·şÎñÖĞ");
+                SYS_VOLUNTEER_STATUS_YES), "æœåŠ¡ä¸­");
         SYS_VOLUNTEER_STATUS_HASHMAP.put(String.valueOf(SYS_VOLUNTEER_STATUS_NO),
-                                         "Í£Ö¹·şÎñ");
+                                         "åœæ­¢æœåŠ¡");
     }
 
-    /*Ô±¹¤×´Ì¬:0:ÀëÖ° 1ÔÚÖ°*/
-    public static final String SYS_USER_STATUS_NO = "0";
+    /*å‘˜å·¥çŠ¶æ€:0:ç¦»èŒ 1åœ¨èŒ*/
+    public static final String SYS_USER_STATUS_NO = "Y";
     public static final String SYS_USER_STATUS_YES = "1";
     public static final HashMap SYS_USER_STATUS_HASHMAP = new HashMap();
     static {
-        SYS_USER_STATUS_HASHMAP.put(String.valueOf(SYS_USER_STATUS_NO), "ÀëÖ°");
-        SYS_USER_STATUS_HASHMAP.put(String.valueOf(SYS_USER_STATUS_YES), "ÔÚÖ°");
+        SYS_USER_STATUS_HASHMAP.put(String.valueOf(SYS_USER_STATUS_NO), "ç¦»èŒ");
+        SYS_USER_STATUS_HASHMAP.put(String.valueOf(SYS_USER_STATUS_YES), "åœ¨èŒ");
     }
 
 
-    /*ÏµÍ³ÊÇ·ñ±êÖ¾£º0·ñ 1ÊÇ*/
+    /*ç³»ç»Ÿæ˜¯å¦æ ‡å¿—ï¼š0å¦ 1æ˜¯*/
     public static final String SYS_YESNO_NO = "N";
     public static final String SYS_YESNO_YES = "Y";
-    public static final HashMap<String, String> SYS_YESNO_HASHMAP = new HashMap<String, String>();
+    public static final HashMap SYS_YESNO_HASHMAP = new HashMap();
     static {
-        SYS_YESNO_HASHMAP.put(String.valueOf(SYS_YESNO_NO), "·ñ");
-        SYS_YESNO_HASHMAP.put(String.valueOf(SYS_YESNO_YES), "ÊÇ");
+        SYS_YESNO_HASHMAP.put(String.valueOf(SYS_YESNO_NO), "å¦");
+        SYS_YESNO_HASHMAP.put(String.valueOf(SYS_YESNO_YES), "æ˜¯");
     }
 
-    /*ÒµÎñ×´Ì¬£º*/
-    public static final String SYS_INFOMATION_STATES_DB = "1"; //1¡¢´ı°ì
-    public static final String SYS_INFOMATION_STATES_CLZ = "2"; // 2¡¢´¦ÀíÖĞ
-    public static final String SYS_INFOMATION_STATES_YJA = "3"; // 3¡¢ÒÑ½á°¸
-    public static final String SYS_INFOMATION_STATES_YQX = "4"; //4¡¢ÒÑÈ¡Ïû
+    /*ä¸šåŠ¡çŠ¶æ€ï¼š*/
+    public static final String SYS_INFOMATION_STATES_DB = "1"; //1ã€å¾…åŠ
+    public static final String SYS_INFOMATION_STATES_CLZ = "2"; // 2ã€å¤„ç†ä¸­
+    public static final String SYS_INFOMATION_STATES_YJA = "3"; // 3ã€å·²ç»“æ¡ˆ
+    public static final String SYS_INFOMATION_STATES_YQX = "4"; //4ã€å·²å–æ¶ˆ
     public static final HashMap SYS_INFOMATION_STATES_HASHMAP = new HashMap();
     static {
         SYS_INFOMATION_STATES_HASHMAP.put(String.valueOf(
-                SYS_INFOMATION_STATES_DB), "´ı°ì");
+                SYS_INFOMATION_STATES_DB), "å¾…åŠ");
         SYS_INFOMATION_STATES_HASHMAP.put(String.valueOf(
-                SYS_INFOMATION_STATES_CLZ), "´¦ÀíÖĞ");
+                SYS_INFOMATION_STATES_CLZ), "å¤„ç†ä¸­");
         SYS_INFOMATION_STATES_HASHMAP.put(String.valueOf(
-                SYS_INFOMATION_STATES_YJA), "ÒÑ½á°¸");
+                SYS_INFOMATION_STATES_YJA), "å·²ç»“æ¡ˆ");
         SYS_INFOMATION_STATES_HASHMAP.put(String.valueOf(
-                SYS_INFOMATION_STATES_YQX), "ÒÑÈ¡Ïû");
+                SYS_INFOMATION_STATES_YQX), "å·²å–æ¶ˆ");
     }
 
-    /*ÇóÖúÀàĞÍ£º*/
-    public static final String INFOMATION_HELPTYPE_REFER = "1"; //1×ÉÑ¯·şÎñÀà
-    public static final String INFOMATION_HELPTYPE_LIFE = "2"; //2Éú»î·şÎñÀà
-    public static final String INFOMATION_HELPTYPE_AFFAIR = "3"; //3ÊÂÎñ·şÎñÀà
-    public static final String INFOMATION_HELPTYPE_FERTILITY = "4"; //4Éú²úÁ¦·şÎñ
+    /*æ±‚åŠ©ç±»å‹ï¼š*/
+    public static final String INFOMATION_HELPTYPE_REFER = "1"; //1å’¨è¯¢æœåŠ¡ç±»
+    public static final String INFOMATION_HELPTYPE_LIFE = "2"; //2ç”Ÿæ´»æœåŠ¡ç±»
+    public static final String INFOMATION_HELPTYPE_AFFAIR = "3"; //3äº‹åŠ¡æœåŠ¡ç±»
+    public static final String INFOMATION_HELPTYPE_FERTILITY = "4"; //4ç”Ÿäº§åŠ›æœåŠ¡
     public static final HashMap INFOMATION_HELPTYPE_HASHMAP = new HashMap();
     static {
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(
-                INFOMATION_HELPTYPE_REFER), "×ÉÑ¯·şÎñÀà");
+                INFOMATION_HELPTYPE_REFER), "å’¨è¯¢æœåŠ¡ç±»");
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_LIFE),
-                                        "Éú»î·şÎñÀà");
+                                        "ç”Ÿæ´»æœåŠ¡ç±»");
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(
-                INFOMATION_HELPTYPE_AFFAIR), "ÊÂÎñ·şÎñÀà");
+                INFOMATION_HELPTYPE_AFFAIR), "äº‹åŠ¡æœåŠ¡ç±»");
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(
-                INFOMATION_HELPTYPE_FERTILITY), "Éú²úÁ¦·şÎñ");
+                INFOMATION_HELPTYPE_FERTILITY), "ç”Ÿäº§åŠ›æœåŠ¡");
     }
 
-    /*Éú»îÀà½ÓÊÜÀàĞÍ£º*/
-    public static final String LIFEINFOMATION_RECEIVETYPE_ZYZ = "1"; //1Ò»¼¼Ö®³¤·şÎñÕß
-    public static final String LIFEINFOMATION_RECEIVETYPE_QY = "2"; //2·şÎñÆóÒµ
+    /*ç”Ÿæ´»ç±»æ¥å—ç±»å‹ï¼š*/
+    public static final String LIFEINFOMATION_RECEIVETYPE_ZYZ = "1"; //1ä¸€æŠ€ä¹‹é•¿æœåŠ¡è€…
+    public static final String LIFEINFOMATION_RECEIVETYPE_QY = "2"; //2æœåŠ¡ä¼ä¸š
     public static final HashMap LIFEINFOMATION_RECEIVETYPE_HASHMAP = new
             HashMap();
     static {
         LIFEINFOMATION_RECEIVETYPE_HASHMAP.put(String.valueOf(
-                LIFEINFOMATION_RECEIVETYPE_ZYZ), "Ò»¼¼Ö®³¤·şÎñÕß");
+                LIFEINFOMATION_RECEIVETYPE_ZYZ), "ä¸€æŠ€ä¹‹é•¿æœåŠ¡è€…");
         LIFEINFOMATION_RECEIVETYPE_HASHMAP.put(String.valueOf(
-                LIFEINFOMATION_RECEIVETYPE_QY), "·şÎñÆóÒµ");
+                LIFEINFOMATION_RECEIVETYPE_QY), "æœåŠ¡ä¼ä¸š");
     }
 
-    /*Êı¾İ×ÖµäÀàĞÍ£º*/
-    public static final String DICT_DICTTYPE_LLFS = "LLFS"; //ÒµÎñÁªÂç·½Ê½ :LLFS
-    public static final String DICT_DICTTYPE_MYD = "MYD"; //ÂúÒâ¶È      :MYD
-    public static final String DICT_DICTTYPE_QZFS = "QZFS"; //ÇóÖú·½Ê½    :QZQY
-    public static final String DICT_DICTTYPE_QZQY = "QZQY"; //ÇóÖúÇøÓò    :QZQY
-    public static final String DICT_DICTTYPE_ZXLX = "ZXLX"; //ÒµÎñ×ÉÑ¯ÀàĞÍ:ZXLX
-    public static final String DICT_DICTTYPE_SLRQ = "SLRQ"; //ÊÜÀíÈËÈº:GROUP
-    public static final String DICT_DICTTYPE_COMMONLB = "XXLB"; //¹²ÏíĞÅÏ¢Àà±ğ:COMMONLB
-    public static final HashMap<String, String> DICT_DICTTYPE_HASHMAP = new HashMap<String, String>();
+    /*æ•°æ®å­—å…¸ç±»å‹ï¼š*/
+    public static final String DICT_DICTTYPE_LLFS = "LLFS"; //ä¸šåŠ¡è”ç»œæ–¹å¼ :LLFS
+    public static final String DICT_DICTTYPE_MYD = "MYD"; //æ»¡æ„åº¦      :MYD
+    public static final String DICT_DICTTYPE_QZFS = "QZFS"; //æ±‚åŠ©æ–¹å¼    :QZQY
+    public static final String DICT_DICTTYPE_QZQY = "QZQY"; //æ±‚åŠ©åŒºåŸŸ    :QZQY
+    public static final String DICT_DICTTYPE_ZXLX = "ZXLX"; //ä¸šåŠ¡å’¨è¯¢ç±»å‹:ZXLX
+    public static final String DICT_DICTTYPE_SLRQ = "SLRQ"; //å—ç†äººç¾¤:GROUP
+    public static final String DICT_DICTTYPE_COMMONLB = "XXLB"; //å…±äº«ä¿¡æ¯ç±»åˆ«:COMMONLB
+    public static final Map<String, String> DICT_DICTTYPE_HASHMAP = new
+            HashMap<String, String>();
     static {
-        DICT_DICTTYPE_HASHMAP.put(String.valueOf(DICT_DICTTYPE_LLFS), "ÒµÎñÁªÂç·½Ê½");
-        DICT_DICTTYPE_HASHMAP.put(String.valueOf(DICT_DICTTYPE_MYD), "ÂúÒâ¶È");
-        DICT_DICTTYPE_HASHMAP.put(String.valueOf(DICT_DICTTYPE_QZFS), "ÇóÖú·½Ê½");
-        DICT_DICTTYPE_HASHMAP.put(String.valueOf(DICT_DICTTYPE_QZQY), "ÇóÖúÇøÓò");
-        DICT_DICTTYPE_HASHMAP.put(String.valueOf(DICT_DICTTYPE_ZXLX), "ÒµÎñ×ÉÑ¯ÀàĞÍ");
-        DICT_DICTTYPE_HASHMAP.put(String.valueOf(DICT_DICTTYPE_SLRQ), "ÊÜÀíÈËÈº");
-        DICT_DICTTYPE_HASHMAP.put(String.valueOf(DICT_DICTTYPE_COMMONLB), "ĞÅÏ¢Àà±ğ");
+        DICT_DICTTYPE_HASHMAP.put(String.valueOf(
+                DICT_DICTTYPE_LLFS), "ä¸šåŠ¡è”ç»œæ–¹å¼");
+        DICT_DICTTYPE_HASHMAP.put(String.valueOf(
+                DICT_DICTTYPE_MYD), "æ»¡æ„åº¦");
+        DICT_DICTTYPE_HASHMAP.put(String.valueOf(
+                DICT_DICTTYPE_QZFS), "æ±‚åŠ©æ–¹å¼");
+        DICT_DICTTYPE_HASHMAP.put(String.valueOf(
+                DICT_DICTTYPE_QZQY), "æ±‚åŠ©åŒºåŸŸ");
+        DICT_DICTTYPE_HASHMAP.put(String.valueOf(
+                DICT_DICTTYPE_ZXLX), "ä¸šåŠ¡å’¨è¯¢ç±»å‹");
+        DICT_DICTTYPE_HASHMAP.put(String.valueOf(
+                DICT_DICTTYPE_SLRQ), "å—ç†äººç¾¤");
+        DICT_DICTTYPE_HASHMAP.put(String.valueOf(
+                DICT_DICTTYPE_COMMONLB), "ä¿¡æ¯ç±»åˆ«");
+
     }
 
 
-    /*ÇóÖúÀàĞÍ*/
+    /*æ±‚åŠ©ç±»å‹*/
     /*
-    public static final int HELP_TYPE_QUERY = 1; //×ÉÑ¯·şÎñÀà
-    public static final int HELP_TYPE_LIFE = 2; //Éú»î·şÎñÀà
-    public static final int HELP_TYPE_TRANSACTION = 3; //ÊÂÎñ·şÎñÀà
+    public static final int HELP_TYPE_QUERY = 1; //å’¨è¯¢æœåŠ¡ç±»
+    public static final int HELP_TYPE_LIFE = 2; //ç”Ÿæ´»æœåŠ¡ç±»
+    public static final int HELP_TYPE_TRANSACTION = 3; //äº‹åŠ¡æœåŠ¡ç±»
     public static HashMap HELP_TYPE_HASHMAP = new HashMap();
     static {
-        HELP_TYPE_HASHMAP.put(String.valueOf(HELP_TYPE_QUERY), "×ÉÑ¯·şÎñÀà");
-        HELP_TYPE_HASHMAP.put(String.valueOf(HELP_TYPE_LIFE), "Éú»î·şÎñÀà");
-        HELP_TYPE_HASHMAP.put(String.valueOf(HELP_TYPE_TRANSACTION), "ÊÂÎñ·şÎñÀà");
+        HELP_TYPE_HASHMAP.put(String.valueOf(HELP_TYPE_QUERY), "å’¨è¯¢æœåŠ¡ç±»");
+        HELP_TYPE_HASHMAP.put(String.valueOf(HELP_TYPE_LIFE), "ç”Ÿæ´»æœåŠ¡ç±»");
+        HELP_TYPE_HASHMAP.put(String.valueOf(HELP_TYPE_TRANSACTION), "äº‹åŠ¡æœåŠ¡ç±»");
     }
     */
 }
