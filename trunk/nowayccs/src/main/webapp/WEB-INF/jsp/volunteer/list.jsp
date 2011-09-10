@@ -15,18 +15,18 @@ function btnsearch_click(){
   form.action="volunteer.do";
   form.submit();
 }
-function btndelete_click(volunteerID) {
-   var form = document.forms[0];
+function btndelete_click(volunteerId) {
+alert("volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&status=N&pageNo=${pageInfo.currentPage}");
   if(confirm("是否真的停止服务者服务？")) {
-    form.action = "volunteer.do?action=changestatus&volunteerId="+volunteerId + "&status=N&pageNo=${pageInfo.currentPage}";
-    form.submit();
+    $("form").attr("action", "volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&tostatus=N");
+    $("form").submit();
   }
 }
-function btnactive_click(volunteerID) {
-   var form = document.forms[0];
+function btnactive_click(volunteerId) {
+alert("volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&status=Y&pageNo=${pageInfo.currentPage}");
   if(confirm("是否真的重新开始服务者服务？")) {
-    form.action = "volunteer.do?action=changestatus&volunteerId="+volunteerId + "&status=Y&pageNo=${pageInfo.currentPage}";
-    form.submit();
+    $("form").attr("action", "volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&tostatus=Y");
+    $("form").submit();
   }
 }
 
@@ -42,7 +42,7 @@ $(document).ready(function(){
 		});
 	});
 
-	if("${volunteerSearch.areaSubId}" != "") {
+	if("${volunteerSearch.areaId}" != "") {
 		fillAreaSub(${volunteerSearch.areaId});
 	}
 
@@ -89,17 +89,17 @@ function fillAreaSub(areaId) {
                   <td width="80">服务者状态：</td>
                   <td width="130">
                   <form:select path="status">
-                  <option value=" ">全部</option>
-                  <option value="Y">服务中</option>
-                  <option value="N">停止服务</option>
+                  <form:option value=" ">全部</form:option>
+                  <form:option value="Y">服务中</form:option>
+                  <form:option value="N">停止服务</form:option>
                   </form:select>
                   </td>
 				  <td width="40">派单：</td>
                   <td width="130">
                   <form:select path="serviceType">
-                  <option value=" ">全部</option>
-                  <option value="Y">可派单</option>
-                  <option value="N">不可派单</option>
+                  <form:option value=" ">全部</form:option>
+                  <form:option value="Y">可派单</form:option>
+                  <form:option value="N">不可派单</form:option>
                   </form:select>
                   </td>
                   <td width="140">服务者所在街道和社区：</td>
@@ -108,7 +108,7 @@ function fillAreaSub(areaId) {
                   		
                   	</form:select>
                   	<form:select path="areaSubId">
-                  		<option value=" ">全部</option>
+                  		<form:option value=" ">全部</form:option>
                   	</form:select>
                   </td>
                   </tr>
@@ -139,7 +139,7 @@ function fillAreaSub(areaId) {
 	          <td>服务者姓名</td>
 	          <td>性别</td>
 	          <td>联系电话</td>
-	          <td>移动电话</td>
+	          <td>派单</td>
 	          <td>服务项目</td>
 	          <td>服务时间</td>
               <td>状态</td>
@@ -152,7 +152,7 @@ function fillAreaSub(areaId) {
                   ${vtVO.volunteerNo}
                 </td>
                 <td>
-                  <a href="volunteer.do?action=view&volunteerId=${vtVO.volunteerId}">
+                  <a href="volunteer.do?action=view&volunteerId=${vtVO.volunteerId}&pageNo=${pageInfo.currentPage}">
                     ${vtVO.volunteerName}
                   </a>
                 </td>
@@ -165,10 +165,15 @@ function fillAreaSub(areaId) {
                 	</c:if>
                 </td>
                 <td>
-                	${vtVO.linkTel}
+                	${vtVO.linkTel}<br/>${vtVO.linkMobile}
                 </td>
                 <td>
-                	${vtVO.linkMobile}
+					<c:if test="${vtVO.status == 'Y'}">
+                		可派单
+                	</c:if>
+                 	<c:if test="${vtVO.status == 'N' }">
+                 		不可派单
+                 	</c:if>
                 </td>
                 <td>
                 	${vtVO.serviceName}
@@ -185,7 +190,7 @@ function fillAreaSub(areaId) {
                  	</c:if>
                 </td>
                 <td width="5%">
-                  <a href="volunteer.do?action=edit?volunteerId=${vtVO.volunteerId}&pageNo=${pageInfo.currentPage}">
+                  <a href="volunteer.do?action=update&volunteerId=${vtVO.volunteerId}&pageNo=${pageInfo.currentPage}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
                 </td>
