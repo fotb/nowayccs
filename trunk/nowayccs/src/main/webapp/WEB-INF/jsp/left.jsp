@@ -19,7 +19,7 @@
       <tr>
         <td height="6"></td>
       </tr>
-      <tr onclick="radioTable(1,'OprInforAccept_init.do')" style="cursor: hand;">
+      <tr onclick="radioTable(1,'bizaccept.do')" style="cursor: hand;">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务受理</td>
       </tr>
       <tr onclick="radioTable(2)" style="cursor: hand">
