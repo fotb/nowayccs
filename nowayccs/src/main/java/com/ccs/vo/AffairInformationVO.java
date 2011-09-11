@@ -10,32 +10,52 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "HJ_LIFEINFORMATION")
-public class LifeInformationVO implements Serializable {
-	private static final long serialVersionUID = -7636204697917297352L;
+@Table(name = "HJ_AFFAIRINFORMATION")
+public class AffairInformationVO implements Serializable {
+
+	private static final long serialVersionUID = -4258786584636252767L;
 
 	@Id
 	@GeneratedValue(generator = "hibernate-uuid")
 	@org.hibernate.annotations.GenericGenerator(name = "hibernate-uuid", strategy = "uuid")
-	@Column(name = "LIFEINFORMATIONID")
-	private String lifeInfoId;
+	@Column(name = "AFFAIRINFORMATIONID")
+	private String affairInfoId;
 
 	@Column(name = "INFORMATIONID")
 	private String infoId;
-	@Column(name = "RECEIVERTYPE")
-	private String receiverType;
 
-	@Column(name = "RECEIVERID")
-	private String receiverId;
-
-	@Column(name = "HANDMODE")
-	private String handMode;
+	@Column(name = "HANDACCEPTOR")
+	private String handAcceptor;
 
 	@Column(name = "HANDOR")
 	private String handor;
 
 	@Column(name = "HANDTIME")
 	private Date handTime;
+
+	@Column(name = "MOVEWAY")
+	private String moveWay;
+
+	@Column(name = "MOVEMODE")
+	private String moveMode;
+
+	@Column(name = "MOVEACCEPTOR")
+	private String moveAcceptor;
+
+	@Column(name = "MOVEACCEPTTEL")
+	private String moveAcceptTel;
+
+	@Column(name = "MOVETIME")
+	private String moveTime;
+
+	@Column(name = "ANSWERMODE")
+	private String answerMode;
+
+	@Column(name = "ANSWERTIME")
+	private Date answerTime;
+
+	@Column(name = "ANSWERRESULT")
+	private String answerResult;
 
 	@Column(name = "CALLMODE")
 	private String callMode;
@@ -55,12 +75,6 @@ public class LifeInformationVO implements Serializable {
 	@Column(name = "REMARK")
 	private String remark;
 
-	@Column(name = "DEALRESULT")
-	private String dealResult;
-
-	@Column(name = "DEALCONTENT")
-	private String dealContent;
-
 	@Column(name = "PRINCIPAL")
 	private String principal;
 
@@ -71,17 +85,17 @@ public class LifeInformationVO implements Serializable {
 	private Date callTime;
 
 	@Column(name = "CANCELER")
-	private String callceler;
+	private String canceler;
 
 	@Column(name = "CANCELTIME")
-	private Date callcelTime;
+	private Date cancelTime;
 
-	public String getLifeInfoId() {
-		return lifeInfoId;
+	public String getAffairInfoId() {
+		return affairInfoId;
 	}
 
-	public void setLifeInfoId(String lifeInfoId) {
-		this.lifeInfoId = lifeInfoId;
+	public void setAffairInfoId(String affairInfoId) {
+		this.affairInfoId = affairInfoId;
 	}
 
 	public String getInfoId() {
@@ -92,28 +106,12 @@ public class LifeInformationVO implements Serializable {
 		this.infoId = infoId;
 	}
 
-	public String getReceiverType() {
-		return receiverType;
+	public String getHandAcceptor() {
+		return handAcceptor;
 	}
 
-	public void setReceiverType(String receiverType) {
-		this.receiverType = receiverType;
-	}
-
-	public String getReceiverId() {
-		return receiverId;
-	}
-
-	public void setReceiverId(String receiverId) {
-		this.receiverId = receiverId;
-	}
-
-	public String getHandMode() {
-		return handMode;
-	}
-
-	public void setHandMode(String handMode) {
-		this.handMode = handMode;
+	public void setHandAcceptor(String handAcceptor) {
+		this.handAcceptor = handAcceptor;
 	}
 
 	public String getHandor() {
@@ -130,6 +128,70 @@ public class LifeInformationVO implements Serializable {
 
 	public void setHandTime(Date handTime) {
 		this.handTime = handTime;
+	}
+
+	public String getMoveWay() {
+		return moveWay;
+	}
+
+	public void setMoveWay(String moveWay) {
+		this.moveWay = moveWay;
+	}
+
+	public String getMoveMode() {
+		return moveMode;
+	}
+
+	public void setMoveMode(String moveMode) {
+		this.moveMode = moveMode;
+	}
+
+	public String getMoveAcceptor() {
+		return moveAcceptor;
+	}
+
+	public void setMoveAcceptor(String moveAcceptor) {
+		this.moveAcceptor = moveAcceptor;
+	}
+
+	public String getMoveAcceptTel() {
+		return moveAcceptTel;
+	}
+
+	public void setMoveAcceptTel(String moveAcceptTel) {
+		this.moveAcceptTel = moveAcceptTel;
+	}
+
+	public String getMoveTime() {
+		return moveTime;
+	}
+
+	public void setMoveTime(String moveTime) {
+		this.moveTime = moveTime;
+	}
+
+	public String getAnswerMode() {
+		return answerMode;
+	}
+
+	public void setAnswerMode(String answerMode) {
+		this.answerMode = answerMode;
+	}
+
+	public Date getAnswerTime() {
+		return answerTime;
+	}
+
+	public void setAnswerTime(Date answerTime) {
+		this.answerTime = answerTime;
+	}
+
+	public String getAnswerResult() {
+		return answerResult;
+	}
+
+	public void setAnswerResult(String answerResult) {
+		this.answerResult = answerResult;
 	}
 
 	public String getCallMode() {
@@ -180,22 +242,6 @@ public class LifeInformationVO implements Serializable {
 		this.remark = remark;
 	}
 
-	public String getDealResult() {
-		return dealResult;
-	}
-
-	public void setDealResult(String dealResult) {
-		this.dealResult = dealResult;
-	}
-
-	public String getDealContent() {
-		return dealContent;
-	}
-
-	public void setDealContent(String dealContent) {
-		this.dealContent = dealContent;
-	}
-
 	public String getPrincipal() {
 		return principal;
 	}
@@ -220,20 +266,20 @@ public class LifeInformationVO implements Serializable {
 		this.callTime = callTime;
 	}
 
-	public String getCallceler() {
-		return callceler;
+	public String getCanceler() {
+		return canceler;
 	}
 
-	public void setCallceler(String callceler) {
-		this.callceler = callceler;
+	public void setCanceler(String canceler) {
+		this.canceler = canceler;
 	}
 
-	public Date getCallcelTime() {
-		return callcelTime;
+	public Date getCancelTime() {
+		return cancelTime;
 	}
 
-	public void setCallcelTime(Date callcelTime) {
-		this.callcelTime = callcelTime;
+	public void setCancelTime(Date cancelTime) {
+		this.cancelTime = cancelTime;
 	}
 
 	@Override
@@ -241,7 +287,7 @@ public class LifeInformationVO implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((lifeInfoId == null) ? 0 : lifeInfoId.hashCode());
+				+ ((affairInfoId == null) ? 0 : affairInfoId.hashCode());
 		return result;
 	}
 
@@ -253,11 +299,11 @@ public class LifeInformationVO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LifeInformationVO other = (LifeInformationVO) obj;
-		if (lifeInfoId == null) {
-			if (other.lifeInfoId != null)
+		AffairInformationVO other = (AffairInformationVO) obj;
+		if (affairInfoId == null) {
+			if (other.affairInfoId != null)
 				return false;
-		} else if (!lifeInfoId.equals(other.lifeInfoId))
+		} else if (!affairInfoId.equals(other.affairInfoId))
 			return false;
 		return true;
 	}
