@@ -3,9 +3,13 @@ package com.ccs.vo;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "HJ_INFORMATION")
 public class InformationVO implements Serializable {
 	private static final long serialVersionUID = 8151777801642274209L;
 
@@ -13,7 +17,7 @@ public class InformationVO implements Serializable {
 	@GeneratedValue(generator = "hibernate-uuid")
 	@org.hibernate.annotations.GenericGenerator(name = "hibernate-uuid", strategy = "uuid")
 	@Column(name = "INFORMATIONID")
-	private String informationId;
+	private String infoId;
 
 	@Column(name = "HELPNAME")
 	private String helpName;
@@ -48,12 +52,12 @@ public class InformationVO implements Serializable {
 	@Column(name = "STATUS")
 	private String status;
 
-	public String getInformationId() {
-		return informationId;
+	public String getInfoId() {
+		return infoId;
 	}
 
-	public void setInformationId(String informationId) {
-		this.informationId = informationId;
+	public void setInfoId(String infoId) {
+		this.infoId = infoId;
 	}
 
 	public String getHelpName() {
@@ -148,8 +152,7 @@ public class InformationVO implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((informationId == null) ? 0 : informationId.hashCode());
+		result = prime * result + ((infoId == null) ? 0 : infoId.hashCode());
 		return result;
 	}
 
@@ -162,10 +165,10 @@ public class InformationVO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		InformationVO other = (InformationVO) obj;
-		if (informationId == null) {
-			if (other.informationId != null)
+		if (infoId == null) {
+			if (other.infoId != null)
 				return false;
-		} else if (!informationId.equals(other.informationId))
+		} else if (!infoId.equals(other.infoId))
 			return false;
 		return true;
 	}

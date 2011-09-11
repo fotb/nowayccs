@@ -95,7 +95,7 @@ public class Constants {
     public static final String INFOMATION_HELPTYPE_LIFE = "2"; //2生活服务类
     public static final String INFOMATION_HELPTYPE_AFFAIR = "3"; //3事务服务类
     public static final String INFOMATION_HELPTYPE_FERTILITY = "4"; //4生产力服务
-    public static final HashMap INFOMATION_HELPTYPE_HASHMAP = new HashMap();
+    public static final Map<String, String> INFOMATION_HELPTYPE_HASHMAP = new HashMap<String, String>();
     static {
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(
                 INFOMATION_HELPTYPE_REFER), "咨询服务类");
