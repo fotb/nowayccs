@@ -1,6 +1,7 @@
 package com.ccs.dao.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -81,5 +82,25 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 	@Override
 	public List<UserVO> findAllOnJob() {
 		return getHibernateTemplate().find("from UserVO vo where vo.onJob = ?", UserVO.ONJOB_YES);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserVO> findByUserIds(List<String> userIdList) {
+		StringBuffer hqlBuffer = new StringBuffer(1000);
+		hqlBuffer.append("from UserVO t where t.userId in (");
+		
+		for (int i = 0; i < userIdList.size(); i++) {
+			if(i == userIdList.size() - 1) {
+				hqlBuffer.append("? )");
+			} else {
+				hqlBuffer.append("?, ");
+			}
+		}
+		hqlBuffer.append(" and t.onJob = ?");
+		List<Object> paramList = new ArrayList<Object>();
+		paramList.addAll(userIdList);
+		paramList.add(UserVO.ONJOB_YES);
+		return getHibernateTemplate().find(hqlBuffer.toString(), paramList.toArray());
 	}
 }

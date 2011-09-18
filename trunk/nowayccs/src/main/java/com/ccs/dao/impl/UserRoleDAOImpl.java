@@ -1,5 +1,7 @@
 package com.ccs.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -58,6 +60,28 @@ public class UserRoleDAOImpl extends DefaultDAOSupport implements IUserRoleDAO {
 	@Override
 	public void merge(UserRoleVO vo) {
 		getHibernateTemplate().merge(vo);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> findUserIdsByRoleIds(List<String> roleIdList) {
+		StringBuffer hqlBuffer = new StringBuffer(1000);
+		hqlBuffer.append("from UserRoleVO t where t.id.roleId in (");
+		
+		for (int i = 0; i < roleIdList.size(); i++) {
+			if(i == roleIdList.size() - 1) {
+				hqlBuffer.append("? )");
+			} else {
+				hqlBuffer.append("?, ");
+			}
+		}
+		List<UserRoleVO> list = getHibernateTemplate().find(hqlBuffer.toString(), roleIdList.toArray());
+		List<String> userIdList = new ArrayList<String>();
+		for (Iterator<UserRoleVO> iter = list.iterator(); iter.hasNext();) {
+			UserRoleVO userRoleVO = iter.next();
+			userIdList.add(userRoleVO.getId().getUserId());
+		}
+		return userIdList;
 	}
 
 }

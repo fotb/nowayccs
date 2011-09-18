@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccs.bo.IRoleBO;
 import com.ccs.util.PageInfo;
-import com.ccs.util.Utils;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.OperationVO;
 import com.ccs.vo.RoleOperationVO;
 import com.ccs.vo.RoleVO;
@@ -29,7 +29,7 @@ public class RoleController {
 	public String init(@RequestParam(value="pageNo", required=false) String pageNo, 
 			ModelMap model) {
 		PageInfo pageInfo = new PageInfo();
-		if(Utils.isNull(pageNo)) { 
+		if(StringUtil.isNull(pageNo)) { 
 		pageInfo.setCurrentPage(1);
 		} else {
 			pageInfo.setCurrentPage(Integer.parseInt(pageNo));

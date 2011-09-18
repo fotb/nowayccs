@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
-import com.ccs.util.Utils;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
 import com.ccs.vo.VolunteerVO;
@@ -36,7 +36,7 @@ public class VolunteerController {
 			@RequestParam(value = "pageNo", required = false) String pageNo,
 			ModelMap model) {
 		PageInfo pageInfo = new PageInfo();
-		if (Utils.isNull(pageNo)) {
+		if (StringUtil.isNull(pageNo)) {
 			pageInfo.setCurrentPage(1);
 		} else {
 			pageInfo.setCurrentPage(Integer.parseInt(pageNo));

@@ -40,7 +40,7 @@ public class LifeInformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<LifeInformationVO> findByInfoIds(List<String> infoIds) {
 		StringBuffer hqlBuffer = new StringBuffer(1000);
-		hqlBuffer.append("from LifeInformationVO where t.infoId in (");
+		hqlBuffer.append("from LifeInformationVO t where t.infoId in (");
 		
 		for (int i = 0; i < infoIds.size(); i++) {
 			if(i == infoIds.size() - 1) {

@@ -7,19 +7,21 @@ package com.ccs.util;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class PageInfo {
-    /* Ã¿Ò³ÏÔÊ¾¼ÇÂ¼Êý */
-    public static int PAGE_COUNT = 8;
+    /* Ã¿Ò³ï¿½ï¿½Ê¾ï¿½ï¿½Â¼ï¿½ï¿½ */
+    public static int DEFAULT_PAGE_COUNT = 8;
 
-    /* µ±Ç°Ò³Âë */
+    /* ï¿½ï¿½Ç°Ò³ï¿½ï¿½ */
     private int currentPage = 0;
 
-    /* ×Ü¼ÇÂ¼Êý */
+    /* ï¿½Ü¼ï¿½Â¼ï¿½ï¿½ */
     private int totalRecords = 0;
 
+    private int rows = 0;
+    
     /**
-     * µÃµ½µ±Ç°Ò³Êý µ±×Ü¼ÇÂ¼ÊýÎª0Ê±£¬·µ»Ø0
-     * µ±currentPage <= 0Ê±£¬·µ»ØfirstPage
-     * µ±currentPage > totalPagesÊ±£¬·µ»ØtotalPages
+     * ï¿½Ãµï¿½ï¿½ï¿½Ç°Ò³ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¼ï¿½Â¼ï¿½ï¿½Îª0Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0
+     * ï¿½ï¿½currentPage <= 0Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½firstPage
+     * ï¿½ï¿½currentPage > totalPagesÊ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½totalPages
      *
      * @return Returns the currentPage.
      */
@@ -30,7 +32,7 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ·µ»ØµÚÒ»Ò³
+     * @Functionality: ï¿½ï¿½ï¿½Øµï¿½Ò»Ò³
      * @return :
      */
     public int getFirstPage() {
@@ -38,7 +40,7 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ·µ»Ø×îºóÒ»Ò³
+     * @Functionality: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ò³
      * @return :
      */
     public int getLastPage() {
@@ -46,7 +48,7 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ·µ»ØÏÂÒ»Ò³
+     * @Functionality: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ò³
      * @param :
      * @return :
      */
@@ -55,21 +57,21 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ·µ»ØÇ°Ò»Ò³
+     * @Functionality: ï¿½ï¿½ï¿½ï¿½Ç°Ò»Ò³
      * @param :
      * @return :
      */
     public int getPreviousPage() {
         /*
-         * ¿¼ÂÇDAO¸Ä¶¯½Ï¶à£¬¹ÊÐÞ¸Ä´Ë·½·¨ ÐÞ¸ÄºóµÄPageInfoµÄÈç¹ûcurrentPageÊÇ1£¬ÔòpreviousPage¾Í³É0ÁË
-         * ¶øµ±totalRecordsÎª0Ê±£¬previousPage¾Í³É-1ÁË ËùÒÔ£¬ÓÐÐ©²»ºÏÂß¼­
+         * ï¿½ï¿½ï¿½ï¿½DAOï¿½Ä¶ï¿½ï¿½Ï¶à£¬ï¿½ï¿½ï¿½Þ¸Ä´Ë·ï¿½ï¿½ï¿½ ï¿½Þ¸Äºï¿½ï¿½PageInfoï¿½ï¿½ï¿½ï¿½ï¿½currentPageï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½previousPageï¿½Í³ï¿½0ï¿½ï¿½
+         * ï¿½ï¿½totalRecordsÎª0Ê±ï¿½ï¿½previousPageï¿½Í³ï¿½-1ï¿½ï¿½ ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½Ð©ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½
          */
         return this.getCurrentPage() - 1;
         //return Math.max(this.getCurrentPage() - 1, this.getFirstPage());
     }
 
     /**
-     * µÃµ½×ÜÒ³Êý µ±×Ü¼ÇÂ¼ÊýÎª0Ê±£¬·µ»Ø0 ·ñÔò£¬·µ»ØÂúÒ³Êý + ÓàÏÂµÄÒ»Ò³
+     * ï¿½Ãµï¿½ï¿½ï¿½Ò³ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¼ï¿½Â¼ï¿½ï¿½Îª0Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0 ï¿½ï¿½ï¿½ò£¬·ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ + ï¿½ï¿½ï¿½Âµï¿½Ò»Ò³
      *
      * @return
      */
@@ -77,13 +79,13 @@ public class PageInfo {
         if (this.getTotalRecords() <= 0) {
             return 0;
         } else {
-            return (this.getTotalRecords() / PAGE_COUNT)
-                    + (this.getTotalRecords() % PAGE_COUNT == 0 ? 0 : 1);
+            return (this.getTotalRecords() / DEFAULT_PAGE_COUNT)
+                    + (this.getTotalRecords() % DEFAULT_PAGE_COUNT == 0 ? 0 : 1);
         }
     }
 
     /**
-     * µÃµ½×Ü¼ÇÂ¼Êý
+     * ï¿½Ãµï¿½ï¿½Ü¼ï¿½Â¼ï¿½ï¿½
      *
      * @return Returns the total.
      */
@@ -92,11 +94,11 @@ public class PageInfo {
     }
 
     public int getPAGE_COUNT() {
-        return PAGE_COUNT;
+        return this.getRows() > 0 ? this.getRows() : DEFAULT_PAGE_COUNT;
     }
 
     /**
-     * @Functionality: ÅÐ¶ÏÄÜ·ñÇ°ÍùµÚÒ»Ò³
+     * @Functionality: ï¿½Ð¶ï¿½ï¿½Ü·ï¿½Ç°ï¿½ï¿½ï¿½Ò»Ò³
      * @param :
      * @return :
      */
@@ -105,7 +107,7 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ÅÐ¶ÏÄÜ·ñÇ°Íù×îºóÒ»Ò³
+     * @Functionality: ï¿½Ð¶ï¿½ï¿½Ü·ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ò³
      * @param :
      * @return :
      */
@@ -114,7 +116,7 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ÅÐ¶ÏÄÜ·ñÇ°ÍùºóÒ»Ò³
+     * @Functionality: ï¿½Ð¶ï¿½ï¿½Ü·ï¿½Ç°ï¿½ï¿½ï¿½Ò»Ò³
      * @param :
      * @return :
      */
@@ -123,7 +125,7 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ÅÐ¶ÏÄÜ·ñÇ°ÍùÇ°Ò»Ò³
+     * @Functionality: ï¿½Ð¶ï¿½ï¿½Ü·ï¿½Ç°ï¿½ï¿½Ç°Ò»Ò³
      * @param :
      * @return :
      */
@@ -132,7 +134,7 @@ public class PageInfo {
     }
 
     /**
-     * @Functionality: ÉèÖÃµ±Ç°Ò³
+     * @Functionality: ï¿½ï¿½ï¿½Ãµï¿½Ç°Ò³
      * @param :
      * @return :
      */
@@ -141,13 +143,22 @@ public class PageInfo {
     }
 
     /**
-     * ÉèÖÃ×Ü¼ÇÂ¼Êý
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ü¼ï¿½Â¼ï¿½ï¿½
      *
-     * @Functionality: ÉèÖÃ×ÜÒ³Êý
+     * @Functionality: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½
      * @param :
      * @return :
      */
     public void setTotalRecords(int totalRecords) {
         this.totalRecords = totalRecords;
     }
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+    
 }

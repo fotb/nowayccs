@@ -63,9 +63,6 @@ public class AffairInformationVO implements Serializable {
 	@Column(name = "CALLRESULT")
 	private String callResult;
 
-	@Column(name = "FINISHTIME")
-	private Date finishTime;
-
 	@Column(name = "HELPAPPROVE")
 	private String helpApprove;
 
@@ -208,14 +205,6 @@ public class AffairInformationVO implements Serializable {
 
 	public void setCallResult(String callResult) {
 		this.callResult = callResult;
-	}
-
-	public Date getFinishTime() {
-		return finishTime;
-	}
-
-	public void setFinishTime(Date finishTime) {
-		this.finishTime = finishTime;
 	}
 
 	public String getHelpApprove() {

@@ -56,4 +56,10 @@ public class RoleOperationDAOImpl extends DefaultDAOSupport implements
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RoleOperationVO> findByOperationId(String operationId) {
+		return getHibernateTemplate().find("from RoleOperationVO t where t.id.operationId = ?", operationId);
+	}
+
 }

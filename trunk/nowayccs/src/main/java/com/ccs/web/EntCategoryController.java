@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccs.bo.IEntCategoryBO;
 import com.ccs.util.Constants;
-import com.ccs.util.Utils;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.EntCategoryVO;
 import com.ccs.web.domain.EntCategory;
 
@@ -29,8 +29,8 @@ public class EntCategoryController {
 	
     @RequestMapping
 	public String init(EntCategory entCategory, ModelMap model) {
-		entCategory.setParentId(Utils.isNull(entCategory.getParentId()) ? String.valueOf(Constants.TOP_CODE) : entCategory.getParentId());
-		entCategory.setSubParentId(Utils.isNull(entCategory.getSubParentId()) ? String.valueOf(Constants.TOP_CODE) : entCategory.getSubParentId());
+		entCategory.setParentId(StringUtil.isNull(entCategory.getParentId()) ? String.valueOf(Constants.TOP_CODE) : entCategory.getParentId());
+		entCategory.setSubParentId(StringUtil.isNull(entCategory.getSubParentId()) ? String.valueOf(Constants.TOP_CODE) : entCategory.getSubParentId());
 		model.addAttribute("entCategory", entCategory);
 //		
 //		model.addAttribute("topCategoryList", entCategoryBO.findByParentId(Constants.TOP_CODE));

@@ -24,4 +24,6 @@ public interface IUserDAO {
 	
 	List<UserVO> findAllOnJob();
 	
+	List<UserVO> findByUserIds(List<String> userIdList);
+	
 }

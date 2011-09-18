@@ -40,7 +40,7 @@ public class ReferInformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<ReferInformationVO> findByInfoIds(List<String> infoIds) {
 		StringBuffer hqlBuffer = new StringBuffer(1000);
-		hqlBuffer.append("from ReferInformationVO where t.infoId in (");
+		hqlBuffer.append("from ReferInformationVO t where t.infoId in (");
 		
 		for (int i = 0; i < infoIds.size(); i++) {
 			if(i == infoIds.size() - 1) {

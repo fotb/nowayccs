@@ -2,7 +2,7 @@ package com.ccs.web.domain;
 
 import java.io.Serializable;
 
-import com.ccs.util.Utils;
+import com.ccs.util.StringUtil;
 
 public class VolunteerSearch implements Serializable {
 
@@ -19,7 +19,7 @@ public class VolunteerSearch implements Serializable {
 	private String volunteerNo;
 
 	public String getStatus() {
-		return Utils.emptyToNull(status);
+		return StringUtil.emptyToNull(status);
 	}
 
 	public void setStatus(String status) {
@@ -27,7 +27,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getServiceType() {
-		return Utils.emptyToNull(serviceType);
+		return StringUtil.emptyToNull(serviceType);
 	}
 
 	public void setServiceType(String serviceType) {
@@ -35,7 +35,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getAreaId() {
-		return Utils.emptyToNull(areaId);
+		return StringUtil.emptyToNull(areaId);
 	}
 
 	public void setAreaId(String areaId) {
@@ -43,7 +43,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getAreaSubId() {
-		return Utils.emptyToNull(areaSubId);
+		return StringUtil.emptyToNull(areaSubId);
 	}
 
 	public void setAreaSubId(String areaSubId) {
@@ -51,7 +51,7 @@ public class VolunteerSearch implements Serializable {
 	}
 
 	public String getVolunteerNo() {
-		return Utils.emptyToNull(volunteerNo);
+		return StringUtil.emptyToNull(volunteerNo);
 	}
 
 	public void setVolunteerNo(String volunteerNo) {
