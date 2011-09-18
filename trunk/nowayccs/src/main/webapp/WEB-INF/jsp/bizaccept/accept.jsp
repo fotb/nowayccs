@@ -6,7 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Untitled Document</title>
-<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script src="js/i18n/grid.locale-cn.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery.jqGrid.src.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script src="js/function.js" type="text/javascript"></script>
@@ -36,9 +40,17 @@ function btnnext_click(){
   if(!isValidStringObj( form.helpArea,"求助区域",true)){
     return;
   }
-form.action="OprInforAccept_icdinitsubmit.do";
-  form.target = "_self";
-  form.submit();
+  
+  if("2" == $("#helpType").val()) {
+	$("#action").val("life");
+	$("form").submit();
+  } else if("3" == $("#helpType").val()) {
+		$("#action").val("affair");
+		$("form").submit();
+  } else if("1" == $("#helpType").val() || "4" == $("#helpType").val()) {
+		$("#action").val("refer");
+		$("form").submit();
+  }
 }
 
 function showInfo(id) {
@@ -71,9 +83,44 @@ function showAffairInfo(id) {
   form.submit();
 }
 
+
+$(document).ready(function(){
+	loadHist();
+	$("#helpTel").change(function(){
+		jQuery("#histList").setGridParam({url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+""});
+		jQuery("#histList").trigger("reloadGrid");
+	});
+});
+
+function loadHist() {
+	jQuery("#histList").jqGrid({ 
+		url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+"", 
+		datatype: "json", 
+		colNames:['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 '], 
+		colModel:[ 
+		           {name:'helpName',index:'helpName'}, 
+		           {name:'createTime',index:'createTime'}, 
+		           {name:'helpAddr',index:'helpAddr'}, 
+		           {name:'helpContent',index:'helpContent', align:"left"}, 
+		           {name:'helpType',index:'helpType', align:"right"}, 
+		           {name:'creator',index:'creator', align:"right"},
+		           {name:'finishTime',index:'finishTime'}, 
+		           {name:'status',index:'status', sortable:false} 
+		], 
+		rowNum:10, 
+		rowList:[10,20,30], 
+		pager: '#histPagerNav', 
+		sortname: 'createTime', 
+		viewrecords: true, 
+		sortorder: "desc", 
+		caption:"近期求助记录" 
+	}); 
+	jQuery("#histList").jqGrid('navGrid','#histPagerNav',{edit:false,add:false,del:false});	
+}
 </script>
 <body>
-<form:form method="post" action="bizaccept.do?action=submit" commandName="bizAccept">
+<form:form method="post" action="bizaccept.do" commandName="bizAccept">
+<input type="hidden" name="action" id="action"/>
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -108,7 +155,7 @@ function showAffairInfo(id) {
           <tr class="table_t1">
             <td>求助方式：</td>
             <td>
-              <form:select path="helpMode" cssClass="form" items="${qzfsList}" itemLabel="value" itemValue="dictId" />
+              <form:select path="helpMode" cssClass="form" items="${qzfsList}" itemLabel="value" itemValue="sortIndex" />
             </td>
           </tr>
           <tr class="line">
@@ -156,7 +203,7 @@ function showAffairInfo(id) {
           <tr class="table_t1">
             <td>求助区域：</td>
             <td>
-              <form:select path="helpArea" cssClass="form" items="${qzqyList}" itemLabel="value" itemValue="dictId" />              
+              <form:select path="helpArea" cssClass="form" items="${qzqyList}" itemLabel="value" itemValue="sortIndex" />              
             </td>
           </tr>
           <tr class="line">
@@ -167,7 +214,7 @@ function showAffairInfo(id) {
             <td>
               <form:select path="helpGroup" cssClass="form">
                 <option value=" ">选择</option>
-                <form:options items="${slrqList}" itemLabel="value" itemValue="dictId"/>
+                <form:options items="${slrqList}" itemLabel="value" itemValue="sortIndex"/>
               </form:select>
             </td>
           </tr>
@@ -176,7 +223,7 @@ function showAffairInfo(id) {
           </tr>
           <tr class="table_t1">
             <td>服务者：</td>
-            <td>${userName}</td>
+            <td>${user.userName}</td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
@@ -199,106 +246,22 @@ function showAffairInfo(id) {
   </table>
   <form:hidden path="creator"/>
   <form:hidden path="createTime"/>
-
-  <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
-  <tr class="table_t1">
-            <td width="3%" align="center">
-              <img src="images/icon_01.gif" width="5" height="17" alt="">
-            </td>
-            <td class="font_no">近期求助记录</td>
- </tr>
-    <tr>
-    <td colspan="2">
-  <table width="100%"  border="0" cellspacing="0" cellpadding="0">
-      <tr class="table_green">
-        <td>求助者姓名</td>
-        <td>求助时间</td>
-        <!--<td>联系电话</td>-->
-        <td>详细地址</td>
-        <td>求助内容</td>
-        <td>求助类别</td>
-        <td>输入人</td>
-        <td>结案时间</td>
-        <td>壮态</td>
-        <td>&nbsp;</td>
-      </tr>
-
-    <logic:notEmpty name="list">
-            <logic:iterate name="list" id="ltt" indexId="indexID">
-              <c:if test="${indexID %2 == 0}">
-                <c:set var="class_1" value="table_white"/>
-              </c:if>
-              <c:if test="${indexID %2 == 1}">
-                <c:set var="class_1" value="table_blue"/>
-              </c:if>
-              <tr class='<c:out value="${class_1}"/>' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
-        <td>
-        <c:if test="${ltt.helpType==HELP_TYPE_LIFE}">
-        <a href="javascript:showLifeInfo('<bean:write name="ltt" property="informationId"/>')">
-        <bean:write name="ltt" property="helpName"/>
-        </a>
-        </c:if>
-        <!--咨询类-->
-        <c:if test="${ltt.helpType==HELP_TYPE_QUERY}">
-        <a href="javascript:showReferInfo('<bean:write name="ltt" property="informationId"/>')">
-        <bean:write name="ltt" property="helpName"/>
-        </a>
-        </c:if>
-
-        <!--事务服务类-->
-                <c:if test="${ltt.helpType==HELP_TYPE_TRANSACTION}">
-        <a href="javascript:showAffairInfo('<bean:write name="ltt" property="informationId"/>')">
-        <bean:write name="ltt" property="helpName"/>
-        </a>
-        </c:if>
-        <!--生产力服务-->
-        <c:if test="${ltt.helpType==INFOMATION_HELPTYPE_FERTILITY}">
-        <a href="javascript:showReferInfo('<bean:write name="ltt" property="informationId"/>')">
-        <bean:write name="ltt" property="helpName"/>
-        </a>
-        </c:if>
-        </td>
-        <td><bean:write name="ltt" property="createTime"/></td>
-        <!--<td> <bean:write name="ltt" property="helpTel"/></td>-->
-        <td><bean:write name="ltt" property="helpAddr"/></td>
-        <td><bean:write name="ltt" property="helpContent"/></td>
-         <td><c:out value="${HELP_TYPE_HASHMAP[ltt.helpType]}"/></td>
-        <td><bean:write name="ltt" property="creatorName"/></td>
-        <c:if test="${ltt.helpType == HELP_TYPE_QUERY}">
-        <td><bean:write name="ltt" property="hjReferInformation.dealTime"/></td>
-        <td><c:out value="${SYS_INFOMATION_STATES_HASHMAP[ltt.hjReferInformation.states]}"/></td>
-        </c:if>
-        <c:if test="${ltt.helpType == HELP_TYPE_LIFE}">
-        <td><bean:write name="ltt" property="hjLifeInformation.finishTime"/></td>
-        <td><c:out value="${SYS_INFOMATION_STATES_HASHMAP[ltt.hjLifeInformation.states]}"/></td>
-        </c:if>
-         <c:if test="${ltt.helpType == HELP_TYPE_TRANSACTION}">
-        <td><bean:write name="ltt" property="hjAffairInformation.finishTime"/></td>
-        <td><c:out value="${SYS_INFOMATION_STATES_HASHMAP[ltt.hjAffairInformation.states]}"/></td>
-        </c:if>
-        <td></td>
-      </tr>
-      <tr class="line">
-        <td height="1" colspan="10"></td>
-        </tr>
-      </logic:iterate>
-          </logic:notEmpty>
-    </table>
-      <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
-        <tr>
-          <td height="30" align="right"> <jsp:include page="../common/pageinfo.jsp" flush="true">
-              <jsp:param name="formname" value="forms[0]"/>
-              <jsp:param name="pagename" value="pageNo"/>
-              <jsp:param name="actionname" value="OprInforAccept_icdInit.do"/>
-            </jsp:include> </td>
-
-        </tr>
-      </table></td>
-  </tr>
-  <input type="hidden" name="pageNo" value=""/>
-</table>
-
-
-</form:form>
+		<table width="100%" border="0" align="center" cellpadding="0"
+			cellspacing="0" class="table_gray">
+			<!-- 
+			<tr class="table_t1">
+				<td width="3%" align="center"><img src="images/icon_01.gif"
+					width="5" height="17" alt=""></td>
+				<td class="font_no">近期求助记录</td>
+			</tr>
+			 -->
+			<tr>
+				<td colspan="1">
+					<table id="histList"></table>
+					<div id="histPagerNav"></div>
+				</td>
+			</tr>
+		</table>
+	</form:form>
 </body>
 </html>

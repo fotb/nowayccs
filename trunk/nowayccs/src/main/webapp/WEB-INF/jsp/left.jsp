@@ -12,7 +12,7 @@
 <script src="js/tree.js"></script>
 </head>
 
-<body>
+<body style="margin: auto">
 <table width="150" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr valign="top">
     <td width="150" height="460" background="images/bg_left.gif"><table width="135" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -31,11 +31,11 @@
             <td height="5"></td>
           </tr>
           <tr>
-            <td class="leftmenu_02"><a href="OprLifeInforDeal_list.do?searchStates=1" target="main"><img src="images/leftpic_10.gif" width="70" height="30" border="0"><br>
+            <td class="leftmenu_02"><a href="bizlife.do" target="main"><img src="images/leftpic_10.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">生活服务类</font></a></td>
           </tr>
           <tr>
-            <td class="leftmenu_02"><a href="OprAffairInforDeal_list.do?searchStates=1" target="main"><img src="images/leftpic_11.gif" width="70" height="30" border="0"><br>
+            <td class="leftmenu_02"><a href="bizaffair.do" target="main"><img src="images/leftpic_11.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">事务服务类</font></a></td>
           </tr>
           <tr>
