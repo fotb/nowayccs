@@ -15,7 +15,7 @@ public interface IUserBO {
 
 	List<UserVO> findAll(PageInfo pageInfo);
 
-	boolean login(String loginName, String pwd);
+	UserVO login(String loginName, String pwd);
 	
 	void addUser(UserVO vo, String[] roleIds);
 	
@@ -26,4 +26,7 @@ public interface IUserBO {
 	List<UserRoleVO> findUserRoleByUserId(String userId);
 	
 	void editUser(UserVO vo, String[] roleIds);
+	
+	List<UserVO> findUserByOpertaionId(String operationId);
+	
 }

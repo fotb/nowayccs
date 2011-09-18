@@ -16,4 +16,8 @@ public interface IInformationDAO {
 	List<InformationVO> findByHelpTel(final String helpTel, PageInfo pageInfo);
 	
 	int getTotalCount(final String helpTel);
+	
+	List<InformationVO> findByCreatorAndStatus(final String userId, final String status, final String helpType, PageInfo pageInfo);
+	
+	int getTotalCount(final String userId, final String status, String helpType);
 }

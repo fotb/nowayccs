@@ -1,6 +1,7 @@
 package com.ccs.bo.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IUserBO;
+import com.ccs.dao.IRoleOperationDAO;
 import com.ccs.dao.IUserDAO;
 import com.ccs.dao.IUserRoleDAO;
 import com.ccs.util.PageInfo;
+import com.ccs.vo.RoleOperationVO;
 import com.ccs.vo.UserRoleIdVO;
 import com.ccs.vo.UserRoleVO;
 import com.ccs.vo.UserVO;
@@ -24,6 +27,9 @@ public class UserBOImpl implements IUserBO {
 	
 	@Autowired
 	private IUserRoleDAO userRoleDAO;
+	
+	@Autowired
+	private IRoleOperationDAO roleOperationDAO;
 	
 	@Override
 	public void saveOrUpdate(UserVO vo) {
@@ -47,9 +53,8 @@ public class UserBOImpl implements IUserBO {
 	}
 
 	@Override
-	public boolean login(String loginName, String pwd) {
-		final UserVO vo = userDAO.findByLoginNameAndPwd(loginName, pwd);
-		return null == vo ? false : true;
+	public UserVO login(String loginName, String pwd) {
+		return userDAO.findByLoginNameAndPwd(loginName, pwd);
 	}
 
     @Override
@@ -103,6 +108,19 @@ public class UserBOImpl implements IUserBO {
 	@Override
 	public List<UserRoleVO> findUserRoleByUserId(String userId) {
 		return userRoleDAO.findByUserId(userId);
+	}
+
+	@Override
+	public List<UserVO> findUserByOpertaionId(String operationId) {
+		List<RoleOperationVO> roleOprVOList = roleOperationDAO.findByOperationId(operationId);
+		List<String> roleIdList = new ArrayList<String>();
+		for (Iterator<RoleOperationVO> iter = roleOprVOList.iterator(); iter.hasNext();) {
+			RoleOperationVO roleOprVO = iter.next();
+			roleIdList.add(roleOprVO.getId().getRoleId());
+		}
+		
+		List<String> userIdList = userRoleDAO.findUserIdsByRoleIds(roleIdList);
+		return userDAO.findByUserIds(userIdList);
 	}
 
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ccs.bo.IDictBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
-import com.ccs.util.Utils;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.DictVO;
 import com.ccs.web.domain.Dict;
 
@@ -59,12 +59,12 @@ public class DictController {
 	@RequestMapping(params="action=search")
 	public String searchDict(Dict dict, @RequestParam("dictType") String dictType , @RequestParam("pageNo") String pageNo, ModelMap model) {
 		PageInfo pageInfo=new PageInfo();
-		if(Utils.isNull(pageNo)) {
+		if(StringUtil.isNull(pageNo)) {
 			pageInfo.setCurrentPage(1);
 		} else {
 			pageInfo.setCurrentPage(Integer.parseInt(pageNo));	
 		}
-		List<DictVO> list = dictBO.findByType(Utils.isNull(dictType) ? dict.getDictType() : dictType, pageInfo);
+		List<DictVO> list = dictBO.findByType(StringUtil.isNull(dictType) ? dict.getDictType() : dictType, pageInfo);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("subDictlist", list);
 		return "dict/dictlist";

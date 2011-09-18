@@ -1,708 +1,473 @@
 package com.ccs.util;
 
-import java.math.BigDecimal;
-import java.text.DateFormat;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
 
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2005</p>
- * <p>Company: </p>
- * @author not attributable
- * @version 1.0
- */
-
+/*
+Modification:End
+*/
 public class Utils {
-    /**
-     * 取得日期的周几
-     *
-     * @param dateStr String 日期
-     * @return int 周几值
-     *
-     * 周日 1
-     * 周一 2
-     * |
-     * 周六 7
-     */
-    public static int getWeek(String dateStr) {
-        /*拆分yyyy-MM-dd形式的日期字符串*/
-        StringTokenizer strTok = new StringTokenizer(dateStr, " _-./");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
+	private static final Set<Character> ALLOWED_ILLEGAL_SYMBOLS_IN_EMAIL =
+		StringUtil.chars2Set(new char[] { '@' });
+	private static final Logger LOG = Logger.getLogger(Utils.class);
+
+	/**
+	 * Constructing this object.
+	 */
+	protected Utils() {
+	}
+
+	
+	/**
+	 * Compare length of input String and input criteria
+	 * @param sEntry Input String to compare
+	 * @param iLength Target length
+	 * @return If sEntry is null or shorter than iLength, return false; otherwise, return true
+	 */
+	public static boolean checkLength(final String sEntry, final int iLength) {
+        if (sEntry == null) {
+            return false;
         }
-        /*从数组中获得年月日*/
-        int year = Integer.parseInt(strAry[0]);
-        int month = Integer.parseInt(strAry[1]);
-        int date = Integer.parseInt(strAry[2]);
-
-        /**
-         * 获得该日期的星期
-         * GregorianCalendar(int year, int month, int date)中的月份标记是从0开始的,
-         * 如1月为0,所以月份要减1
-         */
-        GregorianCalendar gc = new GregorianCalendar(year, month - 1, date);
-        int week = gc.get(Calendar.DAY_OF_WEEK);
-        return week;
-    }
-
-    /**
-     * 根据传入的日期和week标记,获得该week的日期
-     *
-     * @param date String 日期
-     * @param weekFlag int week标记
-     * @return String yyyy-MM-dd形式的日期字符串
-     */
-    public static String getWeekDate(String dateStr, int weekFlag) {
-        /*拆分yyyy-MM-dd形式的日期字符串*/
-        StringTokenizer strTok = new StringTokenizer(dateStr, " _-./");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
-        }
-        /*从数组中获得年月日*/
-        int year = Integer.parseInt(strAry[0]);
-        int month = Integer.parseInt(strAry[1]);
-        int date = Integer.parseInt(strAry[2]);
-
-        /**
-         * 获得该日期的星期
-         * GregorianCalendar(int year, int month, int date)中的月份标记是从0开始的,
-         * 如1月为0,所以月份要减1
-         */
-        GregorianCalendar gc = new GregorianCalendar(year, month - 1, date);
-        int week = gc.get(Calendar.DAY_OF_WEEK);
-
-        /*比较当前星期和希望获得的星期,增减天数*/
-        switch (week) {
-        case 1: //sunday
-            gc.add(gc.DAY_OF_MONTH, weekFlag - 7);
-            break;
-        case 2:
-            gc.add(gc.DAY_OF_MONTH, weekFlag - week + 1);
-            break;
-        case 3:
-            gc.add(gc.DAY_OF_MONTH, weekFlag - week + 1);
-            break;
-        case 4:
-            gc.add(gc.DAY_OF_MONTH, weekFlag - week + 1);
-            break;
-        case 5:
-            gc.add(gc.DAY_OF_MONTH, weekFlag - week + 1);
-            break;
-        case 6:
-            gc.add(gc.DAY_OF_MONTH, weekFlag - week + 1);
-            break;
-        case 7: //FRIDAY
-            gc.add(gc.DAY_OF_MONTH, weekFlag - week + 1);
-            break;
-        }
-        /*组成"yyyy-MM-dd格式的日期字符串*/
-        return gc.get(gc.YEAR) + "-" + (gc.get(gc.MONTH) + 1) + "-" +
-                gc.get(gc.DATE);
-    }
-
-    /**
-     * 根据给定日期返回星期天日期
-     * @param String
-     */
-    public static String getSunDate(String monDate) {
-        StringTokenizer monTok = new StringTokenizer(monDate, " _-./");
-        String[] monStr = new String[monTok.countTokens()];
-        int e = 0; //用于获取字符串
-        while (monTok.hasMoreTokens()) {
-            monStr[e++] = monTok.nextToken();
-        }
-        int y = (new Integer(monStr[0])).intValue(); //year
-        int m = (new Integer(monStr[1])).intValue(); //month
-        int d = (new Integer(monStr[2])).intValue(); //date
-        //创建日历
-        GregorianCalendar calender = new GregorianCalendar(y, (m - 1), d);
-        java.util.Date dat = calender.getTime();
-        //int weekDay = dat.getDay(); //取得星期
-        int weekDay = calender.get(Calendar.DAY_OF_WEEK);
-        //int date = dat.getDate();
-        //int month = dat.getMonth();
-        //int year = dat.getYear();
-        switch (weekDay) {
-        case 1:
-            calender.add(calender.DAY_OF_MONTH, 0);
-            break;
-        case 2:
-            calender.add(calender.DAY_OF_MONTH, 6);
-            break;
-        case 3:
-            calender.add(calender.DAY_OF_MONTH, 5);
-            break;
-        case 4:
-            calender.add(calender.DAY_OF_MONTH, 4);
-            break;
-        case 5:
-            calender.add(calender.DAY_OF_MONTH, 3);
-            break;
-        case 6:
-            calender.add(calender.DAY_OF_MONTH, 2);
-            break;
-        case 7:
-            calender.add(calender.DAY_OF_MONTH, 1);
-            break;
-        }
-        dat = calender.getTime();
-        String ymd = "";
-        int year = calender.get(calender.YEAR); //年
-        int month = calender.get(calender.MONTH) + 1; //月
-        int date = calender.get(Calendar.DATE); //日
-        int weekday = calender.get(Calendar.DAY_OF_WEEK); //周
-
-        ymd = (new Integer(year).toString()) + "-" +
-              (new Integer(month).toString()) +
-              "-" + (new Integer(date).toString());
-        return ymd;
-    }
-
-    /**
-     * 获取上一月
-     *
-     * @param date Date 传入日期
-     * @return String
-     */
-    public static String getPreviousMonth(Date date) {
-        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = spf.format(date);
-        /*拆分yyyy-MM-dd形式的日期字符串*/
-        StringTokenizer strTok = new StringTokenizer(dateStr, " _-.:/");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
-        }
-        /*从数组中获得年月日*/
-        int y = Integer.parseInt(strAry[0]);
-        int m = Integer.parseInt(strAry[1]);
-        int d = Integer.parseInt(strAry[2]);
-        String year = String.valueOf(y);
-        String month = String.valueOf(m - 1);
-        if ((m - 1) <= 0) {
-            year = String.valueOf(y - 1);
-        } else if ((m - 1) < 10) {
-            month = "0" + (m - 1);
-        }
-        /*返回年月(yyyy-MM)*/
-        return year + "-" + month;
-    }
-
-    /**
-     * 获取上一月的第一天的日期
-     *
-     * @param date Date 传入日期
-     * @return String
-     */
-    public static String getPreviousMonthFirstDay(Date date) {
-        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = spf.format(date);
-        /*拆分yyyy-MM-dd形式的日期字符串*/
-        StringTokenizer strTok = new StringTokenizer(dateStr, " _-./");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
-        }
-        /*从数组中获得年月日*/
-        int y = Integer.parseInt(strAry[0]);
-        int m = Integer.parseInt(strAry[1]);
-        int d = Integer.parseInt(strAry[2]);
-        //创建日历
-        GregorianCalendar calender = new GregorianCalendar(y, (m - 2), d);
-        int firstDate = calender.getActualMinimum(Calendar.DAY_OF_MONTH);
-        return String.valueOf(y) + "-" + String.valueOf(m - 1) + "-" +
-                String.valueOf(firstDate);
-    }
-
-    /**
-     * 获取当月的第一天的日期
-     *
-     * @param date Date 传入日期
-     * @return String
-     */
-    public static String getCurrentMonthFirstDay(Date date) {
-        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = spf.format(date);
-        /*拆分yyyy-MM-dd形式的日期字符串*/
-        StringTokenizer strTok = new StringTokenizer(dateStr, " _-./");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
-        }
-        /*从数组中获得年月日*/
-        int y = Integer.parseInt(strAry[0]);
-        int m = Integer.parseInt(strAry[1]);
-        int d = Integer.parseInt(strAry[2]);
-        //创建日历
-        GregorianCalendar calender = new GregorianCalendar(y, (m - 1), d);
-        int firstDate = calender.getActualMinimum(Calendar.DAY_OF_MONTH);
-        return String.valueOf(y) + "-" + String.valueOf(m) + "-" +
-                String.valueOf(firstDate);
-    }
-
-    /**
-     * 获取当月的最后一天
-     *
-     * @param date Date 传入日期
-     * @return String
-     */
-    public static String getCurrentMonthLastDay(Date date) {
-        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = spf.format(date);
-        /*拆分yyyy-MM-dd形式的日期字符串*/
-        StringTokenizer strTok = new StringTokenizer(dateStr, " _-./");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
-        }
-        /*从数组中获得年月日*/
-        int y = Integer.parseInt(strAry[0]);
-        int m = Integer.parseInt(strAry[1]);
-        int d = Integer.parseInt(strAry[2]);
-        //创建日历
-        GregorianCalendar calender = new GregorianCalendar(y, (m - 1), d);
-        int lastDate = calender.getActualMaximum(Calendar.DAY_OF_MONTH);
-        return String.valueOf(y) + "-" + String.valueOf(m) + "-" +
-                String.valueOf(lastDate);
-    }
-
-    /**
-     * 获取上一月的最后一天
-     *
-     * @param date Date 传入日期
-     * @return String
-     */
-    public static String getPreviousMonthLastDay(Date date) {
-        SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = spf.format(date);
-        /*拆分yyyy-MM-dd形式的日期字符串*/
-        StringTokenizer strTok = new StringTokenizer(dateStr, " _-./");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
-        }
-        /*从数组中获得年月日*/
-        int y = Integer.parseInt(strAry[0]);
-        int m = Integer.parseInt(strAry[1]);
-        int d = Integer.parseInt(strAry[2]);
-        //创建日历
-        GregorianCalendar calender = new GregorianCalendar(y, (m - 2), d);
-        int lastDate = calender.getActualMaximum(Calendar.DAY_OF_MONTH);
-        return String.valueOf(y) + "-" + String.valueOf(m - 1) + "-" +
-                String.valueOf(lastDate);
-    }
-
-    /**
-     * 取当前日期
-     * @param
-     */
-    public static String getstrCurrentDate() {
-        Locale locale = Locale.CHINA;
-
-        java.util.Date date = new java.util.Date(System.currentTimeMillis());
-
-        String strDate = DateFormat.getDateInstance(DateFormat.DEFAULT, locale).
-                         format(date);
-        return strDate;
-    }
-
-    /**
-     * 取当前日期时间
-     * @param
-     */
-    public static String getstrCurrentDatetime() {
-        java.util.Date date = new java.util.Date(System.currentTimeMillis());
-
-        return formateDate(date, "yyyy-MM-dd kk:mm:ss");
-    }
-
-
-    /**
-     * 取得指定日期的接下来的几天后的日期
-     *
-     * @param strDate String
-     * @param backCount int 接下来的天数
-     * @param formate String 如yyyy-mm-dd等formate
-     * @return String
-     */
-    public static String getBackDayDate(String strDate, int backCount,
-                                        String formate) throws SystemException {
-        try {
-            /* 设置日期格式 */
-            SimpleDateFormat formatter = new SimpleDateFormat(
-                    "yyyy-MM-dd kk:mm:ss");
-            /* 初始化日期 */
-            Date validateDate = null;
-            /* 日期转换 */
-            if (strDate != null && !strDate.trim().equals("")) {
-                validateDate = formatter.parse(strDate);
-            }
-            long time = (validateDate.getTime() / 1000) - backCount * 24 * 60;
-
-            validateDate.setTime(time * 1000);
-            return formateDate(validateDate, formate);
-        } catch (ParseException e) {
-            SystemException se = new SystemException("日期转换失败", e);
-            e.printStackTrace();
-            throw (se);
+        if (sEntry.length() < iLength) {
+            return false;
         }
 
+        return true;
     }
 
-    /**
-     * 获取指定时间的前backMin分钟的时间
-     *
-     * @param strDate String 格式为yyyy-MM-dd kk:MM:SS
-     * @param backMin int
-     * @param formate String
-     * @return String
-     */
-    public static String getBackDayMin(String strDate, int backMin,
-                                       String formate) throws SystemException {
-        try {
-            /* 设置日期格式 */
-            SimpleDateFormat formatter = new SimpleDateFormat(
-                    "yyyy-MM-dd kk:mm:ss");
-            /* 初始化日期 */
-            Date validateDate = null;
-            /* 日期转换 */
-            if (strDate != null && !strDate.trim().equals("")) {
-                validateDate = formatter.parse(strDate);
-            }
-            long time = (validateDate.getTime() / 1000) - backMin * 60;
+	/**
+	 * Check String of input String and input criteria is correct
+	 * @param sEntry Input String to Check
+	 * @param iType criteria
+	 * @return If the check is correct, return true; otherwise, return false
+	 */
+	public static boolean checkEntry(final String sEntry, final int iType) {
+		int i, iTest;
+		char ch;
+		boolean b = true;
 
-            validateDate.setTime(time * 1000);
-            return formateDate(validateDate, formate);
-        } catch (ParseException e) {
-            SystemException se = new SystemException("日期转换失败", e);
-            e.printStackTrace();
-            throw (se);
-        }
-    }
+		// 0 = Only Alpha's
+		// 1 = Only Numbers
+		// 2 = Only AlphaNumerics
+		// 3 = Alpha's and spaces
+		// 4 = Numerics and spaces
+		// 5 = Alphanumerics and spaces
 
-    /**
-     * 字符串转换为日期
-     * @param dateString String 被转换的字符串
-     * @return Date 返回日期
-     * @throws SystemException
-     */
-    public static Date changeDate(String dateString) throws SystemException {
-        /* 设置日期格式 */
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        /* 初始化日期 */
-        Date validateDate = null;
-        /* 日期转换 */
-        if (dateString != null && !dateString.trim().equals("")) {
-            try {
-                validateDate = (Date) formatter.parse(dateString);
-            } catch (ParseException e) {
-                SystemException se = new SystemException("日期转换失败", e);
-                e.printStackTrace();
-                throw (se);
-            }
-        }
-        /* 返回转换好的日期 */
-        return validateDate;
-    }
+		if (iType > 2){
+			iTest = iType - 3;
+		}else{
+			iTest = iType;
+		}
+		if (sEntry == null)
+			{ b =  false;}
 
-    /**
-     * 字符串转换为时间
-     * @param dateString String 被转换的字符串
-     * @return Date 返回日期
-     * @throws SystemException
-     */
-    public static Date changeDatetime(String datetimeString) throws
-            SystemException {
-        /* 设置日期格式 */
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-        /* 初始化日期 */
-        Date validateDate = null;
-        /* 日期转换 */
-        if (datetimeString != null && !datetimeString.trim().equals("")) {
-            try {
-                validateDate = (Date) formatter.parse(datetimeString);
-            } catch (ParseException e) {
-                SystemException se = new SystemException("日期转换失败", e);
-                e.printStackTrace();
-                throw (se);
-            }
-        }
-        /* 返回转换好的日期 */
-        return validateDate;
-    }
+		for (i = 0; i < sEntry.length(); i++) {
+			ch = sEntry.charAt(i);
+			if ((iType > 2) && Character.isSpaceChar(ch)) {
+				// Space is valid
+				b = true;
+			} else {
+				switch (iTest) {
+					case 0 :
+						b = Character.isLetter(ch);
+						break;
+					case 1 :
+						b = Character.isDigit(ch);
+						break;
+					case 2 :
+						b = Character.isLetterOrDigit(ch);
+						break;
+					default :
+						b = false;
+						break;
+				}
+				if (!b) {
+					break;
+				}	
+			}
+		}
+		return b;
+	}
 
-    /**
-     * 根据指定的格式格式化日期
-     *
-     * @param date Date 日期
-     * @param dateFormat String 指定的格式,如:yyyy-MM-dd等
-     * @return String
-     */
-    public static String formateDate(Date date, String dateFormat) {
-        if (dateFormat == null || dateFormat.equals("")) {
-            return "";
-        }
-        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-        return format.format(date);
-    }
+	/**
+	 * remove String spaces
+	 * @param sString 
+	 * @return remove spaces of String 
+	 */
+	public static String removeNull(final String sString) {
+	    String s = "";
+		if (sString != null){
+			s =  sString;
+		}
+		return s;
+	}
+	
+	/**
+	 * remove String spaces
+	 * @param sString 
+	 * @return remove spaces of String 
+	 */
+	public static String removeNullTrim(final String sString) {
+	    String s = "";
+		if (sString != null){
+			s =  sString.trim();
+		}
+		return s;
+	}
 
-    /**
-     * 传人的参数长度不足补0
-     */
-    public static String fillZero(String inputStr, int length) {
-        String val = inputStr;
-        for (int i = 0; i < length - inputStr.length(); i++) {
-            val = "0" + val;
-        }
-        return val;
-    }
+	/**
+	 * convert String to int. 
+	 * @param sValue sValue
+	 * @return int
+	 */
+	public static int parseInt(final String sValue) {
+		int i;
+		try {
+			i = Integer.parseInt(sValue);
+		} catch (NumberFormatException e) {
+			i = 0;
+		}
+		return i;
+	}
 
-    /**
-     * 去除字符串的空值
-     * @param str
-     * @return
-     */
+	/** Validation on general eMail address format aaaaaaaaa@bbbbbb.ccc
+	* where aaaaaaaaa is the user, bbbbbb is the domain and ccc is the top level domain
+	* 1. the '@' sign must be within the e-mail address and allow enough room for user name
+	* 2. user name must be at least 1 character
+	* 3. domain name must be at least 3 characters
+	* 4. top level domain name must be at least 2 characters
+	* 5. '@' sign should appear only once
+	* 6. No embedded colons, forward slashes, [,],<, >, |, &, ;, $, %, "'", ", (, ), +, \n, \r, ',', \
+	*    Some of the above sybmols are blocked for penetration tests 
+	* Created by:     Elaine Pang
+	* Updated by :    Horace To
+	* Creation Date:  06Mar02
+	**/
 
-    public static String trimNull(String str) {
-        if (str == null) {
-            str = "";
-        }
-        return str;
-    }
-    
-    public static String emptyToNull(String str) {
-    	return isNull(str) ? null : str.trim();
-    }
+	/**
+	 * Validate the EmailAddr is Valid
+	 * @param sEmailAddr Input String to Validate
+	 * @return If sEmailAddr is valid,return true; otherwise, return false
+	 */
+	public static boolean validEmailAddr(final String sEmailAddr) {
+		/* added to check for double-byte characters */
+		try{
+			final byte[] ba = sEmailAddr.getBytes("UTF-8");
+			if (sEmailAddr.length() != ba.length){
+				return false;
+			}
+		}catch(UnsupportedEncodingException e){
+			LOG.error(e.getMessage());
+		}
+		
+		boolean bValid = true;
+		if (!StringUtil.isNull(sEmailAddr)) {
+			final int p1 = sEmailAddr.indexOf('@') + 1;
+			final int p2 = sEmailAddr.indexOf('.', p1) + 1;
+			final int l = sEmailAddr.trim().length();
 
-    public static boolean isNull(final String str) {
-    	return (str == null || str.trim().equals(""));
-    }
-    
-    public static Integer toInteger(String str, int num) {
-        if (str == null || str.equals("")) {
-            return new Integer(num);
-        } else {
-            return new Integer(str);
-        }
-    }
+			if (p1 == 0 || p2 == 0)
+				{bValid = false;}
+			if (p1 <= 1)
+				{bValid = false;}
+      /* 
+      Modification: Merge from Enhancement Code
+      Author: Excel-GITS(HZ) Date: Jan 24, 2007
+      */
+			if (p2 - p1 <= 1)
+				{bValid = false;}
+			/*if (p2 - p1 <= 3)
+				bValid = false;*/
+			/*
+			Modification:End
+			*/
+			if (l - p2 < 2)
+				{bValid = false;}
 
-    public static String toChinese(String str) throws SystemException {
-        try {
-            if (str == null) {
-                str = "";
+			if (sEmailAddr.indexOf('@', p1) >= 0)
+				{bValid = false;}
+			if (sEmailAddr.trim().indexOf(' ') >= 0
+				|| sEmailAddr.indexOf('/') >= 0
+				|| sEmailAddr.indexOf(':') >= 0
+				|| sEmailAddr.indexOf('[') >= 0
+				|| sEmailAddr.indexOf(']') >= 0
+				|| StringUtil.containsIllegalSymbolInEmail(
+					sEmailAddr,
+					ALLOWED_ILLEGAL_SYMBOLS_IN_EMAIL))
+				{bValid = false;}
+		} else {
+			bValid = false;
+		}
+		return bValid;
+	}
+
+	/**
+	 * Validate the StdEmailAddr is Valid
+	 * @param emailAddress Input String to Validate
+	 * @return If StdEmailAddr is valid,return true; otherwise, return false
+	 * @throws 	Exception The class Exception and its subclasses are a form of 
+	 * 			Throwable that indicates conditions that a reasonable 
+	 * 			application might want to catch.
+	 */
+	public static boolean validateStdEmailAddress(final String emailAddress){
+	    //RFC 2822 token definitions for valid email - only used together to form a java Pattern object:
+		final String sp = "!#$%&'*+-/=?^_`{|}~";
+		final String atext = "[a-zA-Z0-9" + sp + "]";
+		final String atom = atext + "+"; 						//one or more atext chars
+		final String dotAtom = "\\." + atom;
+		final String localPart = atom + "(" + dotAtom + ")*"; 	//one atom followed by 0 or more dotAtoms.
+	    //RFC 1035 tokens for domain names:
+		final String letter = "[a-zA-Z]";
+		final String letDig = "[a-zA-Z0-9]";
+		final String letDigHyp = "[a-zA-Z0-9-]";
+		final String rfcLabel = letDig + letDigHyp + "{0,61}" + letDig;
+		final String domain = rfcLabel + "(\\." + rfcLabel + ")*\\." + letter + "{2,6}";
+	    //Combined together, these form the allowed email regexp allowed by RFC 2822:
+		final String addrSpec = "^" + localPart + "@" + domain + "$";
+	    //now compile it:
+		final Pattern VALID_PATTERN = Pattern.compile( addrSpec );
+	    return ( emailAddress != null ) && VALID_PATTERN.matcher( emailAddress ).matches();
+	}
+
+	/**
+	 *  Convert amount/units/percentage fields to double
+	 */
+	public static double convertToDouble(final String sEntry) {
+		int iSign, iLength;
+		boolean bNegative = false;
+		double dValue;
+		String sNoSignNum = sEntry;
+
+		iLength = sEntry.trim().length();
+		// Quit if empty string is passed
+		if (sEntry == null || iLength == 0) {
+			return 0;
+		}
+
+		iSign = sEntry.indexOf('-') + 1;
+
+		// Check for negative sign
+		if (iSign > 0) {
+			bNegative = true;
+			sNoSignNum = sEntry.replace('-', ' ');
+		}
+		try {
+			dValue = Double.parseDouble(sNoSignNum);
+		} catch (NumberFormatException e) {
+			return 0;
+		}
+		if (bNegative) {
+			return (dValue * -1);
+		} else {
+			return dValue;
+		}
+	}
+
+	/**
+	 * Convert to Date object / Date format checking
+	 */
+	public static Date convertToDate(final String sEntry, final String sDateFmt) {
+		final SimpleDateFormat sdf = new SimpleDateFormat(sDateFmt, Locale.ENGLISH);
+		sdf.setLenient(false);
+
+		try {
+			return sdf.parse(sEntry);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Format Date
+	 */
+	public static String formatDate(final Date dDate, final String sDateFmt) {
+		final SimpleDateFormat sdf = new SimpleDateFormat(sDateFmt, Locale.ENGLISH);
+		return sdf.format(dDate);
+	}
+
+	public static Date stringToDate(final String string, final String formatStyle) {
+		Date result = null;
+		try {
+			final SimpleDateFormat format = new SimpleDateFormat(formatStyle,
+					Locale.ENGLISH);
+			result = format.parse(string);
+		} catch (ParseException pe) {
+			LOG.error(pe.getMessage(), pe);
+		}
+		return result;
+	}
+
+	/**
+	 *  Check Minimum Amount
+	 */
+	public static boolean belowMinimum(
+	                final double dAmount,
+	                final double dLimit,
+	                final double dTolerance) {
+		return (dAmount < dLimit * (1 - dTolerance / 10000));
+	}
+
+	/**
+	*   Check Maximum Amount
+	*/
+	public static boolean exceedMaximum(
+	                final double dAmount,
+	                final double dLimit,
+	                final double dTolerance) {
+		return (dAmount > dLimit * (1 + dTolerance / 10000));
+
+	}
+
+	/**
+	 * According to input Object, Returns the Object class name
+	 * @param O Object
+	 * @return Class Name
+	 */
+	public static String getClassName(final Object o) {
+		if (o == null) {
+			return "";
+		}
+
+		final String asClass = o.getClass().getName();
+		final StringTokenizer sToken = new StringTokenizer(asClass, ".");
+		String asToken = asClass;
+		while (sToken.hasMoreElements()) {
+			asToken = sToken.nextToken();
+		}
+		return asToken;
+	}
+
+	/**
+	 * get the collection of all objects name
+	 * @param col collection
+	 * @param colName String
+	 * @return Returns the collection of all objects name
+	 */
+	public static String formSQLInList(final Collection<String> col, final String colName)
+	{
+		/* Oracle doesn't allow the 'in' list to have size > 1000, this routine should be
+		 * changed to cater for this 
+		 */
+		final StringBuffer str = new StringBuffer(0);
+		int index = 0;
+		for (final Iterator<String> it = col.iterator(); it.hasNext();) {
+			final String s = (String) it.next();
+			if (index != 0) {
+				str.append(String.valueOf(','));
+			}
+			str.append("'" + s + "'");
+			index++;
+		}
+		return colName + " in (" + str.toString() + ")";
+	}
+	
+	/**
+	 * remove String CR("\r","\n")
+	 * @param sString 
+	 * @return remove CR of String 
+	 */
+	public static String removeCR(final String s) {
+		if (s == null || "".equals(s)) {
+			return "";
+		}
+		String s1 = s.replaceAll("\r","");
+		s1 = s1.replaceAll("\n","");
+		return s1;
+	}
+	
+	/**
+	 * remove String CR("\r","<p>","\n")
+	 * @param sString 
+	 * @return remove CR of String 
+	 */
+	public static String replaceCR(final String s) {
+		if (s == null || "".equals(s)) {
+			return "";
+		}
+		String s1 = s.replaceAll("\r","<p>");
+		s1 = s1.replaceAll("\n","");
+		return s1;
+	}	
+	
+	//add by 020110
+	/**
+	 * According to input filePath and content of Create file
+	 * @param filePath  file path 
+	 * @param content  file content
+	 * @throws IOException	Signals that an I/O exception of some sort has occurred. This
+	 * 						class is the general class of exceptions produced by failed or
+	 * 						interrupted I/O operations.
+	 */
+	public static void createFile(final String filePath, final String content) throws IOException {
+	    FileWriter fw = null;
+	    try{
+	    	final File file = new File(filePath);
+            if (file.exists()) {
+                //if file exists, delete it and create new file
+                if (file.delete()) {
+                    file.createNewFile();
+                } 
             } else {
-                str = new String(str.getBytes("ISO-8859-1"), "gb2312");
+                file.createNewFile();
             }
-        } catch (Exception e) {
-            new SystemException(e.getMessage());
-        }
-        return str;
-
-    }
-
-
-    /**
-     * 转化数字型金额表达方式为汉语大写金额表达方式
-     *如传入123.23 -- 壹佰贰拾叁圆贰角叁分
-     * @param num String 数字型金额表达方式
-     * @return String
-     */
-    public static String transNumToChinese(BigDecimal bigdMoneyNumber) {
-        /*中文金额单位数组*/
-        String[] straChineseUnit = new String[] {
-                                   "分", "角", "圆", "拾", "佰", "仟", "万", "拾", "佰",
-                                   "仟", "亿", "拾", "佰",
-                                   "仟"};
-        /*中文数字字符数组*/
-        String[] straChineseNumber = new String[] {
-                                     "零", "壹", "贰", "叁", "肆", "伍", "陆", "柒",
-                                     "捌", "玖"};
-        String strChineseCurrency = "";
-        /*零数位标记*/
-        boolean bZero = true;
-        /*中文金额单位下标*/
-        int ChineseUnitIndex = 0;
-
-        try {
-            if (bigdMoneyNumber.intValue() == 0) {
-                return "零圆整";
+            fw = new FileWriter(file.getPath());
+            fw.write(content);
+	    } finally{
+            if (fw != null) {
+                fw.close();
             }
-
-            /*处理小数部分，四舍五入*/
-            double doubMoneyNumber = Math.round(bigdMoneyNumber.doubleValue() *
-                                                100);
-
-            /*是否负数*/
-            boolean bNegative = doubMoneyNumber < 0;
-
-            /*取绝对值*/
-            doubMoneyNumber = Math.abs(doubMoneyNumber);
-
-            /*循环处理转换操作*/
-            while (doubMoneyNumber > 0) {
-                /*整的处理(无小数位)*/
-                if (ChineseUnitIndex == 2 && strChineseCurrency.length() == 0) {
-                    strChineseCurrency = strChineseCurrency + "整";
-                }
-
-                /*非零数位的处理*/
-                if (doubMoneyNumber % 10 > 0) {
-                    strChineseCurrency = straChineseNumber[(int)
-                                         doubMoneyNumber % 10] +
-                                         straChineseUnit[ChineseUnitIndex] +
-                                         strChineseCurrency;
-                    bZero = false;
-                }
-                /*零数位的处理*/
-                else {
-                    /*元的处理(个位)*/
-                    if (ChineseUnitIndex == 2) {
-                        /*段中有数字*/
-                        if (doubMoneyNumber > 0) {
-                            strChineseCurrency = straChineseUnit[
-                                                 ChineseUnitIndex] +
-                                                 strChineseCurrency;
-                            bZero = true;
-                        }
-                    }
-                    /*万、亿数位的处理*/
-                    else if (ChineseUnitIndex == 6 || ChineseUnitIndex == 10) {
-                        /*段中有数字*/
-                        if (doubMoneyNumber % 1000 > 0) {
-                            strChineseCurrency = straChineseUnit[
-                                                 ChineseUnitIndex] +
-                                                 strChineseCurrency;
-                        }
-                    }
-
-                    /*前一数位非零的处理*/
-                    if (!bZero) {
-                        strChineseCurrency = straChineseNumber[0] +
-                                             strChineseCurrency;
-                    }
-                    bZero = true;
-                }
-
-                doubMoneyNumber = Math.floor(doubMoneyNumber / 10);
-                ChineseUnitIndex++;
-            }
-            //负数的处理
-            if (bNegative) {
-                strChineseCurrency = "负" + strChineseCurrency;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-        return strChineseCurrency;
-    }
-
-    /**
-     * 转化数字表达方式为中文数字表达方式
-     *如传入123 -- 一二三
-     * @param num String 数字表达方式
-     * @return String
-     */
-    public static String transNumToChineseNum(String bigdNumber) {
-        /*中文金额单位数组*/
-        String[] straChineseUnit = new String[] {
-                                   "零", "一", "二", "三", "四", "五", "六", "七", "八",
-                                   "九"};
-        String ChineseNum = "";
-        for (int i = 0; i < bigdNumber.length(); i++) {
-            ChineseNum +=
-                    straChineseUnit[Integer.parseInt(String.valueOf(bigdNumber.
-                    charAt(i)))];
-        }
-        return ChineseNum;
-    }
-
-
-    /*判断parentStr中是否包含sonstr元素
-     sonStr String
-     parentStr String //用逗号搁开的字符串
-     return boolean
-     */
-    public static boolean isInStr(String sonStr, String parentStr) {
-        boolean isIn = false;
-        /*拆分parentStr字符串*/
-        StringTokenizer st = new StringTokenizer(parentStr, ",");
-        while (st.hasMoreTokens()) {
-            if (sonStr.equals(st.nextToken())) {
-                isIn = true;
-            } else {
-                isIn = false;
-            }
-        }
-        return isIn;
-    }
-
-
-    public static String[] convertArrayListToArray(ArrayList l) {
-        String s[] = new String[l.size()];
-        for (int i = 0; i < l.size(); i++) {
-            s[i] = (String) l.get(i);
-        }
-        return s;
-    }
-
-    public static long stringToLong(String s) {
-        if (!s.equals("")) {
-            return Long.parseLong(s);
-        } else {
-            return Constants.DATABASE_NULL_NUMBER;
-        }
-    }
-
-    /**
-     * 获得一天的开始时间或结束时间,精确到时分秒 flag: AM 表示开始时间 PM 表示结束时间
-     * @param date String
-     * @return Date
-     */
-    public static Date getDayTime(String date,String flag) {
-        Calendar calendar = Calendar.getInstance();
-        StringTokenizer strTok = new StringTokenizer(date, " _-./");
-        String[] strAry = new String[strTok.countTokens()];
-        /*组成数组*/
-        int i = 0;
-        while (strTok.hasMoreTokens()) {
-            strAry[i++] = strTok.nextToken();
-        }
-        /*从数组中获得年月日*/
-        int y = Integer.parseInt(strAry[0]);
-        int m = Integer.parseInt(strAry[1]);
-        int d = Integer.parseInt(strAry[2]);
-        if("AM".equals(flag)){
-            calendar.set(y, m-1, d, 0, 0, 0);
-        }else if("PM".equals(flag)){
-            calendar.set(y, m-1, d, 24, 0, 0);
-        }
-        return calendar.getTime();
-
+	    }   
+	}
+	//add end
+	/**
+	 * According to input filePath of delete file
+	 * @param filePath  file path 
+	 */
+	public static void deleteFiles(final String filePath){
+		final File f = new File(filePath);
+		final File[] fs = f.listFiles();
+		if(fs != null) {
+			for (int i = 0; i < fs.length; i++){
+				fs[i].delete();
+			}
+		}
+	}
+	
+	/**
+	 * According to input filePath of check the file exist
+	 * @param filePath  file name 
+	 * @return If check the file exist, return true; otherwise, return false
+	 */
+	public static boolean checkFileExist(final String filename){
+		final File f = new File(filename);
+		return (f == null ? false : f.exists());
+	}
+	
+	/**
+	 * copy list
+	 * @param originalList
+	 * @return a copy list of all originalList iterms
+	 */
+	@SuppressWarnings("unchecked")
+    public static  List copyList(final List originalList){
+        final List rtnList = new ArrayList();
+        rtnList.addAll(originalList);
+        return rtnList;
     }
 }

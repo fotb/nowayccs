@@ -23,4 +23,6 @@ public interface IUserRoleDAO {
 	List<UserRoleVO> findByRoleId(final String roleId);
 	
 	void delete(final List<UserRoleVO> list);
+	
+	List<String> findUserIdsByRoleIds(List<String> roleIdList);
 }

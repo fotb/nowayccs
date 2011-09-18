@@ -1,6 +1,9 @@
 package com.ccs.bo.impl;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +49,17 @@ public class DictBOImpl implements IDictBO {
 	public List<DictVO> findByType(String dictType, PageInfo pageInfo) {
 		pageInfo.setTotalRecords(dictDAO.getTotalCountByDictType(dictType));
 		return dictDAO.findByType(dictType, pageInfo);
+	}
+
+	@Override
+	public Map<String, String> getDict(String dictType) {
+		Map<String, String> map = new HashMap<String, String>();
+		List<DictVO> dictList = dictDAO.findByType(dictType);
+		for (Iterator<DictVO> iter = dictList.iterator(); iter.hasNext();) {
+			DictVO dictVO = iter.next();
+			map.put(dictVO.getSortIndex(), dictVO.getValue());
+		}
+		return map;
 	}
 
 }

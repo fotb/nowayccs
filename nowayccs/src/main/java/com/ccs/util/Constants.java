@@ -5,27 +5,27 @@ import java.util.Map;
 
 public class Constants {
     /*系统权限定义*/
-    public static long SYS_PERMISSION_YWSL = 10; //业务受理
-    public static long SYS_PERMISSION_SHYWCL = 20; //生活业务处理
-    public static long SYS_PERMISSION_SHYWCX = 21; //查看生活服务详细信息
-    public static long SYS_PERMISSION_SWYWCL = 30; //事务业务处理
-    public static long SYS_PERMISSION_SHKHHF = 40; //生活客户回访
-    public static long SYS_PERMISSION_SWKHWF = 50; //事务客户回访
-    public static long SYS_PERMISSION_BBCX = 60; //报表查询
-    public static long SYS_PERMISSION_QZZXXCX = 70; //求助者信息查询
-    public static long SYS_PERMISSION_ZYZFWHZ = 80; //一技之长服务者汇总
-    public static long SYS_PERMISSION_YWZXWH = 90; //业务咨询维护
-    public static long SYS_PERMISSION_YWZXCX = 100; //业务咨询查询
-    public static long SYS_PERMISSION_YHGL = 110; //用户管理
-    public static long SYS_PERMISSION_JSQXWH = 120; //角色权限维护
-    public static long SYS_PERMISSION_JDSQWH = 130; //街道社区维护
-    public static long SYS_PERMISSION_SQZYZWH = 140; //一技之长服务者维护
-    public static long SYS_PERMISSION_SQZYZCX = 141; //一技之长服务者查询
-    public static long SYS_PERMISSION_WWQYLBWH = 150; //服务企业类别维护
-    public static long SYS_PERMISSION_FWQYWH = 160; //服务企业维护
-    public static long SYS_PERMISSION_FWQYCX = 161; //服务企业查询
-    public static long SYS_PERMISSION_SJZDWH = 170; //数据字典维护
-    public static long SYS_PERMISSION_ZQLJSZ = 180; //座席联机设置
+    public static String SYS_PERMISSION_YWSL = "10"; //业务受理
+    public static String SYS_PERMISSION_SHYWCL = "20"; //生活业务处理
+    public static String SYS_PERMISSION_SHYWCX = "21"; //查看生活服务详细信息
+    public static String SYS_PERMISSION_SWYWCL = "30"; //事务业务处理
+    public static String SYS_PERMISSION_SHKHHF = "40"; //生活客户回访
+    public static String SYS_PERMISSION_SWKHWF = "50"; //事务客户回访
+    public static String SYS_PERMISSION_BBCX = "60"; //报表查询
+    public static String SYS_PERMISSION_QZZXXCX = "70"; //求助者信息查询
+    public static String SYS_PERMISSION_ZYZFWHZ = "80"; //一技之长服务者汇总
+    public static String SYS_PERMISSION_YWZXWH = "90"; //业务咨询维护
+    public static String SYS_PERMISSION_YWZXCX = "100"; //业务咨询查询
+    public static String SYS_PERMISSION_YHGL = "110"; //用户管理
+    public static String SYS_PERMISSION_JSQXWH = "120"; //角色权限维护
+    public static String SYS_PERMISSION_JDSQWH = "130"; //街道社区维护
+    public static String SYS_PERMISSION_SQZYZWH = "140"; //一技之长服务者维护
+    public static String SYS_PERMISSION_SQZYZCX = "141"; //一技之长服务者查询
+    public static String SYS_PERMISSION_WWQYLBWH = "150"; //服务企业类别维护
+    public static String SYS_PERMISSION_FWQYWH = "160"; //服务企业维护
+    public static String SYS_PERMISSION_FWQYCX = "161"; //服务企业查询
+    public static String SYS_PERMISSION_SJZDWH = "170"; //数据字典维护
+    public static String SYS_PERMISSION_ZQLJSZ = "180"; //座席联机设置
 
 
     /*树型的顶级代码-1*/
@@ -78,7 +78,7 @@ public class Constants {
     public static final String SYS_INFOMATION_STATES_CLZ = "2"; // 2、处理中
     public static final String SYS_INFOMATION_STATES_YJA = "3"; // 3、已结案
     public static final String SYS_INFOMATION_STATES_YQX = "4"; //4、已取消
-    public static final HashMap SYS_INFOMATION_STATES_HASHMAP = new HashMap();
+    public static final Map<String, String> SYS_INFOMATION_STATES_HASHMAP = new HashMap<String, String>();
     static {
         SYS_INFOMATION_STATES_HASHMAP.put(String.valueOf(
                 SYS_INFOMATION_STATES_DB), "待办");

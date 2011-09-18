@@ -1,59 +1,35 @@
-package com.ccs.vo;
+package com.ccs.web.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class InfoBean implements Serializable {
 
-@Entity
-@Table(name = "HJ_INFORMATION")
-public class InformationVO implements Serializable {
-	private static final long serialVersionUID = 8151777801642274209L;
-
-	@Id
-	@GeneratedValue(generator = "hibernate-uuid")
-	@org.hibernate.annotations.GenericGenerator(name = "hibernate-uuid", strategy = "uuid")
-	@Column(name = "INFORMATIONID")
+	private static final long serialVersionUID = -1483581214079226413L;
 	private String infoId;
 
-	@Column(name = "HELPNAME")
 	private String helpName;
 
-	@Column(name = "HELPMODE")
 	private String helpMode;
 
-	@Column(name = "HELPTEL")
 	private String helpTel;
 
-	@Column(name = "HELPADDR")
 	private String helpAddr;
 
-	@Column(name = "HELPCONTENT")
 	private String helpContent;
 
-	@Column(name = "HELPTYPE")
 	private String helpType;
 
-	@Column(name = "HELPAREA")
 	private String helpArea;
 
-	@Column(name = "CREATOR")
 	private String creator;
 
-	@Column(name = "CREATETIME")
 	private Date createTime;
 
-	@Column(name = "HELPGROUP")
 	private String helpGroup;
 
-	@Column(name = "FINISHTIME")
 	private Date finishTime;
-	
-	@Column(name = "STATUS")
+
 	private String status;
 
 	public String getInfoId() {
@@ -144,14 +120,6 @@ public class InformationVO implements Serializable {
 		this.helpGroup = helpGroup;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public Date getFinishTime() {
 		return finishTime;
 	}
@@ -160,29 +128,11 @@ public class InformationVO implements Serializable {
 		this.finishTime = finishTime;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((infoId == null) ? 0 : infoId.hashCode());
-		return result;
+	public String getStatus() {
+		return status;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		InformationVO other = (InformationVO) obj;
-		if (infoId == null) {
-			if (other.infoId != null)
-				return false;
-		} else if (!infoId.equals(other.infoId))
-			return false;
-		return true;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-
 }

@@ -40,7 +40,7 @@ public class AffairInformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<AffairInformationVO> findByInfoIds(List<String> infoIds) {
 		StringBuffer hqlBuffer = new StringBuffer(1000);
-		hqlBuffer.append("from AffairInformationVO where t.infoId in (");
+		hqlBuffer.append("from AffairInformationVO t where t.infoId in (");
 		
 		for (int i = 0; i < infoIds.size(); i++) {
 			if(i == infoIds.size() - 1) {
