@@ -18,4 +18,11 @@ public interface IVolunteerDAO {
 	
 	int getCountByParams(String status, String serviceType,
 			 String areaId, String areaSubId, String volunteerNo);
+	
+	List<VolunteerVO> findByParams(String status, String serviceType,
+			 String areaId, String areaSubId, String volunteerNo, String serviceName, 
+			 PageInfo pageInfo);
+	
+	int getCountByParams(String status, String serviceType,
+			 String areaId, String areaSubId, String volunteerNo, String serviceName);
 }

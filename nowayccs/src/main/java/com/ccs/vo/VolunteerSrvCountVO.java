@@ -3,11 +3,12 @@ package com.ccs.vo;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-
+@Entity
 @Table(name = "VOLUNTEER_SRV_COUNT_VIEW")
 public class VolunteerSrvCountVO implements Serializable {
 

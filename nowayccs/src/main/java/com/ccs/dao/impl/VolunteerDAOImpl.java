@@ -38,13 +38,26 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 	}
 
 	private static final String hql = "from VolunteerVO t where (t.status = ? or ? is null) and (t.serviceType = ? or ? is null) and "
-			+ "(t.areaId = ? or ? is null) and (t.areaSubId = ? or ? is null) and (t.volunteerNo = ? or ? is null) ";
+			+ "(t.areaId = ? or ? is null) and (t.areaSubId = ? or ? is null) and (t.volunteerNo like ? or ? is null) and (t.serviceName like ? or ? is null) ";
+
+	@Override
+	public List<VolunteerVO> findByParams(String status, String serviceType,
+			String areaId, String areaSubId, String volunteerNo,
+			final PageInfo pageInfo) {
+		return findByParams(status, serviceType, areaId, areaSubId, volunteerNo, null, pageInfo);
+	}
+
+	@Override
+	public int getCountByParams(String status, String serviceType,
+			String areaId, String areaSubId, String volunteerNo) {
+		return getCountByParams(status, serviceType, areaId, areaSubId, volunteerNo, null);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<VolunteerVO> findByParams(String status, String serviceType,
 			String areaId, String areaSubId, String volunteerNo,
-			final PageInfo pageInfo) {
+			String serviceName, final PageInfo pageInfo) {
 		final List<String> valList = new ArrayList<String>();
 		valList.add(StringUtil.emptyToNull(status));
 		valList.add(StringUtil.emptyToNull(status));
@@ -54,8 +67,10 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 		valList.add(StringUtil.emptyToNull(areaId));
 		valList.add(StringUtil.emptyToNull(areaSubId));
 		valList.add(StringUtil.emptyToNull(areaSubId));
+		valList.add(StringUtil.emptyToNull("%" + volunteerNo + "%"));
 		valList.add(StringUtil.emptyToNull(volunteerNo));
-		valList.add(StringUtil.emptyToNull(volunteerNo));
+		valList.add(StringUtil.emptyToNull("%" + serviceName + "%"));
+		valList.add(StringUtil.emptyToNull(serviceName));
 		
 		final StringType[] types = new StringType[valList.size()];
 		for (int i = 0; i < valList.size(); i++) {
@@ -77,9 +92,10 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 
 	@Override
 	public int getCountByParams(String status, String serviceType,
-			String areaId, String areaSubId, String volunteerNo) {
+			String areaId, String areaSubId, String volunteerNo,
+			String serviceName) {
 		final String targetHql = "select count(t.volunteerId) " + hql;
-		final Object[] objs = new Object[]{status, status, serviceType, serviceType, areaId, areaId, areaSubId, areaSubId, volunteerNo, volunteerNo};
+		final Object[] objs = new Object[]{status, status, serviceType, serviceType, areaId, areaId, areaSubId, areaSubId, "%" + volunteerNo + "%", volunteerNo, "%" + serviceName + "%", serviceName};
 		final Long count = (Long) getHibernateTemplate().find(targetHql, objs).listIterator().next();
 		return count.intValue();
 	}

@@ -34,12 +34,12 @@ public class VolunteerBOImpl implements IVolunteerBO {
 
 	@Override
 	public List<VolunteerVO> search(String status, String serviceType,
-			String areaId, String areaSubId, String volunteerNo,
+			String areaId, String areaSubId, String volunteerNo, String serviceName, 
 			PageInfo pageInfo) {
 		pageInfo.setTotalRecords(volunteerDAO.getCountByParams(status,
-				serviceType, areaId, areaSubId, volunteerNo));
+				serviceType, areaId, areaSubId, volunteerNo, serviceName));
 		return volunteerDAO.findByParams(status, serviceType, areaId,
-				areaSubId, volunteerNo, pageInfo);
+				areaSubId, volunteerNo, serviceName, pageInfo);
 	}
 
 	@Override

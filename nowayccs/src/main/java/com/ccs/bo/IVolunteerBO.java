@@ -13,7 +13,7 @@ public interface IVolunteerBO {
 	VolunteerVO findById(String volunteerId);
 
 	List<VolunteerVO> search(String status, String serviceType, String areaId,
-			String areaSubId, String volunteerNo, PageInfo pageInfo);
+			String areaSubId, String volunteerNo, String serviceName, PageInfo pageInfo);
 
 	List<AreaVO> getAllArea();
 	
