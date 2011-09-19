@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Untitled Document</title>
-<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/function.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script language="javascript" type="">
@@ -23,7 +24,7 @@ function btnsave_click(){
 
 function btnchoose_click(){
   var form = document.forms[0];
-  var lifeHandInfo = window.showModalDialog("OprLifeInforDeal_select.do?"+getTimeStr(),window,"dialogWidth=900px;dialogHeight=700px;status=0");
+  var lifeHandInfo = window.showModalDialog("bizlife.do?action=receiver&"+getTimeStr(),window,"dialogWidth=900px;dialogHeight=700px;status=0");
   if(lifeHandInfo!=null){
     form.receiverType.value=lifeHandInfo.receiverType;
     form.receiverID.value=lifeHandInfo.receiverID;
