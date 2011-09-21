@@ -46,7 +46,7 @@ public class AffairInformationVO implements Serializable {
 	private String moveAcceptTel;
 
 	@Column(name = "MOVETIME")
-	private String moveTime;
+	private Date moveTime;
 
 	@Column(name = "ANSWERMODE")
 	private String answerMode;
@@ -159,11 +159,11 @@ public class AffairInformationVO implements Serializable {
 		this.moveAcceptTel = moveAcceptTel;
 	}
 
-	public String getMoveTime() {
+	public Date getMoveTime() {
 		return moveTime;
 	}
 
-	public void setMoveTime(String moveTime) {
+	public void setMoveTime(Date moveTime) {
 		this.moveTime = moveTime;
 	}
 

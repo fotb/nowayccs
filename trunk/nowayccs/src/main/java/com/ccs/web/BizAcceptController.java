@@ -38,7 +38,7 @@ import com.ccs.web.domain.InfoBean;
 
 @Controller
 @RequestMapping("/bizaccept.do")
-@SessionAttributes({"currentUser", "bizAccept"})
+@SessionAttributes("bizAccept")
 public class BizAcceptController {
 	private static final String FORMATE_CREATETIME = "yyyy-MM-dd HH:mm:ss";
 	
@@ -54,7 +54,7 @@ public class BizAcceptController {
 	@RequestMapping
 	public String accept(@RequestParam(value = "callNo", required = false) String callNo, HttpSession session, 
 			ModelMap model) {
-		UserVO userVO = (UserVO) session.getAttribute("currentUser");
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = new BizAccept();
 		bizAccept.setHelpTel(callNo);
 		bizAccept.setCreator(userVO.getUserId());
@@ -78,8 +78,9 @@ public class BizAcceptController {
 	
 	
 	@RequestMapping(params = "action=life")
-	public String acceptLife(@ModelAttribute("bizAccept") BizAccept bizAccept, ModelMap model) {
-		
+	public String acceptLife(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		bizAccept.setCreator(user.getUserName());
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
 		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
@@ -90,10 +91,11 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=lifesave")
-	public String acceptLifeSave(@ModelAttribute("bizAccept") BizAccept bizAccept, ModelMap model, SessionStatus status) {
+	public String acceptLifeSave(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model, SessionStatus status) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		InformationVO vo = new InformationVO();
 		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
-		vo.setCreator(bizAccept.getCreator());
+		vo.setCreator(user.getUserId());
 		vo.setHelpAddr(bizAccept.getHelpAddr());
 		vo.setHelpArea(bizAccept.getHelpArea());
 		vo.setHelpContent(bizAccept.getHelpContent());
@@ -110,8 +112,9 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=affair")
-	public String acceptAffair(@ModelAttribute("bizAccept") BizAccept bizAccept, ModelMap model) {
-		
+	public String acceptAffair(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		bizAccept.setCreator(user.getUserName());
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
 		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
@@ -122,10 +125,11 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=affairsave")
-	public String acceptAffairSave(@ModelAttribute("bizAccept") BizAccept bizAccept, ModelMap model, SessionStatus status) {
+	public String acceptAffairSave(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model, SessionStatus status) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		InformationVO vo = new InformationVO();
 		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
-		vo.setCreator(bizAccept.getCreator());
+		vo.setCreator(user.getUserId());
 		vo.setHelpAddr(bizAccept.getHelpAddr());
 		vo.setHelpArea(bizAccept.getHelpArea());
 		vo.setHelpContent(bizAccept.getHelpContent());

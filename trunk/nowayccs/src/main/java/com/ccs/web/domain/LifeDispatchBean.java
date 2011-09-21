@@ -5,7 +5,11 @@ import java.io.Serializable;
 public class LifeDispatchBean implements Serializable {
 
 	private static final long serialVersionUID = -556499363593249003L;
-
+	
+	private String infoId;
+	
+	private String receiverType;
+	
 	private String receiverId;
 
 	private String linkName;
@@ -13,6 +17,22 @@ public class LifeDispatchBean implements Serializable {
 	private String linkTel;
 
 	private String handMode;
+
+	public String getInfoId() {
+		return infoId;
+	}
+
+	public void setInfoId(String infoId) {
+		this.infoId = infoId;
+	}
+
+	public String getReceiverType() {
+		return receiverType;
+	}
+
+	public void setReceiverType(String receiverType) {
+		this.receiverType = receiverType;
+	}
 
 	public String getReceiverId() {
 		return receiverId;
