@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
+	
+	public static final String SESSION_USER_KEY = "currentUser";
+	
     /*系统权限定义*/
     public static String SYS_PERMISSION_YWSL = "10"; //业务受理
     public static String SYS_PERMISSION_SHYWCL = "20"; //生活业务处理

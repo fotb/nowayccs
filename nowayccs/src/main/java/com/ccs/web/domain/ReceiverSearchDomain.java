@@ -11,7 +11,7 @@ public class ReceiverSearchDomain implements Serializable {
 	// volunteer
 	private String areaId;
 
-	private String subAreaId;
+	private String areaSubId;
 
 	private String volunteerNo;
 
@@ -40,12 +40,12 @@ public class ReceiverSearchDomain implements Serializable {
 		this.areaId = areaId;
 	}
 
-	public String getSubAreaId() {
-		return subAreaId;
+	public String getAreaSubId() {
+		return areaSubId;
 	}
 
-	public void setSubAreaId(String subAreaId) {
-		this.subAreaId = subAreaId;
+	public void setAreaSubId(String areaSubId) {
+		this.areaSubId = areaSubId;
 	}
 
 	public String getVolunteerNo() {

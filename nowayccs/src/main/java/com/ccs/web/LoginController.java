@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ccs.bo.IUserBO;
+import com.ccs.util.Constants;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LoginBean;
 
@@ -36,7 +37,7 @@ public class LoginController {
 			return "login";
 		} else {
 			UserVO vo = userBO.login(loginBean.getLoginName(), loginBean.getLoginPassword());
-			session.setAttribute("currentUser", vo);
+			session.setAttribute(Constants.SESSION_USER_KEY, vo);
 		}
 		return "redirect:index.do";
 	}

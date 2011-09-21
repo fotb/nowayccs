@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ccs.util.PageInfo;
 import com.ccs.vo.InformationVO;
+import com.ccs.vo.LifeInformationVO;
 
 public interface IBizLifeBO {
 
@@ -16,4 +17,11 @@ public interface IBizLifeBO {
 	
 	Map<String, String> getVltSrvCountToday();
 	
+	Map<String, String> getEntSrvCount();
+	
+	Map<String, String> getEntSrvCountToday();
+	
+	void addLifeInfo(LifeInformationVO vo);
+	
+	void del(String infoId, String userId);
 }
