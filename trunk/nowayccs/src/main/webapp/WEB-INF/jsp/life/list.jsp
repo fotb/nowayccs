@@ -20,9 +20,8 @@ function btnsearch_click(){
 function option_delete(id){
   var form = document.forms[0];
    if(confirm("确定要删除?")){
-     form.action="bizlife.do?action=del&infoId="+id;
-
-     form.submit();
+	$("#command").attr("action", "bizlife.do?action=del&infoId="+id);
+	$("#command").submit();
    }
 }
 </script>
@@ -32,30 +31,14 @@ function option_delete(id){
   <tr>
     <td>
       <table width="850" border="0" align="center" cellpadding="0" cellspacing="0">
-      	<!-- 
         <tr>
           <td><img src="images/bgtd_01.gif" width="850" height="5" alt=""></td>
         </tr>
         <tr>
           <td bgcolor="#F1F1F1">
-            <table width="98%" border="0" align="center" cellpadding="0" cellspacing="1">
-              <tr>
-                <td>状态：</td>
-                <td>
-                  <html:select property="searchStates" styleClass="form">
-		                <html:optionsCollection name="InfomationStatus" label="label" value="value"/>
-              		</html:select>
-                </td>
-                <td width="55%">
-                  <A href="javascript:btnsearch_click()">
-                    <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
-                  </A>
-                </td>
-              </tr>
-            </table>
+			生活类业务处理
           </td>
         </tr>
-         -->
         <tr>
           <td height="10" valign="top"><img src="images/bgtd_02.gif" width="850" height="5" alt=""></td>
         </tr>
@@ -72,7 +55,7 @@ function option_delete(id){
         </tr>
         <c:forEach items="${infoList}" var="info">
 		<tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
-			<td>${info.createTime}</td>
+			<td><fmt:formatDate value="${info.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${info.helpName}</td>
 			<td>${info.helpTel}</td>
 			<td>${info.helpAddr}</td>
@@ -85,7 +68,7 @@ function option_delete(id){
 				</a>
 			</td>
 			<td>
-				<img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete(${info.infoId});" style="cursor:hand">
+				<img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor:pointer;">
 			</td>
 		</tr>
 		<tr class="line">

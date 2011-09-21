@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Untitled Document</title>
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <base target="_self">
@@ -26,6 +27,130 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
   window.returnValue=lifeHandInfo;
   window.close();
 }
+
+$(document).ready(function(){
+	$.getJSON("json.do?action=entcategory", {parentId: -1}, function(data) {
+		$("#bigEntCategoryId").append("<option value=' '>请选择</option>");
+		$.each(data, function(i, item) {
+			if(item.categoryId == "${receiverSearchDomain.bigEntCategoryId}") {
+				$("#bigEntCategoryId").append("<option value=" + item.categoryId + " selected='selected'>" + item.value + " </option>");
+			} else {
+				$("#bigEntCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+			}
+		});
+	});
+
+	if("" != "${receiverSearchDomain.bigEntCategoryId}") {
+		loadSubEntCategory(${receiverSearchDomain.bigEntCategoryId});
+	}
+
+	$("#bigEntCategoryId").change(function() {
+		$("#subEntCategoryId").empty();
+		$("#subEntCategoryId").append("<option value=' '>请选择</option>");
+		$("#entCategoryId").empty();
+		$("#entCategoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: $("#bigEntCategoryId").val()}, function(data) {
+			$.each(data, function(i, item) {
+				$("#subEntCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+			});
+		});
+		$("form").submit();
+	});
+
+	if("" != "${receiverSearchDomain.subEntCategoryId}") {
+		loadEntCategory(${receiverSearchDomain.subEntCategoryId});
+	}
+
+	$("#subEntCategoryId").change(function() {
+		$("#entCategoryId").empty();
+		$("#entCategoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: $("#subEntCategoryId").val()}, function(data) {
+			$.each(data, function(i, item) {
+				$("#entCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+			});
+		$("form").submit();
+		});
+		
+	});
+
+	$("#entCategoryId").change(function() {
+		$("form").submit();
+	});
+
+	$.getJSON("json.do?action=area", function(data) {
+		$("#areaId").append("<option value=' '>全部</option>");
+		$.each(data, function(i, item) {
+			if(item.areaId == "${receiverSearchDomain.areaId}") {
+				$("#areaId").append("<option value=" + item.areaId + " selected='selected'>" + item.name + " </option>");
+			} else {
+				$("#areaId").append("<option value=" + item.areaId + ">" + item.name + " </option>");
+			}
+		});
+	});
+	if("" != "${receiverSearchDomain.areaId}") {
+		loadAreaSub(${receiverSearchDomain.areaId});
+	}
+
+	$("#areaId").change(function() {
+		$("#areaSubId").empty();
+		$("#areaSubId").append("<option value=' '>全部</option>");
+		$.getJSON("json.do?action=subarea", {areaId: $("#areaId").val()}, function(data) {
+			$.each(data, function(i, item) {
+				$("#areaSubId").append("<option value=" + item.areaSubId + ">" + item.name + " </option>");
+			});
+		});
+		$("form").submit();
+	});
+
+	$("#areaSubId").change(function() {
+		$("form").submit();
+	});
+});
+
+function loadAreaSub(areaId) {
+		$("#areaSubId").empty();
+		$("#areaSubId").append("<option value=' '>全部</option>");
+		$.getJSON("json.do?action=subarea", {areaId: areaId}, function(data) {
+			$.each(data, function(i, item) {
+				if(item.areaSubId == "${receiverSearchDomain.areaSubId}") {
+					$("#areaSubId").append("<option value=" + item.areaSubId + " selected='selected'>" + item.name + " </option>");
+				} else {
+					$("#areaSubId").append("<option value=" + item.areaSubId + ">" + item.name + " </option>");
+				}
+			});
+		});
+}
+
+function loadSubEntCategory(bigEntCategoryId) {
+		$("#subEntCategoryId").empty();
+		$("#subEntCategoryId").append("<option value=' '>请选择</option>");
+		$("#entCategoryId").empty();
+		$("#entCategoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: bigEntCategoryId}, function(data) {
+			$.each(data, function(i, item) {
+				if(item.categoryId == "${receiverSearchDomain.subEntCategoryId}") {
+					$("#subEntCategoryId").append("<option value=" + item.categoryId + " selected='selected'>" + item.value + " </option>");
+				} else {
+					$("#subEntCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+				}
+			});
+		});
+}
+
+function loadEntCategory(subEntCategoryId) {
+		$("#entCategoryId").empty();
+		$("#entCategoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: subEntCategoryId}, function(data) {
+			$.each(data, function(i, item) {
+				if(item.categoryId == "${receiverSearchDomain.entCategoryId}") {
+					$("#entCategoryId").append("<option value=" + item.categoryId + " selected='selected'>" + item.value + " </option>");
+				} else {
+					$("#entCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+				}
+			});
+		});
+}
+
 </script>
 <form:form method="post" action="bizlife.do?action=receiver" commandName="receiverSearchDomain">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
@@ -43,19 +168,18 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
                 <tr>
                   <td>                    请选择服务类别：
                     <form:select path="receiverType" cssClass="form" onchange="btnsearch_click()">
-						<form:option value="V">一技之长服务者</form:option>
-						<form:option value="E">服务企业</form:option>
+						<form:option value="1">一技之长服务者</form:option>
+						<form:option value="2">服务企业</form:option>
                     </form:select>
                   </td>
                 </tr>
                 <tr>
-                  <c:if test="${receiverSearchDomain.receiverType == 'V'}">
+                  <c:if test="${receiverSearchDomain.receiverType == '1'}">
                     <td>                      服务者所在街道：
                       <form:select path="areaId" cssClass="form" >
-                        <option value="">全部</option>
                       </form:select>
-                      <form:select path="subAreaId" cssClass="form" onchange="btnsearch_click()">
-                        <option value="">全部</option>
+                      <form:select path="areaSubId" cssClass="form" onchange="btnsearch_click()">
+                        <option value=" ">全部</option>
                       </form:select>
                       编号：<form:input path="volunteerNo" cssStyle="form" />
                       服务项目：<form:input path="serviceName" cssStyle="form" />
@@ -64,16 +188,15 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
                       </A>
                     </td>
                   </c:if>
-                  <c:if test="${receiverSearchDomain.receiverType == 'E'}">
+                  <c:if test="${receiverSearchDomain.receiverType == '2'}">
                     <td>                      所需服务项目&nbsp;&nbsp;&nbsp;&nbsp;：
                       <form:select path="bigEntCategoryId">
-                        <option value="">请选择</option>
                       </form:select>
                       <form:select path="subEntCategoryId">
-                        <option value="">请选择</option>
+                        <option value=" ">请选择</option>
                       </form:select>
                       <form:select path="entCategoryId" onchange="btnsearch_click()">
-                        <option value="">请选择</option>
+                        <option value=" ">请选择</option>
                       </form:select>
                       <A href="javascript:btnsearch_click()">
                         <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
@@ -90,7 +213,7 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
             </td>
           </tr>
         </table>
-        <c:if test="${receiverSearchDomain.receiverType == 'V'}">
+        <c:if test="${receiverSearchDomain.receiverType == '1'}">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="table_green">
               <td width="15%">&nbsp;</td>
@@ -104,7 +227,7 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
 			<c:forEach items="${vltDTOList}" var="vltDTO">
             <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
               <td>
-                <a href="javascript:btnselect_click('V','${vltDTO.volunteerId}','${vltDTO.volunteerName}','${vltDTO.phone}')">
+                <a href="javascript:btnselect_click('1','${vltDTO.volunteerId}','${vltDTO.volunteerName}','${vltDTO.phone}')">
                   <img src="images/button_choose.gif" width="60" height="18" alt="" border=0>
                 </a>
               </td>
@@ -147,7 +270,7 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
 			</c:forEach>
           </table>
         </c:if>
-        <c:if test="${receiverSearchDomain.receiverType == 'E'}">
+        <c:if test="${receiverSearchDomain.receiverType == '2'}">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="table_green">
               <td width="20%">&nbsp;</td>
@@ -160,7 +283,7 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
 			<c:forEach items="${entDTOList}" var="entDTO">
             <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
               <td>
-                <a href="javascript:btnselect_click('E','${entDTO.entpriseId}','${entDTO.entpriseName}','${entDTO.serviceTel}')">
+                <a href="javascript:btnselect_click('2','${entDTO.entpriseId}','${entDTO.entpriseName}','${entDTO.serviceTel}')">
                   <img src="images/button_choose.gif" width="60" height="18" alt="" border=0>
                 </a>
               </td>

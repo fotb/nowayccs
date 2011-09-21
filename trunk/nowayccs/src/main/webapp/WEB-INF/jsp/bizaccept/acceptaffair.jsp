@@ -110,7 +110,7 @@ function btnnext_click(){
           </tr>
           <tr class="table_t1">
             <td>服务者：</td>
-            <td>--</td>
+            <td>${bizAccept.creator}</td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
