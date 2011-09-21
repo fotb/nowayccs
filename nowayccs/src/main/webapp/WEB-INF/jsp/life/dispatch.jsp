@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Untitled Document</title>
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/function.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
@@ -16,29 +17,30 @@ function btnsave_click(){
   if(!isValidStringObj( form.handMode,"派单方式",true)){
     return;
   }
-  if(!isValidStringObj( form.receiverID,"派送方向",true)){
+  if(!isValidStringObj( form.receiverId,"派送方向",true)){
     return;
   }
   form.submit();
 }
 
 function btnchoose_click(){
-  var form = document.forms[0];
   var lifeHandInfo = window.showModalDialog("bizlife.do?action=receiver&"+getTimeStr(),window,"dialogWidth=900px;dialogHeight=700px;status=0");
   if(lifeHandInfo!=null){
-    form.receiverType.value=lifeHandInfo.receiverType;
-    form.receiverID.value=lifeHandInfo.receiverID;
-    form.linkName.value=lifeHandInfo.linkName;
-    form.linkTel.value=lifeHandInfo.linkTel;
+	$("#receiverType").val(lifeHandInfo.receiverType);
+	$("#receiverId").val(lifeHandInfo.receiverID);
+	$("#linkName").val(lifeHandInfo.linkName);
+	$("#linkTel").val(lifeHandInfo.linkTel);
   }
 }
 
 function btnback_click(){
-  window.open("OprLifeInforDeal_list.do?searchStates=1","_self");
+  window.open("bizlife.do?pageNo=${pageNo}","_self");
 }
 </script>
 <form:form method="post" action="bizlife.do?action=dispatchsave" commandName="lifeDispatchBean">
 <input type="hidden" name="pageNo" id="pageNo" value="${pageNo}"/>
+<form:hidden path="receiverType"/>
+<form:hidden path="infoId"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
