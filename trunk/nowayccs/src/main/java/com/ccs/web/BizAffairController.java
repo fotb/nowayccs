@@ -1,5 +1,6 @@
 package com.ccs.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -54,6 +55,13 @@ public class BizAffairController {
 		return "affair/list";
 	}
 	
+	@RequestMapping(params = "action=del")
+	public String del(String infoId, @RequestParam("pageNo") String pageNo, HttpSession session, ModelMap model) {
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		bizAffairBO.del(infoId, userVO.getUserId());
+		return "redirect:bizaffair.do?pageNo=" + pageNo;
+	}
+	
 	@RequestMapping(params = "action=dispatch")
 	public String dispatch(@RequestParam("infoId") String infoId,
 			@RequestParam("pageNo") String pageNo, ModelMap model) {
@@ -72,14 +80,19 @@ public class BizAffairController {
 	@RequestMapping(params = "action=dispatchsave")
 	public String dispatchSave(@ModelAttribute("affairDispatchBean") AffairDispatchBean affairDispatchBean,
 			@RequestParam("pageNo") String pageNo, HttpSession session, ModelMap model) {
-		AffairInformationVO vo = bizAffairBO.findAffairInfoByInfoId(affairDispatchBean.getInfoId());
+		AffairInformationVO vo = new AffairInformationVO(); 
+		InformationVO infoVO  = bizAffairBO.findInfoByInfoId(affairDispatchBean.getInfoId());
 		vo.setMoveWay(affairDispatchBean.getMoveWay());
 		vo.setMoveAcceptor(affairDispatchBean.getMoveAcceptor());
 		vo.setMoveAcceptTel(affairDispatchBean.getAcceptorTel());
-		vo.setMoveMode(affairDispatchBean.getMoveMode());
 		vo.setMoveTime(DateUtil.parse(affairDispatchBean.getMoveTime(), "yyyy-MM-dd HH:mm"));
 		
-		bizAffairBO.addAffairInfo(vo);
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		infoVO.setDeliverMode(affairDispatchBean.getMoveMode());
+		infoVO.setDeliverer(user.getUserId());
+		infoVO.setDeliverTime(new Date());
+		
+		bizAffairBO.deliverAffair(infoVO, vo);
 		return "redirect:bizaffair.do?pageNo=" + pageNo;
 	}
 }

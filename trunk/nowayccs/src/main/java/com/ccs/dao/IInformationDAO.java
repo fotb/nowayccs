@@ -20,4 +20,8 @@ public interface IInformationDAO {
 	List<InformationVO> findByCreatorAndStatus(final String userId, final String status, final String helpType, PageInfo pageInfo);
 	
 	int getTotalCount(final String userId, final String status, String helpType);
+	
+	List<InformationVO> findByDeliverer(String deliverer, String helpType, PageInfo pageInfo);
+	
+	int getTotalCountByDeliverer(String deliverer, String helpType);
 }

@@ -28,7 +28,6 @@ import com.ccs.util.JQGridFormatterUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.util.Utils;
-import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.DictVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.ReferInformationVO;
@@ -138,14 +137,9 @@ public class BizAcceptController {
 		vo.setHelpName(bizAccept.getHelpName());
 		vo.setHelpTel(bizAccept.getHelpTel());
 		vo.setHelpType(bizAccept.getHelpType());
+		vo.setAffairAcceptor(bizAccept.getHandAcceptor());
 		
-		AffairInformationVO affairInfoVO = new AffairInformationVO();
-		affairInfoVO.setHandAcceptor(bizAccept.getHandAcceptor());
-		affairInfoVO.setHandor(bizAccept.getCreator());
-		affairInfoVO.setHandTime(new Date());
-		
-		
-		bizAcceptBO.acceptAffair(vo, affairInfoVO);
+		bizAcceptBO.acceptAffair(vo);
 		
 //		status.setComplete();
 		return "redirect:bizaccept.do";

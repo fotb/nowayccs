@@ -7,12 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IBizAcceptBO;
-import com.ccs.dao.IAffairInformationDAO;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.dao.IReferInformationDAO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
-import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.ReferInformationVO;
 
@@ -21,8 +19,7 @@ public class BizAcceptBOImpl implements IBizAcceptBO {
 
 	@Autowired
 	private IInformationDAO informatinDAO;
-	@Autowired
-	private IAffairInformationDAO affairInformationDAO;
+
 	@Autowired
 	private IReferInformationDAO referInformationDAO;
 	
@@ -32,13 +29,9 @@ public class BizAcceptBOImpl implements IBizAcceptBO {
 		informatinDAO.saveOrUpate(vo);
 	}
 	@Override
-	@Transactional
-	public void acceptAffair(InformationVO vo, AffairInformationVO affairInfoVO) {
+	public void acceptAffair(InformationVO vo) {
 		vo.setStatus(Constants.SYS_INFOMATION_STATES_DB);
 		informatinDAO.saveOrUpate(vo);
-		
-		affairInfoVO.setInfoId(vo.getInfoId());
-		affairInformationDAO.saveOrUpdate(affairInfoVO);
 	}
 	
 	@Override

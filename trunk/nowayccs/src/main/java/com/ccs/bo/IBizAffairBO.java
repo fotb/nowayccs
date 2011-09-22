@@ -14,5 +14,7 @@ public interface IBizAffairBO {
 	
 	AffairInformationVO findAffairInfoByInfoId(String infoId);
 	
-	void addAffairInfo(AffairInformationVO vo);
+	void deliverAffair(InformationVO infoVO, AffairInformationVO vo);
+	
+	public void del(String infoId, String userId);
 }
