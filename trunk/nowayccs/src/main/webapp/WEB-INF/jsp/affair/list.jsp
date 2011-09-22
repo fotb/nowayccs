@@ -10,12 +10,6 @@
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script language="javascript" type="">
-function btnsearch_click(){
-  var form=document.forms[0];
-  form.action="OprAffairInforDeal_list.do";
-  form.submit();
-}
-
 function option_delete(id){
   var form=document.forms[0];
    if(confirm("确定要删除?")){
@@ -67,7 +61,7 @@ function option_delete(id){
                   </a>
               </td>
               <td>
-                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor:hand">
+                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor:pointer;">
               </td>
             </tr>
             <tr class="line">

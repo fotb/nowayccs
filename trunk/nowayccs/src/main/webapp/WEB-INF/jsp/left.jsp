@@ -52,7 +52,7 @@
             <td height="5"></td>
           </tr>
           <tr>
-            <td class="leftmenu_02"><a href="OprLifeInforBack_list.do" target="main"><img src="images/leftpic_10.gif" width="70" height="30" border="0"><br>
+            <td class="leftmenu_02"><a href="bizlifebackvst.do" target="main"><img src="images/leftpic_10.gif" width="70" height="30" border="0"><br>
                   <font color="#FFFFFF">生活服务类</font></a></td>
           </tr>
           <tr>
