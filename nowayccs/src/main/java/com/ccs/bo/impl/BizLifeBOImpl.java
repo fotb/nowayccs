@@ -66,10 +66,9 @@ public class BizLifeBOImpl implements IBizLifeBO {
 
 	@Override
 	@Transactional
-	public void addLifeInfo(LifeInformationVO vo) {
+	public void deliverLife(InformationVO infoVO, LifeInformationVO vo) {
 		lifeInformationDAO.saveOrUpdate(vo);
 		
-		InformationVO infoVO = informationDAO.findById(vo.getInfoId());
 		infoVO.setStatus(Constants.SYS_INFOMATION_STATES_CLZ);
 		informationDAO.saveOrUpate(infoVO);
 	}
@@ -78,11 +77,8 @@ public class BizLifeBOImpl implements IBizLifeBO {
 	public void del(String infoId, String userId) {
 		InformationVO vo = informationDAO.findById(infoId);
 		vo.setStatus(Constants.SYS_INFOMATION_STATES_YQX);
-		informationDAO.delete(vo);
-		LifeInformationVO lifeInfoVO = lifeInformationDAO.findByInfoId(infoId);
-		lifeInfoVO.setCallceler(userId);
-		lifeInfoVO.setCallcelTime(new Date());
-		lifeInformationDAO.saveOrUpdate(lifeInfoVO);
+		vo.setCanceler(userId);
+		vo.setCancelTime(new Date());
+		informationDAO.saveOrUpate(vo);
 	}
-
 }

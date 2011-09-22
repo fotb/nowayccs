@@ -21,7 +21,7 @@ public interface IBizLifeBO {
 	
 	Map<String, String> getEntSrvCountToday();
 	
-	void addLifeInfo(LifeInformationVO vo);
+	void deliverLife(InformationVO infoVO, LifeInformationVO vo);
 	
 	void del(String infoId, String userId);
 }

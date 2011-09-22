@@ -52,10 +52,28 @@ public class InformationVO implements Serializable {
 
 	@Column(name = "FINISHTIME")
 	private Date finishTime;
-	
+
 	@Column(name = "STATUS")
 	private String status;
 
+	@Column(name = "CANCELER")
+	private String canceler;
+
+	@Column(name = "CANCELTIME")
+	private Date cancelTime;
+
+	@Column(name = "DELIVERER")
+	private String deliverer;
+
+	@Column(name = "DELIVERMODE")
+	private String deliverMode;
+
+	@Column(name = "DELIVERTIME")
+	private Date deliverTime;
+
+	@Column(name = "AFFAIEACCEPTOR")
+	private String affairAcceptor;
+	
 	public String getInfoId() {
 		return infoId;
 	}
@@ -158,6 +176,54 @@ public class InformationVO implements Serializable {
 
 	public void setFinishTime(Date finishTime) {
 		this.finishTime = finishTime;
+	}
+
+	public String getCanceler() {
+		return canceler;
+	}
+
+	public void setCanceler(String canceler) {
+		this.canceler = canceler;
+	}
+
+	public Date getCancelTime() {
+		return cancelTime;
+	}
+
+	public void setCancelTime(Date cancelTime) {
+		this.cancelTime = cancelTime;
+	}
+
+	public String getDeliverer() {
+		return deliverer;
+	}
+
+	public void setDeliverer(String deliverer) {
+		this.deliverer = deliverer;
+	}
+
+	public String getDeliverMode() {
+		return deliverMode;
+	}
+
+	public void setDeliverMode(String deliverMode) {
+		this.deliverMode = deliverMode;
+	}
+
+	public Date getDeliverTime() {
+		return deliverTime;
+	}
+
+	public void setDeliverTime(Date deliverTime) {
+		this.deliverTime = deliverTime;
+	}
+
+	public String getAffairAcceptor() {
+		return affairAcceptor;
+	}
+
+	public void setAffairAcceptor(String affairAcceptor) {
+		this.affairAcceptor = affairAcceptor;
 	}
 
 	@Override

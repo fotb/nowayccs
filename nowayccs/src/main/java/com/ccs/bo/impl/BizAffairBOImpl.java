@@ -1,5 +1,6 @@
 package com.ccs.bo.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,20 @@ public class BizAffairBOImpl implements IBizAffairBO {
 
 	@Override
 	@Transactional
-	public void addAffairInfo(AffairInformationVO vo) {
-		InformationVO infoVO = informationDAO.findById(vo.getInfoId());
+	public void deliverAffair(InformationVO infoVO, AffairInformationVO vo) {
 		infoVO.setStatus(Constants.SYS_INFOMATION_STATES_CLZ);
 		informationDAO.saveOrUpate(infoVO);
+		
 		affairInformationDAO.saveOrUpdate(vo);
 	}
 
+	
+	@Override
+	public void del(String infoId, String userId) {
+		InformationVO vo = informationDAO.findById(infoId);
+		vo.setStatus(Constants.SYS_INFOMATION_STATES_YQX);
+		vo.setCanceler(userId);
+		vo.setCancelTime(new Date());
+		informationDAO.saveOrUpate(vo);
+	}
 }

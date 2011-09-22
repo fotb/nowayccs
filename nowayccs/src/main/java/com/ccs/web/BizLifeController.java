@@ -97,14 +97,15 @@ public class BizLifeController {
 	public String dispatchSave(@ModelAttribute("lifeDispatchBean") LifeDispatchBean lifeDispatchBean,
 			@RequestParam("pageNo") String pageNo, HttpSession session, ModelMap model) {
 		LifeInformationVO vo = new LifeInformationVO();
+		InformationVO infoVO = bizLifeBO.findInfoByInfoId(lifeDispatchBean.getInfoId());
 		vo.setInfoId(lifeDispatchBean.getInfoId());
 		vo.setReceiverType(lifeDispatchBean.getReceiverType());
 		vo.setReceiverId(lifeDispatchBean.getReceiverId());
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
-		vo.setHandMode(lifeDispatchBean.getHandMode());
-		vo.setHandor(user.getUserId());
-		vo.setHandTime(new Date());
-		bizLifeBO.addLifeInfo(vo);
+		infoVO.setDeliverMode(lifeDispatchBean.getHandMode());
+		infoVO.setDeliverer(user.getUserId());
+		infoVO.setDeliverTime(new Date());
+		bizLifeBO.deliverLife(infoVO, vo);
 		
 		return "redirect:bizlife.do?pageNo=" + pageNo;
 	}

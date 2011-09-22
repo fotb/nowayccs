@@ -28,15 +28,6 @@ public class LifeInformationVO implements Serializable {
 	@Column(name = "RECEIVERID")
 	private String receiverId;
 
-	@Column(name = "HANDMODE")
-	private String handMode;
-
-	@Column(name = "HANDOR")
-	private String handor;
-
-	@Column(name = "HANDTIME")
-	private Date handTime;
-
 	@Column(name = "CALLMODE")
 	private String callMode;
 
@@ -66,12 +57,6 @@ public class LifeInformationVO implements Serializable {
 
 	@Column(name = "CALLTIME")
 	private Date callTime;
-
-	@Column(name = "CANCELER")
-	private String callceler;
-
-	@Column(name = "CANCELTIME")
-	private Date callcelTime;
 
 	public String getLifeInfoId() {
 		return lifeInfoId;
@@ -103,30 +88,6 @@ public class LifeInformationVO implements Serializable {
 
 	public void setReceiverId(String receiverId) {
 		this.receiverId = receiverId;
-	}
-
-	public String getHandMode() {
-		return handMode;
-	}
-
-	public void setHandMode(String handMode) {
-		this.handMode = handMode;
-	}
-
-	public String getHandor() {
-		return handor;
-	}
-
-	public void setHandor(String handor) {
-		this.handor = handor;
-	}
-
-	public Date getHandTime() {
-		return handTime;
-	}
-
-	public void setHandTime(Date handTime) {
-		this.handTime = handTime;
 	}
 
 	public String getCallMode() {
@@ -207,22 +168,6 @@ public class LifeInformationVO implements Serializable {
 
 	public void setCallTime(Date callTime) {
 		this.callTime = callTime;
-	}
-
-	public String getCallceler() {
-		return callceler;
-	}
-
-	public void setCallceler(String callceler) {
-		this.callceler = callceler;
-	}
-
-	public Date getCallcelTime() {
-		return callcelTime;
-	}
-
-	public void setCallcelTime(Date callcelTime) {
-		this.callcelTime = callcelTime;
 	}
 
 	@Override

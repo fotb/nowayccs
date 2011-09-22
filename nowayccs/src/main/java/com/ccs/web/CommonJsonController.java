@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IAreaBO;
 import com.ccs.bo.IEntpriseBO;
+import com.ccs.bo.IUserBO;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
 import com.ccs.vo.EntCategoryVO;
+import com.ccs.vo.UserVO;
 
 @Controller
 @RequestMapping("/json.do")
@@ -27,6 +29,9 @@ public class CommonJsonController {
 	
 	@Autowired
 	private IAreaBO areaBO;
+	
+	@Autowired
+	private IUserBO userBO;
 	
 	@RequestMapping(params = "action=entcategory", method = RequestMethod.GET)
 	public @ResponseBody String getCategory(@RequestParam String parentId) throws UnsupportedEncodingException {
@@ -48,4 +53,12 @@ public class CommonJsonController {
 		JSONArray jsonObj = JSONArray.fromObject(list);
 		return jsonObj.toString();
 	}
+	
+	@RequestMapping(params = "action=userbyoprid", method = RequestMethod.GET)
+	public @ResponseBody String getUserByOperationId(@RequestParam String oprId) {
+		List<UserVO> list = userBO.findUserByOpertaionId(oprId);
+		JSONArray jsonObj = JSONArray.fromObject(list);
+		return jsonObj.toString();
+	}
+	
 }

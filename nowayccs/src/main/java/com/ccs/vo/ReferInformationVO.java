@@ -33,12 +33,6 @@ public class ReferInformationVO implements Serializable {
 	@Column(name = "DEALTIME")
 	private Date dealTime;
 
-	@Column(name = "CANCELER")
-	private String canceler;
-
-	@Column(name = "CANCELTIME")
-	private Date cancelTime;
-
 	public String getReferInfoId() {
 		return referInfoId;
 	}
@@ -77,22 +71,6 @@ public class ReferInformationVO implements Serializable {
 
 	public void setDealTime(Date dealTime) {
 		this.dealTime = dealTime;
-	}
-
-	public String getCanceler() {
-		return canceler;
-	}
-
-	public void setCanceler(String canceler) {
-		this.canceler = canceler;
-	}
-
-	public Date getCancelTime() {
-		return cancelTime;
-	}
-
-	public void setCancelTime(Date cancelTime) {
-		this.cancelTime = cancelTime;
 	}
 
 	@Override

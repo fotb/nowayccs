@@ -27,17 +27,8 @@ public class AffairInformationVO implements Serializable {
 	@Column(name = "HANDACCEPTOR")
 	private String handAcceptor;
 
-	@Column(name = "HANDOR")
-	private String handor;
-
-	@Column(name = "HANDTIME")
-	private Date handTime;
-
 	@Column(name = "MOVEWAY")
 	private String moveWay;
-
-	@Column(name = "MOVEMODE")
-	private String moveMode;
 
 	@Column(name = "MOVEACCEPTOR")
 	private String moveAcceptor;
@@ -81,11 +72,6 @@ public class AffairInformationVO implements Serializable {
 	@Column(name = "CALLTIME")
 	private Date callTime;
 
-	@Column(name = "CANCELER")
-	private String canceler;
-
-	@Column(name = "CANCELTIME")
-	private Date cancelTime;
 
 	public String getAffairInfoId() {
 		return affairInfoId;
@@ -111,21 +97,6 @@ public class AffairInformationVO implements Serializable {
 		this.handAcceptor = handAcceptor;
 	}
 
-	public String getHandor() {
-		return handor;
-	}
-
-	public void setHandor(String handor) {
-		this.handor = handor;
-	}
-
-	public Date getHandTime() {
-		return handTime;
-	}
-
-	public void setHandTime(Date handTime) {
-		this.handTime = handTime;
-	}
 
 	public String getMoveWay() {
 		return moveWay;
@@ -133,14 +104,6 @@ public class AffairInformationVO implements Serializable {
 
 	public void setMoveWay(String moveWay) {
 		this.moveWay = moveWay;
-	}
-
-	public String getMoveMode() {
-		return moveMode;
-	}
-
-	public void setMoveMode(String moveMode) {
-		this.moveMode = moveMode;
 	}
 
 	public String getMoveAcceptor() {
@@ -253,22 +216,6 @@ public class AffairInformationVO implements Serializable {
 
 	public void setCallTime(Date callTime) {
 		this.callTime = callTime;
-	}
-
-	public String getCanceler() {
-		return canceler;
-	}
-
-	public void setCanceler(String canceler) {
-		this.canceler = canceler;
-	}
-
-	public Date getCancelTime() {
-		return cancelTime;
-	}
-
-	public void setCancelTime(Date cancelTime) {
-		this.cancelTime = cancelTime;
 	}
 
 	@Override
