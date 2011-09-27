@@ -16,13 +16,13 @@ function btnsearch_click(){
 function option_delete(id){
   var form=document.forms[0];
   if(confirm("确定要删除?")){
-    $("form").attr("action","bizlifebackvst.do?action=del&infoId="+id);
+    $("form").attr("action","bizaffairbackvst.do?action=del&infoId="+id);
     $("form").submit();	
   }
 }
 </script>
 <body>
-<form:form method="post" action="bizlifebackvst.do">
+<form:form method="post" action="bizaffairbackvst.do">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -34,7 +34,7 @@ function option_delete(id){
             <td bgcolor="#F1F1F1">
               <table width="98%" border="0" align="center" cellpadding="0" cellspacing="1">
                 <tr>
-                  <td>派单人：</td>
+                  <td>移送人：</td>
                   <td>
                     <select id="deliverer" name="deliverer" >
                       <c:forEach items="${userList}" var="user">
@@ -66,9 +66,9 @@ function option_delete(id){
           <tr class="table_green">
             <td width="10%">序号</td>
             <td width="20%">求助者姓名</td>
-            <td width="15%" nowrap="nowrap">求助者电话</td>
-            <td width="15%" nowrap="nowrap">求助时间</td>
-            <td width="15%">派单时间</td>
+            <td width="15%">求助者电话</td>
+            <td width="15%">求助时间</td>
+            <td width="15%">移送时间</td>
             <td width="15%">&nbsp;</td>
             <td width="10%">&nbsp;</td>
           </tr>
@@ -90,7 +90,7 @@ function option_delete(id){
                   <fmt:formatDate value="${info.deliverTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                 </td>
                 <td>
-                    <a href="bizlifebackvst.do?action=backvst&infoId=${info.infoId}&pageNo=${pageInfo.currentPage}">进行回访</a>
+                    <a href="bizaffairbackvst.do?action=backvst&infoId=${info.infoId}&pageNo=${pageInfo.currentPage}">进行回访</a>
                 </td>
                 <td>
 					<img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor: pointer;">
@@ -107,8 +107,8 @@ function option_delete(id){
             <td align="right">
             <jsp:include page="../../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
-              <jsp:param name="pagename" value="pageNo"/>
-              <jsp:param name="actionname" value="lifebackvst.do"/>
+              <jsp:param name="pagename" value="pageNO"/>
+              <jsp:param name="actionname" value="OprAffairInforBack_list.do"/>
             </jsp:include>
             </td>
           </tr>

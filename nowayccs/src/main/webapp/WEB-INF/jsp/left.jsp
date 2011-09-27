@@ -56,7 +56,7 @@
                   <font color="#FFFFFF">生活服务类</font></a></td>
           </tr>
           <tr>
-            <td class="leftmenu_02"><a href="OprAffairInforBack_list.do" target="main"><img src="images/leftpic_11.gif" width="70" height="30" border="0"><br>
+            <td class="leftmenu_02"><a href="bizaffairbackvst.do" target="main"><img src="images/leftpic_11.gif" width="70" height="30" border="0"><br>
                   <font color="#FFFFFF">事务服务类</font></a></td>
           </tr>
           <tr>
