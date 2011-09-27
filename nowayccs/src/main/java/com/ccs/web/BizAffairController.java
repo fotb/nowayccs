@@ -86,6 +86,7 @@ public class BizAffairController {
 		vo.setMoveAcceptor(affairDispatchBean.getMoveAcceptor());
 		vo.setMoveAcceptTel(affairDispatchBean.getAcceptorTel());
 		vo.setMoveTime(DateUtil.parse(affairDispatchBean.getMoveTime(), "yyyy-MM-dd HH:mm"));
+		vo.setInfoId(infoVO.getInfoId());
 		
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		infoVO.setDeliverMode(affairDispatchBean.getMoveMode());

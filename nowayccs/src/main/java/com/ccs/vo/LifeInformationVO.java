@@ -38,7 +38,7 @@ public class LifeInformationVO implements Serializable {
 	private String helpApprove;
 
 	@Column(name = "UNAPPROVECAUSE")
-	private String unApproveCase;
+	private String unApproveCause;
 
 	@Column(name = "REMARK")
 	private String remark;
@@ -114,12 +114,12 @@ public class LifeInformationVO implements Serializable {
 		this.helpApprove = helpApprove;
 	}
 
-	public String getUnApproveCase() {
-		return unApproveCase;
+	public String getUnApproveCause() {
+		return unApproveCause;
 	}
 
-	public void setUnApproveCase(String unApproveCase) {
-		this.unApproveCase = unApproveCase;
+	public void setUnApproveCause(String unApproveCause) {
+		this.unApproveCause = unApproveCause;
 	}
 
 	public String getRemark() {

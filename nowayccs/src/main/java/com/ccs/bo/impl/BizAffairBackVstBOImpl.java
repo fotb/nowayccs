@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ccs.bo.IBizLifeBackVstBO;
+import com.ccs.bo.IBizAffairBackVstBO;
+import com.ccs.dao.IAffairInformationDAO;
 import com.ccs.dao.IInformationDAO;
-import com.ccs.dao.ILifeInformationDAO;
 import com.ccs.util.PageInfo;
+import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.InformationVO;
-import com.ccs.vo.LifeInformationVO;
 
-@Service("bizLifeBackVstBO")
-public class BizLifeBackVstBOImpl implements IBizLifeBackVstBO {
+@Service("bizAffairBackVstBO")
+public class BizAffairBackVstBOImpl implements IBizAffairBackVstBO {
 	@Autowired
 	private IInformationDAO informationDAO;
 	@Autowired
-	private ILifeInformationDAO lifeInformationDAO;
+	private IAffairInformationDAO affairInformationDAO;
 	
 	@Override
 	public List<InformationVO> findByDeliverer(String deliverer, String helpType, PageInfo pageInfo) {
@@ -29,17 +29,17 @@ public class BizLifeBackVstBOImpl implements IBizLifeBackVstBO {
 		return informationDAO.findById(infoId);
 	}
 	@Override
-	public LifeInformationVO findLifeInfoByInfoId(String infoId) {
-		return lifeInformationDAO.findByInfoId(infoId);
+	public AffairInformationVO findAffairInfoByInfoId(String infoId) {
+		return affairInformationDAO.findByInfoId(infoId);
 	}
 	@Override
-	public void saveLifeInfo(LifeInformationVO lifeInfoVO) {
-		lifeInformationDAO.saveOrUpdate(lifeInfoVO);
+	public void saveAffairInfo(AffairInformationVO affairInfoVO) {
+		affairInformationDAO.saveOrUpdate(affairInfoVO);
 	}
 	@Override
 	@Transactional
-	public void bizLifeFinish(LifeInformationVO lifeInfoVO, InformationVO infoVO) {
-		lifeInformationDAO.saveOrUpdate(lifeInfoVO);
+	public void bizAffairFinish(AffairInformationVO affairInfoVO, InformationVO infoVO) {
+		affairInformationDAO.saveOrUpdate(affairInfoVO);
 		informationDAO.saveOrUpate(infoVO);
 	}
 
