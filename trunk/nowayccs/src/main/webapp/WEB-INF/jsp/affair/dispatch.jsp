@@ -160,7 +160,7 @@ $(document).ready(function(){
           <tr class="table_t1">
             <td>移送时间：</td>
             <td>
-			<form:input path="moveTime"/>
+			<form:input path="moveTime" readonly="true"/>
             </td>
           </tr>
           <tr class="line">

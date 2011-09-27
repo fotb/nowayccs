@@ -16,7 +16,16 @@
 <script language="javascript" type="">
 function btnsave_click(){
   var form = document.forms[0];
+  if(!isValidStringObj( form.answerMode,"回复方式",true)){
+    return;
+  }
+  if(!isValidStringObj( form.answerTime,"回复时间",true)){
+    return;
+  }
   if(!isValidStringObj( form.callMode,"回访方式",true)){
+    return;
+  }
+  if(!isValidStringObj( form.callTime,"回访时间",true)){
     return;
   }
   if(!isValidStringObj( form.finishTime,"结案时间",true)){
@@ -25,39 +34,42 @@ function btnsave_click(){
   if(!isValidStringObj( form.helpApprove,"求助者满意度",true)){
     return;
   }
-  if(!isValidStringObj( form.dealResult,"处理结果",true)){
-    return;
-  }
   if(!isValidStringObj( form.principal,"经办人",true)){
     return;
   }
-   $("form").submit();
-}
-
-function btnfinish_click(){
-  var form = document.forms[0];
-  if(!isValidStringObj( form.callMode,"回访方式",true)){
-    return;
-  }
-  if(!isValidStringObj( form.finishTime,"结案时间",true)){
-    return;
-  }
-  if(!isValidStringObj( form.helpApprove,"求助者满意度",true)){
-    return;
-  }
-  if(!isValidStringObj( form.dealResult,"处理结果",true)){
-    return;
-  }
-  if(!isValidStringObj( form.principal,"经办人",true)){
-    return;
-  }
-  $("form").attr("action", "bizlifebackvst.do?action=bizfinish");
   $("form").submit();
 }
 
 
+function btnfinish_click(){
+  var form = document.forms[0];
+  if(!isValidStringObj( form.answerMode,"回复方式",true)){
+    return;
+  }
+  if(!isValidStringObj( form.answerTime,"回复时间",true)){
+    return;
+  }
+  if(!isValidStringObj( form.callMode,"回访方式",true)){
+    return;
+  }
+  if(!isValidStringObj( form.callTime,"回访时间",true)){
+    return;
+  }
+  if(!isValidStringObj( form.finishTime,"结案时间",true)){
+    return;
+  }
+  if(!isValidStringObj( form.helpApprove,"求助者满意度",true)){
+    return;
+  }
+  if(!isValidStringObj( form.principal,"经办人",true)){
+    return;
+  }
+  $("form").attr("action", "bizaffairbackvst.do?action=bizfinish");
+  $("form").submit();
+}
+
 function btnback_click(){
-  $("form").attr("action", "bizlifebackvst.do");
+  $("form").attr("action", "bizaffairbackvst.do");
   $("form").submit();
 }
 
@@ -70,7 +82,7 @@ $(document).ready(function(){
 });
 </script>
 <body>
-<form:form method="post" action="bizlifebackvst.do?action=backvstsave" commandName="lifeBackVstDomain">
+<form:form method="post" action="bizaffairbackvst.do?action=backvstsave" commandName="affairBackVstDomain">
 <input type="hidden" name="infoId" id="infoId" value="${infoVO.infoId}"/>
 <input type="hidden" name="pageNo" id="pageNo" value="${pageNo	}"/> 
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
@@ -86,17 +98,17 @@ $(document).ready(function(){
         </table>
         <table width="100%" border="0" cellpadding="0" cellspacing="1">
           <tr class="line">
-            <td height="1" colspan="6">            </td>
+            <td height="1" colspan="7">            </td>
           </tr>
           <!-- 
           <tr class="table_t1">
             <td width="10%">序号：</td>
             <td colspan="6">
-              ${infoVO.infoId}
+            ${infoVO.infoId}
             </td>
           </tr>
            -->
-          <tr class="table_t1">
+                    <tr class="table_t1">
             <td width="11%">求助者姓名：</td>
             <td width="15%">
               ${infoVO.helpName}
@@ -123,25 +135,47 @@ $(document).ready(function(){
             </td>
             <td>求助区域：</td>
             <td>
-            ${qzqyMap[infoVO.helpArea]}
+            	${qzqyMap[infoVO.helpArea]}
             </td>
-            <td>接洽人：</td>
-            <td>
-              ${vltVO.volunteerName}
-            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
           </tr>
           <tr class="table_t1">
-            <td nowrap="nowrap">接洽人联系电话：</td>
+            <td>移送方向：</td>
+            <td>${affairInfoVO.moveWay}</td>
+            <td>接洽人：</td>
+            <td>${affairInfoVO.moveAcceptor}</td>
+            <td>移送方式：</td>
+            <td>${qzfsMap[infoVO.deliverMode]}</td>
+          </tr>
+          <tr class="table_t1">
+            <td>联系电话：</td>
+            <td>${affairInfoVO.moveAcceptTel }</td>
+            <td>移送时间：</td>
+            <td><fmt:formatDate value="${affairInfoVO.moveTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr class="line">
+            <td height="1" colspan="6">            </td>
+          </tr>
+          <tr class="table_t2">
+            <td>回复方式：</td>
             <td>
-              ${vltVO.linkTel}
+              <form:select path="answerMode" cssClass="form">
+                <!--<option selected>选择</option>-->
+                <form:options items="${qzfsList}" itemLabel="value" itemValue="sortIndex"/>
+              </form:select>
             </td>
-            <td>派送方式：</td>
-            <td>
-              ${qzfsMap[infoVO.deliverMode]}
+            <td>回复时间：</td>
+            <td colspan="3">
+              <form:input path="answerTime" cssClass="form" size="20" readonly="true"/>
             </td>
-            <td>派单时间：</td>
-            <td>
-              <fmt:formatDate value="${infoVO.deliverTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+          </tr>
+          <tr class="table_t2">
+            <td>回复情况：</td>
+            <td colspan="5">
+              <form:textarea path="answerResult" cols="140" rows="4" cssClass="form"/>
             </td>
           </tr>
           <tr class="line">
@@ -152,12 +186,12 @@ $(document).ready(function(){
             <td>
               <form:select path="callMode" cssClass="form">
                 <!--<option selected>选择</option>-->
-                	<form:options items="${qzfsList}" itemLabel="value" itemValue="sortIndex"/>
+                <form:options items="${qzfsList}" itemLabel="value" itemValue="sortIndex"/>
               </form:select>
             </td>
             <td>回访时间：</td>
             <td colspan="3">
-				<form:input path="callTime" readonly="true"/>
+              <form:input path="callTime" cssClass="form" size="20" readonly="true"/>
             </td>
           </tr>
           <tr class="table_t2">
@@ -169,7 +203,7 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td>结案时间：</td>
             <td>
-              <form:input path="finishTime" cssClass="form" size="10" />
+              <form:input path="finishTime" cssClass="form" size="10" readonly="true" />
             </td>
             <td>求助者满意度：</td>
             <td colspan="3">
@@ -185,30 +219,16 @@ $(document).ready(function(){
             </td>
           </tr>
           <tr class="table_t2">
-            <td>处理结果：</td>
-            <td colspan="5">
-              <form:select path="dealResult" cssClass="form">
-                <form:options items="${mydList}" itemLabel="value" itemValue="sortIndex"/>
-              </form:select>
-            </td>
-          </tr>
-          <tr class="table_t2">
-            <td>处理描述：</td>
-            <td colspan="5">
-               <form:textarea path="dealContent" cols="140" rows="6" cssClass="form"/>
-            </td>
-          </tr>
-          <tr class="table_t2">
             <td>备注：</td>
             <td colspan="5">
-              <form:textarea path="remark" cols="140" rows="2" cssClass="form"/>
+              <form:textarea path="remark" cols="140" rows="6" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
             <td>经办人：</td>
             <td colspan="5">
               <form:select path="principal" cssClass="form">
-              	<form:options items="${userList}" itemLabel="userName" itemValue="userId"/>
+                <form:options items="${userList}" itemLabel="userName" itemValue="userId"/>
               </form:select>
             </td>
           </tr>
