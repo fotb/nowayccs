@@ -103,7 +103,7 @@
             </tr>
         </table></td>
       </tr>
-      <tr onclick="radioTable(5, 'SysReferAdmin_list.do')" style="cursor: hand">
+      <tr onclick="radioTable(5, 'refer.do')" style="cursor: hand">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务咨询</td>
       </tr>
 <!--
