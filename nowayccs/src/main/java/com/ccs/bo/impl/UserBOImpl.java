@@ -123,4 +123,21 @@ public class UserBOImpl implements IUserBO {
 		return userDAO.findByUserIds(userIdList);
 	}
 
+	@Override
+	public boolean hasOperationRight(String userId, String operationId) {
+		List<RoleOperationVO> roleOprVOList = roleOperationDAO.findByOperationId(operationId);
+		List<String> roleIdList = new ArrayList<String>();
+		for (Iterator<RoleOperationVO> iter = roleOprVOList.iterator(); iter.hasNext();) {
+			RoleOperationVO roleOprVO = iter.next();
+			roleIdList.add(roleOprVO.getId().getRoleId());
+		}
+		
+		List<String> userIdList = userRoleDAO.findUserIdsByRoleIds(roleIdList);
+		boolean result = false;
+		if(userIdList.contains(userId)) {
+			result = true;
+		}
+		return result;
+	}
+
 }
