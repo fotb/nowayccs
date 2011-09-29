@@ -18,6 +18,8 @@ public class ReceiverSearchDomain implements Serializable {
 	private String serviceName;
 
 	// entprise
+	private String entpriseNo;
+	
 	private String bigEntCategoryId;
 
 	private String subEntCategoryId;
@@ -54,6 +56,14 @@ public class ReceiverSearchDomain implements Serializable {
 
 	public void setVolunteerNo(String volunteerNo) {
 		this.volunteerNo = volunteerNo;
+	}
+
+	public String getEntpriseNo() {
+		return entpriseNo;
+	}
+
+	public void setEntpriseNo(String entpriseNo) {
+		this.entpriseNo = entpriseNo;
 	}
 
 	public String getServiceName() {

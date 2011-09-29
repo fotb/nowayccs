@@ -152,7 +152,7 @@ public class BizLifeController {
 			
 			model.addAttribute("vltDTOList", list);
 		} else if("2".equals(receiverSearchDomain.getReceiverType())){
-			List<EntpriseVO> eList = entpriseBO.findByParams(null, null,
+			List<EntpriseVO> eList = entpriseBO.findByParams(null, receiverSearchDomain.getEntpriseNo(),
 					Constants.SYS_YESNO_YES,
 					StringUtil.emptyToNull(receiverSearchDomain.getBigEntCategoryId()),
 					StringUtil.emptyToNull(receiverSearchDomain.getSubEntCategoryId()),

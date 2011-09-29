@@ -29,4 +29,6 @@ public interface IUserBO {
 	
 	List<UserVO> findUserByOpertaionId(String operationId);
 	
+	boolean hasOperationRight(String userId, String operationId);
+	
 }
