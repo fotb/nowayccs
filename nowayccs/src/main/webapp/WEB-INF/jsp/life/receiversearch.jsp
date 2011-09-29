@@ -198,6 +198,7 @@ function loadEntCategory(subEntCategoryId) {
                       <form:select path="entCategoryId" onchange="btnsearch_click()">
                         <option value=" ">请选择</option>
                       </form:select>
+                       	编号：<form:input path="entpriseNo" cssStyle="form" />
                       <A href="javascript:btnsearch_click()">
                         <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
                       </A>
