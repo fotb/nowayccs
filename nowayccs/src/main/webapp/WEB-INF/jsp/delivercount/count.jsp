@@ -15,7 +15,7 @@
 function btnsearch_click(){
   var form=document.forms[0];
   form.pageNo.value = "1";
-  form.action="bizlife.do?action=receiver";
+  form.action="delivercount.do";
   form.submit();
 }
 
@@ -158,7 +158,7 @@ function loadEntCategory(subEntCategoryId) {
 }
 
 </script>
-<form:form method="post" action="bizlife.do?action=receiver" commandName="receiverSearchDomain">
+<form:form method="post" action="delivercount.do" commandName="receiverSearchDomain">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -223,7 +223,6 @@ function loadEntCategory(subEntCategoryId) {
         <c:if test="${receiverSearchDomain.receiverType == '1'}">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="table_green">
-              <td width="15%">&nbsp;</td>
               <td width="5%">编号</td>
               <td width="10%">姓名</td>
               <td width="35%">服务项目</td>
@@ -233,11 +232,6 @@ function loadEntCategory(subEntCategoryId) {
             </tr>
 			<c:forEach items="${vltDTOList}" var="vltDTO">
             <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
-              <td>
-                <a href="javascript:btnselect_click('1','${vltDTO.volunteerId}','${vltDTO.volunteerName}','${vltDTO.phone}')">
-                  <img src="images/button_choose.gif" width="60" height="18" alt="" border=0>
-                </a>
-              </td>
               <td>
                 ${vltDTO.volunteerNo}
               </td>
@@ -280,7 +274,6 @@ function loadEntCategory(subEntCategoryId) {
         <c:if test="${receiverSearchDomain.receiverType == '2'}">
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr class="table_green">
-              <td width="20%">&nbsp;</td>
               <td width="10%">编号</td>
               <td width="15%">企业名称</td>
               <td width="20%">服务电话</td>
@@ -289,11 +282,6 @@ function loadEntCategory(subEntCategoryId) {
             </tr>
 			<c:forEach items="${entDTOList}" var="entDTO">
             <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
-              <td>
-                <a href="javascript:btnselect_click('2','${entDTO.entpriseId}','${entDTO.entpriseName}','${entDTO.serviceTel}')">
-                  <img src="images/button_choose.gif" width="60" height="18" alt="" border=0>
-                </a>
-              </td>
               <td>
                 ${entDTO.entpriseNo}
               </td>
@@ -337,7 +325,7 @@ function loadEntCategory(subEntCategoryId) {
             <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
               <jsp:param name="pagename" value="pageNo"/>
-              <jsp:param name="actionname" value="bizlife.do?action=receiver"/>
+              <jsp:param name="actionname" value="delivercount.do"/>
             </jsp:include>
             </td>
           </tr>

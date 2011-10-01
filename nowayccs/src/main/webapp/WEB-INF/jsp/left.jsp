@@ -82,16 +82,16 @@
             </tr>
 
             <tr>
-              <td class="leftmenu_02"><a href="opr_lifeinfodispatch_view.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+              <td class="leftmenu_02"><a href="delivercount.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">派单量查询</font></a></td>
             </tr>
 
             <tr>
-              <td class="leftmenu_02"><a href="SysVolunteer_list.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+              <td class="leftmenu_02"><a href="volunteer.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">一技之长服务者查询</font></a></td>
             </tr>
              <tr>
-              <td class="leftmenu_02"><a href="SysEntprise_list.do?find=find" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+              <td class="leftmenu_02"><a href="entprise.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">企业查询</font></a></td>
             </tr>
                          <tr>

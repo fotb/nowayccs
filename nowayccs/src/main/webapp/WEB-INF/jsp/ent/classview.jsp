@@ -82,13 +82,12 @@ $(document).ready(function(){
 	            <c:forEach items="${sonDTO.sonCategoryList}" var="thirdDTO">
 	            	<c:choose>
 	            		<c:when test="${not empty coeMap[thirdDTO.entCategoryVO.categoryId]}">
-	            			<input type="checkbox" name="categoryId" id="categoryId" value="${thirdDTO.entCategoryVO.categoryId}" disabled="disabled" checked="checked"/>
+	            			<input type="checkbox" name="categoryId" id="categoryId" value="${thirdDTO.entCategoryVO.categoryId}" disabled="disabled" checked="checked"/><font color="red">${thirdDTO.entCategoryVO.value}</font>	
 	            		</c:when>
 	            		<c:otherwise>
-	            			<input type="checkbox" name="categoryId" id="categoryId" value="${thirdDTO.entCategoryVO.categoryId}" disabled="disabled" />
+	            			<input type="checkbox" name="categoryId" id="categoryId" value="${thirdDTO.entCategoryVO.categoryId}" disabled="disabled" />${thirdDTO.entCategoryVO.value}
 	            		</c:otherwise>
-	            	</c:choose>
-					${thirdDTO.entCategoryVO.value}	            
+	            	</c:choose>					            
 	            </c:forEach>
 	            </td>
 	           </tr>
@@ -99,8 +98,10 @@ $(document).ready(function(){
          </c:forEach>
           <tr align="center" class="table_t1">
             <td colspan="2">
+            	<c:if test="${adminRight == 'Y'}">
               <img src="images/button_edit.gif" id="editImg" alt="修改" width="60" height="18" border="0" style="cursor: pointer;"/>
               <img src="images/button_save.gif" id="saveImg" alt="保存" width="60" height="18" border="0" style="display: none; cursor: pointer;"/>
+              </c:if>
               <img src="images/button_back.gif" id="backImg" alt="返回前一页面" width="60" height="18" border="0" style="cursor: pointer;"/>
             </td>
           </tr>
