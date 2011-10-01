@@ -231,7 +231,7 @@ function fillAreaSub(areaId) {
           </tr>
           <tr align="center" class="table_t1">
             <td colspan="4">
-              <img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()"/>
+              <!-- <img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()"/> -->
               <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()"/>
             </td>
           </tr>

@@ -143,8 +143,10 @@ function fillAreaSub(areaId) {
 	          <td>服务项目</td>
 	          <td>服务时间</td>
               <td>状态</td>
+              <c:if test="${adminRight == 'Y'}">
 	          <td>修改</td>
        	      <td>状态变更</td>
+       	      </c:if>
 	        </tr>
 			<c:forEach items="${volunteerVOList}" var="vtVO">
               <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
@@ -189,6 +191,7 @@ function fillAreaSub(areaId) {
                  		停止服务
                  	</c:if>
                 </td>
+                <c:if test="${adminRight == 'Y'}">
                 <td width="5%">
                   <a href="volunteer.do?action=update&volunteerId=${vtVO.volunteerId}&pageNo=${pageInfo.currentPage}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
@@ -207,6 +210,7 @@ function fillAreaSub(areaId) {
                   </c:if>
 
                 </td>
+                </c:if>
               </tr>
               <tr class="line">
                 <td height="1" colspan="10">                </td>
@@ -215,11 +219,13 @@ function fillAreaSub(areaId) {
         </table>
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
+          <c:if test="${adminRight == 'Y'}">
             <td height="30">
               <a href="volunteer.do?action=add&pageNo=${pageInfo.currentPage }">
                 <img src="images/button_add.gif" width="60" height="18" border="0" alt="">
               </a>
             </td>
+            </c:if>
             <td align="right">
             <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>

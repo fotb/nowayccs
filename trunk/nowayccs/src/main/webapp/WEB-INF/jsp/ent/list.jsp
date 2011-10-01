@@ -145,8 +145,10 @@ $(document).ready(function(){
             <td width="10%">联系电话</td>
             <td width="32%">地址</td>
             <td width="8%">服务项目</td>
+            <c:if test="${adminRight == 'Y'}">
             <td>修改</td>
             <td>状态变更</td>
+            </c:if>
           </tr>
           <c:forEach items="${entpriseList}" var="entprise">
           	<tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
@@ -169,6 +171,7 @@ $(document).ready(function(){
                     <img src="images/edit.gif" alt="维护服务项目" width="11" height="14" border="0">
                   </a>
                 </td>
+                <c:if test="${adminRight == 'Y'}">
                 <td width="5%">
                   <a href="entprise.do?action=update&entpriseId=${entprise.entpriseId}&pageNo=${pageInfo.currentPage }">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
@@ -186,6 +189,7 @@ $(document).ready(function(){
                   </A>
                   </c:if>
                  </td>
+                 </c:if>
               </tr>
               <tr class="line">	
                 <td height="1" colspan="7">                </td>
@@ -194,11 +198,13 @@ $(document).ready(function(){
         </table>
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
+          	<c:if test="${adminRight == 'Y'}">
             <td height="30">
               <a href="entprise.do?action=add&pageNo=${pageInfo.currentPage}">
                 <img src="images/button_add.gif" width="60" height="18" border="0" alt="">
               </a>
             </td>
+            </c:if>
             <td align="right">
               <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
