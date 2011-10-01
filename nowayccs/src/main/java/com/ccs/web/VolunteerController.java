@@ -3,6 +3,8 @@ package com.ccs.web;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
+import com.ccs.vo.UserVO;
 import com.ccs.vo.VolunteerVO;
 import com.ccs.web.domain.VolunteerSearch;
 
@@ -30,11 +34,14 @@ public class VolunteerController {
 	@Autowired
 	private IVolunteerBO volunteerBO;
 
+	@Autowired
+	private IUserBO userBO;
+	
 	@RequestMapping
 	public String list(
 			@ModelAttribute("volunteerSearch") VolunteerSearch volunteerSearch,
 			@RequestParam(value = "pageNo", required = false) String pageNo,
-			ModelMap model) {
+			HttpSession session, ModelMap model) {
 		PageInfo pageInfo = new PageInfo();
 		if (StringUtil.isNull(pageNo)) {
 			pageInfo.setCurrentPage(1);
@@ -54,6 +61,13 @@ public class VolunteerController {
 		model.addAttribute("volunteerVOList", vtList);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("volunteerSearch", volunteerSearch);
+		
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		if(userBO.hasOperationRight(user.getUserId(), Constants.SYS_PERMISSION_SQZYZWH)) {
+			model.addAttribute("adminRight", "Y");
+		} else {
+			model.addAttribute("adminRight", "N");
+		}
 		return "volunteer/list";
 	}
 	

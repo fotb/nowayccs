@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IEntpriseBO;
+import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.ClassOfEntpriseVO;
 import com.ccs.vo.EntCategoryVO;
 import com.ccs.vo.EntpriseVO;
+import com.ccs.vo.UserVO;
 import com.ccs.web.domain.EntSearch;
 import com.ccs.web.domain.EntpriseCategoryDTO;
 
@@ -35,11 +39,14 @@ public class EntpriseController {
 
 	@Autowired
 	private IEntpriseBO entpriseBO;
+	
+	@Autowired
+	private IUserBO userBO;
 
 	@RequestMapping
 	public String list(
 			@ModelAttribute("entSearch") EntSearch entSearch,
-			@RequestParam(value = "pageNo", required = false) String pageNo,
+			@RequestParam(value = "pageNo", required = false) String pageNo, HttpSession session, 
 			ModelMap model) {
 		PageInfo pageInfo = new PageInfo();
 		if (StringUtil.isNull(pageNo)) {
@@ -65,6 +72,13 @@ public class EntpriseController {
 		model.addAttribute("entpriseList", entpriseList);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("entSearch", entSearch);
+		
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		if(userBO.hasOperationRight(user.getUserId(), Constants.SYS_PERMISSION_FWQYWH)) {
+			model.addAttribute("adminRight", "Y");
+		} else {
+			model.addAttribute("adminRight", "N");
+		}
 		return "ent/list";
 	}
 
@@ -118,7 +132,8 @@ public class EntpriseController {
 	}
 	
 	@RequestMapping(params = "action=classview")
-	public String viewClass(@RequestParam("entpriseId") String entpriseId, @RequestParam("pageNo") String pageNo, ModelMap model) {
+	public String viewClass(@RequestParam("entpriseId") String entpriseId, @RequestParam("pageNo") String pageNo, 
+			HttpSession session, ModelMap model) {
 		Map<String, List<EntCategoryVO>> map = entpriseBO.findAllCategory();
 		List<EntpriseCategoryDTO> list = getEntCategoryDTO(map, Constants.TOP_CODE);
 		model.addAttribute("dtoList", list);
@@ -134,6 +149,13 @@ public class EntpriseController {
 		}
 		model.addAttribute("coeMap", coeMap);
 		model.addAttribute("pageNo", pageNo);
+		
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		if(userBO.hasOperationRight(user.getUserId(), Constants.SYS_PERMISSION_FWQYWH)) {
+			model.addAttribute("adminRight", "Y");
+		} else {
+			model.addAttribute("adminRight", "N");
+		}
 		return "ent/classview";
 	}
 	
