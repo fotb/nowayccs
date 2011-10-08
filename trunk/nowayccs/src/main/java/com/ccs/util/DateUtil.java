@@ -254,6 +254,8 @@ public class DateUtil {
 		return gc.getTime();
 	}
 
+	
+	
 	/**
 	 * get first day of month
 	 * 
@@ -266,6 +268,12 @@ public class DateUtil {
 		day = addMonth(day, 1);
 		day = addDate(day, -1);
 		return day;
+	}
+	
+	public static Date getDayOfProvsMonth(final Date date) {
+		final GregorianCalendar gc = (GregorianCalendar) Calendar.getInstance();
+		gc.setTime(date);
+		return addMonth(gc.getTime(), -1);
 	}
 
 	/**

@@ -2,6 +2,7 @@ package com.ccs.dao;
 
 import java.util.List;
 
+import com.ccs.bean.InfoSearchBean;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.InformationVO;
 
@@ -24,4 +25,8 @@ public interface IInformationDAO {
 	List<InformationVO> findByDeliverer(String deliverer, String helpType, PageInfo pageInfo);
 	
 	int getTotalCountByDeliverer(String deliverer, String helpType);
+	
+	List<InformationVO> findByParams(InfoSearchBean bean, PageInfo pageInfo);
+	
+	int getTotalCountByParams(InfoSearchBean bean);
 }

@@ -45,10 +45,8 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 				new HibernateCallback<Object>() {
 					public Object doInHibernate(Session s)
 							throws HibernateException, SQLException {
-						Query query = s
-								.createQuery("from UserVO vo order by vo.loginName");
-						query.setFirstResult((pageInfo.getCurrentPage() - 1)
-								* pageInfo.getPAGE_COUNT());
+						Query query = s.createQuery("from UserVO vo order by vo.loginName");
+						query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
 						query.setMaxResults(pageInfo.getPAGE_COUNT());
 						return query.list();
 					}
@@ -102,5 +100,11 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 		paramList.addAll(userIdList);
 		paramList.add(UserVO.ONJOB_YES);
 		return getHibernateTemplate().find(hqlBuffer.toString(), paramList.toArray());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserVO> findAll() {
+		return getHibernateTemplate().find("from UserVO vo");
 	}
 }

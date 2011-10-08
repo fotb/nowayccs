@@ -1,5 +1,6 @@
 package com.ccs.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -39,17 +40,21 @@ public class LifeInformationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<LifeInformationVO> findByInfoIds(List<String> infoIds) {
-		StringBuffer hqlBuffer = new StringBuffer(1000);
-		hqlBuffer.append("from LifeInformationVO t where t.infoId in (");
-		
-		for (int i = 0; i < infoIds.size(); i++) {
-			if(i == infoIds.size() - 1) {
-				hqlBuffer.append("? )");
-			} else {
-				hqlBuffer.append("?, ");
+		if(infoIds.isEmpty()) {
+			return new ArrayList<LifeInformationVO>();
+		} else {
+			StringBuffer hqlBuffer = new StringBuffer(1000);
+			hqlBuffer.append("from LifeInformationVO t where t.infoId in (");
+			
+			for (int i = 0; i < infoIds.size(); i++) {
+				if(i == infoIds.size() - 1) {
+					hqlBuffer.append("? )");
+				} else {
+					hqlBuffer.append("?, ");
+				}
 			}
+			return getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
 		}
-		return getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
 	}
 
 }
