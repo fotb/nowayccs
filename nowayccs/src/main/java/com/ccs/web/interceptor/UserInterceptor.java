@@ -23,8 +23,8 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 //			}
 //			return null == loginUser ? false : true;
 			UserVO userVO = new UserVO();
-			userVO.setUserId("005");
-			userVO.setUserName("陈");
+			userVO.setUserId("1");
+			userVO.setUserName("系统管理员");
 			request.getSession().setAttribute(Constants.SESSION_USER_KEY, userVO);
 			return true;
 		}

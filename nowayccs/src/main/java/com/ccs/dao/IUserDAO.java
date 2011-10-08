@@ -16,6 +16,8 @@ public interface IUserDAO {
 	
 	List<UserVO> findAll(PageInfo pageInfo);
 	
+	List<UserVO> findAll();
+	
 	UserVO findByLoginNameAndPwd(String loginName, String pwd);
 	
 	int getTotalCount();

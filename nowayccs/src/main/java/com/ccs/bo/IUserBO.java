@@ -1,6 +1,7 @@
 package com.ccs.bo;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ccs.util.PageInfo;
 import com.ccs.vo.UserRoleVO;
@@ -30,5 +31,7 @@ public interface IUserBO {
 	List<UserVO> findUserByOpertaionId(String operationId);
 	
 	boolean hasOperationRight(String userId, String operationId);
+	
+	Map<String, UserVO> findAll();
 	
 }

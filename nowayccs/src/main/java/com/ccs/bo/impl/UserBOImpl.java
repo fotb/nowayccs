@@ -1,8 +1,10 @@
 package com.ccs.bo.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -138,6 +140,17 @@ public class UserBOImpl implements IUserBO {
 			result = true;
 		}
 		return result;
+	}
+
+	@Override
+	public Map<String, UserVO> findAll() {
+		List<UserVO> list = userDAO.findAll();
+		Map<String, UserVO> map = new HashMap<String, UserVO>();
+		for (Iterator<UserVO> iter = list.iterator(); iter.hasNext();) {
+			UserVO userVO = iter.next();
+			map.put(userVO.getUserId(), userVO);
+		}
+		return map;
 	}
 
 }
