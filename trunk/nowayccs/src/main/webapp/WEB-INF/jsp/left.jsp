@@ -77,7 +77,7 @@
                 <font color="#FFFFFF">报表查询</font></a></td>
             </tr>
             <tr>
-              <td class="leftmenu_02"><a href="QryInfoAccept_list.do" target="main"><img src="images/leftpic_02.gif" width="70" height="30" border="0"><br>
+              <td class="leftmenu_02"><a href="infosearch.do" target="main"><img src="images/leftpic_02.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">求助信息查询</font></a></td>
             </tr>
 
