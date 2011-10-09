@@ -1,6 +1,9 @@
 package com.ccs.bo.impl;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,17 @@ public class VolunteerBOImpl implements IVolunteerBO {
 	@Override
 	public List<AreaSubVO> getSubAreaByAreaId(String areaId) {
 		return areaBO.findAreaSubByAreaId(areaId);
+	}
+
+	@Override
+	public Map<String, VolunteerVO> findAll2Map() {
+		List<VolunteerVO> list = volunteerDAO.findAll();
+		Map<String, VolunteerVO> map = new HashMap<String, VolunteerVO>();
+		for (Iterator<VolunteerVO> iter = list.iterator(); iter.hasNext();) {
+			VolunteerVO vltVO = iter.next();
+			map.put(vltVO.getVolunteerId(), vltVO);
+		}
+		return map;
 	}
 
 }

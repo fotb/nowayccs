@@ -25,4 +25,6 @@ public interface IEntpriseDAO {
 	int getTotalCount(final String entpriseName, final String entpriseNo, final String servicesType, 
 			final String bigEntclassId, final String smallEntclassId,
 			final String entclassId, final String status);
+	
+	List<EntpriseVO> findAll();
 }

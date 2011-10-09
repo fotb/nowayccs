@@ -30,4 +30,6 @@ public interface IEntpriseBO {
 	List<ClassOfEntpriseVO> findCOEByEntpriseId(String entpriseId);
 	
 	void addCategoryToEntprise(String entpriseId, List<String> categoryIdList);
+	
+	Map<String, EntpriseVO> findAll2Map();
 }

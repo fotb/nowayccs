@@ -100,4 +100,10 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<VolunteerVO> findAll() {
+		return getHibernateTemplate().find("from VolunteerVO");
+	}
+
 }

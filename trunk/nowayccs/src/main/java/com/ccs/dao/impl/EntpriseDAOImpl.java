@@ -90,7 +90,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 	private static final String countSql3 = "select count(t.entpriseId) from hj_Entprise t where " + tempSql2;
 
 	/**
-	 * bigEntClassID,smallEntClassID,entClassID,: Èç¹ûÎª¿Õ£¬ÔòºöÂÔ²éÑ¯Ìõ¼þ
+	 * bigEntClassID,smallEntClassID,entClassID,: ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½
 	 */
 	@SuppressWarnings("unchecked")
 	public List<EntpriseVO> findByParams(final String entpriseName,
@@ -203,6 +203,12 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 					}
 				});
 		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EntpriseVO> findAll() {
+		return getHibernateTemplate().find("from EntpriseVO ");
 	}
 
 }

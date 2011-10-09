@@ -1,6 +1,7 @@
 package com.ccs.bo;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AreaSubVO;
@@ -18,4 +19,6 @@ public interface IVolunteerBO {
 	List<AreaVO> getAllArea();
 	
 	List<AreaSubVO> getSubAreaByAreaId(String areaId);
+	
+	Map<String, VolunteerVO> findAll2Map();
 }
