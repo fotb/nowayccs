@@ -113,8 +113,8 @@ public class Constants {
     /*生活类接受类型：*/
     public static final String LIFEINFOMATION_RECEIVETYPE_ZYZ = "1"; //1一技之长服务者
     public static final String LIFEINFOMATION_RECEIVETYPE_QY = "2"; //2服务企业
-    public static final HashMap LIFEINFOMATION_RECEIVETYPE_HASHMAP = new
-            HashMap();
+    public static final Map<String, String> LIFEINFOMATION_RECEIVETYPE_HASHMAP = new
+            HashMap<String, String>();
     static {
         LIFEINFOMATION_RECEIVETYPE_HASHMAP.put(String.valueOf(
                 LIFEINFOMATION_RECEIVETYPE_ZYZ), "一技之长服务者");

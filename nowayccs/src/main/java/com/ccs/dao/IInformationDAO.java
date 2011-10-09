@@ -3,6 +3,7 @@ package com.ccs.dao;
 import java.util.List;
 
 import com.ccs.bean.InfoSearchBean;
+import com.ccs.bean.LifeInfoSearchBean;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.InformationVO;
 
@@ -29,4 +30,10 @@ public interface IInformationDAO {
 	List<InformationVO> findByParams(InfoSearchBean bean, PageInfo pageInfo);
 	
 	int getTotalCountByParams(InfoSearchBean bean);
+	
+	int getInfoCount(final String helpType);
+	
+	List<InformationVO> findLifeInfoByParams(LifeInfoSearchBean bean, PageInfo pageInfo);
+	
+	int getLifeCountByParams(LifeInfoSearchBean bean);
 }

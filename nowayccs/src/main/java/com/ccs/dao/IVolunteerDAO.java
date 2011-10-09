@@ -25,4 +25,6 @@ public interface IVolunteerDAO {
 	
 	int getCountByParams(String status, String serviceType,
 			 String areaId, String areaSubId, String volunteerNo, String serviceName);
+	
+	List<VolunteerVO> findAll();
 }

@@ -2,6 +2,7 @@ package com.ccs.dao.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -13,11 +14,13 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.bean.InfoSearchBean;
+import com.ccs.bean.LifeInfoSearchBean;
 import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.InformationVO;
 
 @Repository("informationDAO")
@@ -58,7 +61,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 
 	@Override
 	public int getTotalCount(String helpTel) {
-		final String hql = "select count(t.infoId) from InformationVO t where t.helpTel = ? order by t.createTime";
+		final String hql = "select count(t.infoId) from InformationVO t where t.helpTel = ?";
 		final Long count = (Long) getHibernateTemplate().find(hql, helpTel).listIterator().next();
 		return count.intValue();
 	}
@@ -208,6 +211,144 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("and (t.helpAddr like ? or ? is null) ");
 		values.add("%" + bean.getAddress() + "%");
 		values.add(bean.getAddress());
+		final Long count = (Long) getHibernateTemplate().find(buffer.toString(), values.toArray()).listIterator().next();
+		return count.intValue();
+	}
+
+	@Override
+	public int getInfoCount(String helpType) {
+		final String hql = "select count(t.infoId) from InformationVO t where t.helpType = ?";
+		final Long count = (Long) getHibernateTemplate().find(hql, helpType).listIterator().next();
+		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<InformationVO> findLifeInfoByParams(final LifeInfoSearchBean bean,
+			final PageInfo pageInfo) {
+		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+			@Override
+			public List<InformationVO> doInHibernate(Session session)
+					throws HibernateException, SQLException {
+						final StringBuffer buffer = new StringBuffer(1000);
+						List<Object> values = new ArrayList<Object>();
+						List<Type> typeList = new ArrayList<Type>();
+						buffer.append("select t from InformationVO t, LifeInformationVO l");
+						
+						if(!StringUtil.isNull(bean.getReceiverType())) { 
+							if(Constants.LIFEINFOMATION_RECEIVETYPE_ZYZ.equals(bean.getReceiverType())) {
+								buffer.append(", VolunteerVO v where ");
+								buffer.append("l.receiverId = v.volunteerId ");
+								buffer.append("and (v.volunteerName like ? or ? is null)");
+							} else {
+								buffer.append(", EntpriseVO e where ");
+								buffer.append("l.receiverId = e.entpriseId ");
+								buffer.append("and (e.entpriseName like ? or ? is null)");
+							}
+							values.add("%" + bean.getKeyWords() + "%");
+							values.add(bean.getKeyWords());
+							typeList.add(StandardBasicTypes.STRING);
+							typeList.add(StandardBasicTypes.STRING);
+							buffer.append("and ");
+						} else {
+							buffer.append(" where ");
+						}
+						buffer.append(" t.infoId = l.infoId ");
+						buffer.append(" and t.helpType = ? ");
+						values.add(Constants.INFOMATION_HELPTYPE_LIFE);
+						typeList.add(StandardBasicTypes.STRING);
+						
+						buffer.append("and (t.helpArea = ? or ? is null)");
+						values.add(bean.getHelpArea());
+						values.add(bean.getHelpArea());
+						typeList.add(StandardBasicTypes.STRING);
+						typeList.add(StandardBasicTypes.STRING);
+						
+						buffer.append("and (t.helpArea = ? or ? is null)");
+						values.add(bean.getHelpArea());
+						values.add(bean.getHelpArea());
+						typeList.add(StandardBasicTypes.STRING);
+						typeList.add(StandardBasicTypes.STRING);
+						
+						buffer.append("and (trunc(t.createTime) >= ? or ? is null) ");
+						values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+						values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+						typeList.add(StandardBasicTypes.DATE);
+						typeList.add(StandardBasicTypes.DATE);
+						buffer.append("and (trunc(t.createTime) <= ? or ? is null) ");
+						values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+						values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+						typeList.add(StandardBasicTypes.DATE);
+						typeList.add(StandardBasicTypes.DATE);
+						
+						
+						buffer.append("order by t.createTime desc");
+						
+						Type[] types = new Type[typeList.size()];
+						int i = 0;
+						for (Iterator<Type> iter = typeList.iterator(); iter.hasNext();) {
+							Type type = iter.next();
+							types[i] = type;
+							i++;
+						}
+						Query query = session.createQuery(buffer.toString());
+						query.setParameters(values.toArray(), types);
+						query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
+						query.setMaxResults(pageInfo.getPAGE_COUNT());
+						return query.list();
+			}
+		});
+	}
+
+	@Override
+	public int getLifeCountByParams(LifeInfoSearchBean bean) {
+		final StringBuffer buffer = new StringBuffer(1000);
+		List<Object> values = new ArrayList<Object>();
+		buffer.append("select count(t.infoId) from InformationVO t, LifeInformationVO l");
+		if(!StringUtil.isNull(bean.getReceiverType())) { 
+			if(Constants.LIFEINFOMATION_RECEIVETYPE_ZYZ.equals(bean.getReceiverType())) {
+				buffer.append(", VolunteerVO v where ");
+				buffer.append("l.receiverId = v.volunteerId ");
+				buffer.append("and (v.volunteerName like ? or ? is null)");
+			} else {
+				buffer.append(", EntpriseVO e where ");
+				buffer.append("l.receiverId = e.entpriseId ");
+				buffer.append("and (e.entpriseName like ? or ? is null)");
+			}
+			
+			values.add("%" + bean.getKeyWords() + "%");
+			values.add(bean.getKeyWords());
+			buffer.append("and ");
+		} else {
+			buffer.append(" where ");
+		}
+		buffer.append("t.infoId = l.infoId ");
+		buffer.append("and t.helpType = ? ");
+		values.add(Constants.INFOMATION_HELPTYPE_LIFE);
+		
+		buffer.append("and (t.helpArea = ? or ? is null)");
+		values.add(bean.getHelpArea());
+		values.add(bean.getHelpArea());
+		
+		buffer.append("and (t.helpArea = ? or ? is null)");
+		values.add(bean.getHelpArea());
+		values.add(bean.getHelpArea());
+		
+		buffer.append("and (trunc(t.createTime) >= ? or ? is null) ");
+		values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		buffer.append("and (trunc(t.createTime) <= ? or ? is null) ");
+		values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		
+		buffer.append("and (l.helpApprove = ? or ? is null) ");
+		values.add(bean.getHelpApprove());
+		values.add(bean.getHelpApprove());
+		
+		buffer.append("and (t.status = ? or ? is null) ");
+		values.add(bean.getStatus());
+		values.add(bean.getStatus());
+		
 		final Long count = (Long) getHibernateTemplate().find(buffer.toString(), values.toArray()).listIterator().next();
 		return count.intValue();
 	}

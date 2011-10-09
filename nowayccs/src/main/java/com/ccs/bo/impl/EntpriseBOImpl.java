@@ -1,6 +1,7 @@
 package com.ccs.bo.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -100,5 +101,16 @@ public class EntpriseBOImpl implements IEntpriseBO {
 	@Override
 	public List<ClassOfEntpriseVO> findCOEByEntpriseId(String entpriseId) {
 		return classOfEntpriseDAO.findByEntpriseId(entpriseId);
+	}
+
+	@Override
+	public Map<String, EntpriseVO> findAll2Map() {
+		List<EntpriseVO> list = entpriseDAO.findAll();
+		Map<String, EntpriseVO> map = new HashMap<String, EntpriseVO>();
+		for (Iterator<EntpriseVO> iter = list.iterator(); iter.hasNext();) {
+			EntpriseVO entpriseVO = iter.next();
+			map.put(entpriseVO.getEntpriseId(), entpriseVO);
+		}
+		return map;
 	}
 }
