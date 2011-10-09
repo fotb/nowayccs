@@ -73,7 +73,7 @@
               <td height="5"></td>
             </tr>
             <tr>
-              <td class="leftmenu_02"><a href="QryReport_infolist.do" target="main"><img src="images/leftpic_01.gif" width="70" height="30" border="0"><br>
+              <td class="leftmenu_02"><a href="inforeport.do" target="main"><img src="images/leftpic_01.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">报表查询</font></a></td>
             </tr>
             <tr>
