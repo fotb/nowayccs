@@ -74,8 +74,8 @@ $("#fertility").html(data.fertility);
           <tr valign="top" class="font_no">
             <td width="15%" height="22">1.求助受理记录表</td>
             <td width="18%"><a href="inforeport.do?action=lifeinforeport">2.生活类服务派单表</a></td>
-            <td width="15%"><a href="helpdealtransactionfind_list.do">3.事务移送记录表</a></td>
-            <td width="15%"><a href="statisticbusiness_list.do">4.话务量统计</a></td>
+            <td width="15%"><a href="inforeport.do?action=affairinforeport">3.事务移送记录表</a></td>
+            <td width="15%"><a href="inforeport.do?action=usertrafficreport">4.话务量统计</a></td>
             <td>&nbsp;</td>
           </tr>
         </table>

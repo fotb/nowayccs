@@ -21,23 +21,23 @@ win.close();
 win=window.open(url,null,"width=500,height=325");
 }
 
-function option_search(form){
-  form.submit();
-}
-
 function option_exp(form){
-  form.action="helpdeallifefind_exp.do";
+  form.action="helpdealtransactionfind_exp.do";
   form.target="_blank";
   form.submit();
   form.target="_self";
 }
 
+function option_search(form){
+  form.submit();
+}
+
+
 function showInfo(id) {
 var form=document.forms[0];
-form.action="infosearch.do?action=lifeinfo&infoId=" + id;
+form.action="infosearch.do?action=affairinfo&infoId=" + id;
 form.submit();
 } 
-
 $(document).ready(function(){
 
 $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue'); 
@@ -56,7 +56,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
 	});
 
 
-	$.getJSON("inforeport.do?action=lifeinfocount", {receiverType: "${lifeInfoSearchBean.receiverType}", keyWords: "${lifeInfoSearchBean.keyWords}", startDt: "${lifeInfoSearchBean.startDt}", endDt: "${lifeInfoSearchBean.endDt}", helpArea: "${lifeInfoSearchBean.helpArea}"}, function(data) {
+	$.getJSON("inforeport.do?action=affairinfocount", {startDt: "${affairInfoSearchBean.startDt}", endDt: "${affairInfoSearchBean.endDt}"}, function(data) {
 		$("#total").html(data.total);
 $("#finish").html(data.finishtotal);
 $("#my").html(data.satis);
@@ -69,7 +69,7 @@ $("#myd").html(data.percent);
 </head>
 
 <body>
-<form:form action="inforeport.do?action=lifeinforeport" method="post" commandName="lifeInfoSearchBean">
+<form:form action="inforeport.do?action=affairinforeport" method="post" commandName="affairInfoSearchBean">
 <table width="865"  border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
   <tr>
     <td><table width="850" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -80,31 +80,19 @@ $("#myd").html(data.percent);
         <td bgcolor="#F1F1F1"><table width="98%"  border="0" align="center" cellpadding="0" cellspacing="0">
           <tr valign="top" class="font_no">
             <td width="15%" height="22"><a href="inforeport.do">1.求助受理记录表</a></td>
-            <td width="18%">2.生活类服务派单表</td>
-            <td width="15%"><a href="inforeport.do?action=affairinforeport">3.事务移送记录表</a></td>
+            <td width="18%"><a href="inforeport.do?action=lifeinforeport">2.生活类服务派单表</a></td>
+            <td width="15%">3.事务移送记录表</td>
             <td width="15%"><a href="inforeport.do?action=usertrafficreport">4.话务量统计</a></td>
             <td>&nbsp;</td>
           </tr>
         </table>
           <table width="98%"  border="0" align="center" cellpadding="0" cellspacing="1">
           <tr>
-            <td width="10%">服务类型：</td>
-            <td colspan="4"> <form:select cssClass="form" path="receiverType" >
-              <form:option  value="">全部</form:option>
-              <form:options items="${receiverTypeMap}"/>
-            </form:select>              <form:input path="keyWords" size="30"/><font color="red">(请先选择服务类型。关键字是指一技之长服务者名称或者服务企业名称。)</font></td>
-            </tr>
-          <tr>
-            <td width="10%">派单时间从：</td>
-            <td width="60%"><form:input cssStyle="form" path="startDt" size="20"/>
+            <td width="10%">移送时间从：</td>
+            <td width="40%"><form:input cssClass="form" path="startDt" size="20"/>
       到
-        <form:input cssStyle="form" path="endDt" size="20"/>       </td>
-        <td width="10%">求助区域：</td>
-            <td width="10%"><form:select cssClass="form" path="helpArea">
-                <form:option value="">全部</form:option>
-				<form:options items="${helpAreaList}" itemLabel="value" itemValue="sortIndex"/>
-            </form:select></td>
-            <td width="10%"><img width="60" height="18" src="images/button_search.gif" onclick="option_search(document.forms[0]);" style="cursor:hand"/></td>
+        <form:input cssStyle="form" path="endDt" size="20"/>        </td>
+            <td><img width="60" height="18" src="images/button_search.gif" onclick="option_search(document.forms[0]);" style="cursor:hand"/></td>
             </tr>
         </table></td>
       </tr>
@@ -119,7 +107,7 @@ $("#myd").html(data.percent);
         <td>求助时间</td>
         <td>联系电话</td>
         <td>求助内容</td>
-        <td>服务者类型</td>
+        <td>移送方向</td>
         <td>服务者</td>
         <td>满意度</td>
         <td>接线员</td>
@@ -133,8 +121,8 @@ $("#myd").html(data.percent);
         <td><fmt:formatDate value="${dto.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td>${dto.helpTel}</td>
         <td>${dto.helpContent}</td>
-        <td>${dto.receiverType }</td>
-        <td>${dto.receiver}</td>
+        <td>${dto.moveWay }</td>
+        <td>${dto.moveAcceptor}</td>
         <td><c:if test="${dto.callResult == ''}">-</c:if><c:if test="${dto.callResult != ''}">${dto.callResult}</c:if></td>
         <td>${dto.creator }</td>
         <td>${dto.status}</td>
@@ -142,7 +130,7 @@ $("#myd").html(data.percent);
       <tr class="line">
         <td height="1" colspan="10"></td>
         </tr>
-	</c:forEach>
+    </c:forEach>
     </table>
       <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
@@ -150,9 +138,8 @@ $("#myd").html(data.percent);
           <td height="30" align="right"> <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
               <jsp:param name="pagename" value="pageNo"/>
-              <jsp:param name="actionname" value="inforeport.do?action=lifeinforeport"/>
+              <jsp:param name="actionname" value="inforeport.do?action=affairinforeport"/>
             </jsp:include> </td>
-
         </tr>
         <tr>
           <td height="20" colspan="2">合计：<span id=total></span>件 其中：结案<span id=finish></span>条（满意<span id=my></span>，基本满意<span id="jbmy"></span>，自行解决<span id="zxjj"></span>，满意度<span id="myd"></span>％）</td>
@@ -160,6 +147,7 @@ $("#myd").html(data.percent);
       </table></td>
   </tr>
   <input type="hidden" name="pageNo" value="${pageInfo.currentPage}" />
+  
 </table>
 </form:form>
 </body>
