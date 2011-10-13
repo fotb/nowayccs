@@ -41,4 +41,15 @@ public class LoginController {
 		}
 		return "redirect:index.do";
 	}
+	
+	@RequestMapping(params = "action=logout")
+	public String logout(HttpSession session, ModelMap model) {
+		session.setAttribute(Constants.SESSION_USER_KEY, null);
+		return "redirect:login.do";
+	}
+	
+	@RequestMapping(params = "action=relogin")
+	public String reLogin(ModelMap model) {
+		return "relogin";
+	}
 }

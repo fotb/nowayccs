@@ -2,6 +2,8 @@ package com.ccs.dao;
 
 import java.util.List;
 
+import com.ccs.bean.TrafficSearchBean;
+import com.ccs.bean.UserTrafficBean;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.UserVO;
 
@@ -27,5 +29,7 @@ public interface IUserDAO {
 	List<UserVO> findAllOnJob();
 	
 	List<UserVO> findByUserIds(List<String> userIdList);
+	
+	List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean);
 	
 }

@@ -20,10 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ccs.bean.AffairInfoReportDTO;
+import com.ccs.bean.AffairInfoSearchBean;
 import com.ccs.bean.InfoReportDTO;
 import com.ccs.bean.InfoSearchBean;
 import com.ccs.bean.LifeInfoReportDTO;
 import com.ccs.bean.LifeInfoSearchBean;
+import com.ccs.bean.TrafficSearchBean;
+import com.ccs.bean.UserTrafficBean;
+import com.ccs.bean.UserTrafficDTO;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IInfoReportBO;
@@ -32,6 +37,7 @@ import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
+import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.EntpriseVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
@@ -208,12 +214,14 @@ public class InfoReportController {
 			dto.setHelpName(infoVO.getHelpName());
 			dto.setHelpTel(infoVO.getHelpTel());
 			dto.setReceiverType(Constants.LIFEINFOMATION_RECEIVETYPE_HASHMAP.get(lifeInfoVO.getReceiverType()));
-			if(Constants.LIFEINFOMATION_RECEIVETYPE_QY.equals(lifeInfoVO.getReceiverType())) {
-				EntpriseVO entVO = entMap.get(lifeInfoVO.getReceiverId());
-				dto.setReceiver(entVO.getEntpriseName());
-			} else {
-				VolunteerVO vltVO = vltMap.get(lifeInfoVO.getReceiverId());
-				dto.setReceiver(vltVO.getVolunteerName());
+			if(!StringUtil.isNull(lifeInfoVO.getReceiverType())) {
+				if(Constants.LIFEINFOMATION_RECEIVETYPE_QY.equals(lifeInfoVO.getReceiverType())) {
+					EntpriseVO entVO = entMap.get(lifeInfoVO.getReceiverId());
+					dto.setReceiver(entVO.getEntpriseName());
+				} else {
+					VolunteerVO vltVO = vltMap.get(lifeInfoVO.getReceiverId());
+					dto.setReceiver(vltVO.getVolunteerName());
+				}
 			}
 			dto.setStatus(Constants.SYS_INFOMATION_STATES_HASHMAP.get(infoVO.getStatus()));
 			dtoList.add(dto);
@@ -258,8 +266,11 @@ public class InfoReportController {
 		int self = infoReportBO.getLifeCount(bean);
 		map.put("self", String.valueOf(self));
 		
-		
-		map.put("percent", calculatePercent(satis + basesatis + self, finishtotal));
+		if(finishtotal == 0) {
+			map.put("percent", "0");
+		} else {
+			map.put("percent", calculatePercent(satis + basesatis + self, finishtotal));
+		}
 		JSONObject jsonObject = JSONObject.fromObject(map);
 		return jsonObject.toString();
 	}
@@ -272,5 +283,174 @@ public class InfoReportController {
 		
 		DecimalFormat format = new DecimalFormat("##.00");
 		return format.format(percent);
+	}
+	
+	
+	@RequestMapping(params = "action=affairinforeport")
+	public String affairInfoReport(
+			@ModelAttribute("affairInfoSearchBean") AffairInfoSearchBean bean,
+			@RequestParam(value = "pageNo", required = false) String pageNo,
+			ModelMap model) {
+
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
+		List<InformationVO> list = infoReportBO.findAffairInfoByParams(bean,
+				pageInfo);
+		Map<String, UserVO> userMap = userBO.findAll();
+		Map<String, String> dictMap = dictBO.getDict(Constants.DICT_DICTTYPE_MYD);
+		List<String> infoIds = new ArrayList<String>();
+		for (Iterator<InformationVO> iter = list.iterator(); iter.hasNext();) {
+			InformationVO infoVO = iter.next();
+			infoIds.add(infoVO.getInfoId());
+		}
+		
+		
+		Map<String, AffairInformationVO> affairInfoMap = infoReportBO.findAffairInfoByInfoIds(infoIds);
+		List<AffairInfoReportDTO> dtoList = new ArrayList<AffairInfoReportDTO>();
+		for (Iterator<InformationVO> iter = list.iterator(); iter.hasNext();) {
+			InformationVO infoVO = iter.next();
+			AffairInfoReportDTO dto = new AffairInfoReportDTO();
+			dto.setInfoId(infoVO.getInfoId());
+			final AffairInformationVO	affairInfoVO = affairInfoMap.get(infoVO.getInfoId());
+			if(null != affairInfoVO) {
+				dto.setCallResult(null == affairInfoVO.getHelpApprove() ? "" : dictMap.get(affairInfoVO.getHelpApprove()));
+				dto.setMoveWay(affairInfoVO.getMoveWay());
+				dto.setMoveAcceptor(affairInfoVO.getMoveAcceptor());
+			}
+			
+			dto.setCreateTime(infoVO.getCreateTime());
+			dto.setCreator(userMap.get(infoVO.getCreator()).getUserName());
+			dto.setHelpContent(infoVO.getHelpContent());
+			dto.setHelpName(infoVO.getHelpName());
+			dto.setHelpTel(infoVO.getHelpTel());
+			dto.setStatus(Constants.SYS_INFOMATION_STATES_HASHMAP.get(infoVO.getStatus()));
+			dtoList.add(dto);
+		}
+		
+		model.addAttribute("dtoList", dtoList);
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("affairInfoSearchBean", bean);
+		
+//		model.addAttribute("receiverTypeMap", Constants.LIFEINFOMATION_RECEIVETYPE_HASHMAP);
+//		model.addAttribute("helpAreaList", dictBO.findByType(Constants.DICT_DICTTYPE_QZQY));
+//		model.addAttribute("slrqList", dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ));
+//		model.addAttribute("users", userMap.values());
+		return "inforeport/affairinfolist";
+	}
+	
+	
+	@RequestMapping(params = "action=affairinfocount", method = RequestMethod.GET)
+	public @ResponseBody
+	String getAffairInfoCount(@RequestParam String startDt, String endDt, String helpArea)
+			throws UnsupportedEncodingException {
+		AffairInfoSearchBean bean = new AffairInfoSearchBean();
+		bean.setStartDt(startDt);
+		bean.setEndDt(endDt);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		int total = infoReportBO.getAffairCount(bean);
+		map.put("total", String.valueOf(total));
+		bean.setStatus(Constants.SYS_INFOMATION_STATES_YJA);
+		int finishtotal = infoReportBO.getAffairCount(bean);
+		map.put("finishtotal", String.valueOf(finishtotal));
+		bean.setHelpApprove("1");//滿意
+		int satis = infoReportBO.getAffairCount(bean);
+		map.put("satis", String.valueOf(satis));
+		bean.setHelpApprove("2");//基本滿意
+		int basesatis = infoReportBO.getAffairCount(bean);
+		map.put("basesatis", String.valueOf(basesatis));
+		bean.setHelpApprove("4");//自行解決
+		int self = infoReportBO.getAffairCount(bean);
+		map.put("self", String.valueOf(self));
+		
+		if(finishtotal == 0) {
+			map.put("percent", "0");
+		} else {
+			map.put("percent", calculatePercent(satis + basesatis + self, finishtotal));
+		}
+		JSONObject jsonObject = JSONObject.fromObject(map);
+		return jsonObject.toString();
+	}
+	
+	@RequestMapping(params = "action=usertrafficreport")
+	public  String  userTrafficReport(@ModelAttribute("trafficSearchBean") TrafficSearchBean bean, ModelMap model) {
+		Map<String, UserTrafficDTO> map = new HashMap<String, UserTrafficDTO>();
+		//life
+		bean.setHelpType(Constants.INFOMATION_HELPTYPE_LIFE);
+		List<UserTrafficBean> lifeList = userBO.findUserTraffic(bean);
+		for (Iterator<UserTrafficBean> iter = lifeList.iterator(); iter.hasNext();) {
+			UserTrafficBean userTrafficBean = iter.next();
+			if(map.containsKey(userTrafficBean.getUserId())) {
+				UserTrafficDTO dto = map.get(userTrafficBean.getUserId());
+				dto.setLifeTraffic(userTrafficBean.getTraffic());
+			} else {
+				UserTrafficDTO dto = new UserTrafficDTO();
+				dto.setUserId(userTrafficBean.getUserId());
+				dto.setLoginName(userTrafficBean.getLoginName());
+				dto.setUserName(userTrafficBean.getUserName());
+				dto.setLifeTraffic(userTrafficBean.getTraffic());
+				map.put(dto.getUserId(), dto);
+			}
+		}
+		
+		//affair
+		bean.setHelpType(Constants.INFOMATION_HELPTYPE_AFFAIR);
+		List<UserTrafficBean> affairList = userBO.findUserTraffic(bean);
+		for (Iterator<UserTrafficBean> iter = affairList.iterator(); iter.hasNext();) {
+			UserTrafficBean userTrafficBean = iter.next();
+			if(map.containsKey(userTrafficBean.getUserId())) {
+				UserTrafficDTO dto = map.get(userTrafficBean.getUserId());
+				dto.setAffairTraffic(userTrafficBean.getTraffic());
+			} else {
+				UserTrafficDTO dto = new UserTrafficDTO();
+				dto.setUserId(userTrafficBean.getUserId());
+				dto.setLoginName(userTrafficBean.getLoginName());
+				dto.setUserName(userTrafficBean.getUserName());
+				dto.setAffairTraffic(userTrafficBean.getTraffic());
+				map.put(dto.getUserId(), dto);
+			}
+		}
+		
+		
+		//refer
+		bean.setHelpType(Constants.INFOMATION_HELPTYPE_REFER);
+		List<UserTrafficBean> referList = userBO.findUserTraffic(bean);
+		for (Iterator<UserTrafficBean> iter = referList.iterator(); iter.hasNext();) {
+			UserTrafficBean userTrafficBean = iter.next();
+			if(map.containsKey(userTrafficBean.getUserId())) {
+				UserTrafficDTO dto = map.get(userTrafficBean.getUserId());
+				dto.setReferTraffic(userTrafficBean.getTraffic());
+			} else {
+				UserTrafficDTO dto = new UserTrafficDTO();
+				dto.setUserId(userTrafficBean.getUserId());
+				dto.setLoginName(userTrafficBean.getLoginName());
+				dto.setUserName(userTrafficBean.getUserName());
+				dto.setReferTraffic(userTrafficBean.getTraffic());
+				map.put(dto.getUserId(), dto);
+			}
+		}
+		
+		//fertility
+		bean.setHelpType(Constants.INFOMATION_HELPTYPE_FERTILITY);
+		List<UserTrafficBean> sclList = userBO.findUserTraffic(bean);
+		for (Iterator<UserTrafficBean> iter = sclList.iterator(); iter.hasNext();) {
+			UserTrafficBean userTrafficBean = iter.next();
+			if(map.containsKey(userTrafficBean.getUserId())) {
+				UserTrafficDTO dto = map.get(userTrafficBean.getUserId());
+				dto.setSclTraffic(userTrafficBean.getTraffic());
+			} else {
+				UserTrafficDTO dto = new UserTrafficDTO();
+				dto.setUserId(userTrafficBean.getUserId());
+				dto.setLoginName(userTrafficBean.getLoginName());
+				dto.setUserName(userTrafficBean.getUserName());
+				dto.setSclTraffic(userTrafficBean.getTraffic());
+				map.put(dto.getUserId(), dto);
+			}
+		}
+		
+		model.addAttribute("trafficSearchBean", bean);
+		
+		model.addAttribute("dtoList", map.values());
+		return "inforeport/usertraffic";
 	}
 }

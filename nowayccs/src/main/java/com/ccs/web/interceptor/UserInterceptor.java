@@ -17,16 +17,18 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 		if("com.ccs.web.LoginController".equals(className)) {
 			return true;
 		} else {
-//			UserVO loginUser = (UserVO)request.getSession().getAttribute(Constants.SESSION_USER_KEY); 
-//			if(null == loginUser) {
-//				request.getRequestDispatcher("/login.do").forward(request, response); 
-//			}
-//			return null == loginUser ? false : true;
-			UserVO userVO = new UserVO();
-			userVO.setUserId("1");
-			userVO.setUserName("系统管理员");
-			request.getSession().setAttribute(Constants.SESSION_USER_KEY, userVO);
-			return true;
+			UserVO loginUser = (UserVO)request.getSession().getAttribute(Constants.SESSION_USER_KEY); 
+			if(null == loginUser) {
+				request.getRequestDispatcher("/login.do?action=relogin").forward(request, response); 
+			}
+			return null == loginUser ? false : true;
+			
+			//for testing
+//			UserVO userVO = new UserVO();
+//			userVO.setUserId("1");
+//			userVO.setUserName("系统管理员");
+//			request.getSession().setAttribute(Constants.SESSION_USER_KEY, userVO);
+//			return true;
 		}
 	}
 

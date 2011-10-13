@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccs.bean.TrafficSearchBean;
+import com.ccs.bean.UserTrafficBean;
 import com.ccs.bo.IUserBO;
 import com.ccs.dao.IRoleOperationDAO;
 import com.ccs.dao.IUserDAO;
@@ -151,6 +153,11 @@ public class UserBOImpl implements IUserBO {
 			map.put(userVO.getUserId(), userVO);
 		}
 		return map;
+	}
+
+	@Override
+	public List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean) {
+		return userDAO.findUserTraffic(bean);
 	}
 
 }

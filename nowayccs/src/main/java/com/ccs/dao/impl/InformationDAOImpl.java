@@ -13,6 +13,7 @@ import org.hibernate.type.Type;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
+import com.ccs.bean.AffairInfoSearchBean;
 import com.ccs.bean.InfoSearchBean;
 import com.ccs.bean.LifeInfoSearchBean;
 import com.ccs.dao.DefaultDAOSupport;
@@ -342,6 +343,68 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
 		
 		buffer.append("and (l.helpApprove = ? or ? is null) ");
+		values.add(bean.getHelpApprove());
+		values.add(bean.getHelpApprove());
+		
+		buffer.append("and (t.status = ? or ? is null) ");
+		values.add(bean.getStatus());
+		values.add(bean.getStatus());
+		
+		final Long count = (Long) getHibernateTemplate().find(buffer.toString(), values.toArray()).listIterator().next();
+		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<InformationVO> findAffairInfoByParams(
+			final AffairInfoSearchBean bean, final PageInfo pageInfo) {
+		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+			@Override
+			public List<InformationVO> doInHibernate(Session session)
+					throws HibernateException, SQLException {
+						final StringBuffer buffer = new StringBuffer(1000);
+						List<Object> values = new ArrayList<Object>();
+						Type[] types = new Type[5];
+						buffer.append("from InformationVO t where ");
+						buffer.append("(trunc(t.createTime) >= ? or ? is null) ");
+						values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+						values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+						types[0] = StandardBasicTypes.DATE;
+						types[1] = StandardBasicTypes.DATE;
+						buffer.append("and (trunc(t.createTime) <= ? or ? is null) ");
+						values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+						values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+						types[2] = StandardBasicTypes.DATE;
+						types[3] = StandardBasicTypes.DATE;
+						buffer.append("and t.helpType = ?" );
+						values.add(Constants.INFOMATION_HELPTYPE_AFFAIR);
+						types[4] = StandardBasicTypes.STRING;
+						buffer.append("order by t.createTime desc");
+						
+						Query query = session.createQuery(buffer.toString());
+						query.setParameters(values.toArray(), types);
+						query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
+						query.setMaxResults(pageInfo.getPAGE_COUNT());
+						return query.list();
+			}
+		});
+	}
+
+	@Override
+	public int getAffairCountByParams(AffairInfoSearchBean bean) {
+		final StringBuffer buffer = new StringBuffer(1000);
+		List<Object> values = new ArrayList<Object>();
+		buffer.append("select count(t.infoId) from InformationVO t, AffairInformationVO a where ");
+		buffer.append("(trunc(t.createTime) >= ? or ? is null) ");
+		values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		buffer.append("and (trunc(t.createTime) <= ? or ? is null) ");
+		values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		values.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		buffer.append("and t.helpType = ? " );
+		values.add(Constants.INFOMATION_HELPTYPE_AFFAIR);
+		buffer.append("and t.infoId = a.infoId ");
+		buffer.append("and (a.helpApprove = ? or ? is null) ");
 		values.add(bean.getHelpApprove());
 		values.add(bean.getHelpApprove());
 		

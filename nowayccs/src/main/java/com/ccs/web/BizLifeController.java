@@ -96,9 +96,9 @@ public class BizLifeController {
 	@RequestMapping(params = "action=dispatchsave")
 	public String dispatchSave(@ModelAttribute("lifeDispatchBean") LifeDispatchBean lifeDispatchBean,
 			@RequestParam("pageNo") String pageNo, HttpSession session, ModelMap model) {
-		LifeInformationVO vo = new LifeInformationVO();
+		LifeInformationVO vo = bizLifeBO.findLifeInfoByInfoId(lifeDispatchBean.getInfoId());
 		InformationVO infoVO = bizLifeBO.findInfoByInfoId(lifeDispatchBean.getInfoId());
-		vo.setInfoId(lifeDispatchBean.getInfoId());
+//		vo.setInfoId(lifeDispatchBean.getInfoId());
 		vo.setReceiverType(lifeDispatchBean.getReceiverType());
 		vo.setReceiverId(lifeDispatchBean.getReceiverId());
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);

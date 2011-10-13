@@ -80,13 +80,13 @@ public class BizAffairController {
 	@RequestMapping(params = "action=dispatchsave")
 	public String dispatchSave(@ModelAttribute("affairDispatchBean") AffairDispatchBean affairDispatchBean,
 			@RequestParam("pageNo") String pageNo, HttpSession session, ModelMap model) {
-		AffairInformationVO vo = new AffairInformationVO(); 
+		AffairInformationVO vo = bizAffairBO.findAffairInfoByInfoId(affairDispatchBean.getInfoId());
 		InformationVO infoVO  = bizAffairBO.findInfoByInfoId(affairDispatchBean.getInfoId());
 		vo.setMoveWay(affairDispatchBean.getMoveWay());
 		vo.setMoveAcceptor(affairDispatchBean.getMoveAcceptor());
 		vo.setMoveAcceptTel(affairDispatchBean.getAcceptorTel());
 		vo.setMoveTime(DateUtil.parse(affairDispatchBean.getMoveTime(), "yyyy-MM-dd HH:mm"));
-		vo.setInfoId(infoVO.getInfoId());
+//		vo.setInfoId(infoVO.getInfoId());
 		
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		infoVO.setDeliverMode(affairDispatchBean.getMoveMode());
