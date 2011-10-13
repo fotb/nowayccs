@@ -11,7 +11,7 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script language="javascript" type="">
 function logout(){
-  window.open("SysSystem_logout.do","_parent");
+  window.open("login.do?action=logout","_parent");
 }
 
 function btnSignIn_onclick() {
