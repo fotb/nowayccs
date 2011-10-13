@@ -3,6 +3,8 @@ package com.ccs.bo;
 import java.util.List;
 import java.util.Map;
 
+import com.ccs.bean.TrafficSearchBean;
+import com.ccs.bean.UserTrafficBean;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.UserRoleVO;
 import com.ccs.vo.UserVO;
@@ -33,5 +35,7 @@ public interface IUserBO {
 	boolean hasOperationRight(String userId, String operationId);
 	
 	Map<String, UserVO> findAll();
+	
+	List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean);
 	
 }

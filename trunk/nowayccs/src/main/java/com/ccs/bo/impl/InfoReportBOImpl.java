@@ -9,8 +9,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ccs.bean.AffairInfoSearchBean;
 import com.ccs.bean.InfoSearchBean;
-import com.ccs.bo.IInfoSearchBO;
+import com.ccs.bean.LifeInfoSearchBean;
+import com.ccs.bo.IInfoReportBO;
 import com.ccs.dao.IAffairInformationDAO;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.dao.ILifeInformationDAO;
@@ -23,7 +25,7 @@ import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.ReferInformationVO;
 
 @Service("infoReportBO")
-public class InfoReportBOImpl implements IInfoSearchBO {
+public class InfoReportBOImpl implements IInfoReportBO {
 
 	@Autowired
 	private IInformationDAO informationDAO;
@@ -37,6 +39,7 @@ public class InfoReportBOImpl implements IInfoSearchBO {
 	
 	@Autowired
 	private IReferInformationDAO referInformationDAO;
+	
 	
 	@Override
 	public List<InformationVO> findByParams(InfoSearchBean bean, PageInfo pageInfo) {
@@ -103,4 +106,60 @@ public class InfoReportBOImpl implements IInfoSearchBO {
 		return referInformationDAO.findByInfoId(infoId);
 	}
 
+	
+	@Override
+	public int getCountByParams(InfoSearchBean bean) {
+		return informationDAO.getTotalCountByParams(bean);
+	}
+
+	@Override
+	public int getInfoCount(String helpType) {
+		return informationDAO.getInfoCount(helpType);
+	}
+
+	@Override
+	public List<InformationVO> findLifeInfoByParams(LifeInfoSearchBean bean,
+			PageInfo pageInfo) {
+		pageInfo.setTotalRecords(informationDAO.getLifeCountByParams(bean));
+		return informationDAO.findLifeInfoByParams(bean, pageInfo);
+	}
+
+	@Override
+	public Map<String, LifeInformationVO> findLifeInfoByInfoIds(List<String> infoIds) {
+		final List<LifeInformationVO> list = lifeInformationDAO.findByInfoIds(infoIds);
+		Map<String, LifeInformationVO> map = new HashMap<String, LifeInformationVO>();
+		for (Iterator<LifeInformationVO> iter = list.iterator(); iter.hasNext();) {
+			LifeInformationVO lifeInfoVO = iter.next();
+			map.put(lifeInfoVO.getInfoId(), lifeInfoVO);
+		}
+		return map;
+	}
+
+	@Override
+	public int getLifeCount(LifeInfoSearchBean bean) {
+		return informationDAO.getLifeCountByParams(bean);
+	}
+
+	@Override
+	public List<InformationVO> findAffairInfoByParams(
+			AffairInfoSearchBean bean, PageInfo pageInfo) {
+		return informationDAO.findAffairInfoByParams(bean, pageInfo);
+	}
+
+	@Override
+	public Map<String, AffairInformationVO> findAffairInfoByInfoIds(
+			List<String> infoIds) {
+		final List<AffairInformationVO> list = affairInformationDAO.findByInfoIds(infoIds);
+		Map<String, AffairInformationVO> map = new HashMap<String, AffairInformationVO>();
+		for (Iterator<AffairInformationVO> iter = list.iterator(); iter.hasNext();) {
+			AffairInformationVO affairInfoVO = iter.next();
+			map.put(affairInfoVO.getInfoId(), affairInfoVO);
+		}
+		return map;
+	}
+
+	@Override
+	public int getAffairCount(AffairInfoSearchBean bean) {
+		return informationDAO.getAffairCountByParams(bean);
+	}
 }

@@ -23,4 +23,5 @@ public interface IInfoSearchBO {
 	AffairInformationVO findAffairInfoByInfoId(String infoId);
 	
 	ReferInformationVO findReferInfoByInfoId(String infoId);
+	
 }

@@ -3,6 +3,7 @@ package com.ccs.bo;
 import java.util.List;
 import java.util.Map;
 
+import com.ccs.bean.AffairInfoSearchBean;
 import com.ccs.bean.InfoSearchBean;
 import com.ccs.bean.LifeInfoSearchBean;
 import com.ccs.util.PageInfo;
@@ -34,4 +35,10 @@ public interface IInfoReportBO {
 	Map<String, LifeInformationVO> findLifeInfoByInfoIds(List<String> infoIds);
 	
 	int getLifeCount(LifeInfoSearchBean bean);
+	
+	List<InformationVO> findAffairInfoByParams(AffairInfoSearchBean bean, PageInfo pageInfo);
+	
+	int getAffairCount(AffairInfoSearchBean bean);
+	
+	Map<String, AffairInformationVO> findAffairInfoByInfoIds(List<String> infoIds);
 }

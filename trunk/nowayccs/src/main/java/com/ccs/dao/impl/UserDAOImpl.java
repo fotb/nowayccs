@@ -10,8 +10,11 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
+import com.ccs.bean.TrafficSearchBean;
+import com.ccs.bean.UserTrafficBean;
 import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.IUserDAO;
+import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.UserVO;
 
@@ -107,4 +110,27 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 	public List<UserVO> findAll() {
 		return getHibernateTemplate().find("from UserVO vo");
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean) {
+		List<Object> objs = new ArrayList<Object>();
+		StringBuffer buffer = new StringBuffer(1000);
+		buffer.append("select new com.ccs.bean.UserTrafficBean(u.userId, u.loginName, u.userName, count(i.infoId) as traffic) from UserVO u, InformationVO i ");
+		buffer.append("where i.creator = u.userId ");
+		buffer.append("and (u.loginName = ? or ? is null) ");
+		objs.add(bean.getLoginName());
+		objs.add(bean.getLoginName());
+		buffer.append("and (trunc(i.createTime) >= ? or ? is null) ");
+		objs.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		objs.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		buffer.append("and (trunc(i.createTime) <= ? or ? is null) ");
+		objs.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		objs.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		buffer.append("and i.helpType = ?" );
+		objs.add(bean.getHelpType());
+		buffer.append("group by u.loginName, u.userId, u.userName");
+		return getHibernateTemplate().find(buffer.toString(), objs.toArray());
+	}
+	
 }

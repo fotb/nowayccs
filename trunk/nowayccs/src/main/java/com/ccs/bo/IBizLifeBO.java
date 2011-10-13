@@ -24,4 +24,6 @@ public interface IBizLifeBO {
 	void deliverLife(InformationVO infoVO, LifeInformationVO vo);
 	
 	void del(String infoId, String userId);
+	
+	LifeInformationVO findLifeInfoByInfoId(String infoId);
 }

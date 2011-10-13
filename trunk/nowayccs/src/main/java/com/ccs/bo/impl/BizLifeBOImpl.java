@@ -81,4 +81,9 @@ public class BizLifeBOImpl implements IBizLifeBO {
 		vo.setCancelTime(new Date());
 		informationDAO.saveOrUpate(vo);
 	}
+
+	@Override
+	public LifeInformationVO findLifeInfoByInfoId(String infoId) {
+		return lifeInformationDAO.findByInfoId(infoId);
+	}
 }
