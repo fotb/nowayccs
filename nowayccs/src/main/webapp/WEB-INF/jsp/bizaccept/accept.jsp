@@ -89,8 +89,27 @@ $(document).ready(function(){
 	$("#helpTel").change(function(){
 		jQuery("#histList").setGridParam({url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+""});
 		jQuery("#histList").trigger("reloadGrid");
+		
+		getPhoneLevels($("#helpTel").val());
 	});
 });
+
+function getPhoneLevels(phone) {
+	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(data) {
+		$("#phonelevels").html("");
+		if(data[0].levels < 0) {
+			$("#phonelevels").css("color", "black");
+		} else {
+			$("#phonelevels").css("color", "red");
+		}
+		
+		for(i = 0; i < Math.abs(data[0].levels); i++) {
+			$("#phonelevels").append("★");
+		}
+		
+		$("#phonelevels").append("(" + data[0].remark + ")");
+	});
+}
 
 function loadHist() {
 	jQuery("#histList").jqGrid({ 
@@ -164,7 +183,7 @@ function loadHist() {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              <form:input path="helpTel" cssClass="form" size="40"/><font color="red">(*长度不能超过50位)</font>
+              <form:input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color: black"></span>
             </td>
           </tr>
           <tr class="line">
