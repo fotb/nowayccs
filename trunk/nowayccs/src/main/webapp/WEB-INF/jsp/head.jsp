@@ -351,7 +351,7 @@ Phone_OnSignInExFailure()
   <tr>
     <td height="24" valign="bottom" background="images/bg_top.gif"><table width="95%" height="20"  border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td width="13%"><bean:write name="userName"/>，您好！</td>
+        <td width="13%">${user.userName}，您好！</td>
         <td width="60%">
         <logic:present name="hjAgent">
           <INPUT id=btnSignIn type=button value=签入 name=button1 LANGUAGE=javascript onclick="return btnSignIn_onclick()">
@@ -384,7 +384,7 @@ if(today.getDay()==3) week="星期三"
 if(today.getDay()==4) week="星期四"
 if(today.getDay()==5) week="星期五"
 if(today.getDay()==6) week="星期六"
-date=(today.getYear())+"年"+(today.getMonth()+1)+"月"+today.getDate()+"日"+" "
+date=(today.getFullYear())+"年"+(today.getMonth()+1)+"月"+today.getDate()+"日"+" "
 document.write(""+date+week+"");
 // -->
           </script></td>

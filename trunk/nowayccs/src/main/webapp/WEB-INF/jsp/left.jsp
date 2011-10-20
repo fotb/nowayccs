@@ -95,7 +95,7 @@
                 <font color="#FFFFFF">企业查询</font></a></td>
             </tr>
                          <tr>
-              <td class="leftmenu_02"><a href="opr_message_list.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+              <td class="leftmenu_02"><a href="msg.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">信息栏</font></a></td>
             </tr>
 			<tr>
@@ -122,7 +122,7 @@
    <td height="5"></td>
   </tr>
     <tr>
-    <td class="leftmenu_02"><a href="sys_icdsetting_list.do" target="main"><img src="images/leftpic_12.gif" width="70" height="30" border="0"><br>
+    <td class="leftmenu_02"><a href="agent.do" target="main"><img src="images/leftpic_12.gif" width="70" height="30" border="0"><br>
     <font color="#FFFFFF">坐席连接设置</font></a></td>
   </tr>
   <tr>
@@ -152,6 +152,10 @@
   <tr>
     <td class="leftmenu_02"><a href="dict.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>
     <font color="#FFFFFF">数据字典维护</font></a></td>
+  </tr>
+    <tr>
+    <td class="leftmenu_02"><a href="blacklist.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>
+    <font color="#FFFFFF">红黑名单维护</font></a></td>
   </tr>
   <!--
    <tr>

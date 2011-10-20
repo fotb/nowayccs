@@ -16,14 +16,12 @@ function btnsearch_click(){
   form.submit();
 }
 function btndelete_click(volunteerId) {
-alert("volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&status=N&pageNo=${pageInfo.currentPage}");
   if(confirm("是否真的停止服务者服务？")) {
     $("form").attr("action", "volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&tostatus=N");
     $("form").submit();
   }
 }
 function btnactive_click(volunteerId) {
-alert("volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&status=Y&pageNo=${pageInfo.currentPage}");
   if(confirm("是否真的重新开始服务者服务？")) {
     $("form").attr("action", "volunteer.do?action=changestatus&volunteerId="+ volunteerId + "&tostatus=Y");
     $("form").submit();
