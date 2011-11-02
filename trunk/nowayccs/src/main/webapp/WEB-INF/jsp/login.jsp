@@ -47,7 +47,7 @@ $(document).keypress(function(e) {
               <td>&nbsp;</td>
             </tr>
 			<tr>
-              <td height="15" colspan="3"><font color="red"
+              <td height="15" colspan="3"><font color="red">
               <form:errors path="loginName"/>
               <form:errors path="loginPassword"/>
               </font>

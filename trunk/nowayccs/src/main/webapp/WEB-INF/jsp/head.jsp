@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>Untitled Document</title>
-<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script language="javascript" type="">
@@ -15,29 +15,30 @@ function logout(){
 }
 
 function btnSignIn_onclick() {
-  TextResult.innerHTML = "";
+  $("#TextResult").html("");
   var i,j,sResult;
   Phone.TimeOut    = 10000;
 
   i = Phone.Initial();
   sResult = Phone.GetPromptByErrorCode(i);
-  TextResult.innerHTML = sResult;
+  //TextResult.innerHTML = sResult;
+$("#TextResult").html(sResult);
   if (i==0)
   {
     TextResult.innerHTML = "";
 
     sResult = Phone.SynchronizeCcsTime()
     sResult = Phone.GetPromptByErrorCode(j);
-    TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
+    $("#TextResult").append('\n'+sResult);
 
-    TextResult.innerHTML = "";
+    $("#TextResult").html("");
     i = Phone.AgentType;
     //j = Phone.SignIn(3);
 
-    j = Phone.SignInEx('TTT',i,'<logic:present name="hjAgent" ><bean:write name="hjAgent" property="targetDevice"/></logic:present>');
+    j = Phone.SignInEx('TTT',i,'${agentVO.targetDevice}');
     sResult = Phone.GetPromptByErrorCode(j);
-    TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
-    window.status = TextResult.innerHTML;
+    $("#TextResult").append('\n'+sResult);
+    window.status = $("#TextResult").html();
   }
 }
 
@@ -84,7 +85,7 @@ function Phone_OnRequestReleaseEx(MediaType) {
 function Phone_OnAnswerExSuccess() {
   BtAns.disabled = true;
   BtRelease.disabled =false;
-  window.open("/OprInforAccept_icdInit.do?callerNo="+Phone.GetCallerNo(), "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+  window.open("bizaccept.do?callerNo="+Phone.GetCallerNo(), "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 
 function Phone_OnSignOutSuccess() {
@@ -117,7 +118,7 @@ function Phone_OnAnswerSuccess() {
   BtAns.disabled = true;
   BtRelease.disabled =false;
 
-  window.open("/OprInforAccept_icdInit.do?callerNo="+Phone.GetCallerNo(), "", 'height=500, width=700, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=yes,location=no, status=no');
+  window.open("bizaccept.do?callerNo="+Phone.GetCallerNo(), "", 'height=500, width=700, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=yes,location=no, status=no');
 }
 
 function Phone_OnReleaseSuccess() {
@@ -393,39 +394,37 @@ document.write(""+date+week+"");
     </table></td>
   </tr>
 </table>
-<logic:present name="hjAgent">
-<logic:notEmpty name="hjAgent">
+<c:if test="${not empty agentVO}">
 <OBJECT classid=clsid:014D83A5-7E35-11D3-8AF9-00C0DF245E51 name=Phone
 style="LEFT: 0px; TOP: 0px; VISIBILITY: hidden" VIEWASTEXT>
-<PARAM NAME="CcsID" VALUE='<bean:write name="hjAgent" property="serverType"/>'>
+<PARAM NAME="CcsID" VALUE='${agentVO.serverType}'>
 <PARAM NAME="MyID" VALUE="40">
-<PARAM NAME="MainCcsIP" VALUE='<bean:write name="hjAgent" property="mainCcsIp"/>'>
-<PARAM NAME="BackCcsIP" VALUE='<bean:write name="hjAgent" property="backCcsIp"/>'>
-<PARAM NAME="WorkNo" VALUE='<bean:write name="hjAgent" property="workNo"/>'>
+<PARAM NAME="MainCcsIP" VALUE='${agentVO.mainCcsIp}'>
+<PARAM NAME="BackCcsIP" VALUE='${agentVO.backCcsIp}'>
+<PARAM NAME="WorkNo" VALUE='${agentVO.workNo}'>
 <PARAM NAME="DesktopNo" VALUE="1000">
-<PARAM NAME="Password" VALUE='<bean:write name="hjAgent" property="password"/>'>
+<PARAM NAME="Password" VALUE='${agentVO.password}'>
 <PARAM NAME="TimeOut" VALUE="10000">
 <PARAM NAME="RecordFileDir" VALUE="c:\temp">
-<PARAM NAME="CardType" VALUE='<bean:write name="hjAgent" property="cardType"/>'>
-<PARAM NAME="AutoAnswer" VALUE='<bean:write name="hjAgent" property="autoAnswer"/>'>
-<PARAM NAME="AutoRelease" VALUE='<bean:write name="hjAgent" property="autoRelease"/>'>
-<PARAM NAME="AutoReconnect" VALUE='<bean:write name="hjAgent" property="autoReconnect"/>'>
-<PARAM NAME="HaveBell" VALUE='<bean:write name="hjAgent" property="haveBell"/>'>
-<PARAM NAME="BellTime" VALUE='<bean:write name="hjAgent" property="bellTime"/>'>
+<PARAM NAME="CardType" VALUE='${agentVO.cardType}'>
+<PARAM NAME="AutoAnswer" VALUE='${agentVO.autoAnswer}'>
+<PARAM NAME="AutoRelease" VALUE='${agentVO.autoRelease}'>
+<PARAM NAME="AutoReconnect" VALUE='${agentVO.autoReconnect}'>
+<PARAM NAME="HaveBell" VALUE='${agentVO.haveBell}'>
+<PARAM NAME="BellTime" VALUE='${agentVO.bellTime}'>
 <PARAM NAME="PlayStep" VALUE="2">
-<PARAM NAME="FreeStatus" VALUE='<bean:write name="hjAgent" property="freeStatus"/>'>
+<PARAM NAME="FreeStatus" VALUE='${agentVO.freeStatus}'>
 <PARAM NAME="TimerEnabled" VALUE="0">
 <PARAM NAME="TimerInterval" VALUE="1000">
-<PARAM NAME="MediaPlay" VALUE='<bean:write name="hjAgent" property="mediaPlay"/>'>
-<PARAM NAME="MediaFileName" VALUE='<bean:write name="hjAgent" property="mediaFilename"/>'>
+<PARAM NAME="MediaPlay" VALUE='${agentVO.mediaPlay}'>
+<PARAM NAME="MediaFileName" VALUE='${agentVO.mediaFilename}'>
 <PARAM NAME="Version" VALUE="3">
-<PARAM NAME="AgentType" VALUE='<bean:write name="hjAgent" property="agentType"/>'>
+<PARAM NAME="AgentType" VALUE='${agentVO.agentType}'>
 <PARAM NAME="ConvoyDirection" VALUE="1">
 <PARAM NAME="ConvoyMode" VALUE="1">
 <PARAM NAME="WFSMode" VALUE="2">
 <PARAM NAME="PMSMode" VALUE="1">
 </OBJECT>
-</logic:notEmpty>
-</logic:present>
+</c:if>
 </body>
 </html>

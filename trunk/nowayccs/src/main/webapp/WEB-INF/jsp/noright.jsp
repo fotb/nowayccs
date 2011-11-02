@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,16 +26,11 @@ function relogin() {
         </tr>
         <tr class="table_t1">
           <td class="table_t1" >
-            	请重新登录系统！
+            	您没有进行此项操作的权限，请联系管理员！
           </td>
         </tr>
         <tr class="line">
           <td height="1">          </td>
-        </tr>
-        <tr align="center" class="table_t1">
-          <td>
-            <img src="images/login_button.jpg" alt="重新登录" width="92" height="19" border="0" style="cursor: pointer;" onclick="relogin();"/>
-          </td>
         </tr>
       </table>
     </td>
