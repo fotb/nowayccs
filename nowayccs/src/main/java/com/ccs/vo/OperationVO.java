@@ -22,6 +22,28 @@ public class OperationVO implements Serializable {
 	@Column(name = "OPERATIONNAME")
 	private String operationName;
 
+	@Column(name = "CLASSNAME")
+	private String className;
+
+	@Column(name = "ACTION")
+	private String action;
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
 	public String getOperationId() {
 		return operationId;
 	}

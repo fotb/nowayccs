@@ -6,6 +6,7 @@ import java.util.Map;
 import com.ccs.bean.TrafficSearchBean;
 import com.ccs.bean.UserTrafficBean;
 import com.ccs.util.PageInfo;
+import com.ccs.vo.OperationVO;
 import com.ccs.vo.UserRoleVO;
 import com.ccs.vo.UserVO;
 
@@ -37,5 +38,7 @@ public interface IUserBO {
 	Map<String, UserVO> findAll();
 	
 	List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean);
+	
+	Map<String, OperationVO> findUserOpertaionRightByUserId(String userId);
 	
 }
