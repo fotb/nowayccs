@@ -14,10 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ccs.bean.TrafficSearchBean;
 import com.ccs.bean.UserTrafficBean;
 import com.ccs.bo.IUserBO;
+import com.ccs.dao.IOperationDAO;
 import com.ccs.dao.IRoleOperationDAO;
 import com.ccs.dao.IUserDAO;
 import com.ccs.dao.IUserRoleDAO;
 import com.ccs.util.PageInfo;
+import com.ccs.vo.OperationVO;
 import com.ccs.vo.RoleOperationVO;
 import com.ccs.vo.UserRoleIdVO;
 import com.ccs.vo.UserRoleVO;
@@ -34,6 +36,9 @@ public class UserBOImpl implements IUserBO {
 	
 	@Autowired
 	private IRoleOperationDAO roleOperationDAO;
+	
+	@Autowired
+	private IOperationDAO operationDAO;
 	
 	@Override
 	public void saveOrUpdate(UserVO vo) {
@@ -158,6 +163,17 @@ public class UserBOImpl implements IUserBO {
 	@Override
 	public List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean) {
 		return userDAO.findUserTraffic(bean);
+	}
+
+	@Override
+	public Map<String, OperationVO> findUserOpertaionRightByUserId(String userId) {
+		List<OperationVO> list = operationDAO.findByUserId(userId);
+		Map<String, OperationVO> map = new HashMap<String, OperationVO>();
+		for(OperationVO vo : list) {
+//			map.put(vo.getClassName() + vo.getAction(), vo);
+			map.put(vo.getClassName(), vo);
+		}
+		return map;
 	}
 
 }

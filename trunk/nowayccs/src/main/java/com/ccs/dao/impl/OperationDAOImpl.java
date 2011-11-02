@@ -33,4 +33,15 @@ public class OperationDAOImpl extends DefaultDAOSupport implements
 		return getHibernateTemplate().find("from OperationVO");
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<OperationVO> findByUserId(String userId) {
+		StringBuffer buffer = new StringBuffer(1000);
+		buffer.append("select o from OperationVO o, UserRoleVO u, RoleOperationVO r ");
+		buffer.append(" where u.id.userId = ? ");
+		buffer.append("and u.id.roleId = r.id.roleId ");
+		buffer.append("and r.id.operationId = o.operationId ");
+		return getHibernateTemplate().find(buffer.toString(), userId);
+	}
+
 }

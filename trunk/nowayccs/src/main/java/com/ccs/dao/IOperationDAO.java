@@ -12,4 +12,6 @@ public interface IOperationDAO {
 	void delete(final OperationVO vo);
 
 	List<OperationVO> findAll();
+	
+	List<OperationVO> findByUserId(String userId);
 }

@@ -24,6 +24,16 @@ public class InfoSearchBean implements Serializable {
 	private String helpTel;
 
 	private String address;
+	
+	private String hlepContent;
+	
+	public String getHlepContent() {
+		return hlepContent;
+	}
+
+	public void setHlepContent(String hlepContent) {
+		this.hlepContent = hlepContent;
+	}
 
 	public String getCreator() {
 		return creator;
