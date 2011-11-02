@@ -35,10 +35,17 @@
 		<property name="interceptors">
 			<list>
 				<bean class="com.ccs.web.interceptor.UserInterceptor"/>
+				<!-- <bean class="com.ccs.web.interceptor.RightInterceptor"/> -->
+				<!-- <ref bean="rightInterceptor"/>-->
 			</list>
 		</property>
 	</bean>
 
+<!-- 
+	<bean id="rightInterceptor" class="com.ccs.web.interceptor.RightInterceptor">
+		<property name="userBO" ref="userBO"/>
+	</bean>
+	 -->
           
 	<!-- ③：对模型视图名称的解析，即在模型视图名称添加前后缀 -->
 	<bean
