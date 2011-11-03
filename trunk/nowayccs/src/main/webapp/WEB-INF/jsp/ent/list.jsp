@@ -113,7 +113,7 @@ $(document).ready(function(){
                 </tr>
                 <tr>
                 <td>服务类别：</td>
-                  <td colspan="3">
+                  <td colspan="2">
                   <form:select path="parentCategoryId" >
                   	<form:option value="All">请选择</form:option>
                   </form:select>
@@ -127,7 +127,7 @@ $(document).ready(function(){
                   </form:select>
                   </td>
 
-					<td>&nbsp;</td>
+					<td>地址：<form:input cssClass="form" path="address" size="40"/></td>
                 </tr>
               </table>
             </td>

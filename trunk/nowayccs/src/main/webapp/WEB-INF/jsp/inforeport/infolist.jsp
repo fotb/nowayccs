@@ -109,7 +109,10 @@ $("#fertility").html(data.fertility);
             <td colspan="3"><form:input cssClass="form" path="startDt" size="20"/>
       到
         <form:input cssClass="form" path="endDt" size="20"/></td>
-            <td colspan="2"><img width="60" height="18" src="images/button_search.gif" onclick="option_search(document.forms[0]);" style="cursor:pointer;"/></td>
+            
+          <td>求助内容</td>
+          <td><form:input cssClass="form" path="helpContent" size="30"/></td>
+          <td><img width="60" height="18" src="images/button_search.gif" onclick="option_search(document.forms[0]);" style="cursor:pointer;"/></td>
           </tr>
         </table></td>
       </tr>

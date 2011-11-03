@@ -34,6 +34,7 @@ function btnnext_click(){
   if(!isValidStringObj( form.helpContent,"求助内容",true)){
     return;
   }
+  
   if(!isValidStringObj( form.helpType,"求助类型",true)){
     return;
   }
@@ -91,6 +92,10 @@ $(document).ready(function(){
 		jQuery("#histList").trigger("reloadGrid");
 		
 		getPhoneLevels($("#helpTel").val());
+	});
+	
+	$("#addContent").click(function(){
+		$("#helpContent2").css("display", "block");
 	});
 });
 
@@ -199,11 +204,14 @@ function loadHist() {
             <td height="1" colspan="2">            </td>
           </tr>
           <tr class="table_t1">
-            <td>求助内容：</td>
+            <td>求助内容：<br><br><input type="button" value="增加求助内容" id="addContent"/></td>
             <td>
               <form:textarea path="helpContent" cssClass="form" cols="120" rows="4"/>
+              <form:textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>
             </td>
           </tr>
+          
+	          
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
