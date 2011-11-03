@@ -56,7 +56,7 @@ public class VolunteerController {
 		List<VolunteerVO> vtList = volunteerBO.search(
 				volunteerSearch.getStatus(), volunteerSearch.getServiceType(),
 				volunteerSearch.getAreaId(), volunteerSearch.getAreaSubId(),
-				volunteerSearch.getVolunteerNo(), null, pageInfo);
+				volunteerSearch.getVolunteerNo(), volunteerSearch.getServiceName(), pageInfo);
 
 		model.addAttribute("volunteerVOList", vtList);
 		model.addAttribute("pageInfo", pageInfo);

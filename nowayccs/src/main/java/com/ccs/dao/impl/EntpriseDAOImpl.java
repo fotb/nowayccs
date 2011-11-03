@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.IEntpriseDAO;
 import com.ccs.util.PageInfo;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.EntpriseVO;
 
 @Repository("entpriseDAO")
@@ -68,7 +69,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 			+ "From hj_Entprise t, hj_ClassOfEntprise b "
 			+ "Where t.entpriseId = b.entpriseId ";
 	private static final String tempSql2 = "(t.entpriseName like ? or ? is null) and (t.entpriseNo=? or ? is null) "
-			+ "and (t.status=? or ? is null) and (t.servicesType = ? or ? is null) order by cast(t.entpriseNo as int)";
+			+ "and (t.status=? or ? is null) and (t.servicesType = ? or ? is null) and (t.address like ? or ? is null) order by cast(t.entpriseNo as int)";
 	private static final String sql = tempSql
 			+ "And b.entclassId In ( "
 			+ "Select entclassid From hj_entclass a Start With a.parententclassid = ? CONNECT BY Prior a.entclassid = a.parententclassid"
@@ -96,7 +97,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 	public List<EntpriseVO> findByParams(final String entpriseName,
 			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
-			final String status, final PageInfo pageInfo) {
+			final String status, final String address, final PageInfo pageInfo) {
 		return getHibernateTemplate().executeFind(
 				new HibernateCallback<List<EntpriseVO>>() {
 					@Override
@@ -105,18 +106,16 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 
 						final List<Object> objList = new ArrayList<Object>();
 						String targetSql = "";
-						if (entclassId != null && !entclassId.equals("")) {
+						if (!StringUtil.isNull(entclassId)) {
 							objList.add(entclassId);
 							targetSql = sql2;
 						} else {
-							if (smallEntclassId != null
-									&& !smallEntclassId.equals("")) {
+							if (!StringUtil.isNull(smallEntclassId)) {
 								objList.add(smallEntclassId);
 								targetSql = sql;
 
 							} else {
-								if (bigEntclassId != null
-										&& !bigEntclassId.equals("")) {
+								if (!StringUtil.isNull(bigEntclassId)) {
 									objList.add(bigEntclassId);
 									targetSql = sql;
 								} else {
@@ -134,6 +133,8 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 						objList.add(status);
 						objList.add(servicesType);
 						objList.add(servicesType);
+						objList.add("%" + address + "%");
+						objList.add("%" + address + "%");
 						
 						final StringType[] types = new StringType[objList.size()];
 						for (int i = 0; i < objList.size(); i++) {
@@ -153,7 +154,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 	public int getTotalCount(final String entpriseName,
 			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
-			final String status) {
+			final String status, final String address) {
 		BigDecimal count = (BigDecimal) getHibernateTemplate().execute(
 				new HibernateCallback<BigDecimal>() {
 					@Override
@@ -161,18 +162,16 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 							throws HibernateException, SQLException {
 						final List<Object> objList = new ArrayList<Object>();
 						String targetSql = "";
-						if (entclassId != null && !entclassId.equals("")) {
+						if (!StringUtil.isNull(entclassId)) {
 							objList.add(entclassId);
 							targetSql = countSql2;
 						} else {
-							if (smallEntclassId != null
-									&& !smallEntclassId.equals("")) {
+							if (!StringUtil.isNull(smallEntclassId)) {
 								objList.add(smallEntclassId);
 								targetSql = countSql1;
 
 							} else {
-								if (bigEntclassId != null
-										&& !bigEntclassId.equals("")) {
+								if (!StringUtil.isNull(bigEntclassId)) {
 									objList.add(bigEntclassId);
 									targetSql = countSql1;
 								} else {
@@ -190,6 +189,8 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 						objList.add(status);
 						objList.add(servicesType);
 						objList.add(servicesType);
+						objList.add("%" + address + "%");
+						objList.add("%" + address + "%");
 						
 						final StringType[] types = new StringType[objList
 								.size()];

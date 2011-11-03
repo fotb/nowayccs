@@ -20,6 +20,16 @@ public class EntSearch implements Serializable {
 
 	private String categoryId;
 
+	private String address;
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public final String getEntpriseNo() {
 		return entpriseNo;
 	}

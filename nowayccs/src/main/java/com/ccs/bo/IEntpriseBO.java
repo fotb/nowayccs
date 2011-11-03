@@ -21,7 +21,7 @@ public interface IEntpriseBO {
 	List<EntpriseVO> findByParams(final String entpriseName,
 			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
-			final String status, PageInfo pageInfo);
+			final String status, final String address, PageInfo pageInfo);
 	
 	Map<String, List<EntCategoryVO>> findAllCategory();
 	
