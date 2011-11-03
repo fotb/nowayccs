@@ -45,5 +45,9 @@ public class IndexController {
 		return "noright";
 	}
 	
+	@RequestMapping(params = "action=xtsz")
+	public String systemSetting(ModelMap model) {
+		return "menu_xtsz";
+	}
 	
 }
