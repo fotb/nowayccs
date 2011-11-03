@@ -85,6 +85,7 @@ public class DeliverCountController {
 					StringUtil.emptyToNull(receiverSearchDomain.getBigEntCategoryId()),
 					StringUtil.emptyToNull(receiverSearchDomain.getSubEntCategoryId()),
 					StringUtil.emptyToNull(receiverSearchDomain.getEntCategoryId()),
+					null, 
 					Constants.SYS_YESNO_YES, pageInfo);
 			Map<String, String> entSrvCountMap = bizLifeBO.getEntSrvCount();
 			Map<String, String> entSrvTodayCountMap = bizLifeBO.getEntSrvCountToday();

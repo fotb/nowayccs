@@ -18,6 +18,16 @@ public class VolunteerSearch implements Serializable {
 
 	private String volunteerNo;
 
+	private String serviceName;
+	
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
 	public String getStatus() {
 		return StringUtil.emptyToNull(status);
 	}

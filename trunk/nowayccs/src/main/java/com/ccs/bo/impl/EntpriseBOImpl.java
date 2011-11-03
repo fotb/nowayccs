@@ -58,12 +58,12 @@ public class EntpriseBOImpl implements IEntpriseBO {
 	public List<EntpriseVO> findByParams(final String entpriseName,
 			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
-			final String status, PageInfo pageInfo) {
+			final String status, final String address, PageInfo pageInfo) {
 
 		pageInfo.setTotalRecords(entpriseDAO.getTotalCount(entpriseName,
-				entpriseNo, servicesType, bigEntclassId, smallEntclassId, entclassId, status));
+				entpriseNo, servicesType, bigEntclassId, smallEntclassId, entclassId, status, address));
 		return entpriseDAO.findByParams(entpriseName, entpriseNo, servicesType, 
-				bigEntclassId, smallEntclassId, entclassId, status, pageInfo);
+				bigEntclassId, smallEntclassId, entclassId, status, address, pageInfo);
 	}
 
 	@Override

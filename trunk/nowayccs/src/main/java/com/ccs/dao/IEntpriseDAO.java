@@ -20,11 +20,11 @@ public interface IEntpriseDAO {
 	List<EntpriseVO> findByParams(final String entpriseName,
 			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
-			final String status, final PageInfo pageInfo);
+			final String status, final String address, final PageInfo pageInfo);
 
 	int getTotalCount(final String entpriseName, final String entpriseNo, final String servicesType, 
 			final String bigEntclassId, final String smallEntclassId,
-			final String entclassId, final String status);
+			final String entclassId, final String status, final String address);
 	
 	List<EntpriseVO> findAll();
 }

@@ -70,8 +70,12 @@ public class InfoReportController {
 			ModelMap model) {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
+		long startTime = System.currentTimeMillis();
 		List<InformationVO> list = infoReportBO.findByParams(infoSearchBean,
 				pageInfo);
+		
+		System.out.println("Tims spend: " + String.valueOf(System.currentTimeMillis() - startTime));
+		
 		Map<String, UserVO> userMap = userBO.findAll();
 		Map<String, String> dictMap = dictBO.getDict(Constants.DICT_DICTTYPE_MYD);
 		Map<String, String> resultMap = infoReportBO.getResult(list);

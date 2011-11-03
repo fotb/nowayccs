@@ -92,22 +92,35 @@ public class BizAcceptController {
 	@RequestMapping(params = "action=lifesave")
 	public String acceptLifeSave(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model, SessionStatus status) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		List<InformationVO> list = new ArrayList<InformationVO>();
+			list.add(getInformationVO(bizAccept, user, "1"));
+		if(!StringUtil.isNull(bizAccept.getHelpContent2())) {
+			list.add(getInformationVO(bizAccept, user, "2"));
+		}
+		bizAcceptBO.acceptLife(list);
+		
+		status.setComplete();
+		return "redirect:bizaccept.do";
+	}
+
+
+	private InformationVO getInformationVO(BizAccept bizAccept, UserVO user, String index) {
 		InformationVO vo = new InformationVO();
 		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
 		vo.setCreator(user.getUserId());
 		vo.setHelpAddr(bizAccept.getHelpAddr());
 		vo.setHelpArea(bizAccept.getHelpArea());
-		vo.setHelpContent(bizAccept.getHelpContent());
+		if("1".equals(index)) {
+			vo.setHelpContent(bizAccept.getHelpContent());
+		} else {
+			vo.setHelpContent(bizAccept.getHelpContent2());
+		}
 		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
 		vo.setHelpMode(bizAccept.getHelpMode());
 		vo.setHelpName(bizAccept.getHelpName());
 		vo.setHelpTel(bizAccept.getHelpTel());
 		vo.setHelpType(bizAccept.getHelpType());
-		
-		bizAcceptBO.acceptLife(vo);
-		
-		status.setComplete();
-		return "redirect:bizaccept.do";
+		return vo;
 	}
 	
 	@RequestMapping(params = "action=affair")
@@ -126,17 +139,7 @@ public class BizAcceptController {
 	@RequestMapping(params = "action=affairsave")
 	public String acceptAffairSave(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model, SessionStatus status) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
-		InformationVO vo = new InformationVO();
-		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
-		vo.setCreator(user.getUserId());
-		vo.setHelpAddr(bizAccept.getHelpAddr());
-		vo.setHelpArea(bizAccept.getHelpArea());
-		vo.setHelpContent(bizAccept.getHelpContent());
-		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
-		vo.setHelpMode(bizAccept.getHelpMode());
-		vo.setHelpName(bizAccept.getHelpName());
-		vo.setHelpTel(bizAccept.getHelpTel());
-		vo.setHelpType(bizAccept.getHelpType());
+		InformationVO vo = getInformationVO(bizAccept, user, "1");
 		vo.setAffairAcceptor(bizAccept.getHandAcceptor());
 		
 		bizAcceptBO.acceptAffair(vo);

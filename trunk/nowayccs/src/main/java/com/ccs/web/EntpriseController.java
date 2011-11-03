@@ -68,7 +68,7 @@ public class EntpriseController {
 		List<EntpriseVO> entpriseList = entpriseBO.findByParams(
 				entSearch.getEntpriseName(), entSearch.getEntpriseNo(), servicesType, 
 				parentCategoryId, subParentCategoryId, categoryId,
-				null, pageInfo);
+				null, entSearch.getAddress(), pageInfo);
 		model.addAttribute("entpriseList", entpriseList);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("entSearch", entSearch);

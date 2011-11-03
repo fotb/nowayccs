@@ -7,7 +7,7 @@ import com.ccs.vo.InformationVO;
 import com.ccs.vo.ReferInformationVO;
 
 public interface IBizAcceptBO {
-	void acceptLife(InformationVO vo);
+	void acceptLife(List<InformationVO> list);
 	
 	void acceptAffair(InformationVO vo);
 	

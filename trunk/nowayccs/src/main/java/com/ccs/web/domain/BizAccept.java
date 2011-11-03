@@ -10,6 +10,9 @@ public class BizAccept implements Serializable {
 	private String helpTel; // 求助者电话
 	private String helpAddr; // 求助者地址
 	private String helpContent; // 求助内容
+	
+	private String helpContent2; //第二求助内容，针对生活类服务
+	
 	private String helpType; // 求助类型
 	private String helpArea; // 求助区域
 	private String creator; // 创建者
@@ -18,6 +21,14 @@ public class BizAccept implements Serializable {
 	private String handAcceptor; // 事务类移交接受人
 
 	private String helpGroup;// 受理人群
+	
+	public String getHelpContent2() {
+		return helpContent2;
+	}
+
+	public void setHelpContent2(String helpContent2) {
+		this.helpContent2 = helpContent2;
+	}
 
 	public String getCreateTime() {
 		return createTime;

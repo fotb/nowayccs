@@ -130,7 +130,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 					throws HibernateException, SQLException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
-						Type[] types = new Type[16];
+						Type[] types = new Type[18];
 						buffer.append("from InformationVO t where ");
 						buffer.append("(t.creator = ? or ? is null) ");
 						values.add(bean.getCreator());
@@ -172,6 +172,11 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 						values.add(bean.getAddress());
 						types[14] = StandardBasicTypes.STRING;
 						types[15] = StandardBasicTypes.STRING;
+						buffer.append("and (t.helpContent like ? or ? is null) ");
+						values.add("%" + bean.getHelpContent() + "%");
+						values.add(bean.getHelpContent());
+						types[16] = StandardBasicTypes.STRING;
+						types[17] = StandardBasicTypes.STRING;					
 						buffer.append("order by t.createTime desc");
 						
 						Query query = session.createQuery(buffer.toString());
@@ -212,6 +217,9 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("and (t.helpAddr like ? or ? is null) ");
 		values.add("%" + bean.getAddress() + "%");
 		values.add(bean.getAddress());
+		buffer.append("and (t.helpContent like ? or ? is null) ");
+		values.add("%" + bean.getHelpContent() + "%");
+		values.add(bean.getHelpContent());
 		final Long count = (Long) getHibernateTemplate().find(buffer.toString(), values.toArray()).listIterator().next();
 		return count.intValue();
 	}
