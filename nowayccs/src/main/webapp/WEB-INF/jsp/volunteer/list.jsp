@@ -116,7 +116,14 @@ function fillAreaSub(areaId) {
                   	服务者编号：
                   </td>
                    <td width="200">
-                   	<form:input path="volunteerNo"/>
+                   	<form:input path="volunteerNo" cssClass="form"/>
+                  </td>
+                  
+                   <td width="80">
+                  	服务项目：
+                  </td>
+                   <td width="200" colspan="2">
+                   	<form:input path="serviceName" cssClass="form" size="40"/>
                   </td>
                   <td colspan="4">
                     <A href="javascript:btnsearch_click()">
