@@ -115,8 +115,14 @@
       <tr onclick="radioTable(6)" style="cursor: hand">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">系统设置</td>
       </tr>
+      
+            <tr id="ffTR" style="display: none" class="green">
+        <td><iframe width="100%" height=300 frameborder=0 scrolling="yes" src="index.do?action=xtsz"></iframe></td>
+      </tr>
+      <!-- 
       <tr id="ffTR" style="display: none" class="green">
         <td>
+        <div style="overflow: auto;">
         <table width="100%"  border="0" cellpadding="1" cellspacing="0" bgcolor="#3F9A91">
   <tr>
    <td height="5"></td>
@@ -157,15 +163,11 @@
     <td class="leftmenu_02"><a href="blacklist.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>
     <font color="#FFFFFF">红黑名单维护</font></a></td>
   </tr>
-  <!--
-   <tr>
-    <td class="leftmenu_02"><a href="/opr_infocommon_whlist.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>
-    <font color="#FFFFFF">业务咨询维护</font></a></td>
-  </tr>
-  -->
 </table>
+</div>
         </td>
       </tr>
+       -->
     </table></td>
   </tr>
 </table>
