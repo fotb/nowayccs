@@ -2,24 +2,25 @@ package com.ccs.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-
-@Entity
-@Table(name = "VOLUNTEER_SRV_COUNT_VIEW")
+//@Entity
+//@Table(name = "VOLUNTEER_SRV_COUNT_VIEW")
 public class VolunteerSrvCountVO implements Serializable {
 
 	private static final long serialVersionUID = 656691360832279130L;
 
-	@Id
-	@Column(name = "VOLUNTEERID")
+public VolunteerSrvCountVO(String volunteerId, long count) {
+		super();
+		this.volunteerId = volunteerId;
+		this.count = count;
+	}
+
+	//	@Id
+//	@Column(name = "VOLUNTEERID")
 	private String volunteerId;
 	
-	@Column(name = "SRVCOUNT")
-	private int count;
+//	@Column(name = "SRVCOUNT")
+	private long count;
 
 	public String getVolunteerId() {
 		return volunteerId;
@@ -29,7 +30,7 @@ public class VolunteerSrvCountVO implements Serializable {
 		this.volunteerId = volunteerId;
 	}
 
-	public int getCount() {
+	public long getCount() {
 		return count;
 	}
 
