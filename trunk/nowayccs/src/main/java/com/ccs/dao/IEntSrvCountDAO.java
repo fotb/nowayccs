@@ -3,7 +3,5 @@ package com.ccs.dao;
 import java.util.Map;
 
 public interface IEntSrvCountDAO {
-	Map<String, String> getEntSrvCount();
-	
-	Map<String, String> getEntSrvCountToday();
+	Map<String, String> getEntSrvCount(String startDt, String endDt);
 }

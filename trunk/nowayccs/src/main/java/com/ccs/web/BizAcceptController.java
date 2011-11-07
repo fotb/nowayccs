@@ -93,9 +93,12 @@ public class BizAcceptController {
 	public String acceptLifeSave(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model, SessionStatus status) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		List<InformationVO> list = new ArrayList<InformationVO>();
-			list.add(getInformationVO(bizAccept, user, "1"));
+		list.add(getInformationVO(bizAccept, user, "1"));
 		if(!StringUtil.isNull(bizAccept.getHelpContent2())) {
 			list.add(getInformationVO(bizAccept, user, "2"));
+		}
+		if(!StringUtil.isNull(bizAccept.getHelpContent3())) {
+			list.add(getInformationVO(bizAccept, user, "3"));
 		}
 		bizAcceptBO.acceptLife(list);
 		
@@ -112,8 +115,10 @@ public class BizAcceptController {
 		vo.setHelpArea(bizAccept.getHelpArea());
 		if("1".equals(index)) {
 			vo.setHelpContent(bizAccept.getHelpContent());
-		} else {
+		} else if("2".equals(index)){
 			vo.setHelpContent(bizAccept.getHelpContent2());
+		} else if("3".equals(index)) {
+			vo.setHelpContent(bizAccept.getHelpContent3());
 		}
 		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
 		vo.setHelpMode(bizAccept.getHelpMode());

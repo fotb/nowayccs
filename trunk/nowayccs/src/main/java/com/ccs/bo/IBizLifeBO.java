@@ -13,13 +13,9 @@ public interface IBizLifeBO {
 	
 	InformationVO findInfoByInfoId(String infoId);
 
-	Map<String, String> getVltSrvCount();
+	Map<String, String> getVltSrvCount(String startDt, String endDt);
 	
-	Map<String, String> getVltSrvCountToday();
-	
-	Map<String, String> getEntSrvCount();
-	
-	Map<String, String> getEntSrvCountToday();
+	Map<String, String> getEntSrvCount(String startDt, String endDt);
 	
 	void deliverLife(InformationVO infoVO, LifeInformationVO vo);
 	

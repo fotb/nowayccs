@@ -29,7 +29,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 			if(null == loginUser) {
 				request.getRequestDispatcher("/login.do?action=relogin").forward(request, response); 
 				return false;
-			} else if(!"com.ccs.web.IndexController".equals(className)){
+			} else if(!"com.ccs.web.IndexController".equals(className) && !"com.ccs.web.CommonJsonController".equals(className)){
 				String action = request.getParameter("action");
 				System.out.println("className + action : " + className + "-" + action);
 				Map<String, OperationVO> map = userBO.findUserOpertaionRightByUserId(loginUser.getUserId());

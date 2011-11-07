@@ -1,6 +1,7 @@
 package com.ccs.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.ccs.bo.IBizLifeBO;
 import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
+import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.EntpriseVO;
@@ -62,8 +64,8 @@ public class DeliverCountController {
 					StringUtil.emptyToNull(receiverSearchDomain.getAreaSubId()),
 					receiverSearchDomain.getVolunteerNo(),
 					receiverSearchDomain.getServiceName(), pageInfo);
-			Map<String, String> vltSrvCountMap = bizLifeBO.getVltSrvCount();
-			Map<String, String> vltSrvTodayCountMap = bizLifeBO.getVltSrvCountToday();
+			Map<String, String> vltSrvCountMap = bizLifeBO.getVltSrvCount(receiverSearchDomain.getStartDt(), receiverSearchDomain.getEndDt());
+			Map<String, String> vltSrvTodayCountMap = bizLifeBO.getVltSrvCount(DateUtil.format(new Date(), "yyyy-MM-dd"), DateUtil.format(new Date(), "yyyy-MM-dd)"));
 			List<ReceiverVolunteerDTO> list = new ArrayList<ReceiverVolunteerDTO>();
 			for (Iterator<VolunteerVO> iter = vList.iterator(); iter.hasNext();) {
 				VolunteerVO vltVO = (VolunteerVO) iter.next();
@@ -85,10 +87,9 @@ public class DeliverCountController {
 					StringUtil.emptyToNull(receiverSearchDomain.getBigEntCategoryId()),
 					StringUtil.emptyToNull(receiverSearchDomain.getSubEntCategoryId()),
 					StringUtil.emptyToNull(receiverSearchDomain.getEntCategoryId()),
-					null, 
-					Constants.SYS_YESNO_YES, pageInfo);
-			Map<String, String> entSrvCountMap = bizLifeBO.getEntSrvCount();
-			Map<String, String> entSrvTodayCountMap = bizLifeBO.getEntSrvCountToday();
+					Constants.SYS_YESNO_YES, null, pageInfo);
+			Map<String, String> entSrvCountMap = bizLifeBO.getEntSrvCount(receiverSearchDomain.getStartDt(), receiverSearchDomain.getEndDt());
+			Map<String, String> entSrvTodayCountMap = bizLifeBO.getEntSrvCount(DateUtil.format(new Date(), "yyyy-MM-dd"), DateUtil.format(new Date(), "yyyy-MM-dd)"));
 			List<ReceiverEntDTO> list = new ArrayList<ReceiverEntDTO>();
 			for (Iterator<EntpriseVO> iter = eList.iterator(); iter.hasNext();) {
 				EntpriseVO entVO = iter.next();

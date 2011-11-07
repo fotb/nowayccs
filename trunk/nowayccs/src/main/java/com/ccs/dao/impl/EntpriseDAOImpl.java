@@ -134,7 +134,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 						objList.add(servicesType);
 						objList.add(servicesType);
 						objList.add("%" + address + "%");
-						objList.add("%" + address + "%");
+						objList.add(address);
 						
 						final StringType[] types = new StringType[objList.size()];
 						for (int i = 0; i < objList.size(); i++) {
@@ -190,7 +190,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 						objList.add(servicesType);
 						objList.add(servicesType);
 						objList.add("%" + address + "%");
-						objList.add("%" + address + "%");
+						objList.add(address);
 						
 						final StringType[] types = new StringType[objList
 								.size()];

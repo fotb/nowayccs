@@ -35,7 +35,7 @@ public class TrafficSearchBean implements Serializable {
 
 	public String getStartDt() {
 		return null == startDt ? DateUtil.format(
-				DateUtil.getDayOfProvsMonth(new Date()), "yyyy-MM-dd")
+				DateUtil.addDate(new Date(), -1), "yyyy-MM-dd")
 				: startDt;
 	}
 

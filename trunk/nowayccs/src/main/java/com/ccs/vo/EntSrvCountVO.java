@@ -2,22 +2,18 @@ package com.ccs.vo;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "ENT_SRV_COUNT_VIEW")
 public class EntSrvCountVO implements Serializable {
 	private static final long serialVersionUID = 944112604499451872L;
 	
-	@Id
-	@Column(name = "ENTPRISEID")
 	private String entpriseId;
 
-	@Column(name = "ENTCOUNT")
-	private String count;
+	private long count;
+
+	public EntSrvCountVO(String entpriseId, long count) {
+		super();
+		this.entpriseId = entpriseId;
+		this.count = count;
+	}
 
 	public String getEntpriseId() {
 		return entpriseId;
@@ -27,11 +23,11 @@ public class EntSrvCountVO implements Serializable {
 		this.entpriseId = entpriseId;
 	}
 
-	public String getCount() {
+	public long getCount() {
 		return count;
 	}
 
-	public void setCount(String count) {
+	public void setCount(long count) {
 		this.count = count;
 	}
 
