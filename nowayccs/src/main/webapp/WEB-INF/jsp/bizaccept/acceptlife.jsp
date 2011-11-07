@@ -73,16 +73,15 @@ function btnnext_click(){
             <td>求助内容：</td>
             <td>
             <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent}</textarea>
+            <c:if test="${not empty bizAccept.helpContent2}">
+             <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent2}</textarea>
+            </c:if>
+            <c:if test="${not empty bizAccept.helpContent3}">
+            <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent3}</textarea>
+            </c:if>
             </td>
           </tr>
-          <c:if test="${not empty bizAccept.helpContent2}">
-          <tr class="table_t1">
-            <td>求助内容：</td>
-            <td>
-            <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent2}</textarea>
-            </td>
-          </tr>
-          </c:if>
+
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>

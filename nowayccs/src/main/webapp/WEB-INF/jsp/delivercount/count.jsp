@@ -6,8 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Untitled Document</title>
-<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.dynDateTime.js"></script>
+<script type="text/javascript" src="js/lang/calendar-zh.js"></script>
+<script type="text/javascript" src="js/function.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="css/calendar-win2k-cold-1.css"/> 
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <base target="_self">
@@ -111,6 +114,19 @@ $(document).ready(function(){
 		//$("form").submit();
 		btnsearch_click();
 	});
+
+	$("#startDt").dynDateTime({
+  showsTime: true,
+  ifFormat: "%Y-%m-%d"
+  //button: ".next()" //next sibling to input field
+	});
+
+
+	$("#endDt").dynDateTime({
+  showsTime: true,
+  ifFormat: "%Y-%m-%d"
+  //button: ".next()" //next sibling to input field
+	});
 });
 
 function loadAreaSub(areaId) {
@@ -211,6 +227,15 @@ function loadEntCategory(subEntCategoryId) {
                     </td>
 				</c:if>
                 </tr>
+                
+                <tr>
+                <td>开始时间：
+                <form:input path="startDt" cssStyle="form" />
+                	&nbsp;&nbsp;&nbsp;&nbsp;结束时间：
+                <form:input path="endDt" cssStyle="form" />
+                </td>
+                </tr>
+                 
               </table>
             </td>
           </tr>

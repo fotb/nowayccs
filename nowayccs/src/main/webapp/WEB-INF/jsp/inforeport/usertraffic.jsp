@@ -70,7 +70,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
              <td width="10%">工号：</td>
              <td width="20%"><form:input path="loginName" cssClass="form"/></td>
             <td width="10%">统计时间从：</td>
-            <td width="40%"><form:input cssClass="form" path="startDt"size="20"/>
+            <td width="40%"><form:input cssClass="form" path="startDt" size="20"/>
       到
         <form:input cssClass="form" path="endDt" size="20" />        </td>
 
