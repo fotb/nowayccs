@@ -95,7 +95,11 @@ $(document).ready(function(){
 	});
 	
 	$("#addContent").click(function(){
-		$("#helpContent2").css("display", "block");
+		if($("#helpContent2").css("display") != "block") {
+			$("#helpContent2").css("display", "block");
+		} else {
+			$("#helpContent3").css("display", "block");
+		}
 	});
 });
 
@@ -204,10 +208,11 @@ function loadHist() {
             <td height="1" colspan="2">            </td>
           </tr>
           <tr class="table_t1">
-            <td>求助内容：<br><br><input type="button" value="增加求助内容" id="addContent"/></td>
+            <td>求助内容：<br><br><input type="button" value="+" id="addContent"/></td>
             <td>
               <form:textarea path="helpContent" cssClass="form" cols="120" rows="4"/>
               <form:textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>
+              <form:textarea path="helpContent3" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>              
             </td>
           </tr>
           
