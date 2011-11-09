@@ -115,7 +115,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td>服务者：</td>
             <td>
-            --
+            ${bizAccept.creator}
             </td>
           </tr>
           <tr class="table_t1">
