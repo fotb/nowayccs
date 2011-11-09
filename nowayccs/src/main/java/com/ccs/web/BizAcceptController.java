@@ -154,8 +154,9 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=refer")
-	public String acceptRefer(@ModelAttribute("bizAccept") BizAccept bizAccept, ModelMap model) {
-		
+	public String acceptRefer(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		bizAccept.setCreator(user.getUserName());
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
 		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
