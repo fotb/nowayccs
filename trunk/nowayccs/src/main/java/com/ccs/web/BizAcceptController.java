@@ -155,8 +155,12 @@ public class BizAcceptController {
 		
 		bizAcceptBO.acceptAffair(vo);
 		
-//		status.setComplete();
-		return "redirect:bizaccept.do";
+		status.setComplete();
+		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+			return "common/selfclose";
+		} else {
+			return "redirect:bizaccept.do";
+		}
 	}
 	
 	@RequestMapping(params = "action=refer")
@@ -194,7 +198,11 @@ public class BizAcceptController {
 		bizAcceptBO.acceptRefer(vo, referInfoVO);
 		
 		status.setComplete();
-		return "redirect:bizaccept.do";
+		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+			return "common/selfclose";
+		} else {
+			return "redirect:bizaccept.do";
+		}
 	}
 	
 	@RequestMapping(params = "action=helphist", method = RequestMethod.GET)
