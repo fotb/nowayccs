@@ -8,7 +8,7 @@ package com.ccs.util;
  */
 public class PageInfo {
     /* ÿҳ��ʾ��¼�� */
-    public static int DEFAULT_PAGE_COUNT = 10;
+    public static int DEFAULT_PAGE_COUNT = 30;
 
     /* ��ǰҳ�� */
     private int currentPage = 0;
