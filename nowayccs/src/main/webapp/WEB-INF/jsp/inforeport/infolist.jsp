@@ -154,7 +154,7 @@ $("#fertility").html(data.fertility);
     </table>
       <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-        <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td>
+       <!--  <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td> -->
           <td height="30" align="right">
             <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
@@ -167,7 +167,7 @@ $("#fertility").html(data.fertility);
           <td height="20" colspan="2">合计：<span id="count"></span>件 生活服务类：<span id="lifecount"></span>件  咨询类：<span id="refercount"></span>件  事务类：<span id="affaircount"></span>件 生产力服务类：<span id="fertilitycount"></span>件 <!--取消：<bean:write name="hjdelete"/>件--></td>
         </tr>
         <tr>
-          <td height="20" colspan="2">合计：<span id="total"></span>件 生活服务类：<span id="life"></span>件  咨询类：<span id="refer"></span>件  事务类：<span id="affair"></span>件 生产力服务类：<span id="fertility"></span>件 <!--取消：<bean:write name="hjdelete"/>件--></td>
+          <td height="20" colspan="2">总计：<span id="total"></span>件 生活服务类：<span id="life"></span>件  咨询类：<span id="refer"></span>件  事务类：<span id="affair"></span>件 生产力服务类：<span id="fertility"></span>件 <!--取消：<bean:write name="hjdelete"/>件--></td>
         </tr>
       </table></td>
   </tr>
@@ -175,4 +175,4 @@ $("#fertility").html(data.fertility);
 </table>
 </form:form>
 </body>
-<html>
+</html>
