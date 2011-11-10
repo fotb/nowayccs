@@ -4,7 +4,7 @@
 <%@ include file="common/includes.jsp" %>  
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>嘉兴社区服务中心</title>
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
@@ -28,9 +28,9 @@ $(document).keypress(function(e) {
 	}
 });
 </script>
-<body background="images/bg_login.gif" topmargin="0" leftmargin="0">
+<body topmargin="0" leftmargin="0">
 <form:form action="login.do?action=login" method="post" commandName="loginBean">
-<table width="100%" height="100%"  border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="100%"  border="0" cellpadding="0" cellspacing="0" background="images/bg_login.gif">
   <tr>
     <td><table width="683" height="408"  border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
