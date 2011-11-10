@@ -24,6 +24,16 @@ public class BizAccept implements Serializable {
 
 	private String helpGroup;// 受理人群
 	
+	private String popupFlag;
+	
+	public String getPopupFlag() {
+		return popupFlag;
+	}
+
+	public void setPopupFlag(String popupFlag) {
+		this.popupFlag = popupFlag;
+	}
+
 	public String getHelpContent3() {
 		return helpContent3;
 	}

@@ -50,7 +50,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				final String hql = "from InformationVO t where t.helpTel = ? order by t.createTime";
+				final String hql = "from InformationVO t where t.helpTel = ? order by t.createTime desc";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, helpTel);
 				query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());

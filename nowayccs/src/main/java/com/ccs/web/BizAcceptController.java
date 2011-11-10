@@ -51,13 +51,15 @@ public class BizAcceptController {
 	private IBizAcceptBO bizAcceptBO;
 	
 	@RequestMapping
-	public String accept(@RequestParam(value = "callNo", required = false) String callNo, HttpSession session, 
+	public String accept(@RequestParam(value = "callNo", required = false) String callNo, 
+			@RequestParam(value = "flag", required = false) String flag, HttpSession session, 
 			ModelMap model) {
 		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = new BizAccept();
 		bizAccept.setHelpTel(callNo);
 		bizAccept.setCreator(userVO.getUserId());
 		bizAccept.setCreateTime(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+		bizAccept.setPopupFlag(flag);
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("user", userVO);
 		
@@ -103,7 +105,11 @@ public class BizAcceptController {
 		bizAcceptBO.acceptLife(list);
 		
 		status.setComplete();
-		return "redirect:bizaccept.do";
+		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+			return "common/selfclose";
+		} else {
+			return "redirect:bizaccept.do";
+		}
 	}
 
 
