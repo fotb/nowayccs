@@ -90,6 +90,8 @@ public class BizAffairBackVstController {
 		affairBackVstDomain.setPrincipal(affairInfoVO.getPrincipal());
 		affairBackVstDomain.setRemark(affairInfoVO.getRemark());
 		affairBackVstDomain.setUnApproveCause(affairInfoVO.getUnApproveCause());
+		affairBackVstDomain.setHelpAddr(infoVO.getHelpAddr());
+		affairBackVstDomain.setHelpContent(infoVO.getHelpContent());
 		
 		model.addAttribute("affairBackVstDomain", affairBackVstDomain);
 		
@@ -124,7 +126,13 @@ public class BizAffairBackVstController {
 				infoId);
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		affairInfoVO.setCaller(user.getUserId());
-		bizAffairBackVstBO.saveAffairInfo(affairInfoVO);
+		
+		
+		InformationVO infoVO = bizAffairBackVstBO.findInfoByInfoId(infoId);
+		infoVO.setHelpAddr(affairBackVstDomain.getHelpAddr());
+		infoVO.setHelpContent(affairBackVstDomain.getHelpContent());
+		
+		bizAffairBackVstBO.bizAffairFinish(affairInfoVO, infoVO);
 		return "redirect:bizaffairbackvst.do?action=backvst&infoId=" + infoId + "&pageNo=" + pageNo;
 	}
 
@@ -154,6 +162,8 @@ public class BizAffairBackVstController {
 		InformationVO infoVO = bizAffairBackVstBO.findInfoByInfoId(infoId);
 		infoVO.setFinishTime(DateUtil.parse(affairBackVstDomain.getFinishTime(), "yyyy-MM-dd"));
 		infoVO.setStatus(Constants.SYS_INFOMATION_STATES_YJA);
+		infoVO.setHelpAddr(affairBackVstDomain.getHelpAddr());
+		infoVO.setHelpContent(affairBackVstDomain.getHelpContent());
 		
 		bizAffairBackVstBO.bizAffairFinish(affairInfoVO, infoVO);
 		return "redirect:bizaffairbackvst.do?&pageNo=" + pageNo;

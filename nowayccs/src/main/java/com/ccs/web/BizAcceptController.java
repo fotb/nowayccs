@@ -24,6 +24,7 @@ import com.ccs.bo.IBizAcceptBO;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
+import com.ccs.util.DateUtil;
 import com.ccs.util.JQGridFormatterUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
@@ -58,8 +59,9 @@ public class BizAcceptController {
 		BizAccept bizAccept = new BizAccept();
 		bizAccept.setHelpTel(callNo);
 		bizAccept.setCreator(userVO.getUserId());
-		bizAccept.setCreateTime(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		bizAccept.setPopupFlag(flag);
+		bizAccept.setCreateTime(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+		
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("user", userVO);
 		
@@ -76,7 +78,30 @@ public class BizAcceptController {
 		
 		return "bizaccept/accept";
 	}
+
 	
+	@RequestMapping(params = "action=back")
+	public String backAccept(@ModelAttribute("bizAccept") BizAccept bizAccept, 
+			HttpSession session, 
+			ModelMap model) {
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+
+		model.addAttribute("bizAccept", bizAccept);
+		model.addAttribute("user", userVO);
+		
+		List<DictVO> qzfsList = dictBO.findByType(Constants.DICT_DICTTYPE_QZFS);
+		model.addAttribute("qzfsList", qzfsList);
+				
+		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+		
+		List<DictVO> qzqyList = dictBO.findByType(Constants.DICT_DICTTYPE_QZQY);
+		model.addAttribute("qzqyList", qzqyList);
+		
+		List<DictVO> slrqList = dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ);
+		model.addAttribute("slrqList", slrqList);
+		
+		return "bizaccept/accept";
+	}
 	
 	@RequestMapping(params = "action=life")
 	public String acceptLife(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
@@ -224,12 +249,14 @@ public class BizAcceptController {
 		
 		Map<String, String> qzfsMap = dictBO.getDict(Constants.DICT_DICTTYPE_QZFS);
 		Map<String, String> slrqMap = dictBO.getDict(Constants.DICT_DICTTYPE_SLRQ);
+		
+		Map<String, UserVO> userMap = userBO.findAll();
 		for (Iterator<InformationVO> iter = list.iterator(); iter.hasNext();) {
 			InformationVO infoVO = iter.next();
 			InfoBean infoBean = new InfoBean();
-			infoBean.setCreateTime(infoVO.getCreateTime());
-			infoBean.setCreator(infoVO.getCreator());
-			infoBean.setFinishTime(infoVO.getFinishTime());
+			infoBean.setCreateTime(DateUtil.format(infoVO.getCreateTime(), FORMATE_CREATETIME));
+			infoBean.setCreator(userMap.get(infoVO.getCreator()).getUserName());
+			infoBean.setFinishTime(DateUtil.format(infoVO.getFinishTime(), FORMATE_CREATETIME));
 			infoBean.setHelpAddr(infoVO.getHelpAddr());
 			infoBean.setHelpArea(infoVO.getHelpArea());
 			infoBean.setHelpContent(infoVO.getHelpContent());
