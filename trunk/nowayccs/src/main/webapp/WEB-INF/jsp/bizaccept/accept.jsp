@@ -126,14 +126,14 @@ function loadHist() {
 		datatype: "json", 
 		colNames:['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 '], 
 		colModel:[ 
-		           {name:'helpName',index:'helpName'}, 
-		           {name:'createTime',index:'createTime'}, 
-		           {name:'helpAddr',index:'helpAddr'}, 
-		           {name:'helpContent',index:'helpContent', align:"left"}, 
-		           {name:'helpType',index:'helpType', align:"right"}, 
-		           {name:'creator',index:'creator', align:"right"},
-		           {name:'finishTime',index:'finishTime'}, 
-		           {name:'status',index:'status', sortable:false} 
+		           {name:'helpName',index:'helpName',width:'70'}, 
+		           {name:'createTime',index:'createTime',width:'120'}, 
+		           {name:'helpAddr',index:'helpAddr',width:'180'}, 
+		           {name:'helpContent',index:'helpContent', align:"left",width:'130'}, 
+		           {name:'helpType',index:'helpType', align:"right",width:'70'}, 
+		           {name:'creator',index:'creator', align:"right",width:'60'},
+		           {name:'finishTime',index:'finishTime',width:'120'}, 
+		           {name:'status',index:'status', sortable:false,width:'30'} 
 		], 
 		rowNum:10, 
 		rowList:[10,20,30], 

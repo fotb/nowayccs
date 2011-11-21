@@ -17,10 +17,14 @@ function logout(){
 function btnSignIn_onclick() {
   $("#TextResult").html("");
   var i,j,sResult;
-  Phone.TimeOut    = 10000;
+  Phone.TimeOut = 10000;
+alert(Phone.WorkNo);
 
-  i = Phone.Initial();
-  sResult = Phone.GetPromptByErrorCode(i);
+i = Phone.Initial();
+sResult = Phone.GetPromptByErrorCode(i);
+alert("22");
+  //sResult = Phone.GetPromptByErrorCode(i);
+alert(sResult);
   //TextResult.innerHTML = sResult;
 $("#TextResult").html(sResult);
   if (i==0)
@@ -34,7 +38,7 @@ $("#TextResult").html(sResult);
     $("#TextResult").html("");
     i = Phone.AgentType;
     //j = Phone.SignIn(3);
-
+alert("1111122233");
     j = Phone.SignInEx('TTT',i,'${agentVO.targetDevice}');
     sResult = Phone.GetPromptByErrorCode(j);
     $("#TextResult").append('\n'+sResult);
@@ -89,6 +93,7 @@ function Phone_OnAnswerExSuccess() {
 }
 
 function Phone_OnSignOutSuccess() {
+alert("111");
     btnSignIn.disabled = false;
     btnSignOut.disabled = true;
     BtAns.disabled = true;
@@ -395,8 +400,7 @@ document.write(""+date+week+"");
   </tr>
 </table>
 <c:if test="${not empty agentVO}">
-<OBJECT classid=clsid:014D83A5-7E35-11D3-8AF9-00C0DF245E51 name=Phone
-style="LEFT: 0px; TOP: 0px; VISIBILITY: hidden" VIEWASTEXT>
+<OBJECT classid=clsid:014D83A5-7E35-11D3-8AF9-00C0DF245E51 name=Phone style="LEFT: 0px; TOP: 0px; VISIBILITY: hidden" VIEWASTEXT>
 <PARAM NAME="CcsID" VALUE='${agentVO.serverType}'>
 <PARAM NAME="MyID" VALUE="40">
 <PARAM NAME="MainCcsIP" VALUE='${agentVO.mainCcsIp}'>

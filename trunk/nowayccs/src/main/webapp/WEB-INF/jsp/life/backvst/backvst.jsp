@@ -102,18 +102,20 @@ $(document).ready(function(){
               ${infoVO.helpName}
             </td>
             <td width="12%">联系电话：</td>
-            <td width="15%">
+            <td width="15%" colspan="3">
               ${infoVO.helpTel}
             </td>
+          </tr>
+          <tr class="table_t1" style="padding-bottom: 10px;">
             <td width="10%">详细地址：</td>
-            <td width="37%">
-              ${infoVO.helpAddr}
+            <td width="37%" colspan="5">
+              <form:input path="helpAddr" cssClass="form" size="100%"/>
             </td>
           </tr>
           <tr class="table_t1">
             <td>求助内容：</td>
             <td colspan="5">
-              <textarea Class="form" cols="120" rows="4" readonly>${infoVO.helpContent}</textarea>
+              <form:textarea path="helpContent" cssClass="form" cols="120" rows="6"/>
             </td>
           </tr>
           <tr class="table_t1">
