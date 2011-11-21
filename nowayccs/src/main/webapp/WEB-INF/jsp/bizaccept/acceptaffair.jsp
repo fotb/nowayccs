@@ -18,6 +18,12 @@ function btnnext_click(){
   }
   form.submit();
 }
+
+function btnprovs_click() {
+	$("form").attr("action", "bizaccept.do?action=back");
+	//$("#action").val("back");
+	$("form").submit();
+}
 </script>
 <body>
 <form:form method="post" action="bizaccept.do?action=affairsave" commandName="bizAccept">
@@ -138,7 +144,7 @@ function btnnext_click(){
            -->
           <tr align="center" class="table_t1">
             <td colspan="4">
-            <img src="images/button_pre.gif" width="60" height="18" onclick="history.back();"/>
+            <img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click()"/>
               <img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click()"/>
             </td>
           </tr>

@@ -90,6 +90,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
         <td>生活服务类</td>
         <td>事务服务类</td>
         <td>生产力服务</td>
+        <td>总计</td>
         </tr>
 		<c:forEach items="${dtoList}" var="dto">
         <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
@@ -99,6 +100,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
         <td>${dto.lifeTraffic}</td>
         <td>${dto.affairTraffic}</td>
         <td>${dto.sclTraffic}</td>
+        <td>${dto.totalTraffic}</td>
         </tr>
       <tr class="line">
         <td height="1" colspan="6"></td>

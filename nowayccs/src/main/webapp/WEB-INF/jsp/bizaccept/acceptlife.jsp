@@ -6,12 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Untitled Document</title>
-<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script src="js/function.js" type="text/javascript"></script>
 <script language="javascript" type="">
 function btnnext_click(){
+	$("form").submit();
+}
+function btnprovs_click() {
+	$("form").attr("action", "bizaccept.do");
+	$("#action").val("back");
 	$("form").submit();
 }
 </script>
@@ -122,8 +127,8 @@ function btnnext_click(){
           </tr>
           <tr align="center" class="table_t1">
             <td colspan="4">
-              <img src="images/button_pre.gif" width="60" height="18" onclick="history.back();"/>
-              <img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click()"/>
+              <img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click();"/>
+              <img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click();"/>
             </td>
           </tr>
         </table>
