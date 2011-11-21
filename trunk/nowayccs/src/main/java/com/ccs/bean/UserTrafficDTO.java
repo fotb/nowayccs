@@ -23,6 +23,17 @@ public class UserTrafficDTO implements Serializable {
 
 	private int sclTraffic;
 
+	private int totalTraffic;
+	
+	public int getTotalTraffic() {
+		return referTraffic + lifeTraffic + affairTraffic + sclTraffic;
+	}
+	
+	public void setTotalTraffic(int totalTraffic) {
+		this.totalTraffic = totalTraffic;
+	}
+
+
 	public String getUserId() {
 		return userId;
 	}

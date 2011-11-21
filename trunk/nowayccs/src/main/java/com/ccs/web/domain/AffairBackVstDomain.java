@@ -28,6 +28,26 @@ public class AffairBackVstDomain implements Serializable {
 	
 	private String callTime;
 	
+	private String helpAddr;
+	
+	private String helpContent;
+	
+	public String getHelpAddr() {
+		return helpAddr;
+	}
+
+	public void setHelpAddr(String helpAddr) {
+		this.helpAddr = helpAddr;
+	}
+
+	public String getHelpContent() {
+		return helpContent;
+	}
+
+	public void setHelpContent(String helpContent) {
+		this.helpContent = helpContent;
+	}
+
 	public String getCallTime() {
 		return callTime;
 	}

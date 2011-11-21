@@ -1,7 +1,6 @@
 package com.ccs.web.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class InfoBean implements Serializable {
 
@@ -24,11 +23,11 @@ public class InfoBean implements Serializable {
 
 	private String creator;
 
-	private Date createTime;
+	private String createTime;
 
 	private String helpGroup;
 
-	private Date finishTime;
+	private String finishTime;
 
 	private String status;
 
@@ -104,11 +103,11 @@ public class InfoBean implements Serializable {
 		this.creator = creator;
 	}
 
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 
@@ -120,11 +119,11 @@ public class InfoBean implements Serializable {
 		this.helpGroup = helpGroup;
 	}
 
-	public Date getFinishTime() {
+	public String getFinishTime() {
 		return finishTime;
 	}
 
-	public void setFinishTime(Date finishTime) {
+	public void setFinishTime(String finishTime) {
 		this.finishTime = finishTime;
 	}
 

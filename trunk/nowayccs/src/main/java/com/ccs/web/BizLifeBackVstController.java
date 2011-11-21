@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ccs.bo.IAreaBO;
 import com.ccs.bo.IBizLifeBO;
 import com.ccs.bo.IBizLifeBackVstBO;
 import com.ccs.bo.IDictBO;
@@ -22,7 +21,6 @@ import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
-import com.ccs.vo.AreaVO;
 import com.ccs.vo.DictVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
@@ -98,6 +96,8 @@ public class BizLifeBackVstController {
 		lifeBackVstDomain.setPrincipal(lifeInfoVO.getPrincipal());
 		lifeBackVstDomain.setRemark(lifeInfoVO.getRemark());
 		lifeBackVstDomain.setUnApproveCause(lifeInfoVO.getUnApproveCause());
+		lifeBackVstDomain.setHelpAddr(infoVO.getHelpAddr());
+		lifeBackVstDomain.setHelpContent(infoVO.getHelpContent());
 		
 		model.addAttribute("lifeBackVstDomain", lifeBackVstDomain);
 		
@@ -132,7 +132,12 @@ public class BizLifeBackVstController {
 				infoId);
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		lifeInfoVO.setCaller(user.getUserId());
-		bizLifeBackVstBO.saveLifeInfo(lifeInfoVO);
+		
+		InformationVO infoVO = bizLifeBackVstBO.findInfoByInfoId(infoId);
+		infoVO.setHelpAddr(lifeBackVstDomain.getHelpAddr());
+		infoVO.setHelpContent(lifeBackVstDomain.getHelpContent());
+		
+		bizLifeBackVstBO.bizLifeFinish(lifeInfoVO, infoVO);
 		return "redirect:bizlifebackvst.do?action=backvst&infoId=" + infoId + "&pageNo=" + pageNo;
 	}
 
@@ -161,6 +166,9 @@ public class BizLifeBackVstController {
 		InformationVO infoVO = bizLifeBackVstBO.findInfoByInfoId(infoId);
 		infoVO.setFinishTime(DateUtil.parse(lifeBackVstDomain.getCallTime(), "yyyy-MM-dd"));
 		infoVO.setStatus(Constants.SYS_INFOMATION_STATES_YJA);
+		
+		infoVO.setHelpAddr(lifeBackVstDomain.getHelpAddr());
+		infoVO.setHelpContent(lifeBackVstDomain.getHelpContent());
 		
 		bizLifeBackVstBO.bizLifeFinish(lifeInfoVO, infoVO);
 		return "redirect:bizlifebackvst.do?&pageNo=" + pageNo;
