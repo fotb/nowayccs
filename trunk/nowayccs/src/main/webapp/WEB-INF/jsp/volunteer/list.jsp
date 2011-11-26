@@ -174,11 +174,11 @@ function fillAreaSub(areaId) {
                 <td>
                 	${vtVO.linkTel}<br/>${vtVO.linkMobile}
                 </td>
-                <td>
-					<c:if test="${vtVO.status == 'Y'}">
+                <td nowrap="nowrap">
+					<c:if test="${vtVO.serviceType == 'Y'}">
                 		可派单
                 	</c:if>
-                 	<c:if test="${vtVO.status == 'N' }">
+                 	<c:if test="${vtVO.serviceType == 'N' }">
                  		不可派单
                  	</c:if>
                 </td>
@@ -235,7 +235,7 @@ function fillAreaSub(areaId) {
             <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
               <jsp:param name="pagename" value="pageNo"/>
-              <jsp:param name="actionname" value="SysVolunteerAdmin_list.do"/>
+              <jsp:param name="actionname" value="volunteer.do"/>
             </jsp:include>
             </td>
           </tr>

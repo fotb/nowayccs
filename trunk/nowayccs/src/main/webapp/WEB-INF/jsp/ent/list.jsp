@@ -105,15 +105,18 @@ $(document).ready(function(){
                     	<form:option value="N">不可派单</form:option>
                     </form:select>
                   </td>
-				  <td width="10%" rowspan="2">
+				  <td width="10%" rowspan="3">
                     <A href="javascript:btnsearch_click()">
                       <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
                     </A>
                   </td>
                 </tr>
+                <tr>	
+                <td height="2" colspan="6">                </td>
+              </tr>
                 <tr>
-                <td>服务类别：</td>
-                  <td colspan="2">
+                <td width="70">服务类别：</td>
+                  <td colspan="5">
                   <form:select path="parentCategoryId" >
                   	<form:option value="All">请选择</form:option>
                   </form:select>
@@ -126,8 +129,13 @@ $(document).ready(function(){
                   	<form:option value="All">请选择</form:option>
                   </form:select>
                   </td>
-
-					<td>地址：<form:input cssClass="form" path="address" size="40"/></td>
+				</tr>
+				 <tr>	
+                <td height="2" colspan="6">                </td>
+              </tr>
+				<tr>
+					<td width="70">地址：</td>
+					<td colspan="5"><form:input cssClass="form" path="address" size="65" /></td>
                 </tr>
               </table>
             </td>
@@ -143,6 +151,7 @@ $(document).ready(function(){
             <td width="10%">编号</td>
             <td width="30%">企业名称</td>
             <td width="10%">联系电话</td>
+            <td width="10%">派单</td>
             <td width="32%">地址</td>
             <td width="8%">服务项目</td>
             <c:if test="${adminRight == 'Y'}">
@@ -162,6 +171,14 @@ $(document).ready(function(){
                 </td>
                 <td>
                   ${entprise.linkTel}
+                </td>
+                <td>
+					<c:if test="${entprise.servicesType == 'Y'}">
+                		可派单
+                	</c:if>
+                 	<c:if test="${entprise.servicesType == 'N' }">
+                 		不可派单
+                 	</c:if>
                 </td>
                 <td>
                 	${entprise.address }
