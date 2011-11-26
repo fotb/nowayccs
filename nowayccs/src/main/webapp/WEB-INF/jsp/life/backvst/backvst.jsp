@@ -73,7 +73,7 @@ $(document).ready(function(){
 <form:form method="post" action="bizlifebackvst.do?action=backvstsave" commandName="lifeBackVstDomain">
 <input type="hidden" name="infoId" id="infoId" value="${infoVO.infoId}"/>
 <input type="hidden" name="pageNo" id="pageNo" value="${pageNo	}"/> 
-  <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
+  <table width="850" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -97,25 +97,25 @@ $(document).ready(function(){
           </tr>
            -->
           <tr class="table_t1">
-            <td width="11%">求助者姓名：</td>
-            <td width="15%">
+            <td>求助者姓名：</td>
+            <td>
               ${infoVO.helpName}
             </td>
-            <td width="12%">联系电话：</td>
-            <td width="15%" colspan="3">
+            <td>联系电话：</td>
+            <td colspan="3">
               ${infoVO.helpTel}
             </td>
           </tr>
           <tr class="table_t1" style="padding-bottom: 10px;">
-            <td width="10%">详细地址：</td>
-            <td width="37%" colspan="5">
+            <td>详细地址：</td>
+            <td colspan="5">
               <form:input path="helpAddr" cssClass="form" size="100%"/>
             </td>
           </tr>
           <tr class="table_t1">
             <td>求助内容：</td>
             <td colspan="5">
-              <form:textarea path="helpContent" cssClass="form" cols="120" rows="6"/>
+              <form:textarea path="helpContent" cssClass="form" cols="135" rows="3"/>
             </td>
           </tr>
           <tr class="table_t1">
@@ -127,21 +127,32 @@ $(document).ready(function(){
             <td>
             ${qzqyMap[infoVO.helpArea]}
             </td>
-            <td>接洽人：</td>
+            <td width="60">接洽人：</td>
             <td>
-              ${vltVO.volunteerName}
+            	<c:if test="${lifeInfoVO.receiverType == '1'}">
+            		${vltVO.volunteerName}
+            	</c:if>
+            	<c:if test="${lifeInfoVO.receiverType == '2'}">
+            		${entVO.entpriseName}
+            	</c:if>
             </td>
           </tr>
           <tr class="table_t1">
             <td nowrap="nowrap">接洽人联系电话：</td>
             <td>
-              ${vltVO.linkTel}
+                <c:if test="${lifeInfoVO.receiverType == '1'}">
+            		${vltVO.linkTel}
+            	</c:if>
+            	<c:if test="${lifeInfoVO.receiverType == '2'}">
+            		${entVO.linkTel}
+            	</c:if>
+              
             </td>
             <td>派送方式：</td>
             <td>
               ${qzfsMap[infoVO.deliverMode]}
             </td>
-            <td>派单时间：</td>
+            <td width="60">派单时间：</td>
             <td>
               <fmt:formatDate value="${infoVO.deliverTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
@@ -165,7 +176,7 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td>回访记录：</td>
             <td colspan="5">
-              <form:textarea path="callResult" cols="140" rows="6" cssClass="form"/>
+              <form:textarea path="callResult" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
@@ -173,7 +184,7 @@ $(document).ready(function(){
             <td>
               <form:input path="finishTime" cssClass="form" size="10" />
             </td>
-            <td>求助者满意度：</td>
+            <td width="90">求助者满意度：</td>
             <td colspan="3">
               <form:select path="helpApprove" cssClass="form">
                 <form:options items="${mydList}" itemLabel="value" itemValue="sortIndex"/>
@@ -183,7 +194,7 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td>不满意原因：</td>
             <td colspan="5">
-              <form:textarea path="unApproveCause" cols="140" rows="6" cssClass="form"/>
+              <form:textarea path="unApproveCause" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
@@ -197,13 +208,13 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td>处理描述：</td>
             <td colspan="5">
-               <form:textarea path="dealContent" cols="140" rows="6" cssClass="form"/>
+               <form:textarea path="dealContent" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
             <td>备注：</td>
             <td colspan="5">
-              <form:textarea path="remark" cols="140" rows="2" cssClass="form"/>
+              <form:textarea path="remark" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">

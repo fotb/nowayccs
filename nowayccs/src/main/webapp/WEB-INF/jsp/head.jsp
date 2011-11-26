@@ -18,13 +18,9 @@ function btnSignIn_onclick() {
   $("#TextResult").html("");
   var i,j,sResult;
   Phone.TimeOut = 10000;
-alert(Phone.WorkNo);
-
 i = Phone.Initial();
 sResult = Phone.GetPromptByErrorCode(i);
-alert("22");
   //sResult = Phone.GetPromptByErrorCode(i);
-alert(sResult);
   //TextResult.innerHTML = sResult;
 $("#TextResult").html(sResult);
   if (i==0)
@@ -38,7 +34,6 @@ $("#TextResult").html(sResult);
     $("#TextResult").html("");
     i = Phone.AgentType;
     //j = Phone.SignIn(3);
-alert("1111122233");
     j = Phone.SignInEx('TTT',i,'${agentVO.targetDevice}');
     sResult = Phone.GetPromptByErrorCode(j);
     $("#TextResult").append('\n'+sResult);
@@ -87,13 +82,12 @@ function Phone_OnRequestReleaseEx(MediaType) {
 }
 
 function Phone_OnAnswerExSuccess() {
-  BtAns.disabled = true;
-  BtRelease.disabled =false;
-  window.open("bizaccept.do?callerNo="+Phone.GetCallerNo(), "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+  $("#BtAns").attr("disabled", true); 
+  $("#BtRelease").attr("disabled", false); 
+  window.open("bizaccept.do?flag=Y&callNo="+Phone.GetCallerNo(), "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 
 function Phone_OnSignOutSuccess() {
-alert("111");
     btnSignIn.disabled = false;
     btnSignOut.disabled = true;
     BtAns.disabled = true;
@@ -121,9 +115,8 @@ function Phone_OnSignInExFailure() {
 }
 function Phone_OnAnswerSuccess() {
   BtAns.disabled = true;
-  BtRelease.disabled =false;
-
-  window.open("bizaccept.do?callerNo="+Phone.GetCallerNo(), "", 'height=500, width=700, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=yes,location=no, status=no');
+  BtRelease.disabled = false;
+  window.open("bizaccept.do?flag=Y&callNo="+Phone.GetCallerNo(), "", 'height=500, width=700, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=yes,location=no, status=no');
 }
 
 function Phone_OnReleaseSuccess() {
@@ -373,7 +366,7 @@ Phone_OnSignInExFailure()
           &nbsp;&nbsp;
             <INPUT id =btnCallOut  name=button12  type=button value=呼出 disabled LANGUAGE=javascript onclick="return btnCallOut_onclick()">
           <INPUT id =btnTrans name=button11  type=button value=呼叫转移 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
-
+		 <input id="test" name="testbt" type="button" onclick="Phone_OnAnswerExSuccess()" value="test">
         </logic:present>
 
           <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div>

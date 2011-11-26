@@ -16,9 +16,11 @@ function btnsave_click(){
   if(!isValidStringObj( form.workNo,"工号",true)){
     return;
   }
+  /*
   if(!isValidStringObj( form.password,"密码",true)){
    return;
   }
+  */
   if(!isValidStringObj( form.agentType,"坐席类型",true)){
     return;
   }

@@ -8,7 +8,10 @@
 <title>Untitled Document</title>
 <link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/calendar-win2k-cold-1.css"/> 
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.dynDateTime.js"></script>
+<script type="text/javascript" src="js/lang/calendar-zh.js"></script>
 <script src="js/i18n/grid.locale-cn.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquery.jqGrid.src.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
@@ -87,6 +90,7 @@ function showAffairInfo(id) {
 
 $(document).ready(function(){
 	loadHist();
+	getPhoneLevels($("#helpTel").val());
 	$("#helpTel").change(function(){
 		jQuery("#histList").setGridParam({url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+""});
 		jQuery("#histList").trigger("reloadGrid");
@@ -101,11 +105,26 @@ $(document).ready(function(){
 			$("#helpContent3").css("display", "block");
 		}
 	});
+	
+	$("#reduceContent").click(function(){
+		if($("#helpContent3").css("display") == "block") {
+			$("#helpContent3").css("display", "none");
+		} else {
+			$("#helpContent2").css("display", "none");
+		}
+	});
+	
+	$("#createTime" ).dynDateTime({
+		  showsTime: true,
+		  ifFormat: "%Y-%m-%d %H:%M",
+		  button: ".next()" //next sibling to input field
+			});
 });
 
 function getPhoneLevels(phone) {
 	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(data) {
 		$("#phonelevels").html("");
+		if(data != "") {
 		if(data[0].levels < 0) {
 			$("#phonelevels").css("color", "black");
 		} else {
@@ -117,23 +136,25 @@ function getPhoneLevels(phone) {
 		}
 		
 		$("#phonelevels").append("(" + data[0].remark + ")");
+		}
 	});
 }
 
 function loadHist() {
+	var lastsel;
 	jQuery("#histList").jqGrid({ 
 		url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+"", 
 		datatype: "json", 
 		colNames:['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 '], 
 		colModel:[ 
-		           {name:'helpName',index:'helpName',width:'70'}, 
+		           {name:'helpName',index:'helpName',width:'90'}, 
 		           {name:'createTime',index:'createTime',width:'120'}, 
-		           {name:'helpAddr',index:'helpAddr',width:'180'}, 
-		           {name:'helpContent',index:'helpContent', align:"left",width:'130'}, 
-		           {name:'helpType',index:'helpType', align:"right",width:'70'}, 
+		           {name:'helpAddr',index:'helpAddr',width:'200'}, 
+		           {name:'helpContent',index:'helpContent', align:"left",width:'200'}, 
+		           {name:'helpType',index:'helpType', align:"right",width:'80'}, 
 		           {name:'creator',index:'creator', align:"right",width:'60'},
 		           {name:'finishTime',index:'finishTime',width:'120'}, 
-		           {name:'status',index:'status', sortable:false,width:'30'} 
+		           {name:'status',index:'status', sortable:false,width:'50'} 
 		], 
 		rowNum:10, 
 		rowList:[10,20,30], 
@@ -141,7 +162,14 @@ function loadHist() {
 		sortname: 'createTime', 
 		viewrecords: true, 
 		sortorder: "desc", 
-		caption:"近期求助记录" 
+		caption:"近期求助记录",
+		onSelectRow: function(id){ 
+			//alert(id);
+			//if(id && id!==lastsel){ 
+					window.open("infosearch.do?action=showinfo&infoId=" + id, "", 'height=700, width=750, top=0, left=100, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no'); 
+			//		lastsel=id; 
+			//	} 
+			}
 	}); 
 	jQuery("#histList").jqGrid('navGrid','#histPagerNav',{edit:false,add:false,del:false});	
 }
@@ -174,7 +202,7 @@ function loadHist() {
           <tr class="table_t1">
             <td width="15%">求助者姓名：</td>
             <td>
-              <form:input path="helpName" cssClass="form" size="40"/>
+              <form:input path="helpName" cssClass="form" size="40" tabindex="1"/>
             </td>
           </tr>
           <tr class="line">
@@ -201,16 +229,16 @@ function loadHist() {
           <tr class="table_t1">
             <td>详细地址：</td>
             <td>
-              <form:input path="helpAddr" cssClass="form" size="70"/>
+              <form:input path="helpAddr" cssClass="form" size="70" tabindex="2"/>
             </td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
           <tr class="table_t1">
-            <td>求助内容：<br><br><input type="button" value="+" id="addContent"/></td>
+            <td>求助内容：<br><br><input type="button" value="+" id="addContent"/><input type="button" value="-" id="reduceContent"/></td>
             <td>
-              <form:textarea path="helpContent" cssClass="form" cols="120" rows="4"/>
+              <form:textarea path="helpContent" cssClass="form" cols="120" rows="4" tabindex="3"/>
               <form:textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>
               <form:textarea path="helpContent3" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>              
             </td>
@@ -262,7 +290,7 @@ function loadHist() {
           </tr>
           <tr class="table_t1">
             <td>求助时间：</td>
-            <td>${bizAccept.createTime}</td>
+            <td><form:input path="createTime" size="20"/></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
@@ -275,10 +303,9 @@ function loadHist() {
         </table>
       </td>
     </tr>
-  </table>
-  <form:hidden path="creator"/>
-  <form:hidden path="createTime"/>
-		<table width="100%" border="0" align="center" cellpadding="0"
+    <tr>
+    <td>
+    <table width="100%" border="0" align="center" cellpadding="0"
 			cellspacing="0" class="table_gray">
 			<!-- 
 			<tr class="table_t1">
@@ -294,6 +321,12 @@ function loadHist() {
 				</td>
 			</tr>
 		</table>
+    </td>
+    </tr>
+  </table>
+  <form:hidden path="creator"/>
+  <form:hidden path="createTime"/>
+		
 	</form:form>
 </body>
 </html>

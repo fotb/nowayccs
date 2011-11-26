@@ -108,7 +108,7 @@ function option_delete(id){
             <jsp:include page="../../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
               <jsp:param name="pagename" value="pageNo"/>
-              <jsp:param name="actionname" value="lifebackvst.do"/>
+              <jsp:param name="actionname" value="bizlifebackvst.do"/>
             </jsp:include>
             </td>
           </tr>

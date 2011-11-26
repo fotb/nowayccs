@@ -84,7 +84,7 @@ $(document).ready(function(){
 <body>
 <form:form method="post" action="bizaffairbackvst.do?action=backvstsave" commandName="affairBackVstDomain">
 <input type="hidden" name="infoId" id="infoId" value="${infoVO.infoId}"/>
-<input type="hidden" name="pageNo" id="pageNo" value="${pageNo	}"/> 
+<input type="hidden" name="pageNo" id="pageNo" value="${pageNo}"/> 
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -109,12 +109,12 @@ $(document).ready(function(){
           </tr>
            -->
                     <tr class="table_t1">
-            <td width="11%" nowrap="nowrap">求助者姓名：</td>
-            <td width="15%">
+            <td nowrap="nowrap">求助者姓名：</td>
+            <td>
               ${infoVO.helpName}
             </td>
-            <td width="12%">联系电话：</td>
-            <td width="15%" colspan="3">
+            <td>联系电话：</td>
+            <td colspan="3">
               ${infoVO.helpTel}
             </td>
             </tr>
@@ -127,7 +127,7 @@ $(document).ready(function(){
           <tr class="table_t1">
             <td>求助内容：</td>
             <td colspan="5">
-              <form:textarea path="helpContent" cols="120" rows="6" cssClass="form"/>
+              <form:textarea path="helpContent" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t1">
@@ -147,7 +147,7 @@ $(document).ready(function(){
             <td>${affairInfoVO.moveWay}</td>
             <td>接洽人：</td>
             <td>${affairInfoVO.moveAcceptor}</td>
-            <td>移送方式：</td>
+            <td width="60">移送方式：</td>
             <td>${qzfsMap[infoVO.deliverMode]}</td>
           </tr>
           <tr class="table_t1">
@@ -177,7 +177,7 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td>回复情况：</td>
             <td colspan="5">
-              <form:textarea path="answerResult" cols="140" rows="4" cssClass="form"/>
+              <form:textarea path="answerResult" cols="135" rows="4" cssClass="form"/>
             </td>
           </tr>
           <tr class="line">
@@ -199,7 +199,7 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td>回访记录：</td>
             <td colspan="5">
-              <form:textarea path="callResult" cols="140" rows="6" cssClass="form"/>
+              <form:textarea path="callResult" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
@@ -207,7 +207,7 @@ $(document).ready(function(){
             <td>
               <form:input path="finishTime" cssClass="form" size="10" readonly="true" />
             </td>
-            <td>求助者满意度：</td>
+            <td width="90">求助者满意度：</td>
             <td colspan="3">
               <form:select path="helpApprove" cssClass="form">
                 <form:options items="${mydList}" itemLabel="value" itemValue="sortIndex"/>
@@ -217,13 +217,13 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td>不满意原因：</td>
             <td colspan="5">
-              <form:textarea path="unApproveCause" cols="140" rows="6" cssClass="form"/>
+              <form:textarea path="unApproveCause" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
             <td>备注：</td>
             <td colspan="5">
-              <form:textarea path="remark" cols="140" rows="6" cssClass="form"/>
+              <form:textarea path="remark" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">

@@ -75,7 +75,7 @@ $(document).ready(function(){
           <tr class="table_t1">
             <td>求助方式：</td>
             <td>
-            ${infoVO.helpMode}
+            ${qzfsMap[infoVO.helpMode]}
             </td>
           </tr>
           <tr class="line">
