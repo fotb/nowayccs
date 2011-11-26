@@ -16,6 +16,7 @@ import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.IMessageDAO;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.MessageVO;
 
 @Repository("messageDAO")
@@ -59,21 +60,27 @@ public class MessageDAOImpl extends DefaultDAOSupport implements IMessageDAO {
 				objs.add(creator);
 				types.add(StandardBasicTypes.STRING);
 				types.add(StandardBasicTypes.STRING);
-				buffer.append("(t.title like ? or ? is null) and ");
+				buffer.append("(t.title like ? or ? is null) ");
 				objs.add("%" + title + "%");
 				objs.add(title);
 				types.add(StandardBasicTypes.STRING);
 				types.add(StandardBasicTypes.STRING);
-				buffer.append("(trunc(t.createDate) >= ? or ? is null) and ");
-				objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
-				objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
-				types.add(StandardBasicTypes.DATE);
-				types.add(StandardBasicTypes.DATE);
-				buffer.append("(trunc(t.createDate) <= ? or ? is null) ");
-				objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
-				objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
-				types.add(StandardBasicTypes.DATE);
-				types.add(StandardBasicTypes.DATE);
+				if(!StringUtil.isNull(startDt)) {				
+					buffer.append("and ");
+					buffer.append("(trunc(t.createDate) >= ? or ? is null) ");
+					objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
+					objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
+					types.add(StandardBasicTypes.DATE);
+					types.add(StandardBasicTypes.DATE);
+				}
+				if(!StringUtil.isNull(endDt)) {
+					buffer.append("and ");
+					buffer.append("(trunc(t.createDate) <= ? or ? is null) ");
+					objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
+					objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
+					types.add(StandardBasicTypes.DATE);
+					types.add(StandardBasicTypes.DATE);
+				}
 				buffer.append("order by t.createDate DESC");
 				
 				Type[] typeAry = new Type[types.size()]; 
@@ -105,15 +112,21 @@ public class MessageDAOImpl extends DefaultDAOSupport implements IMessageDAO {
 
 		objs.add(creator);
 		objs.add(creator);
-		buffer.append("(t.title like ? or ? is null) and ");
+		buffer.append("(t.title like ? or ? is null) ");
 		objs.add("%" + title + "%");
 		objs.add(title);
-		buffer.append("(trunc(t.createDate) >= ? or ? is null) and ");
-		objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
-		objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
-		buffer.append("(trunc(t.createDate) <= ? or ? is null) ");
-		objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
-		objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
+		if(!StringUtil.isNull(startDt)) {
+			buffer.append(" and ");
+			buffer.append("(trunc(t.createDate) >= ? or ? is null) ");
+			objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
+			objs.add(DateUtil.parse(startDt, "yyyy-MM-dd"));
+		}
+		if(!StringUtil.isNull(endDt)) {
+			buffer.append(" and ");
+			buffer.append("(trunc(t.createDate) <= ? or ? is null) ");
+			objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
+			objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
+		}
 		
 		final Long count = (Long) getHibernateTemplate().find(buffer.toString(), objs.toArray()).listIterator().next();
 		return count.intValue();

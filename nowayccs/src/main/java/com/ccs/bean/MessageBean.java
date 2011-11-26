@@ -1,9 +1,6 @@
 package com.ccs.bean;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import com.ccs.util.DateUtil;
 
 public class MessageBean implements Serializable {
 
@@ -44,9 +41,10 @@ public class MessageBean implements Serializable {
 	}
 
 	public String getStartDt() {
-		return null == startDt ? DateUtil.format(
-				DateUtil.getDayOfProvsMonth(new Date()), "yyyy-MM-dd")
-				: startDt;
+		return startDt;
+//		return null == startDt ? DateUtil.format(
+//				DateUtil.getDayOfProvsMonth(new Date()), "yyyy-MM-dd")
+//				: startDt;
 	}
 
 	public void setStartDt(String startDt) {
@@ -54,8 +52,9 @@ public class MessageBean implements Serializable {
 	}
 
 	public String getEndDt() {
-		return null == endDt ? DateUtil.format(new Date(), "yyyy-MM-dd")
-				: endDt;
+//		return null == endDt ? DateUtil.format(new Date(), "yyyy-MM-dd")
+//				: endDt;
+		return endDt;
 	}
 
 	public void setEndDt(String endDt) {

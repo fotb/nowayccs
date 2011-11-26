@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.ccs.bo.IBizAcceptBO;
 import com.ccs.bo.IDictBO;
@@ -38,7 +36,7 @@ import com.ccs.web.domain.InfoBean;
 
 @Controller
 @RequestMapping("/bizaccept.do")
-@SessionAttributes("bizAccept")
+//@SessionAttributes("bizAccept")
 public class BizAcceptController {
 	private static final String FORMATE_CREATETIME = "yyyy-MM-dd HH:mm:ss";
 	
@@ -62,6 +60,8 @@ public class BizAcceptController {
 		bizAccept.setPopupFlag(flag);
 		bizAccept.setCreateTime(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		
+//		session.setAttribute("bizAccept", bizAccept);
+		
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("user", userVO);
 		
@@ -81,10 +81,9 @@ public class BizAcceptController {
 
 	
 	@RequestMapping(params = "action=back")
-	public String backAccept(@ModelAttribute("bizAccept") BizAccept bizAccept, 
-			HttpSession session, 
-			ModelMap model) {
+	public String backAccept(HttpSession session, ModelMap model) {
 		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
 
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("user", userVO);
@@ -106,7 +105,11 @@ public class BizAcceptController {
 	@RequestMapping(params = "action=life")
 	public String acceptLife(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
 		bizAccept.setCreator(user.getUserName());
+		
+		session.setAttribute("bizAccept", bizAccept);
+		
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
 		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
@@ -117,8 +120,10 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=lifesave")
-	public String acceptLifeSave(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model, SessionStatus status) {
+	public String acceptLifeSave(HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		
 		List<InformationVO> list = new ArrayList<InformationVO>();
 		list.add(getInformationVO(bizAccept, user, "1"));
 		if(!StringUtil.isNull(bizAccept.getHelpContent2())) {
@@ -129,7 +134,7 @@ public class BizAcceptController {
 		}
 		bizAcceptBO.acceptLife(list);
 		
-		status.setComplete();
+		session.setAttribute("bizAccept", null);
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
 			return "common/selfclose";
 		} else {
@@ -162,7 +167,11 @@ public class BizAcceptController {
 	@RequestMapping(params = "action=affair")
 	public String acceptAffair(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
 		bizAccept.setCreator(user.getUserName());
+		
+		session.setAttribute("bizAccept", bizAccept);
+		
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
 		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
@@ -173,14 +182,16 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=affairsave")
-	public String acceptAffairSave(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model, SessionStatus status) {
+	public String acceptAffairSave(HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		
 		InformationVO vo = getInformationVO(bizAccept, user, "1");
 		vo.setAffairAcceptor(bizAccept.getHandAcceptor());
 		
 		bizAcceptBO.acceptAffair(vo);
 		
-		status.setComplete();
+		session.setAttribute("bizAccept", null);
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
 			return "common/selfclose";
 		} else {
@@ -191,7 +202,10 @@ public class BizAcceptController {
 	@RequestMapping(params = "action=refer")
 	public String acceptRefer(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
 		bizAccept.setCreator(user.getUserName());
+		session.setAttribute("bizAccept", bizAccept);
+		
 		model.addAttribute("bizAccept", bizAccept);
 		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
 		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
@@ -202,10 +216,13 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=refersave")
-	public String acceptReferSave(@ModelAttribute("bizAccept") BizAccept bizAccept, ModelMap model, SessionStatus status) {
+	public String acceptReferSave(HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		
 		InformationVO vo = new InformationVO();
 		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
-		vo.setCreator(bizAccept.getCreator());
+		vo.setCreator(user.getUserId());
 		vo.setHelpAddr(bizAccept.getHelpAddr());
 		vo.setHelpArea(bizAccept.getHelpArea());
 		vo.setHelpContent(bizAccept.getHelpContent());
@@ -222,7 +239,7 @@ public class BizAcceptController {
 		
 		bizAcceptBO.acceptRefer(vo, referInfoVO);
 		
-		status.setComplete();
+		session.setAttribute("bizAccept", null);
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
 			return "common/selfclose";
 		} else {

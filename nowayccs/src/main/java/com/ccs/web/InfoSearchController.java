@@ -102,7 +102,7 @@ public class InfoSearchController {
 		model.addAttribute("mydMap", dictBO.getDict(Constants.DICT_DICTTYPE_MYD));
 		
 		LifeInformationVO lifeInfoVO = infoSearchBO.findLifeInfoByInfoId(infoId);
-		if(null != lifeInfoVO) {
+		if(!Constants.SYS_INFOMATION_STATES_DB.equals(infoVO.getStatus()) && null != lifeInfoVO) {
 			if(Constants.LIFEINFOMATION_RECEIVETYPE_ZYZ.equals(lifeInfoVO.getReceiverType())) {
 				VolunteerVO volunteerVO = volunteerBO.findById(lifeInfoVO.getReceiverId());
 				model.addAttribute("vltVO", volunteerVO);
@@ -152,7 +152,7 @@ public class InfoSearchController {
 	
 	
 	@RequestMapping(params = "action=affairinfo")
-	public String affairInfo(String infoId, String pageNo, ModelMap model) {
+	public String affairInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
 		
 		model.addAttribute("infoVO", infoVO);
@@ -174,5 +174,19 @@ public class InfoSearchController {
 			}
 		}
 		return "infosearch/affairinfo";
+	}
+	
+	@RequestMapping(params = "action=showinfo")
+	public String showInfo(String infoId, ModelMap model) {
+		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		if(Constants.INFOMATION_HELPTYPE_LIFE.equals(infoVO.getHelpType())) {
+			return "redirect:infosearch.do?action=lifeinfo&infoId=" + infoId;
+		} else if(Constants.INFOMATION_HELPTYPE_AFFAIR.equals(infoVO.getHelpType())) {
+			return "redirect:infosearch.do?action=affairinfo&infoId=" + infoId;
+		} else if(Constants.INFOMATION_HELPTYPE_REFER.equals(infoVO.getHelpType())) {
+			return "redirect:infosearch.do?action=referinfo&infoId=" + infoId;
+		} else{// if(Constants.INFOMATION_HELPTYPE_FERTILITY.equals(infoVO.getHelpType())) {
+			return "redirect:infosearch.do?action=productivityinfo&infoId=" + infoId;
+		}
 	}
 }

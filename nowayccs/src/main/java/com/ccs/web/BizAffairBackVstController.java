@@ -20,6 +20,7 @@ import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.DictVO;
 import com.ccs.vo.InformationVO;
@@ -69,8 +70,8 @@ public class BizAffairBackVstController {
 	}
 	
 	@RequestMapping(params = "action=backvst")
-	public String backVst(String infoId, String pageNo, ModelMap model) {
-		
+	public String backVst(String infoId, String pageNo, ModelMap model, HttpSession session) {
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		InformationVO infoVO = bizAffairBackVstBO.findInfoByInfoId(infoId);
 		
 		AffairInformationVO affairInfoVO = bizAffairBackVstBO.findAffairInfoByInfoId(infoId);
@@ -87,7 +88,11 @@ public class BizAffairBackVstController {
 		affairBackVstDomain.setCallTime(DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		affairBackVstDomain.setFinishTime(DateUtil.format(new Date(), "yyyy-MM-dd"));
 		affairBackVstDomain.setHelpApprove(affairInfoVO.getHelpApprove());
-		affairBackVstDomain.setPrincipal(affairInfoVO.getPrincipal());
+		if(!StringUtil.isNull(affairInfoVO.getPrincipal())) {
+			affairBackVstDomain.setPrincipal(affairInfoVO.getPrincipal());
+		} else {
+			affairBackVstDomain.setPrincipal(userVO.getUserId());
+		}
 		affairBackVstDomain.setRemark(affairInfoVO.getRemark());
 		affairBackVstDomain.setUnApproveCause(affairInfoVO.getUnApproveCause());
 		affairBackVstDomain.setHelpAddr(infoVO.getHelpAddr());

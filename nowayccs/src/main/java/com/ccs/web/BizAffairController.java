@@ -74,6 +74,7 @@ public class BizAffairController {
 		model.addAttribute("affairDispatchBean", bean);
 		model.addAttribute("qzqyMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
 		model.addAttribute("pdfsList", dictBO.findByType(Constants.DICT_DICTTYPE_LLFS));
+		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_LLFS));
 		return "affair/dispatch";
 	}
 	

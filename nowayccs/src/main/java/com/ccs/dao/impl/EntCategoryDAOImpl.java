@@ -34,7 +34,7 @@ public class EntCategoryDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<EntCategoryVO> findByParentId(String parentId) {
-		return getHibernateTemplate().find("from EntCategoryVO vo where vo.parentId = ?", parentId);
+		return getHibernateTemplate().find("from EntCategoryVO vo where vo.parentId = ? order by vo.categoryId", parentId);
 	}
 	
 	@SuppressWarnings("unchecked")

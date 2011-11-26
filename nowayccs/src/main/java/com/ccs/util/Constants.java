@@ -2,6 +2,7 @@ package com.ccs.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Constants {
 	
@@ -98,12 +99,12 @@ public class Constants {
     public static final String INFOMATION_HELPTYPE_LIFE = "2"; //2生活服务类
     public static final String INFOMATION_HELPTYPE_AFFAIR = "3"; //3事务服务类
     public static final String INFOMATION_HELPTYPE_FERTILITY = "4"; //4生产力服务
-    public static final Map<String, String> INFOMATION_HELPTYPE_HASHMAP = new HashMap<String, String>();
+    public static final Map<String, String> INFOMATION_HELPTYPE_HASHMAP = new TreeMap<String, String>();
     static {
-        INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(
-                INFOMATION_HELPTYPE_REFER), "咨询服务类");
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_LIFE),
                                         "生活服务类");
+        INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(
+                INFOMATION_HELPTYPE_REFER), "咨询服务类");
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(
                 INFOMATION_HELPTYPE_AFFAIR), "事务服务类");
         INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(

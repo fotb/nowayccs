@@ -22,6 +22,7 @@ public class BizLifeBackVstBOImpl implements IBizLifeBackVstBO {
 	
 	@Override
 	public List<InformationVO> findByDeliverer(String deliverer, String helpType, PageInfo pageInfo) {
+		pageInfo.setTotalRecords(informationDAO.getTotalCountByDeliverer(deliverer, helpType));
 		return informationDAO.findByDeliverer(deliverer, helpType, pageInfo);
 	}
 	@Override
