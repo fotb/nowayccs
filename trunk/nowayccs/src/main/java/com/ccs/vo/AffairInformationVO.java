@@ -24,9 +24,6 @@ public class AffairInformationVO implements Serializable {
 	@Column(name = "INFORMATIONID")
 	private String infoId;
 
-	@Column(name = "HANDACCEPTOR")
-	private String handAcceptor;
-
 	@Column(name = "MOVEWAY")
 	private String moveWay;
 
@@ -88,15 +85,6 @@ public class AffairInformationVO implements Serializable {
 	public void setInfoId(String infoId) {
 		this.infoId = infoId;
 	}
-
-	public String getHandAcceptor() {
-		return handAcceptor;
-	}
-
-	public void setHandAcceptor(String handAcceptor) {
-		this.handAcceptor = handAcceptor;
-	}
-
 
 	public String getMoveWay() {
 		return moveWay;

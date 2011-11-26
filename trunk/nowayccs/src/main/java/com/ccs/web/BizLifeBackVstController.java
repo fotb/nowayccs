@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ccs.bo.IBizLifeBO;
 import com.ccs.bo.IBizLifeBackVstBO;
 import com.ccs.bo.IDictBO;
+import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.DictVO;
+import com.ccs.vo.EntpriseVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.UserVO;
@@ -43,6 +46,9 @@ public class BizLifeBackVstController {
 	
 	@Autowired
 	private IVolunteerBO volunteerBO;
+	
+	@Autowired
+	private IEntpriseBO entpriseBO;
 	
 	@Autowired
 	private IDictBO dictBO;
@@ -74,17 +80,23 @@ public class BizLifeBackVstController {
 	}
 	
 	@RequestMapping(params = "action=backvst")
-	public String backVst(String infoId, String pageNo, ModelMap model) {
-		
+	public String backVst(String infoId, String pageNo, HttpSession session, ModelMap model) {
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		InformationVO infoVO = bizLifeBackVstBO.findInfoByInfoId(infoId);
 		
 		LifeInformationVO lifeInfoVO = bizLifeBackVstBO.findLifeInfoByInfoId(infoId);
 		
-		VolunteerVO vltVO = volunteerBO.findById(lifeInfoVO.getReceiverId());
+		if("1".equals(lifeInfoVO.getReceiverType())) {
+			VolunteerVO vltVO = volunteerBO.findById(lifeInfoVO.getReceiverId());
+			model.addAttribute("vltVO", vltVO);
+		} else {
+			EntpriseVO entVO = entpriseBO.findEntByEntpriseId(lifeInfoVO.getReceiverId());
+			model.addAttribute("entVO", entVO);
+		}
 		
 		model.addAttribute("infoVO", infoVO);
 		model.addAttribute("lifeInfoVO", lifeInfoVO);
-		model.addAttribute("vltVO", vltVO);
+		
 		LifeBackVstDomain lifeBackVstDomain = new LifeBackVstDomain();
 		lifeBackVstDomain.setCallMode(lifeInfoVO.getCallMode());
 		lifeBackVstDomain.setCallResult(lifeInfoVO.getCallResult());
@@ -93,7 +105,11 @@ public class BizLifeBackVstController {
 		lifeBackVstDomain.setDealResult(lifeInfoVO.getDealResult());
 		lifeBackVstDomain.setFinishTime(DateUtil.format(new Date(), "yyyy-MM-dd"));
 		lifeBackVstDomain.setHelpApprove(lifeInfoVO.getHelpApprove());
-		lifeBackVstDomain.setPrincipal(lifeInfoVO.getPrincipal());
+		if(!StringUtil.isNull(lifeInfoVO.getPrincipal())) {
+			lifeBackVstDomain.setPrincipal(lifeInfoVO.getPrincipal());
+		} else {
+			lifeBackVstDomain.setPrincipal(userVO.getUserId());
+		}
 		lifeBackVstDomain.setRemark(lifeInfoVO.getRemark());
 		lifeBackVstDomain.setUnApproveCause(lifeInfoVO.getUnApproveCause());
 		lifeBackVstDomain.setHelpAddr(infoVO.getHelpAddr());

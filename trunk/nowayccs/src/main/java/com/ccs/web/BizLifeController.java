@@ -91,6 +91,7 @@ public class BizLifeController {
 		model.addAttribute("lifeDispatchBean", bean);
 		model.addAttribute("qzqyMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
 		model.addAttribute("pdfsList", dictBO.findByType(Constants.DICT_DICTTYPE_LLFS));
+		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_LLFS));
 		return "life/dispatch";
 	}
 	

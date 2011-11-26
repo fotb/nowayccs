@@ -68,7 +68,7 @@ public class InfoSearchBean implements Serializable {
 	}
 
 	public String getStartDt() {
-		return null == startDt ? DateUtil.format(DateUtil.addDate(new Date(), -1), "yyyy-MM-dd") : startDt;
+		return null == startDt ? DateUtil.format(new Date(), "yyyy-MM-dd") : startDt;
 	}
 
 	public void setStartDt(String startDt) {
