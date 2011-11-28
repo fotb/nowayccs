@@ -84,7 +84,7 @@ public class EntpriseController {
 
 	private String getSelectedValue(String value) {
 		String result = "";
-		if(!EntSearch.DEFAULT_VALUE_SELECT.equals(value)) {
+		if(!StringUtil.isNull(value)) {
 			result = value;
 		}
 		return result;

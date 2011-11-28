@@ -50,9 +50,9 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				final String hql = "from InformationVO t where t.helpTel = ? order by t.createTime desc";
+				final String hql = "from InformationVO t where t.helpTel like ? order by t.createTime desc";
 				Query query = session.createQuery(hql);
-				query.setParameter(0, helpTel);
+				query.setParameter(0, "%" + helpTel + "%");
 				query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
 				query.setMaxResults(pageInfo.getPAGE_COUNT());
 				return query.list();
@@ -62,8 +62,8 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 
 	@Override
 	public int getTotalCount(String helpTel) {
-		final String hql = "select count(t.infoId) from InformationVO t where t.helpTel = ?";
-		final Long count = (Long) getHibernateTemplate().find(hql, helpTel).listIterator().next();
+		final String hql = "select count(t.infoId) from InformationVO t where t.helpTel like ?";
+		final Long count = (Long) getHibernateTemplate().find(hql, "%" + helpTel + "%").listIterator().next();
 		return count.intValue();
 	}
 
