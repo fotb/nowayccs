@@ -145,16 +145,17 @@ function loadHist() {
 	jQuery("#histList").jqGrid({ 
 		url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+"", 
 		datatype: "json", 
-		colNames:['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 '], 
+		colNames:['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 ', ''], 
 		colModel:[ 
-		           {name:'helpName',index:'helpName',width:'90'}, 
+		           {name:'helpName',index:'helpName', formatter:bizShowLinkFormatter, width:'90'}, 
 		           {name:'createTime',index:'createTime',width:'120'}, 
 		           {name:'helpAddr',index:'helpAddr',width:'200'}, 
 		           {name:'helpContent',index:'helpContent', align:"left",width:'200'}, 
 		           {name:'helpType',index:'helpType', align:"right",width:'80'}, 
 		           {name:'creator',index:'creator', align:"right",width:'60'},
 		           {name:'finishTime',index:'finishTime',width:'120'}, 
-		           {name:'status',index:'status', sortable:false,width:'50'} 
+		           {name:'status',index:'status', sortable:false,width:'50'} ,
+		           {name:'infoId', index:'infoId', hidden:true}
 		], 
 		rowNum:10, 
 		rowList:[10,20,30], 
@@ -162,7 +163,8 @@ function loadHist() {
 		sortname: 'createTime', 
 		viewrecords: true, 
 		sortorder: "desc", 
-		caption:"近期求助记录",
+		caption:"近期求助记录"
+		/*
 		onSelectRow: function(id){ 
 			//alert(id);
 			//if(id && id!==lastsel){ 
@@ -170,9 +172,16 @@ function loadHist() {
 			//		lastsel=id; 
 			//	} 
 			}
+		*/
 	}); 
 	jQuery("#histList").jqGrid('navGrid','#histPagerNav',{edit:false,add:false,del:false});	
 }
+
+function bizShowLinkFormatter(cellValue, options, rowObj) {
+	return "<a href=\"infosearch.do?action=showinfo&infoId=" + options.rowId + "\" target=\"_blank\">"+cellValue+"</a>";
+}
+
+
 </script>
 <body>
 <form:form method="post" action="bizaccept.do" commandName="bizAccept">
@@ -220,7 +229,7 @@ function loadHist() {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              <form:input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color: black"></span>
+              <form:input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color: black"></span><!-- &nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form:input path="otherTel" cssClass="form" size="40"/> -->
             </td>
           </tr>
           <tr class="line">
@@ -326,7 +335,7 @@ function loadHist() {
   </table>
   <form:hidden path="creator"/>
   <form:hidden path="createTime"/>
-		
+		<form:hidden path="popupFlag"/>
 	</form:form>
 </body>
 </html>
