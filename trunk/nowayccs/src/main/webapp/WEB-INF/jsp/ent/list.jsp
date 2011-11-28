@@ -42,17 +42,23 @@ function changeStatus(entpriseId, newStatus) {
 }
 
 $(document).ready(function(){
+/*
 	$.getJSON("entprise.do?action=getCategory", {parentId: -1}, function(data) {
 		$.each(data, function(i, item) {
-			$("#parentCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+			//$("#parentCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+				if(item.categoryId == "${entSearch.parentCategoryId}") {
+					$("#parentCategoryId").append("<option value=" + item.categoryId + " selected='selected'>" + item.value + " </option>");
+				} else {
+					$("#parentCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+				}
 		});
 	});
 
 	$("#parentCategoryId").change(function() {
 		$("#subParentCategoryId").empty();
-		$("#subParentCategoryId").append("<option value='All'>请选择</option>");
+		$("#subParentCategoryId").append("<option value=' '>请选择</option>");
 		$("#categoryId").empty();
-		$("#categoryId").append("<option value='All'>请选择</option>");
+		$("#categoryId").append("<option value=' '>请选择</option>");
 		$.getJSON("entprise.do?action=getCategory", {parentId: $("#parentCategoryId").val()}, function(data) {
 			$.each(data, function(i, item) {
 				$("#subParentCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
@@ -61,15 +67,90 @@ $(document).ready(function(){
 	});
 	$("#subParentCategoryId").change(function() {
 		$("#categoryId").empty();
-		$("#categoryId").append("<option value='All'>请选择</option>");
+		$("#categoryId").append("<option value=' '>请选择</option>");
 		$.getJSON("entprise.do?action=getCategory", {parentId: $("#subParentCategoryId").val()}, function(data) {
 			$.each(data, function(i, item) {
 				$("#categoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
 			});
 		});
 	});
-});
+*/
+$.getJSON("json.do?action=entcategory", {parentId: -1}, function(data) {
+		//$("#parentCategoryId").append("<option value=' '>请选择</option>");
+		$.each(data, function(i, item) {
+			if(item.categoryId == "${entSearch.parentCategoryId}") {
+				$("#parentCategoryId").append("<option value=" + item.categoryId + " selected='selected'>" + item.value + " </option>");
+			} else {
+				$("#parentCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+			}
+		});
+	});
 
+	if("" != "${entSearch.parentCategoryId}") {
+		loadSubEntCategory(${entSearch.parentCategoryId});
+	}
+
+	$("#parentCategoryId").change(function() {
+		$("#subParentCategoryId").empty();
+		$("#subParentCategoryId").append("<option value=' '>请选择</option>");
+		$("#categoryId").empty();
+		$("#categoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: $("#parentCategoryId").val()}, function(data) {
+			$.each(data, function(i, item) {
+				$("#subParentCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+			});
+		});
+		//$("form").submit();
+		//btnsearch_click();
+	});
+
+	if("" != "${entSearch.subParentCategoryId}") {
+		loadEntCategory(${entSearch.subParentCategoryId});
+	}
+
+	$("#subParentCategoryId").change(function() {
+		$("#categoryId").empty();
+		$("#categoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: $("#subParentCategoryId").val()}, function(data) {
+			$.each(data, function(i, item) {
+				$("#categoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+			});
+		//$("form").submit();
+		//btnsearch_click();
+		});
+		
+	});
+
+});
+function loadSubEntCategory(parentCategoryId) {
+		$("#subParentCategoryId").empty();
+		$("#subParentCategoryId").append("<option value=' '>请选择</option>");
+		$("#entCategoryId").empty();
+		$("#entCategoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: parentCategoryId}, function(data) {
+			$.each(data, function(i, item) {
+				if(item.categoryId == "${entSearch.subParentCategoryId}") {
+					$("#subParentCategoryId").append("<option value=" + item.categoryId + " selected='selected'>" + item.value + " </option>");
+				} else {
+					$("#subParentCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+				}
+			});
+		});
+}
+
+function loadEntCategory(subParentCategoryId) {
+		$("#categoryId").empty();
+		$("#categoryId").append("<option value=' '>请选择</option>");
+		$.getJSON("json.do?action=entcategory", {parentId: subParentCategoryId}, function(data) {
+			$.each(data, function(i, item) {
+				if(item.categoryId == "${entSearch.categoryId}") {
+					$("#categoryId").append("<option value=" + item.categoryId + " selected='selected'>" + item.value + " </option>");
+				} else {
+					$("#categoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
+				}
+			});
+		});
+}
 
 </script>
 
@@ -100,7 +181,7 @@ $(document).ready(function(){
 					<td width="70">能否派单：</td>
                   <td>
                     <form:select path="servicesType">
-                    	<form:option value="All">请选择</form:option>
+                    	<form:option value=" ">请选择</form:option>
                     	<form:option value="Y">可派单</form:option>
                     	<form:option value="N">不可派单</form:option>
                     </form:select>
@@ -118,15 +199,15 @@ $(document).ready(function(){
                 <td width="70">服务类别：</td>
                   <td colspan="5">
                   <form:select path="parentCategoryId" >
-                  	<form:option value="All">请选择</form:option>
+                  	<form:option value=" ">请选择</form:option>
                   </form:select>
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <form:select path="subParentCategoryId">
-                  	<form:option value="All">请选择</form:option>
+                  	<form:option value=" ">请选择</form:option>
                   </form:select>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <form:select path="categoryId">
-                  	<form:option value="All">请选择</form:option>
+                  <form:select path="categoryId" >
+                  	<form:option value=" ">请选择</form:option>
                   </form:select>
                   </td>
 				</tr>
