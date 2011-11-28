@@ -8,6 +8,9 @@ public class BizAccept implements Serializable {
 	private String helpName; // 求助者姓名
 	private String helpMode; // 求助方式
 	private String helpTel; // 求助者电话
+	
+	private String otherTel;
+	
 	private String helpAddr; // 求助者地址
 	private String helpContent; // 求助内容
 	
@@ -26,6 +29,14 @@ public class BizAccept implements Serializable {
 	
 	private String popupFlag;
 	
+	public String getOtherTel() {
+		return otherTel;
+	}
+
+	public void setOtherTel(String otherTel) {
+		this.otherTel = otherTel;
+	}
+
 	public String getPopupFlag() {
 		return popupFlag;
 	}

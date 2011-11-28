@@ -6,7 +6,7 @@ public class EntSearch implements Serializable {
 
 	private static final long serialVersionUID = -9075569914198622802L;
 	
-	public static final String DEFAULT_VALUE_SELECT = "All";
+//	public static final String DEFAULT_VALUE_SELECT = "All";
 
 	private String entpriseNo;
 

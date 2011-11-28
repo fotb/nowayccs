@@ -182,9 +182,10 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=affairsave")
-	public String acceptAffairSave(HttpSession session, ModelMap model) {
+	public String acceptAffairSave(@ModelAttribute("bizAccept") BizAccept bindBizAccept, HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		bizAccept.setHandAcceptor(bindBizAccept.getHandAcceptor());
 		
 		InformationVO vo = getInformationVO(bizAccept, user, "1");
 		vo.setAffairAcceptor(bizAccept.getHandAcceptor());
@@ -216,9 +217,10 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=refersave")
-	public String acceptReferSave(HttpSession session, ModelMap model) {
+	public String acceptReferSave(@ModelAttribute("bizAccept") BizAccept bindBizAccept, HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		bizAccept.setResult(bindBizAccept.getResult());
 		
 		InformationVO vo = new InformationVO();
 		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
@@ -298,6 +300,7 @@ public class BizAcceptController {
 		propList.add("creator");
 		propList.add("finishTime");
 		propList.add("status");
+		propList.add("infoId");
 		
 		return JQGridFormatterUtil.getJSON(page, pageInfo.getTotalRecords(), rows, infoList, propList, "infoId");
 	}
