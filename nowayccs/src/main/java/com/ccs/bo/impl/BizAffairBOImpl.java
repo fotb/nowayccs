@@ -27,9 +27,9 @@ public class BizAffairBOImpl implements IBizAffairBO {
 	@Override
 	public List<InformationVO> findInfoByParams(String creator, String status,
 			String helpType, PageInfo pageInfo) {
-		pageInfo.setTotalRecords(informationDAO.getTotalCount(creator, status,
+		pageInfo.setTotalRecords(informationDAO.getTotalCountByAffairAcceptorAndStatus(creator, status,
 				helpType));
-		return informationDAO.findByCreatorAndStatus(creator, status, helpType,
+		return informationDAO.findByAffairAcceptorAndStatus(creator, status, helpType,
 				pageInfo);
 	}
 

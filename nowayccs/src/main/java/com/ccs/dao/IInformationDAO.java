@@ -24,6 +24,10 @@ public interface IInformationDAO {
 	
 	int getTotalCount(final String userId, final String status, String helpType);
 	
+	List<InformationVO> findByAffairAcceptorAndStatus(final String userId, final String status, final String helpType, PageInfo pageInfo);
+	
+	int getTotalCountByAffairAcceptorAndStatus(final String userId, final String status, String helpType);
+	
 	List<InformationVO> findByDeliverer(String deliverer, String helpType, PageInfo pageInfo);
 	
 	int getTotalCountByDeliverer(String deliverer, String helpType);
