@@ -210,7 +210,6 @@ public class InfoReportController {
 			LifeInfoReportDTO dto = new LifeInfoReportDTO();
 			dto.setInfoId(infoVO.getInfoId());
 			final LifeInformationVO	lifeInfoVO = lifeInfoMap.get(infoVO.getInfoId());
-			
 			dto.setCallResult(null == lifeInfoVO.getHelpApprove() ? "" : dictMap.get(lifeInfoVO.getHelpApprove()));
 			dto.setCreateTime(infoVO.getCreateTime());
 			dto.setCreator(userMap.get(infoVO.getCreator()).getUserName());
@@ -221,10 +220,18 @@ public class InfoReportController {
 			if(!StringUtil.isNull(lifeInfoVO.getReceiverType())) {
 				if(Constants.LIFEINFOMATION_RECEIVETYPE_QY.equals(lifeInfoVO.getReceiverType())) {
 					EntpriseVO entVO = entMap.get(lifeInfoVO.getReceiverId());
-					dto.setReceiver(entVO.getEntpriseName());
+					if(null != entVO) {
+						dto.setReceiver(entVO.getEntpriseName());
+					} else {
+						dto.setReceiver("---找不到服务企业!服务企业可能已删除.---");
+					}
 				} else {
 					VolunteerVO vltVO = vltMap.get(lifeInfoVO.getReceiverId());
-					dto.setReceiver(vltVO.getVolunteerName());
+					if(null != vltVO) {
+						dto.setReceiver(vltVO.getVolunteerName());
+					} else {
+						dto.setReceiver("---找不到服务者!服务者可能已删除.---");
+					}
 				}
 			}
 			dto.setStatus(Constants.SYS_INFOMATION_STATES_HASHMAP.get(infoVO.getStatus()));
@@ -245,7 +252,7 @@ public class InfoReportController {
 	@RequestMapping(params = "action=lifeinfocount", method = RequestMethod.GET)
 	public @ResponseBody
 	String getLifeInfoCount(@RequestParam String receiverType, String keyWords, 
-			String startDt, String endDt, String helpArea)
+			String startDt, String endDt, String helpArea, String creator)
 			throws UnsupportedEncodingException {
 		LifeInfoSearchBean bean = new LifeInfoSearchBean();
 		bean.setReceiverType(receiverType);
@@ -253,6 +260,7 @@ public class InfoReportController {
 		bean.setStartDt(startDt);
 		bean.setEndDt(endDt);
 		bean.setHelpArea(helpArea);
+		bean.setCreator(creator);
 		
 		Map<String, String> map = new HashMap<String, String>();
 		int total = infoReportBO.getLifeCount(bean);

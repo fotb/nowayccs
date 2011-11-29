@@ -23,6 +23,16 @@ public class LifeInfoSearchBean implements Serializable {
 	
 	private String status;
 	
+	private String creator;
+	
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
 	public String getStatus() {
 		return status;
 	}
