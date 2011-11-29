@@ -22,6 +22,7 @@ win=window.open(url,null,"width=500,height=325");
 }
 
 function option_search(form){
+  $("#pageNo").val("1");
   form.submit();
 }
 
@@ -56,7 +57,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
 	});
 
 
-	$.getJSON("inforeport.do?action=lifeinfocount", {receiverType: "${lifeInfoSearchBean.receiverType}", keyWords: "${lifeInfoSearchBean.keyWords}", startDt: "${lifeInfoSearchBean.startDt}", endDt: "${lifeInfoSearchBean.endDt}", helpArea: "${lifeInfoSearchBean.helpArea}"}, function(data) {
+	$.getJSON("inforeport.do?action=lifeinfocount", {receiverType: "${lifeInfoSearchBean.receiverType}", keyWords: "${lifeInfoSearchBean.keyWords}", startDt: "${lifeInfoSearchBean.startDt}", endDt: "${lifeInfoSearchBean.endDt}", helpArea: "${lifeInfoSearchBean.helpArea}", creator: "${lifeInfoSearchBean.creator}"}, function(data) {
 		$("#total").html(data.total);
 $("#finish").html(data.finishtotal);
 $("#my").html(data.satis);
@@ -88,22 +89,30 @@ $("#myd").html(data.percent);
         </table>
           <table width="98%"  border="0" align="center" cellpadding="0" cellspacing="1">
           <tr>
-            <td width="10%">服务类型：</td>
-            <td colspan="4"> <form:select cssClass="form" path="receiverType" >
+            <td width="80">服务类型：</td>
+            <td colspan="6"> <form:select cssClass="form" path="receiverType" >
               <form:option  value="">全部</form:option>
               <form:options items="${receiverTypeMap}"/>
             </form:select>              <form:input path="keyWords" size="30"/><font color="red">(请先选择服务类型。关键字是指一技之长服务者名称或者服务企业名称。)</font></td>
             </tr>
           <tr>
-            <td width="10%">派单时间从：</td>
-            <td width="60%"><form:input cssStyle="form" path="startDt" size="20"/>
+            <td width="80">派单时间从：</td>
+            <td width="400"><form:input cssStyle="form" path="startDt" size="15"/>
       到
-        <form:input cssStyle="form" path="endDt" size="20"/>       </td>
-        <td width="10%">求助区域：</td>
-            <td width="10%"><form:select cssClass="form" path="helpArea">
+        <form:input cssStyle="form" path="endDt" size="15"/></td>
+        <td nowrap="nowrap">求助区域：</td>
+            <td><form:select cssClass="form" path="helpArea">
                 <form:option value="">全部</form:option>
 				<form:options items="${helpAreaList}" itemLabel="value" itemValue="sortIndex"/>
             </form:select></td>
+            <td nowrap="nowrap">受理人：</td>
+            <td>
+            <form:select path="creator" cssClass="form">
+				<form:option value="">全部</form:option>
+				<form:options items="${users}" itemLabel="userName" itemValue="userId"/>
+            </form:select>
+            </td>
+            
             <td width="10%"><img width="60" height="18" src="images/button_search.gif" onclick="option_search(document.forms[0]);" style="cursor:hand"/></td>
             </tr>
         </table></td>
@@ -159,7 +168,7 @@ $("#myd").html(data.percent);
         </tr>
       </table></td>
   </tr>
-  <input type="hidden" name="pageNo" value="${pageInfo.currentPage}" />
+  <input type="hidden" name="pageNo" id="pageNo" value="${pageInfo.currentPage}"/>
 </table>
 </form:form>
 </body>
