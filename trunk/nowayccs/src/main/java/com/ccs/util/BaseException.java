@@ -4,14 +4,12 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * @Functionality: 整系统的异常超类
  */
 public class BaseException extends Exception {
 
         protected Throwable nested;
 
         /**
-         * @Functionality: 构造函数
          * @param :
          * @return :
          */
@@ -20,8 +18,6 @@ public class BaseException extends Exception {
         }
 
         /**
-         * @Functionality: 构造函数
-         * @param : 消息信息
          * @return :
          */
         public BaseException(String message){
@@ -29,8 +25,6 @@ public class BaseException extends Exception {
         }
 
         /**
-         * @Functionality: 构造函数
-         * @param : 消息信息
          * @param :
          * @return :
          */
@@ -40,8 +34,6 @@ public class BaseException extends Exception {
         }
 
         /**
-         * @Functionality: 构造函数
-         * @param : 消息信息
          * @param :
          * @return :
          */

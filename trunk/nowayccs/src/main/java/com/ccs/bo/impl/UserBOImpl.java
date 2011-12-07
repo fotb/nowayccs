@@ -176,4 +176,13 @@ public class UserBOImpl implements IUserBO {
 		return map;
 	}
 
+	@Override
+	public Map<String, UserVO> findOnJob() {
+		List<UserVO> list =  userDAO.findAllOnJob();
+		Map<String, UserVO> map = new HashMap<String, UserVO>();
+		for (UserVO userVO : list) {
+			map.put(userVO.getUserId(), userVO);
+		}
+		return map;
+	}
 }

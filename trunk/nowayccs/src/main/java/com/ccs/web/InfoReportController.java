@@ -106,7 +106,7 @@ public class InfoReportController {
 		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
 		model.addAttribute("helpAreaList", dictBO.findByType(Constants.DICT_DICTTYPE_QZQY));
 		model.addAttribute("slrqList", dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ));
-		model.addAttribute("users", userMap.values());
+		model.addAttribute("users", userBO.findAllOnJob());
 		return "inforeport/infolist";
 	}
 	
@@ -245,7 +245,7 @@ public class InfoReportController {
 		model.addAttribute("receiverTypeMap", Constants.LIFEINFOMATION_RECEIVETYPE_HASHMAP);
 		model.addAttribute("helpAreaList", dictBO.findByType(Constants.DICT_DICTTYPE_QZQY));
 		model.addAttribute("slrqList", dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ));
-		model.addAttribute("users", userMap.values());
+		model.addAttribute("users", userBO.findAllOnJob());
 		return "inforeport/lifeinfolist";
 	}
 	

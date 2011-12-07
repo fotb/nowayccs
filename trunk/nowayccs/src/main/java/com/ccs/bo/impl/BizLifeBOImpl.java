@@ -45,13 +45,13 @@ public class BizLifeBOImpl implements IBizLifeBO {
 	}
 
 	@Override
-	public Map<String, String> getVltSrvCount(String startDt, String endDt) {
-		return volunteerSrvCountDAO.getVolunteerSrvCount(startDt, endDt);
+	public Map<String, String> getVltSrvCount(String startDt, String endDt, String creator) {
+		return volunteerSrvCountDAO.getVolunteerSrvCount(startDt, endDt, creator);
 	}
 
 	@Override
-	public Map<String, String> getEntSrvCount(String startDt, String endDt) {
-		return entSrvCountDAO.getEntSrvCount(startDt, endDt);
+	public Map<String, String> getEntSrvCount(String startDt, String endDt, String creator) {
+		return entSrvCountDAO.getEntSrvCount(startDt, endDt, creator);
 	}
 
 	@Override

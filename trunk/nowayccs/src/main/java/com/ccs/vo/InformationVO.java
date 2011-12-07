@@ -73,7 +73,13 @@ public class InformationVO implements Serializable {
 
 	@Column(name = "AFFAIEACCEPTOR")
 	private String affairAcceptor;
-	
+
+	@Column(name = "RECORDFILENAME")
+	private String recordFileName;
+
+	@Column(name = "ISRECORD")
+	private String recordFlag;
+
 	public String getInfoId() {
 		return infoId;
 	}
@@ -224,6 +230,22 @@ public class InformationVO implements Serializable {
 
 	public void setAffairAcceptor(String affairAcceptor) {
 		this.affairAcceptor = affairAcceptor;
+	}
+
+	public String getRecordFileName() {
+		return recordFileName;
+	}
+
+	public void setRecordFileName(String recordFileName) {
+		this.recordFileName = recordFileName;
+	}
+
+	public String getRecordFlag() {
+		return recordFlag;
+	}
+
+	public void setRecordFlag(String recordFlag) {
+		this.recordFlag = recordFlag;
 	}
 
 	@Override

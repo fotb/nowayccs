@@ -29,6 +29,18 @@ public class ReceiverSearchDomain implements Serializable {
 	private String startDt;
 	
 	private String endDt;
+	
+	private String creator;
+	
+	
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
 
 	public String getStartDt() {
 		return startDt;
