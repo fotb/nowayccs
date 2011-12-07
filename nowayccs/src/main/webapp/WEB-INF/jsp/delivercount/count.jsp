@@ -188,7 +188,8 @@ function loadEntCategory(subEntCategoryId) {
             <td bgcolor="#F1F1F1">
               <table width="98%" border="0" align="center" cellpadding="0" cellspacing="1">
                 <tr>
-                  <td>                    请选择服务类别：
+                  <td>请选择服务类别：</td>
+                  <td colspan="5">
                     <form:select path="receiverType" cssClass="form" onchange="btnsearch_click()">
 						<form:option value="1">一技之长服务者</form:option>
 						<form:option value="2">服务企业</form:option>
@@ -197,43 +198,55 @@ function loadEntCategory(subEntCategoryId) {
                 </tr>
                 <tr>
                   <c:if test="${receiverSearchDomain.receiverType == '1'}">
-                    <td>                      服务者所在街道：
-                      <form:select path="areaId" cssClass="form" >
+                    <td>服务者所在街道：</td>
+                    <td>
+                      <form:select path="areaId" cssClass="form" cssStyle="width:80px;">
+                      <option value=" ">全部</option>
                       </form:select>
-                      <form:select path="areaSubId" cssClass="form" onchange="btnsearch_click()">
+                      <form:select path="areaSubId" cssClass="form" onchange="btnsearch_click()" cssStyle="width:120px;">
                         <option value=" ">全部</option>
                       </form:select>
-                      编号：<form:input path="volunteerNo" cssStyle="form" />
-                      服务项目：<form:input path="serviceName" cssStyle="form" />
-                      <A href="javascript:btnsearch_click()">
-                        <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
-                      </A>
-                    </td>
+                      </td>
+                      <td>编号：</td>
+                      <td><form:input path="volunteerNo" cssStyle="form" /></td>
+                     <td>服务项目：</td>
+                     <td><form:input path="serviceName" cssStyle="form" /></td>
                   </c:if>
                   <c:if test="${receiverSearchDomain.receiverType == '2'}">
-                    <td>                      所需服务项目&nbsp;&nbsp;&nbsp;&nbsp;：
-                      <form:select path="bigEntCategoryId">
+                    <td>所需服务项目：</td>
+                    <td colspan="3">
+                      <form:select path="bigEntCategoryId" cssStyle="width:80px;">
                       </form:select>
-                      <form:select path="subEntCategoryId">
+                      <form:select path="subEntCategoryId" cssStyle="width:80px;">
                         <option value=" ">请选择</option>
                       </form:select>
-                      <form:select path="entCategoryId" onchange="btnsearch_click()">
+                      <form:select path="entCategoryId" onchange="btnsearch_click()" cssStyle="width:80px;">
                         <option value=" ">请选择</option>
                       </form:select>
-                       	编号：<form:input path="entpriseNo" cssStyle="form" />
-                      <A href="javascript:btnsearch_click()">
-                        <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
-                      </A>
                     </td>
+                    <td>编号：</td>
+                    <td><form:input path="entpriseNo" cssStyle="form" /></td>
 				</c:if>
                 </tr>
-                
                 <tr>
-                <td>开始时间：
-                <form:input path="startDt" cssStyle="form" />
-                	&nbsp;&nbsp;&nbsp;&nbsp;结束时间：
-                <form:input path="endDt" cssStyle="form" />
+                <td>开始时间：</td>
+                <td align="left">
+                <form:input path="startDt" cssStyle="form" size="10"/>
+                	结束时间：
+                <form:input path="endDt" cssStyle="form" size="10"/>
                 </td>
+				<td nowrap="nowrap">受理人：</td>
+            	<td align="left">
+		            <form:select path="creator" cssClass="form">
+						<form:option value="">全部</form:option>
+						<form:options items="${users}" itemLabel="userName" itemValue="userId"/>
+		            </form:select>
+	            </td>
+				<td colspan="2">                      
+					<A href="javascript:btnsearch_click()">
+						<img src="images/button_search.gif" width="60" height="18" alt="" border="0">
+					</A>
+				</td>
                 </tr>
                  
               </table>
