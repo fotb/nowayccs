@@ -2,7 +2,7 @@ function radioTable(eventFlag, url) {
 //	var oTR = obj.nextSibling;
 	switch(eventFlag){
 		case 1:
-		case 5:  //ÒµÎñ×ÉÑ¯
+		case 5:  //Òµï¿½ï¿½ï¿½ï¿½Ñ¯
 		    reloadMain(url);
 		    $("#bbTR").css("display", "none");
 		    $("#ccTR").css("display", "none");
@@ -22,28 +22,49 @@ function radioTable(eventFlag, url) {
 //			}
 			break;
 		case 2:
-		    $("#bbTR").css("display", "block");
+			if($("#bbTR").css("display") == "none"){
+				$("#bbTR").css("display", "block");
+			} else {
+				$("#bbTR").css("display", "none");
+			}
 		    $("#ccTR").css("display", "none");
 		    $("#ddTR").css("display", "none");
 		    $("#ffTR").css("display", "none");
 			break;
 		case 3:		
 		    $("#bbTR").css("display", "none");
-		    $("#ccTR").css("display", "block");
+			if($("#ccTR").css("display") == "none"){
+				$("#ccTR").css("display", "block");
+			} else {
+				$("#ccTR").css("display", "none");
+			}
+		    //$("#ccTR").css("display", "block");
 		    $("#ddTR").css("display", "none");
 		    $("#ffTR").css("display", "none");
 			break;
 		case 4:
 			$("#bbTR").css("display", "none");
 		    $("#ccTR").css("display", "none");
-		    $("#ddTR").css("display", "block");
+		    //$("#ddTR").css("display", "block");
+		    
+			if($("#ddTR").css("display") == "none"){
+				$("#ddTR").css("display", "block");
+			} else {
+				$("#ddTR").css("display", "none");
+			}
 		    $("#ffTR").css("display", "none");
 			break;
 		case 6:
 			$("#bbTR").css("display", "none");
 		    $("#ccTR").css("display", "none");
 		    $("#ddTR").css("display", "none");
-		    $("#ffTR").css("display", "block");
+		    //$("#ffTR").css("display", "block");
+			if($("#ffTR").css("display") == "none"){
+				$("#ffTR").css("display", "block");
+			} else {
+				$("#ffTR").css("display", "none");
+			}
+		    
 			break;
 	}
 }
