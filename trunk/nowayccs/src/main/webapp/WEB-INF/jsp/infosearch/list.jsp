@@ -48,6 +48,11 @@ form.action="infosearch.do?action=affairinfo&infoId=" + id;
   form.submit();
 }
 
+function playRecord(infoId) {
+  var form=document.forms[0];
+  form.action="record.do?infoId=" + infoId;
+  form.submit();
+}
 
 $(document).ready(function(){
 	$("#startDt").dynDateTime({
@@ -103,7 +108,7 @@ $(document).ready(function(){
         <td>结案时间</td>
         <td>满意度</td>
         <td>状态</td>
-        <td>&nbsp;</td>
+        <td>播放<br>录音</td>
       </tr>
 
 <c:forEach items="${dtoList}" var="dto">
@@ -113,6 +118,7 @@ $(document).ready(function(){
         <a href="javascript:showLifeInfo('${dto.infoId}')">
         ${dto.helpName}
         </a>
+
         </c:if>
         <!--咨询类-->
         <c:if test="${dto.helpType=='1'}">
@@ -144,10 +150,14 @@ $(document).ready(function(){
         <td><fmt:formatDate value="${dto.finishTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td><c:if test="${dto.callResult == ''}">&nbsp;</c:if><c:if test="${dto.callResult != ''}">${dto.callResult}</c:if></td>
         <td>${dto.status}</td>
-        <td></td>
+        <td>
+       	<a href="javascript:playRecord('${dto.infoId}')">
+        <img alt="播放录音" src="images/play.png" width="20px" border="0">
+        </a>
+       	</td>
       </tr>
       <tr class="line">
-        <td height="1" colspan="10"></td>
+        <td height="1" colspan="11"></td>
         </tr>
 </c:forEach>
     </table>

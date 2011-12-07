@@ -172,7 +172,8 @@ function loadEntCategory(subEntCategoryId) {
             <td bgcolor="#F1F1F1">
               <table width="98%" border="0" align="center" cellpadding="0" cellspacing="1">
                 <tr>
-                  <td>                    请选择服务类别：
+                  <td>                    请选择服务类别：</td>
+                  <td colspan="5">
                     <form:select path="receiverType" cssClass="form" onchange="btnsearch_click()">
 						<form:option value="1">一技之长服务者</form:option>
 						<form:option value="2">服务企业</form:option>
@@ -181,30 +182,44 @@ function loadEntCategory(subEntCategoryId) {
                 </tr>
                 <tr>
                   <c:if test="${receiverSearchDomain.receiverType == '1'}">
-                    <td>                      服务者所在街道：
-                      <form:select path="areaId" cssClass="form" >
+                    <td>                      服务者所在街道：</td>
+                    <td>
+                      <form:select path="areaId" cssClass="form"  cssStyle="width:80px;">
                       </form:select>
-                      <form:select path="areaSubId" cssClass="form" onchange="btnsearch_click()">
+                      </td>
+                      <td>
+                      <form:select path="areaSubId" cssClass="form" onchange="btnsearch_click()"  cssStyle="width:160px;">
                         <option value=" ">全部</option>
                       </form:select>
-                      编号：<form:input path="volunteerNo" cssStyle="form" />
-                      服务项目：<form:input path="serviceName" cssStyle="form" />
+                      </td>
+                     	<td> 编号：</td>
+                     	<td><form:input path="volunteerNo" cssStyle="form" /></td>
+                      <td>服务项目：</td>
+                      <td><form:input path="serviceName" cssStyle="form" /></td>
+                      <td>
                       <A href="javascript:btnsearch_click()">
                         <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
                       </A>
                     </td>
                   </c:if>
                   <c:if test="${receiverSearchDomain.receiverType == '2'}">
-                    <td>                      所需服务项目&nbsp;&nbsp;&nbsp;&nbsp;：
-                      <form:select path="bigEntCategoryId">
-                      </form:select>
-                      <form:select path="subEntCategoryId">
+                    <td>所需服务项目&nbsp;&nbsp;&nbsp;&nbsp;：</td>
+                    <td>
+                      <form:select path="bigEntCategoryId" cssStyle="width:80px;">
+                      </form:select></td>
+                      <td>
+                      <form:select path="subEntCategoryId" cssStyle="width:80px;">
                         <option value=" ">请选择</option>
                       </form:select>
-                      <form:select path="entCategoryId" onchange="btnsearch_click()">
+                      </td>
+                      <td>
+                      <form:select path="entCategoryId" onchange="btnsearch_click()" cssStyle="width:180px;">
                         <option value=" ">请选择</option>
                       </form:select>
-                       	编号：<form:input path="entpriseNo" cssStyle="form" />
+                      </td>
+                       <td>	编号：</td>
+                       <td colspan="2"><form:input path="entpriseNo" cssStyle="form" /></td>
+                       <td>
                       <A href="javascript:btnsearch_click()">
                         <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
                       </A>

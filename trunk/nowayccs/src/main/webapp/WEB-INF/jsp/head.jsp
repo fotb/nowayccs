@@ -81,10 +81,31 @@ function Phone_OnRequestReleaseEx(MediaType) {
     //CbMediaType.selectedIndex = MediaType-1;
 }
 
+var recordFileName;
 function Phone_OnAnswerExSuccess() {
+/*
   $("#BtAns").attr("disabled", true); 
   $("#BtRelease").attr("disabled", false); 
   window.open("bizaccept.do?flag=Y&callNo="+Phone.GetCallerNo(), "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+*/
+//TODO -----
+	getRecordFile();
+}
+
+function getRecordFile() {
+	var recordFileName = Phone.QueryAgentSelfRecordFilename();
+	var id;
+	if(recordFileName=="") {
+		id = window.setTimeout("getRecordFile()",5000);
+	} else {
+		window.clearTimeout(id);
+		//post recordFileName to Spring MVC
+		$.post("${pageContext.request.contextPath}/bizaccept.do?action=recordfile",
+				{recordFileName: recordFileName},
+				function(data){							  													
+					//nothing					   
+				});
+	}
 }
 
 function Phone_OnSignOutSuccess() {
@@ -114,9 +135,11 @@ function Phone_OnSignInExFailure() {
 
 }
 function Phone_OnAnswerSuccess() {
+/*
   BtAns.disabled = true;
   BtRelease.disabled = false;
   window.open("bizaccept.do?flag=Y&callNo="+Phone.GetCallerNo(), "", 'height=500, width=700, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=yes,location=no, status=no');
+*/
 }
 
 function Phone_OnReleaseSuccess() {
@@ -153,8 +176,13 @@ function Phone_OnAnswerRequest() {
 }
 
 function Phone_OnAnswerRequestEx() {
-    BtAns.disabled    = false;
+    //BtAns.disabled    = false;
   //alert("success");
+//alert(Phone.GetCallerNo());
+
+$("#BtAns").attr("disabled", true); 
+  $("#BtRelease").attr("disabled", false); 
+  window.open("bizaccept.do?flag=Y&callNo="+Phone.GetCallerNo(), "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 
 //呼出
@@ -366,7 +394,7 @@ Phone_OnSignInExFailure()
           &nbsp;&nbsp;
             <INPUT id =btnCallOut  name=button12  type=button value=呼出 disabled LANGUAGE=javascript onclick="return btnCallOut_onclick()">
           <INPUT id =btnTrans name=button11  type=button value=呼叫转移 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
-		 <input id="test" name="testbt" type="button" onclick="Phone_OnAnswerExSuccess()" value="test">
+		 <!--<input id="test" name="testbt" type="button" onclick="post_test();" value="test">-->
         </logic:present>
 
           <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div>
