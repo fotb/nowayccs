@@ -20,7 +20,7 @@ public class EntSrvCountDAOImpl extends DefaultDAOSupport implements
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, String> getEntSrvCount(String startDt, String endDt) {
+	public Map<String, String> getEntSrvCount(String startDt, String endDt, String creator) {
 		StringBuffer buffer = new StringBuffer(1000);
 		List<Object> objs = new ArrayList<Object>();
 		
@@ -34,6 +34,10 @@ public class EntSrvCountDAOImpl extends DefaultDAOSupport implements
 		if(!StringUtil.isNull(endDt)) {
 			buffer.append("and trunc(i.deliverTime) <= ? ");
 			objs.add(DateUtil.parse(endDt, "yyyy-MM-dd"));
+		}
+		if(!StringUtil.isNull(creator)) {
+			buffer.append("and i.creator = ? ");
+			objs.add(creator);
 		}
 		buffer.append("and t.receiverType = ? and e.status = ? and e.servicesType = ? ");
 		buffer.append("group by e.entpriseId");

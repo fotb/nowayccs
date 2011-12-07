@@ -17,12 +17,14 @@ import com.ccs.bean.ReceiverEntDTO;
 import com.ccs.bean.ReceiverVolunteerDTO;
 import com.ccs.bo.IBizLifeBO;
 import com.ccs.bo.IEntpriseBO;
+import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.EntpriseVO;
+import com.ccs.vo.UserVO;
 import com.ccs.vo.VolunteerVO;
 import com.ccs.web.domain.ReceiverSearchDomain;
 
@@ -38,7 +40,9 @@ public class DeliverCountController {
 	
 	@Autowired
 	private IEntpriseBO entpriseBO;
-
+	
+	@Autowired
+	private IUserBO userBO;
 	
 	@RequestMapping
 	public String receiverSearch(
@@ -56,6 +60,8 @@ public class DeliverCountController {
 			receiverSearchDomain.setReceiverType("1");
 		} 
 		model.addAttribute("receiverSearchDomain", receiverSearchDomain);
+		Map<String, UserVO> userMap = userBO.findOnJob();
+		model.addAttribute("users", userMap.values());
 		
 		if("1".equals(receiverSearchDomain.getReceiverType())) {
 			List<VolunteerVO> vList = volunteerBO.search(
@@ -64,8 +70,8 @@ public class DeliverCountController {
 					StringUtil.emptyToNull(receiverSearchDomain.getAreaSubId()),
 					receiverSearchDomain.getVolunteerNo(),
 					receiverSearchDomain.getServiceName(), pageInfo);
-			Map<String, String> vltSrvCountMap = bizLifeBO.getVltSrvCount(receiverSearchDomain.getStartDt(), receiverSearchDomain.getEndDt());
-			Map<String, String> vltSrvTodayCountMap = bizLifeBO.getVltSrvCount(DateUtil.format(new Date(), "yyyy-MM-dd"), DateUtil.format(new Date(), "yyyy-MM-dd)"));
+			Map<String, String> vltSrvCountMap = bizLifeBO.getVltSrvCount(receiverSearchDomain.getStartDt(), receiverSearchDomain.getEndDt(), receiverSearchDomain.getCreator());
+			Map<String, String> vltSrvTodayCountMap = bizLifeBO.getVltSrvCount(DateUtil.format(new Date(), "yyyy-MM-dd"), DateUtil.format(new Date(), "yyyy-MM-dd)"), receiverSearchDomain.getCreator());
 			List<ReceiverVolunteerDTO> list = new ArrayList<ReceiverVolunteerDTO>();
 			for (Iterator<VolunteerVO> iter = vList.iterator(); iter.hasNext();) {
 				VolunteerVO vltVO = (VolunteerVO) iter.next();
@@ -88,8 +94,8 @@ public class DeliverCountController {
 					StringUtil.emptyToNull(receiverSearchDomain.getSubEntCategoryId()),
 					StringUtil.emptyToNull(receiverSearchDomain.getEntCategoryId()),
 					Constants.SYS_YESNO_YES, null, pageInfo);
-			Map<String, String> entSrvCountMap = bizLifeBO.getEntSrvCount(receiverSearchDomain.getStartDt(), receiverSearchDomain.getEndDt());
-			Map<String, String> entSrvTodayCountMap = bizLifeBO.getEntSrvCount(DateUtil.format(new Date(), "yyyy-MM-dd"), DateUtil.format(new Date(), "yyyy-MM-dd)"));
+			Map<String, String> entSrvCountMap = bizLifeBO.getEntSrvCount(receiverSearchDomain.getStartDt(), receiverSearchDomain.getEndDt(), receiverSearchDomain.getCreator());
+			Map<String, String> entSrvTodayCountMap = bizLifeBO.getEntSrvCount(DateUtil.format(new Date(), "yyyy-MM-dd"), DateUtil.format(new Date(), "yyyy-MM-dd)"), receiverSearchDomain.getCreator());
 			List<ReceiverEntDTO> list = new ArrayList<ReceiverEntDTO>();
 			for (Iterator<EntpriseVO> iter = eList.iterator(); iter.hasNext();) {
 				EntpriseVO entVO = iter.next();

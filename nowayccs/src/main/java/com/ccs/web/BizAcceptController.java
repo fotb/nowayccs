@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,7 +39,12 @@ import com.ccs.web.domain.InfoBean;
 @RequestMapping("/bizaccept.do")
 //@SessionAttributes("bizAccept")
 public class BizAcceptController {
+	
+	private static final Logger logger = Logger.getLogger(BizAcceptController.class);
+	
 	private static final String FORMATE_CREATETIME = "yyyy-MM-dd HH:mm:ss";
+	
+	private static final String RECORD_FILE_NAME = "RECORD_FILE_NAME";
 	
 	@Autowired
 	private IDictBO dictBO;
@@ -125,12 +131,12 @@ public class BizAcceptController {
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
 		
 		List<InformationVO> list = new ArrayList<InformationVO>();
-		list.add(getInformationVO(bizAccept, user, "1"));
+		list.add(getInformationVO(bizAccept, user, "1", session));
 		if(!StringUtil.isNull(bizAccept.getHelpContent2())) {
-			list.add(getInformationVO(bizAccept, user, "2"));
+			list.add(getInformationVO(bizAccept, user, "2", session));
 		}
 		if(!StringUtil.isNull(bizAccept.getHelpContent3())) {
-			list.add(getInformationVO(bizAccept, user, "3"));
+			list.add(getInformationVO(bizAccept, user, "3", session));
 		}
 		bizAcceptBO.acceptLife(list);
 		
@@ -143,7 +149,7 @@ public class BizAcceptController {
 	}
 
 
-	private InformationVO getInformationVO(BizAccept bizAccept, UserVO user, String index) {
+	private InformationVO getInformationVO(BizAccept bizAccept, UserVO user, String index, HttpSession session) {
 		InformationVO vo = new InformationVO();
 		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
 		vo.setCreator(user.getUserId());
@@ -161,6 +167,14 @@ public class BizAcceptController {
 		vo.setHelpName(bizAccept.getHelpName());
 		vo.setHelpTel(bizAccept.getHelpTel());
 		vo.setHelpType(bizAccept.getHelpType());
+		
+		String recordFileName = (String) session.getAttribute(RECORD_FILE_NAME);
+		if(!StringUtil.isNull(recordFileName)) {
+			vo.setRecordFileName(recordFileName);
+			vo.setRecordFlag(Constants.SYS_YESNO_YES);
+		} else {
+			vo.setRecordFlag(Constants.SYS_YESNO_NO);
+		}
 		return vo;
 	}
 	
@@ -187,7 +201,7 @@ public class BizAcceptController {
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
 		bizAccept.setHandAcceptor(bindBizAccept.getHandAcceptor());
 		
-		InformationVO vo = getInformationVO(bizAccept, user, "1");
+		InformationVO vo = getInformationVO(bizAccept, user, "1", session);
 		vo.setAffairAcceptor(bizAccept.getHandAcceptor());
 		
 		bizAcceptBO.acceptAffair(vo);
@@ -233,6 +247,13 @@ public class BizAcceptController {
 		vo.setHelpName(bizAccept.getHelpName());
 		vo.setHelpTel(bizAccept.getHelpTel());
 		vo.setHelpType(bizAccept.getHelpType());
+		String recordFileName = (String) session.getAttribute(RECORD_FILE_NAME);
+		if(!StringUtil.isNull(recordFileName)) {
+			vo.setRecordFileName(recordFileName);
+			vo.setRecordFlag(Constants.SYS_YESNO_YES);
+		} else {
+			vo.setRecordFlag(Constants.SYS_YESNO_NO);
+		}
 		
 		ReferInformationVO referInfoVO = new ReferInformationVO();
 		referInfoVO.setResult(bizAccept.getResult());
@@ -303,5 +324,11 @@ public class BizAcceptController {
 		propList.add("infoId");
 		
 		return JQGridFormatterUtil.getJSON(page, pageInfo.getTotalRecords(), rows, infoList, propList, "infoId");
+	}
+	
+	@RequestMapping(params = "action=recordfile", method = RequestMethod.POST)
+	public @ResponseBody void postRecordFileName(String recordFileName, HttpSession session) {
+		session.setAttribute(RECORD_FILE_NAME, recordFileName);
+		logger.info("Got record file name: " + recordFileName);
 	}
 }

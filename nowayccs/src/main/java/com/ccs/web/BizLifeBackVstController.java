@@ -154,7 +154,8 @@ public class BizLifeBackVstController {
 		infoVO.setHelpContent(lifeBackVstDomain.getHelpContent());
 		
 		bizLifeBackVstBO.bizLifeFinish(lifeInfoVO, infoVO);
-		return "redirect:bizlifebackvst.do?action=backvst&infoId=" + infoId + "&pageNo=" + pageNo;
+//		return "redirect:bizlifebackvst.do?action=backvst&infoId=" + infoId + "&pageNo=" + pageNo;
+		return "redirect:bizlifebackvst.do?pageNo=" + pageNo;
 	}
 
 	private LifeInformationVO readyLifeInfoVO(

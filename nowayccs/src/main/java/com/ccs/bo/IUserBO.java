@@ -37,6 +37,8 @@ public interface IUserBO {
 	
 	Map<String, UserVO> findAll();
 	
+	Map<String, UserVO> findOnJob();
+	
 	List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean);
 	
 	Map<String, OperationVO> findUserOpertaionRightByUserId(String userId);

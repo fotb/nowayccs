@@ -138,7 +138,8 @@ public class BizAffairBackVstController {
 		infoVO.setHelpContent(affairBackVstDomain.getHelpContent());
 		
 		bizAffairBackVstBO.bizAffairFinish(affairInfoVO, infoVO);
-		return "redirect:bizaffairbackvst.do?action=backvst&infoId=" + infoId + "&pageNo=" + pageNo;
+//		return "redirect:bizaffairbackvst.do?action=backvst&infoId=" + infoId + "&pageNo=" + pageNo;
+		return "redirect:bizaffairbackvst.do?pageNo=" + pageNo;
 	}
 
 	private AffairInformationVO readyLifeInfoVO(
