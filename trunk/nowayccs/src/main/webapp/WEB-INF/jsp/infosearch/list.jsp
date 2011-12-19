@@ -108,7 +108,7 @@ $(document).ready(function(){
         <td>结案时间</td>
         <td>满意度</td>
         <td>状态</td>
-        <td>播放<br>录音</td>
+        <!-- <td>播放<br>录音</td>-->
       </tr>
 
 <c:forEach items="${dtoList}" var="dto">
@@ -150,10 +150,12 @@ $(document).ready(function(){
         <td><fmt:formatDate value="${dto.finishTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td><c:if test="${dto.callResult == ''}">&nbsp;</c:if><c:if test="${dto.callResult != ''}">${dto.callResult}</c:if></td>
         <td>${dto.status}</td>
+        <!-- 
         <td>
        	<a href="javascript:playRecord('${dto.infoId}')">
         <img alt="播放录音" src="images/play.png" width="20px" border="0">
         </a>
+         -->
        	</td>
       </tr>
       <tr class="line">

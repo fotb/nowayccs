@@ -73,7 +73,7 @@ $(document).ready(function(){
 <form:form method="post" action="bizlifebackvst.do?action=backvstsave" commandName="lifeBackVstDomain">
 <input type="hidden" name="infoId" id="infoId" value="${infoVO.infoId}"/>
 <input type="hidden" name="pageNo" id="pageNo" value="${pageNo	}"/> 
-  <table width="850" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
+  <table width="830" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -97,37 +97,37 @@ $(document).ready(function(){
           </tr>
            -->
           <tr class="table_t1">
-            <td>求助者姓名：</td>
+            <td align="right">求助者姓名：</td>
             <td>
               ${infoVO.helpName}
             </td>
-            <td>联系电话：</td>
+            <td align="right">联系电话：</td>
             <td colspan="3">
               ${infoVO.helpTel}
             </td>
           </tr>
           <tr class="table_t1" style="padding-bottom: 10px;">
-            <td>详细地址：</td>
+            <td align="right">详细地址：</td>
             <td colspan="5">
               <form:input path="helpAddr" cssClass="form" size="100%"/>
             </td>
           </tr>
           <tr class="table_t1">
-            <td>求助内容：</td>
+            <td align="right">求助内容：</td>
             <td colspan="5">
               <form:textarea path="helpContent" cssClass="form" cols="135" rows="3"/>
             </td>
           </tr>
           <tr class="table_t1">
-            <td>求助时间：</td>
+            <td align="right">求助时间：</td>
             <td>
               <fmt:formatDate value="${infoVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
-            <td>求助区域：</td>
+            <td align="right">求助区域：</td>
             <td>
             ${qzqyMap[infoVO.helpArea]}
             </td>
-            <td width="60">接洽人：</td>
+            <td width="60" align="right">接洽人：</td>
             <td>
             	<c:if test="${lifeInfoVO.receiverType == '1'}">
             		${vltVO.volunteerName}
@@ -138,7 +138,7 @@ $(document).ready(function(){
             </td>
           </tr>
           <tr class="table_t1">
-            <td nowrap="nowrap">接洽人联系电话：</td>
+            <td nowrap="nowrap" align="right">接洽人联系电话：</td>
             <td>
                 <c:if test="${lifeInfoVO.receiverType == '1'}">
             		${vltVO.linkTel}
@@ -148,11 +148,11 @@ $(document).ready(function(){
             	</c:if>
               
             </td>
-            <td>派送方式：</td>
+            <td align="right">派送方式：</td>
             <td>
               ${qzfsMap[infoVO.deliverMode]}
             </td>
-            <td width="60">派单时间：</td>
+            <td width="60" align="right">派单时间：</td>
             <td>
               <fmt:formatDate value="${infoVO.deliverTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
@@ -161,30 +161,30 @@ $(document).ready(function(){
             <td height="1" colspan="6">            </td>
           </tr>
           <tr class="table_t2">
-            <td>回访方式：</td>
+            <td align="right">回访方式：</td>
             <td>
               <form:select path="callMode" cssClass="form">
                 <!--<option selected>选择</option>-->
                 	<form:options items="${qzfsList}" itemLabel="value" itemValue="sortIndex"/>
               </form:select>
             </td>
-            <td>回访时间：</td>
+            <td align="right">回访时间：</td>
             <td colspan="3">
 				<form:input path="callTime" readonly="true"/>
             </td>
           </tr>
           <tr class="table_t2">
-            <td>回访记录：</td>
+            <td align="right">回访记录：</td>
             <td colspan="5">
               <form:textarea path="callResult" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
-            <td>结案时间：</td>
+            <td align="right">结案时间：</td>
             <td>
               <form:input path="finishTime" cssClass="form" size="10" />
             </td>
-            <td width="90">求助者满意度：</td>
+            <td width="90" align="right">求助者满意度：</td>
             <td colspan="3">
               <form:select path="helpApprove" cssClass="form">
                 <form:options items="${mydList}" itemLabel="value" itemValue="sortIndex"/>
@@ -192,13 +192,13 @@ $(document).ready(function(){
             </td>
           </tr>
           <tr class="table_t2">
-            <td>不满意原因：</td>
+            <td align="right">不满意原因：</td>
             <td colspan="5">
               <form:textarea path="unApproveCause" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
-            <td>处理结果：</td>
+            <td align="right">处理结果：</td>
             <td colspan="5">
               <form:select path="dealResult" cssClass="form">
                 <form:options items="${mydList}" itemLabel="value" itemValue="sortIndex"/>
@@ -206,19 +206,19 @@ $(document).ready(function(){
             </td>
           </tr>
           <tr class="table_t2">
-            <td>处理描述：</td>
+            <td align="right">处理描述：</td>
             <td colspan="5">
                <form:textarea path="dealContent" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
-            <td>备注：</td>
+            <td align="right">备注：</td>
             <td colspan="5">
               <form:textarea path="remark" cols="135" rows="3" cssClass="form"/>
             </td>
           </tr>
           <tr class="table_t2">
-            <td>经办人：</td>
+            <td align="right">经办人：</td>
             <td colspan="5">
               <form:select path="principal" cssClass="form">
               	<form:options items="${userList}" itemLabel="userName" itemValue="userId"/>

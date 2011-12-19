@@ -59,7 +59,7 @@ $(document).ready(function(){
 			});
 		});
 		//$("form").submit();
-		btnsearch_click();
+		//btnsearch_click();
 	});
 
 	if("" != "${receiverSearchDomain.subEntCategoryId}") {
@@ -74,14 +74,14 @@ $(document).ready(function(){
 				$("#entCategoryId").append("<option value=" + item.categoryId + ">" + item.value + " </option>");
 			});
 		//$("form").submit();
-		btnsearch_click();
+		//btnsearch_click();
 		});
 		
 	});
 
 	$("#entCategoryId").change(function() {
 		//$("form").submit();
-		btnsearch_click();
+		//btnsearch_click();
 	});
 
 	$.getJSON("json.do?action=area", function(data) {
@@ -107,12 +107,12 @@ $(document).ready(function(){
 			});
 		});
 		//$("form").submit();
-		btnsearch_click();
+		//btnsearch_click();
 	});
 
 	$("#areaSubId").change(function() {
 		//$("form").submit();
-		btnsearch_click();
+		//btnsearch_click();
 	});
 
 	$("#startDt").dynDateTime({
@@ -201,9 +201,9 @@ function loadEntCategory(subEntCategoryId) {
                     <td>服务者所在街道：</td>
                     <td>
                       <form:select path="areaId" cssClass="form" cssStyle="width:80px;">
-                      <option value=" ">全部</option>
+                      <!-- <option value=" ">全部</option>-->
                       </form:select>
-                      <form:select path="areaSubId" cssClass="form" onchange="btnsearch_click()" cssStyle="width:120px;">
+                      <form:select path="areaSubId" cssClass="form" cssStyle="width:120px;">
                         <option value=" ">全部</option>
                       </form:select>
                       </td>
@@ -220,7 +220,7 @@ function loadEntCategory(subEntCategoryId) {
                       <form:select path="subEntCategoryId" cssStyle="width:80px;">
                         <option value=" ">请选择</option>
                       </form:select>
-                      <form:select path="entCategoryId" onchange="btnsearch_click()" cssStyle="width:80px;">
+                      <form:select path="entCategoryId" cssStyle="width:80px;">
                         <option value=" ">请选择</option>
                       </form:select>
                     </td>

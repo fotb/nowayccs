@@ -122,20 +122,23 @@ $(document).ready(function(){
 });
 
 function getPhoneLevels(phone) {
+	if(phone == "") {
+		phone = "${bizAccept.helpTel}";
+	}
 	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(data) {
 		$("#phonelevels").html("");
 		if(data != "") {
-		if(data[0].levels < 0) {
-			$("#phonelevels").css("color", "black");
-		} else {
-			$("#phonelevels").css("color", "red");
-		}
-		
-		for(i = 0; i < Math.abs(data[0].levels); i++) {
-			$("#phonelevels").append("★");
-		}
-		
-		$("#phonelevels").append("(" + data[0].remark + ")");
+			if(data[0].levels < 0) {
+				$("#phonelevels").css("color", "black");
+			} else {
+				$("#phonelevels").css("color", "red");
+			}
+			
+			for(i = 0; i < Math.abs(data[0].levels); i++) {
+				$("#phonelevels").append("★");
+			}
+			
+			$("#phonelevels").append("(" + data[0].remark + ")");
 		}
 	});
 }

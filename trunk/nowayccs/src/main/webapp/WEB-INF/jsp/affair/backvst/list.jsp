@@ -75,7 +75,7 @@ function option_delete(id){
           <c:forEach items="${infoList}" var="info" varStatus="status">
               <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
                 <td>
-                  ${status.index}
+                  ${status.index + 1}
                 </td>
                 <td>
                   ${info.helpName}
