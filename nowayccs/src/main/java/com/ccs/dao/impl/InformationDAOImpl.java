@@ -296,6 +296,12 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 						typeList.add(StandardBasicTypes.STRING);
 						typeList.add(StandardBasicTypes.STRING);
 						
+						buffer.append("and (l.helpApprove = ? or ? is null) ");
+						values.add(bean.getHelpApprove());
+						values.add(bean.getHelpApprove());
+						typeList.add(StandardBasicTypes.STRING);
+						typeList.add(StandardBasicTypes.STRING);
+						
 						buffer.append("order by t.createTime desc");
 						
 						Type[] types = new Type[typeList.size()];
@@ -366,6 +372,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("and (t.creator = ? or ? is null) ");
 		values.add(bean.getCreator());
 		values.add(bean.getCreator());
+		
+		buffer.append("and (l.helpApprove = ? or ? is null) ");
+		values.add(bean.getHelpApprove());
+		values.add(bean.getHelpApprove());
 		
 		final Long count = (Long) getHibernateTemplate().find(buffer.toString(), values.toArray()).listIterator().next();
 		return count.intValue();

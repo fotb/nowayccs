@@ -113,7 +113,7 @@ public class InfoReportController {
 	@RequestMapping(params = "action=infocount", method = RequestMethod.GET)
 	public @ResponseBody
 	String getInfoCount(@RequestParam String creator, String helpType,
-			String helpArea, String helpGroup, String startDt, String endDt)
+			String helpArea, String helpGroup, String startDt, String endDt, String helpContent)
 			throws UnsupportedEncodingException {
 		InfoSearchBean infoSearchBean = new InfoSearchBean();
 		infoSearchBean.setCreator(creator);
@@ -122,6 +122,7 @@ public class InfoReportController {
 		infoSearchBean.setHelpGroup(helpGroup);
 		infoSearchBean.setStartDt(startDt);
 		infoSearchBean.setEndDt(endDt);
+		infoSearchBean.setHelpContent(helpContent);
 		
 		Map<String, String> map = new HashMap<String, String>();
 		if(StringUtil.isNull(helpType)) {
@@ -245,6 +246,7 @@ public class InfoReportController {
 		model.addAttribute("receiverTypeMap", Constants.LIFEINFOMATION_RECEIVETYPE_HASHMAP);
 		model.addAttribute("helpAreaList", dictBO.findByType(Constants.DICT_DICTTYPE_QZQY));
 		model.addAttribute("slrqList", dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ));
+		model.addAttribute("mydList", dictBO.findByType(Constants.DICT_DICTTYPE_MYD));
 		model.addAttribute("users", userBO.findAllOnJob());
 		return "inforeport/lifeinfolist";
 	}
@@ -265,6 +267,11 @@ public class InfoReportController {
 		Map<String, String> map = new HashMap<String, String>();
 		int total = infoReportBO.getLifeCount(bean);
 		map.put("total", String.valueOf(total));
+		
+		bean.setStatus(Constants.SYS_INFOMATION_STATES_YQX);
+		int cancelTotal = infoReportBO.getLifeCount(bean);
+		map.put("canceltotal", String.valueOf(cancelTotal));
+
 		bean.setStatus(Constants.SYS_INFOMATION_STATES_YJA);
 		int finishtotal = infoReportBO.getLifeCount(bean);
 		map.put("finishtotal", String.valueOf(finishtotal));
