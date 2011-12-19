@@ -16,6 +16,14 @@
 		<hibernate.version>3.6.0.Final</hibernate.version>
 		<junit.version>3.8.1</junit.version>
 	</properties>
+<!-- 
+	<scm>
+		<connection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</connection>
+		<developerConnection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</developerConnection>
+		<url>http://somerepository.com/view.cvs</url>
+	</scm>
+ -->
+
 	<build>
 		<plugins>
 			<plugin>
@@ -71,6 +79,19 @@
 					</execution>
 				</executions>
 			</plugin>
+<!-- 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.6</version>
+				<configuration>
+					<configuration>
+						<username>noway.white@gmail.com</username>
+						<password>password</password>
+					</configuration>
+				</configuration>
+			</plugin>
+			 -->
 		</plugins>
 		<resources>
 			<resource>
