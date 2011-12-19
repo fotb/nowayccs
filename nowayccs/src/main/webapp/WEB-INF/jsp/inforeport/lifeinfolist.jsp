@@ -59,7 +59,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
 
 	$.getJSON("inforeport.do?action=lifeinfocount", {receiverType: "${lifeInfoSearchBean.receiverType}", keyWords: "${lifeInfoSearchBean.keyWords}", startDt: "${lifeInfoSearchBean.startDt}", endDt: "${lifeInfoSearchBean.endDt}", helpArea: "${lifeInfoSearchBean.helpArea}", creator: "${lifeInfoSearchBean.creator}"}, function(data) {
 		$("#total").html(data.total);
-$("#finish").html(data.finishtotal);
+$("#finish").html(parseInt(data.finishtotal));
 $("#my").html(data.satis);
 $("#jbmy").html(data.basesatis);
 $("#zxjj").html(data.self);
@@ -96,22 +96,30 @@ $("#myd").html(data.percent);
             </form:select>              <form:input path="keyWords" size="30"/><font color="red">(请先选择服务类型。关键字是指一技之长服务者名称或者服务企业名称。)</font></td>
             </tr>
           <tr>
-            <td width="80">派单时间从：</td>
-            <td width="400"><form:input cssStyle="form" path="startDt" size="15"/>
-      到
-        <form:input cssStyle="form" path="endDt" size="15"/></td>
+            
         <td nowrap="nowrap">求助区域：</td>
-            <td><form:select cssClass="form" path="helpArea">
+            <td colspan="6"><form:select cssClass="form" path="helpArea">
                 <form:option value="">全部</form:option>
 				<form:options items="${helpAreaList}" itemLabel="value" itemValue="sortIndex"/>
-            </form:select></td>
-            <td nowrap="nowrap">受理人：</td>
-            <td>
-            <form:select path="creator" cssClass="form">
+            </form:select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            受理人：
+                        <form:select path="creator" cssClass="form">
 				<form:option value="">全部</form:option>
 				<form:options items="${users}" itemLabel="userName" itemValue="userId"/>
+            </form:select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            满意度：
+            <form:select path="helpApprove" cssClass="form">
+				<form:option value="">全部</form:option>
+				<form:options items="${mydList}" itemLabel="value" itemValue="sortIndex"/>
             </form:select>
-            </td>
+            </tr>
+            <tr>
+            <td width="80" >派单时间从：</td>
+            <td width="400" colspan="4"><form:input cssStyle="form" path="startDt" size="15"/>
+      到
+        <form:input cssStyle="form" path="endDt" size="15"/></td>
+            
             
             <td width="10%"><img width="60" height="18" src="images/button_search.gif" onclick="option_search(document.forms[0]);" style="cursor:hand"/></td>
             </tr>

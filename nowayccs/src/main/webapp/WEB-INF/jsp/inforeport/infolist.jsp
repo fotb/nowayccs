@@ -46,8 +46,8 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
 	});
 
 
-	$.getJSON("inforeport.do?action=infocount", {creator: "${infoSearchBean.creator}", helpType: "${infoSearchBean.helpType}", helpArea: "${infoSearchBean.helpArea}", helpGroup: "${infoSearchBean.helpGroup}", startDt: "${infoSearchBean.startDt}", endDt: "${infoSearchBean.endDt}"}, function(data) {
-		$("#count").html(data.count);
+	$.getJSON("inforeport.do?action=infocount", {creator: "${infoSearchBean.creator}", helpType: "${infoSearchBean.helpType}", helpArea: "${infoSearchBean.helpArea}", helpGroup: "${infoSearchBean.helpGroup}", startDt: "${infoSearchBean.startDt}", endDt: "${infoSearchBean.endDt}", helpContent: "${infoSearchBean.helpContent}"}, function(data) {
+$("#count").html(data.count);
 $("#lifecount").html(data.lifeCount);
 $("#affaircount").html(data.affairCount);
 $("#refercount").html(data.referCount);
