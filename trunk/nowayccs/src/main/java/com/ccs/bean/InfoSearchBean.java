@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.ccs.util.DateUtil;
+import com.ccs.util.StringUtil;
 
 public class InfoSearchBean implements Serializable {
 
@@ -85,7 +86,7 @@ public class InfoSearchBean implements Serializable {
 	}
 
 	public String getHelpTel() {
-		return helpTel;
+		return StringUtil.isNull(helpTel) ? helpTel : helpTel.trim();
 	}
 
 	public void setHelpTel(String helpTel) {
