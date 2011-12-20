@@ -56,7 +56,7 @@ $(document).ready(function(){
             <td width="3%" align="center">
               <img src="images/icon_01.gif" width="5" height="17" alt="">
             </td>
-            <td class="font_no">事物类业务处理</td>
+            <td class="font_no">事务类业务处理</td>
           </tr>
         </table>
         <table width="100%" border="0" cellpadding="0" cellspacing="1">
