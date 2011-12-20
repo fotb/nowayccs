@@ -248,6 +248,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
             <td>
               <form:select path="helpMode" cssClass="form" items="${qzfsList}" itemLabel="value" itemValue="sortIndex" />
               				<INPUT  size=30 id=btnRecordName name=btnRecordName value='' />
+              								<input type=button class="btn_b"  name=btnQueryRecord value="查询录音" onclick="return button_QueryRecordFileName_onclick()" title="2.6.4"/>
             </td>
           </tr>
           <tr class="line">
