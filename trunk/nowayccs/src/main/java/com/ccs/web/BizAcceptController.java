@@ -82,7 +82,7 @@ public class BizAcceptController {
 		List<DictVO> slrqList = dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ);
 		model.addAttribute("slrqList", slrqList);
 		
-		return "bizaccept/accept";
+		return "bizaccept/accept2";
 	}
 
 	
