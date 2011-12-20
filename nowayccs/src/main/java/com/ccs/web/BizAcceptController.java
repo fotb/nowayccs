@@ -165,7 +165,8 @@ public class BizAcceptController {
 		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
 		vo.setHelpMode(bizAccept.getHelpMode());
 		vo.setHelpName(bizAccept.getHelpName());
-		vo.setHelpTel(bizAccept.getHelpTel());
+		final String helpTel = bizAccept.getHelpTel() + (StringUtil.isNull(bizAccept.getOtherTel()) ? "" : "," + bizAccept.getOtherTel());
+		vo.setHelpTel(helpTel);
 		vo.setHelpType(bizAccept.getHelpType());
 		
 		String recordFileName = (String) session.getAttribute(RECORD_FILE_NAME);
@@ -245,7 +246,8 @@ public class BizAcceptController {
 		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
 		vo.setHelpMode(bizAccept.getHelpMode());
 		vo.setHelpName(bizAccept.getHelpName());
-		vo.setHelpTel(bizAccept.getHelpTel());
+		final String helpTel = bizAccept.getHelpTel() + (StringUtil.isNull(bizAccept.getOtherTel()) ? "" : "," + bizAccept.getOtherTel());
+		vo.setHelpTel(helpTel);
 		vo.setHelpType(bizAccept.getHelpType());
 		String recordFileName = (String) session.getAttribute(RECORD_FILE_NAME);
 		if(!StringUtil.isNull(recordFileName)) {
