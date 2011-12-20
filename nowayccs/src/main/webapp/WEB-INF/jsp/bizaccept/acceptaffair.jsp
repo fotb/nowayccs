@@ -63,7 +63,7 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              ${bizAccept.helpTel}
+              ${bizAccept.helpTel}<c:if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c:if>
             </td>
           </tr>
           <tr class="line">
