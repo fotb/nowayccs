@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Untitled Document</title>
+<title>业务受理</title>
 <link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
 <link rel="stylesheet" type="text/css" media="all" href="css/calendar-win2k-cold-1.css"/> 
@@ -18,29 +18,26 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script src="js/function.js" type="text/javascript"></script>
 <script type="text/javascript">
-var Phone=window.parent.frames("topFrame").Phone;
+<c:if test="${not empty bizAccept.popupFlag}">
+var Phone = opener.document.Phone;
+alert(Phone.GetCallerNo());
 
 //弹出座席操作成功与否的对话框
-function AddAlert(Result)
-{
-	if(Result=='0')
-	{
+function AddAlert(Result){
+	if(Result=='0') {
 		alert("操作成功");
-	}
-	else
-	{
+	} else {
 		alert("操作失败，失败原因码为"+Result);
 	}
 }
 
 //查询座席自录音文件名 2.6.4
-function button_QueryRecordFileName_onclick()
-{
+function button_QueryRecordFileName_onclick(){
     //查询自录音文件(参数：自录音的文件名)
 	var rtn = Phone.QueryAgentSelfRecordFileName(btnRecordName.value);
     AddAlert(rtn);
 }
-
+</c:if>
 function btnnext_click(){
   var form = document.forms[0];
   if(!isValidStringObj( form.helpName,"求助者姓名",true)){
@@ -49,9 +46,11 @@ function btnnext_click(){
   if(!isValidStringObj( form.helpMode,"求助方式",true)){
     return;
   }
+  /*
   if(!isValidStringObj( form.helpTel,"求助者电话",true)){
     return;
   }
+  */
   /*
   if(!isValidStringObj( form.helpAddr,"求助者地址",true)){
     return;
@@ -257,7 +256,14 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              <form:input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color: black"></span><!-- &nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form:input path="otherTel" cssClass="form" size="40"/> -->
+            <c:choose>
+            <c:when test="${not empty bizAccept.popupFlag}">${bizAccept.helpTel}<form:hidden path="helpTel" /></c:when>
+            <c:otherwise><form:input path="helpTel" cssClass="form" size="40"/></c:otherwise>
+            </c:choose>
+            <span id="phonelevels" style="color: black"></span>
+            <c:if test="${not empty bizAccept.popupFlag}">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form:input path="otherTel" cssClass="form" size="40"/>
+            </c:if>
             </td>
           </tr>
           <tr class="line">
