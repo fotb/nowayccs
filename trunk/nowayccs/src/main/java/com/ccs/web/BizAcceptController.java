@@ -44,7 +44,7 @@ public class BizAcceptController {
 	
 	private static final String FORMATE_CREATETIME = "yyyy-MM-dd HH:mm:ss";
 	
-	private static final String RECORD_FILE_NAME = "RECORD_FILE_NAME";
+	private static final String CALL_ID = "CALL_ID";
 	
 	@Autowired
 	private IDictBO dictBO;
@@ -169,9 +169,9 @@ public class BizAcceptController {
 		vo.setHelpTel(helpTel);
 		vo.setHelpType(bizAccept.getHelpType());
 		
-		String recordFileName = (String) session.getAttribute(RECORD_FILE_NAME);
-		if(!StringUtil.isNull(recordFileName)) {
-			vo.setRecordFileName(recordFileName);
+		String callId = (String) session.getAttribute(CALL_ID);
+		if(!StringUtil.isNull(callId)) {
+			vo.setCallId(callId);
 			vo.setRecordFlag(Constants.SYS_YESNO_YES);
 		} else {
 			vo.setRecordFlag(Constants.SYS_YESNO_NO);
@@ -249,9 +249,9 @@ public class BizAcceptController {
 		final String helpTel = bizAccept.getHelpTel() + (StringUtil.isNull(bizAccept.getOtherTel()) ? "" : "," + bizAccept.getOtherTel());
 		vo.setHelpTel(helpTel);
 		vo.setHelpType(bizAccept.getHelpType());
-		String recordFileName = (String) session.getAttribute(RECORD_FILE_NAME);
-		if(!StringUtil.isNull(recordFileName)) {
-			vo.setRecordFileName(recordFileName);
+		String callId = (String) session.getAttribute(CALL_ID);
+		if(!StringUtil.isNull(callId)) {
+			vo.setCallId(callId);
 			vo.setRecordFlag(Constants.SYS_YESNO_YES);
 		} else {
 			vo.setRecordFlag(Constants.SYS_YESNO_NO);
@@ -329,8 +329,8 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=recordfile", method = RequestMethod.POST)
-	public @ResponseBody void postRecordFileName(String recordFileName, HttpSession session) {
-		session.setAttribute(RECORD_FILE_NAME, recordFileName);
-		logger.info("Got record file name: " + recordFileName);
+	public @ResponseBody void postRecordFileName(String callId, HttpSession session) {
+		session.setAttribute(CALL_ID, callId);
+		logger.info("Got callId: " + callId);
 	}
 }
