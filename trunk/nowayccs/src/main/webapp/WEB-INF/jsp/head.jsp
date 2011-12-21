@@ -105,7 +105,7 @@ function getRecordFile() {
 		window.clearTimeout(id);
 		//post recordFileName to Spring MVC
 		$.post("${pageContext.request.contextPath}/bizaccept.do?action=recordfile",
-				{recordFileName: recordFileName},
+				{callId: callId},
 				function(data){							  													
 					//nothing					   
 				});
@@ -144,6 +144,13 @@ function Phone_OnAnswerSuccess() {
   BtRelease.disabled = false;
   window.open("bizaccept.do?flag=Y&callNo="+Phone.GetCallerNo(), "", 'height=500, width=700, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=yes,location=no, status=no');
 */
+var callId = Phone.GetCallIDByMediaType(5);
+
+$.post("${pageContext.request.contextPath}/bizaccept.do?action=recordfile",
+				{callId: callId},
+				function(data){							  													
+					//nothing					   
+				});
 }
 
 function Phone_OnReleaseSuccess() {
@@ -196,6 +203,7 @@ function Phone_test() {
 
 $("#BtAns").attr("disabled", true); 
   $("#BtRelease").attr("disabled", false); 
+//window.parent.frames("main").location = "bizaccept.do?flag=Y&callNo=13958186722";
   window.open("bizaccept.do?flag=Y&callNo=13958186722", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 

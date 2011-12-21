@@ -18,26 +18,6 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script src="js/function.js" type="text/javascript"></script>
 <script type="text/javascript">
-<c:if test="${not empty bizAccept.popupFlag}">
-var Phone = opener.document.Phone;
-alert(Phone.GetCallerNo());
-
-//弹出座席操作成功与否的对话框
-function AddAlert(Result){
-	if(Result=='0') {
-		alert("操作成功");
-	} else {
-		alert("操作失败，失败原因码为"+Result);
-	}
-}
-
-//查询座席自录音文件名 2.6.4
-function button_QueryRecordFileName_onclick(){
-    //查询自录音文件(参数：自录音的文件名)
-	var rtn = Phone.QueryAgentSelfRecordFileName(btnRecordName.value);
-    AddAlert(rtn);
-}
-</c:if>
 function btnnext_click(){
   var form = document.forms[0];
   if(!isValidStringObj( form.helpName,"求助者姓名",true)){
@@ -246,8 +226,6 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
             <td>求助方式：</td>
             <td>
               <form:select path="helpMode" cssClass="form" items="${qzfsList}" itemLabel="value" itemValue="sortIndex" />
-              				<INPUT  size=30 id=btnRecordName name=btnRecordName value='' />
-              								<input type=button class="btn_b"  name=btnQueryRecord value="查询录音" onclick="return button_QueryRecordFileName_onclick()" title="2.6.4"/>
             </td>
           </tr>
           <tr class="line">
