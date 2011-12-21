@@ -30,6 +30,9 @@ public class Constants {
     public static String SYS_PERMISSION_FWQYCX = "161"; //服务企业查询
     public static String SYS_PERMISSION_SJZDWH = "170"; //数据字典维护
     public static String SYS_PERMISSION_ZQLJSZ = "180"; //座席联机设置
+    
+    
+    public static String SYS_ROLE_ADMIN = "1";
 
 
     /*树型的顶级代码-1*/

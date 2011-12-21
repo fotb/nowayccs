@@ -119,6 +119,7 @@ public class UserBOImpl implements IUserBO {
 		return userRoleDAO.findByUserId(userId);
 	}
 
+	
 	@Override
 	public List<UserVO> findUserByOpertaionId(String operationId) {
 		List<RoleOperationVO> roleOprVOList = roleOperationDAO.findByOperationId(operationId);
@@ -184,5 +185,13 @@ public class UserBOImpl implements IUserBO {
 			map.put(userVO.getUserId(), userVO);
 		}
 		return map;
+	}
+
+	@Override
+	public UserRoleVO findUserRole(String userId, String roleId) {
+		UserRoleIdVO idVO = new UserRoleIdVO();
+		idVO.setRoleId(roleId);
+		idVO.setUserId(userId);
+		return userRoleDAO.findById(idVO);
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -52,7 +54,7 @@ public class InfoSearchController {
 	public String list(
 			@ModelAttribute("infoSearchBean") InfoSearchBean infoSearchBean,
 			@RequestParam(value = "pageNo", required = false) String pageNo,
-			ModelMap model) {
+			ModelMap model, HttpSession session) {
 
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
@@ -86,6 +88,14 @@ public class InfoSearchController {
 		model.addAttribute("dtoList", dtoList);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("infoSearchBean", infoSearchBean);
+		
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		if(null != userBO.findUserRole(user.getUserId(), Constants.SYS_ROLE_ADMIN)) {
+			model.addAttribute("adminRight", "Y");
+		} else {
+			model.addAttribute("adminRight", "N");
+		}
+		
 		return "infosearch/list";
 	}
 	

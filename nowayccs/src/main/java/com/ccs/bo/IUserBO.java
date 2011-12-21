@@ -43,4 +43,6 @@ public interface IUserBO {
 	
 	Map<String, OperationVO> findUserOpertaionRightByUserId(String userId);
 	
+	UserRoleVO findUserRole(String userId, String roleId);
+	
 }
