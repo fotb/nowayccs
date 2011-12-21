@@ -80,6 +80,9 @@ public class InformationVO implements Serializable {
 	@Column(name = "ISRECORD")
 	private String recordFlag;
 
+	@Column(name = "CALLID")
+	private String callId;
+	
 	public String getInfoId() {
 		return infoId;
 	}
@@ -246,6 +249,14 @@ public class InformationVO implements Serializable {
 
 	public void setRecordFlag(String recordFlag) {
 		this.recordFlag = recordFlag;
+	}
+
+	public String getCallId() {
+		return callId;
+	}
+
+	public void setCallId(String callId) {
+		this.callId = callId;
 	}
 
 	@Override
