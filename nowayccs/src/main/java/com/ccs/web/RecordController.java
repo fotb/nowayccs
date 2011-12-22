@@ -129,6 +129,8 @@ public class RecordController {
 		List<String> recordUrlList = new ArrayList<String>();
 		
 		IRecordInfoBO recordInfoBO = (IRecordInfoBO) IcdSpringUtil.getBean("recordInfoBO");
+		
+		AgentVO agentVO = agentBO.findById(infoVO.getCreator());
 		if(!StringUtil.isNull(callId)) {
 			callId = callId.substring(0, callId.length() - 4);
 			
@@ -137,7 +139,8 @@ public class RecordController {
 			if(null != recordInfoVO) {
 				String recordUrl = PropertyLoad.getInstance().getString("record.http.url");
 				final String fileName = recordInfoVO.getFileName();
-				recordUrl = recordUrl + fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
+				String url = DateUtil.format(infoVO.getCreateTime(), "yyyyMMdd") + "/" + agentVO.getWorkNo() + "/" + fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
+				recordUrl = recordUrl + url;
 				recordUrlList.add(recordUrl);
 			}
 		} else {
@@ -146,15 +149,16 @@ public class RecordController {
 				callerNo = callerNo.substring(0, callerNo.indexOf(",") );
 			}
 			
-			AgentVO agentVO = agentBO.findById(infoVO.getCreator());
+			
 			final String beginTime = DateUtil.format(infoVO.getCreateTime(), "yyyyMMddHHmm");
 			List<RecordInfoVO> list = recordInfoBO.findRecordInfo(callerNo, agentVO.getWorkNo(), beginTime);
 			for (RecordInfoVO recordInfoVO : list) {
 				String fileName = recordInfoVO.getFileName();
-				if(fileName.contains("\\")) {
-					fileName = fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
-				}
-				final String recordUrl = PropertyLoad.getInstance().getString("record.http.url") + fileName;
+//				if(fileName.contains("\\")) {
+//					fileName = fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
+//				}
+				String url = DateUtil.format(infoVO.getCreateTime(), "yyyyMMdd") + "/" + agentVO.getWorkNo() + "/" + fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
+				final String recordUrl = PropertyLoad.getInstance().getString("record.http.url") + url;
 				recordUrlList.add(recordUrl);
 			}
 		}
