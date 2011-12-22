@@ -7,9 +7,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ccs.sms.bo.ISmsRecvBO;
-import com.ccs.sms.util.SpringUtil;
-import com.ccs.sms.vo.SmsRecvVO;
+//import com.ccs.sms.bo.ISmsRecvBO;
+//import com.ccs.sms.util.SmsSpringUtil;
+//import com.ccs.sms.vo.SmsRecvVO;
 import com.ccs.util.PageInfo;
 
 @Controller
@@ -26,14 +26,14 @@ public class SmsController {
 		}
 		model.addAttribute("pageInfo", pageInfo);
 		
-		ISmsRecvBO smsRecvBO = (ISmsRecvBO) SpringUtil.getBean("smsRecvBO");
-		
-		List<SmsRecvVO> list = smsRecvBO.findByAll();
-		
-		for (SmsRecvVO vo : list) {
-			System.out.println(vo.getOrgTele());
-			System.out.println(vo.getSmsContent());
-		}
+//		ISmsRecvBO smsRecvBO = (ISmsRecvBO) SmsSpringUtil.getBean("smsRecvBO");
+//		
+//		List<SmsRecvVO> list = smsRecvBO.findByAll();
+//		
+//		for (SmsRecvVO vo : list) {
+//			System.out.println(vo.getOrgTele());
+//			System.out.println(vo.getSmsContent());
+//		}
 		return "sms/list";
 	}
 }

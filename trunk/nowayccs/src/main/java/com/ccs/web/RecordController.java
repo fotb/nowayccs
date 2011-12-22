@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -21,16 +23,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ccs.bo.IAgentBO;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IInfoSearchBO;
 import com.ccs.bo.IInformationBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
+import com.ccs.icd.bo.IRecordInfoBO;
+import com.ccs.icd.util.IcdSpringUtil;
+import com.ccs.icd.vo.RecordInfoVO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PropertyLoad;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.AffairInformationVO;
+import com.ccs.vo.AgentVO;
 import com.ccs.vo.EntpriseVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
@@ -65,6 +73,9 @@ public class RecordController {
 	@Autowired
 	private IEntpriseBO entpriseBO;
 	
+	@Autowired
+	private IAgentBO agentBO;
+	
 	@RequestMapping
 	public String playRecord(String infoId, ModelMap model) {
 		InformationVO infoVO = informationBO.findById(infoId);
@@ -81,6 +92,10 @@ public class RecordController {
 
 	public String lifeInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		final List<String> recordUrlList = getRecordUrls(infoVO);
+		
+		model.addAttribute("recordUrlList", recordUrlList);
 		
 		model.addAttribute("infoVO", infoVO);
 		model.addAttribute("statusMap", Constants.SYS_INFOMATION_STATES_HASHMAP);
@@ -108,9 +123,51 @@ public class RecordController {
 		}
 		return "record/lifeinfo";
 	}
+
+	private List<String> getRecordUrls(InformationVO infoVO) {
+		String callId = infoVO.getCallId();
+		List<String> recordUrlList = new ArrayList<String>();
+		
+		IRecordInfoBO recordInfoBO = (IRecordInfoBO) IcdSpringUtil.getBean("recordInfoBO");
+		if(!StringUtil.isNull(callId)) {
+			callId = callId.substring(0, callId.length() - 4);
+			
+			
+			RecordInfoVO recordInfoVO = recordInfoBO.findById(callId);
+			if(null != recordInfoVO) {
+				String recordUrl = PropertyLoad.getInstance().getString("record.http.url");
+				final String fileName = recordInfoVO.getFileName();
+				recordUrl = recordUrl + fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
+				recordUrlList.add(recordUrl);
+			}
+		} else {
+			String callerNo = infoVO.getHelpTel();
+			if(callerNo.contains(",")) {
+				callerNo = callerNo.substring(0, callerNo.indexOf(",") );
+			}
+			
+			AgentVO agentVO = agentBO.findById(infoVO.getCreator());
+			final String beginTime = DateUtil.format(infoVO.getCreateTime(), "yyyyMMddHHmm");
+			List<RecordInfoVO> list = recordInfoBO.findRecordInfo(callerNo, agentVO.getWorkNo(), beginTime);
+			for (RecordInfoVO recordInfoVO : list) {
+				String fileName = recordInfoVO.getFileName();
+				if(fileName.contains("\\")) {
+					fileName = fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
+				}
+				final String recordUrl = PropertyLoad.getInstance().getString("record.http.url") + fileName;
+				recordUrlList.add(recordUrl);
+			}
+		}
+		return recordUrlList;
+	}
 	
 	public String referInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		final List<String> recordUrlList = getRecordUrls(infoVO);
+		
+		model.addAttribute("recordUrlList", recordUrlList);
+		
 		ReferInformationVO referInfoVO = infoSearchBO.findReferInfoByInfoId(infoId);
 		
 		model.addAttribute("infoVO", infoVO);
@@ -125,6 +182,11 @@ public class RecordController {
 	
 	public String productivityInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		final List<String> recordUrlList = getRecordUrls(infoVO);
+		
+		model.addAttribute("recordUrlList", recordUrlList);
+		
 		ReferInformationVO referInfoVO = infoSearchBO.findReferInfoByInfoId(infoId);
 		
 		model.addAttribute("infoVO", infoVO);
@@ -140,6 +202,10 @@ public class RecordController {
 	
 	public String affairInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		final List<String> recordUrlList = getRecordUrls(infoVO);
+		
+		model.addAttribute("recordUrlList", recordUrlList);
 		
 		model.addAttribute("infoVO", infoVO);
 		model.addAttribute("statusMap", Constants.SYS_INFOMATION_STATES_HASHMAP);
