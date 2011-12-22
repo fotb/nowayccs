@@ -6,13 +6,13 @@ import org.springframework.beans.factory.access.BeanFactoryLocator;
 import org.springframework.beans.factory.access.BeanFactoryReference;
 import org.springframework.context.access.ContextSingletonBeanFactoryLocator;
 
-public final class SpringUtil {
-	private static final Logger LOG = Logger.getLogger(SpringUtil.class);
+public final class SmsSpringUtil {
+	private static final Logger LOG = Logger.getLogger(SmsSpringUtil.class);
 	private static BeanFactoryLocator locator;
 	private static BeanFactoryReference bfr;
 	private static BeanFactory factory;
 
-	private SpringUtil(){
+	private SmsSpringUtil(){
 	    super();
 	}
 	/**
