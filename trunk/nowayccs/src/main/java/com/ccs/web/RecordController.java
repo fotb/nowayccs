@@ -134,7 +134,7 @@ public class RecordController {
 		if(!StringUtil.isNull(callId)) {
 			callId = callId.substring(0, callId.length() - 4);
 			
-			
+			callId = callId.replace("_", "-");
 			RecordInfoVO recordInfoVO = recordInfoBO.findById(callId);
 			if(null != recordInfoVO) {
 				String recordUrl = PropertyLoad.getInstance().getString("record.http.url");
