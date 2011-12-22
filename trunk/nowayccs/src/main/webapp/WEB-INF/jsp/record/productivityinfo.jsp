@@ -18,8 +18,32 @@ function btnback_click(){
 <body>
 <form:form method="post" action="infosearch.do?action=referinfo">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
+  <c:if test="${empty recordUrlList}">
+  	<tr><td><font color="red">没有找到录音文件，或录音文件已删除！</font></td></tr>
+  	</c:if>
+  	<c:if test="${not empty recordUrlList}">
     <tr>
-      <td>
+    <td>
+    	<c:forEach var="url" step="1" items="${recordUrlList}" varStatus="status">
+    		<a href="javascript:play('${url}')">录音 - ${status.index + 1}</a><br>
+    	</c:forEach>
+    </td>
+    <td>
+      <object id="MediaPlayer" height="65" classid="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6" type="application/x-oleobject">
+		<param name="ShowPositionControls" value="0" />
+		<param name="AutoStart" value="0" />
+		<param name="EnableContextMenu" value="0">
+		<param name="URL" value="${recordUrlList[0]}" />
+		<!--<embed id="MediaPlayer1" height="45" src="http://localhost:8001/test.mp3" type="application/x-mplayer2" autostart="0" EnableContextMenu="0"></embed>-->
+	</object>
+    </td>
+    </tr>
+    </c:if>
+	<tr class="line">
+            <td height="1" colspan="2">            </td>
+          </tr>
+    <tr>
+      <td colspan="2">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr class="table_t1">
             <td width="3%" align="center">
