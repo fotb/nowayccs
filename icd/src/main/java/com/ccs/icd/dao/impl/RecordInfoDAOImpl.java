@@ -26,7 +26,7 @@ public class RecordInfoDAOImpl extends DefaultDAOSupport implements
 	public List<RecordInfoVO> findRecordInfo(String callerNo, String agentId,
 			String beginTime) {
 		StringBuffer buffer = new StringBuffer(300);
-		buffer.append("from recordInfoVO t where ");
+		buffer.append("from RecordInfoVO t where ");
 		buffer.append("t.callerNo = ? ");
 		buffer.append("and t.agentId = ? ");
 		buffer.append("and to_char(t.beginTime, 'yyyymmddhh24mi') = ? ");
