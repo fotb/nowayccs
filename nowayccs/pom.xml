@@ -397,6 +397,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>com.ccs</groupId>
 			<artifactId>sms</artifactId>
@@ -404,6 +405,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -415,6 +417,13 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.1.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ccs</groupId>
+			<artifactId>icd</artifactId>
+			<version>0.0.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
