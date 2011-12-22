@@ -5,7 +5,7 @@
 		class="org.springframework.context.support.ClassPathXmlApplicationContext">
 		<constructor-arg>
 			<list>
-				<value>classpath:spring/applicationContext.xml</value>
+				<value>classpath:spring/applicationContext-sms.xml</value>
 			</list>
 		</constructor-arg>
 	</bean>
