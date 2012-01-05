@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -130,12 +132,15 @@ public class RecordController {
 		
 		IRecordInfoBO recordInfoBO = (IRecordInfoBO) IcdSpringUtil.getBean("recordInfoBO");
 		
+	
 		AgentVO agentVO = agentBO.findById(infoVO.getCreator());
 		if(!StringUtil.isNull(callId)) {
 			callId = callId.substring(0, callId.length() - 4);
 			
 			callId = callId.replace("_", "-");
-			RecordInfoVO recordInfoVO = recordInfoBO.findById(callId);
+			Calendar calendar = new GregorianCalendar();
+			int year = calendar.get(Calendar.YEAR);
+			RecordInfoVO recordInfoVO = recordInfoBO.findById(callId, year);
 			if(null != recordInfoVO) {
 				String recordUrl = PropertyLoad.getInstance().getString("record.http.url");
 				final String fileName = recordInfoVO.getFileName();
@@ -151,7 +156,9 @@ public class RecordController {
 			
 			
 			final String beginTime = DateUtil.format(infoVO.getCreateTime(), "yyyyMMddHHmm");
-			List<RecordInfoVO> list = recordInfoBO.findRecordInfo(callerNo, agentVO.getWorkNo(), beginTime);
+			final String yearStr = DateUtil.format(infoVO.getCancelTime(), "yyyy");
+			int year = Integer.parseInt(yearStr);
+			List<RecordInfoVO> list = recordInfoBO.findRecordInfo(callerNo, agentVO.getWorkNo(), beginTime, year);
 			for (RecordInfoVO recordInfoVO : list) {
 				String fileName = recordInfoVO.getFileName();
 //				if(fileName.contains("\\")) {
