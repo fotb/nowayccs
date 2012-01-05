@@ -27,10 +27,10 @@ public class UserValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
 		if(isUserExist(user.getLoginName())) {
-			errors.rejectValue("loginName", "userNameExist", null, "µÇÂ¼ÃûÒÑ´æÔÚ£¬ÇëÊäÈëÆäËûµÇÂ¼Ãû£¡");
+			errors.rejectValue("loginName", "userNameExist", null, "ç™»å½•åå·²å­˜åœ¨ï¼Œè¯·é‡æ–°è¾“å…¥ï¼");
 		}
 		if(!isSamePwd(user.getLoginPassword(), user.getDoublePassword())) {
-			errors.rejectValue("loginPassword", "doublepwderror", null, "Á½´ÎÊäÈëÃÜÂë²»Ò»ÖÂ£¬ÇëÖØĞÂÊäÈë£¡");
+			errors.rejectValue("loginPassword", "doublepwderror", null, "ä¸¤æ¬¡è¾“å…¥çš„å¯†ç ä¸ä¸€è‡´ï¼Œè¯·é‡æ–°è¾“å…¥ï¼");
 		}
 	}
 	

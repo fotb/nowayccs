@@ -2,6 +2,7 @@ package com.ccs.bo;
 
 import java.util.List;
 
+import com.ccs.util.PageInfo;
 import com.ccs.vo.BlackListVO;
 
 public interface IBlackListBO {
@@ -13,5 +14,5 @@ public interface IBlackListBO {
 	
 	BlackListVO findByPhoneNum(String phoneNum); 
 	
-	List<BlackListVO> findByParams(String phoneNum, String levels);
+	List<BlackListVO> findByParams(String phoneNum, String levels, PageInfo pageInfo);
 }

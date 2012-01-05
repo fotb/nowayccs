@@ -2,6 +2,7 @@ package com.ccs.dao;
 
 import java.util.List;
 
+import com.ccs.util.PageInfo;
 import com.ccs.vo.BlackListVO;
 
 public interface IBlackListDAO {
@@ -14,5 +15,7 @@ public interface IBlackListDAO {
 	
 	BlackListVO findByPhoneNum(String phoneNum); 
 	
-	List<BlackListVO> findByParams(String phoneNum, String levels);
+	List<BlackListVO> findByParams(String phoneNum, String levels, PageInfo pageInfo);
+	
+	int getTotalByParams(String phoneNum, String levels);
 }
