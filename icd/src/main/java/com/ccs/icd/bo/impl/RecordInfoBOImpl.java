@@ -14,16 +14,31 @@ public class RecordInfoBOImpl implements IRecordInfoBO {
 
 	@Autowired
 	private IRecordInfoDAO recordInfoDAO;
-	
+
 	@Override
-	public RecordInfoVO findById(String callId) {
-		return recordInfoDAO.findById(callId);
+	public RecordInfoVO findById(String callId, int year) {
+		return recordInfoDAO.findById(callId, getTableName(year));
 	}
 
 	@Override
 	public List<RecordInfoVO> findRecordInfo(String callerNo, String agentId,
-			String beginTime) {
-		return recordInfoDAO.findRecordInfo(callerNo, agentId, beginTime);
+			String beginTime, int year) {
+		return recordInfoDAO.findRecordInfo(callerNo, agentId, beginTime, getTableName(year));
+	}
+	
+	private String getTableName(int year) {
+		String tableName = "";
+		switch (year) {
+		case 2011:
+			tableName = "RecordInfo12VO";
+			break;
+		case 2012:
+			tableName = "RecordInfo1VO";
+			break;
+		default:
+			break;
+		}
+		return tableName;
 	}
 
 }

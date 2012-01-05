@@ -5,7 +5,7 @@ import java.util.List;
 import com.ccs.icd.vo.RecordInfoVO;
 
 public interface IRecordInfoBO {
-	RecordInfoVO findById(String callId);
+	RecordInfoVO findById(String callId, int year);
 
 	/**
 	 * @param callerNo
@@ -14,5 +14,5 @@ public interface IRecordInfoBO {
 	 * @return
 	 */
 	List<RecordInfoVO> findRecordInfo(String callerNo, String agentId,
-			String beginTime);
+			String beginTime, int year);
 }
