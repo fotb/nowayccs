@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccs.bo.IBlackListBO;
 import com.ccs.dao.IBlackListDAO;
+import com.ccs.util.PageInfo;
 import com.ccs.vo.BlackListVO;
 
 @Service("blackListBO")
@@ -36,8 +37,9 @@ public class BlackListBOImpl implements IBlackListBO {
 	}
 
 	@Override
-	public List<BlackListVO> findByParams(String phoneNum, String levels) {
-		return blackListDAO.findByParams(phoneNum, levels);
+	public List<BlackListVO> findByParams(String phoneNum, String levels, PageInfo pageInfo) {
+		pageInfo.setTotalRecords(blackListDAO.getTotalByParams(phoneNum, levels));
+		return blackListDAO.findByParams(phoneNum, levels, pageInfo);
 	}
 
 }
