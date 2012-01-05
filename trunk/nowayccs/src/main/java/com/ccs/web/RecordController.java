@@ -156,7 +156,7 @@ public class RecordController {
 			
 			
 			final String beginTime = DateUtil.format(infoVO.getCreateTime(), "yyyyMMddHHmm");
-			final String yearStr = DateUtil.format(infoVO.getCancelTime(), "yyyy");
+			final String yearStr = DateUtil.format(infoVO.getCreateTime(), "yyyy");
 			int year = Integer.parseInt(yearStr);
 			List<RecordInfoVO> list = recordInfoBO.findRecordInfo(callerNo, agentVO.getWorkNo(), beginTime, year);
 			for (RecordInfoVO recordInfoVO : list) {
