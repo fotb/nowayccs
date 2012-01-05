@@ -17,6 +17,7 @@ $(document).ready(function(){
 });
 function btn_search(){
 	  var form = document.forms[0];
+	  form.pageNo.value = "1";
 	  form.submit();
 }
 
@@ -89,7 +90,7 @@ function option_delete(phoneId) {
             	</td>
             	<td>${phone.remark}</td>
                 <td width="5%">
-                  <a href="blacklist.do?action=edit&phoneId=${phone.phoneId}">
+                  <a href="blacklist.do?action=edit&phoneId=${phone.phoneId}&pageNo=${pageInfo.currentPage}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
                 </td>
@@ -112,10 +113,20 @@ function option_delete(phoneId) {
               </a>
             </td>
           </tr>
+        <tr>
+       <!--  <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td> -->
+          <td height="30" align="right">
+            <jsp:include page="../common/pageinfo.jsp" flush="true">
+              <jsp:param name="formname" value="forms[0]"/>
+              <jsp:param name="pagename" value="pageNo"/>
+              <jsp:param name="actionname" value="blacklist.do"/>
+            </jsp:include> </td>
+
+        </tr>
         </table>
       </td>
     </tr>
-  </table>
+  </table><input type="hidden" name="pageNo" value="${pageInfo.currentPage}" />
   </form:form>
 </body>
 </html>

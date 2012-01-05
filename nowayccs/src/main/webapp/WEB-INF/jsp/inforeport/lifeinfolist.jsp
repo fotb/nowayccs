@@ -64,6 +64,7 @@ $("#my").html(data.satis);
 $("#jbmy").html(data.basesatis);
 $("#zxjj").html(data.self);
 $("#myd").html(data.percent);
+$("#cancelTotal").html(data.canceltotal);
 	});
 });
 </script>
@@ -172,7 +173,7 @@ $("#myd").html(data.percent);
 
         </tr>
         <tr>
-          <td height="20" colspan="2">合计：<span id=total></span>件 其中：结案<span id=finish></span>条（满意<span id=my></span>，基本满意<span id="jbmy"></span>，自行解决<span id="zxjj"></span>，满意度<span id="myd"></span>％）</td>
+          <td height="20" colspan="2">合计：<span id=total></span>件 其中：结案<span id=finish></span>件（满意<span id=my></span>，基本满意<span id="jbmy"></span>，自行解决<span id="zxjj"></span>，满意度<span id="myd"></span>％）	取消<span id="cancelTotal"></span>件</td>
         </tr>
       </table></td>
   </tr>
