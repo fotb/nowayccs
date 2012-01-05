@@ -27,6 +27,7 @@ function btnback_click(){
 </script>
 <body>
 <form:form method="post" action="blacklist.do?action=editsave" commandName="blackListVO">
+<input type="hidden" name="pageNo" value="${pageNo}" />
 <form:hidden path="phoneId"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
@@ -46,7 +47,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td width="10%">电话号码：</td>
             <td>
-            	<form:input path="phoneNum" cssClass="form" size="20"/>
+            	<form:input path="phoneNum" cssClass="form" size="20" readonly="true"/>
             </td>
           </tr>
           <tr class="line">

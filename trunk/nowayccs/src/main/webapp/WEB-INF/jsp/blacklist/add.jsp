@@ -45,7 +45,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td width="10%">电话号码：</td>
             <td>
-            	<form:input path="phoneNum" cssClass="form" size="20"/>
+            	<form:input path="phoneNum" cssClass="form" size="20"/>&nbsp;&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="phoneNum"/></font>
             </td>
           </tr>
           <tr class="line">
