@@ -95,8 +95,12 @@
                 <font color="#FFFFFF">企业查询</font></a></td>
             </tr>
                          <tr>
-              <td class="leftmenu_02"><a href="msg.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+              <td class="leftmenu_02"><a href="msg.do?msgType=001" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">信息栏</font></a></td>
+            </tr>
+                         <tr>
+              <td class="leftmenu_02"><a href="msg.do?msgType=002" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+                <font color="#FFFFFF">请假</font></a></td>
             </tr>
 			<tr>
               <td height="5"></td>

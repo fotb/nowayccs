@@ -60,9 +60,13 @@ function btnback_click() {
           <tr class="table_t1">
             <td>类别：</td>
             <td>
+            ${msgTypeValue}
+            <form:hidden path="messageType"/>
+            <!-- 
                  <form:select path="messageType" cssClass="form">
                       <form:options items="${msgTypeList}" itemLabel="value" itemValue="sortIndex"/>
                  </form:select>
+                  -->
             </td>
           </tr>
          <tr class="line">

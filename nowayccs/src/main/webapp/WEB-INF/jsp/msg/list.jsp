@@ -44,6 +44,7 @@ $(document).ready(function(){
 </script>
 <body>
 <form:form method="post" action="msg.do" commandName="messageBean">
+<input type="hidden" value="${messageBean.messageType}" name="msgType" />
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -55,6 +56,7 @@ $(document).ready(function(){
             <td bgcolor="#F1F1F1">
               <table width="98%" border="0" align="center" cellpadding="0" cellspacing="1">
                 <tr>
+                <!-- 
                   <td width="100">类别：</td>
                   <td>
                     <form:select path="messageType" cssClass="form">
@@ -62,8 +64,9 @@ $(document).ready(function(){
                       <form:options items="${msgTypeList}" itemLabel="value" itemValue="sortIndex"/>
                     </form:select>
                   </td>
+                   -->
 				 <td>发布人：</td>
-                  <td>
+                  <td colspan="3">
 					<form:select path="creator" cssClass="form">
                       <form:option value="">选择</form:option>
                       <form:options items="${users}" itemLabel="userName" itemValue="userId"/>
@@ -136,7 +139,7 @@ $(document).ready(function(){
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td height="30">
-              <a href="msg.do?action=add">
+              <a href="msg.do?action=add&msgType=${messageBean.messageType}">
                 <img src="images/button_add.gif" width="60" height="18" border="0" alt="" style="cursor:pointer;">
               </a></td>
             <td align="right">
