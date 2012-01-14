@@ -20,6 +20,7 @@ import com.ccs.bo.IMessageBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.DictVO;
 import com.ccs.vo.MessageVO;
 import com.ccs.vo.UserVO;
@@ -40,10 +41,15 @@ public class MessageController {
 
 	@RequestMapping
 	public String list(@ModelAttribute("messageBean") MessageBean msgBean,
-			@RequestParam(value = "pageNo", required = false) String pageNo, HttpSession session, 
+			@RequestParam(value = "pageNo", required = false) String pageNo, @RequestParam(value = "msgType", required = false) String msgType, HttpSession session, 
 			ModelMap model) {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
+		
+		if(!StringUtil.isNull(msgType)) {
+			msgBean.setMessageType(msgType);
+		}
+		
 		List<MessageVO> msgVOList = messageBO.findByParams(
 				msgBean.getMessageType(), msgBean.getCreator(),
 				msgBean.getTitle(), msgBean.getStartDt(), msgBean.getEndDt(),
@@ -69,12 +75,16 @@ public class MessageController {
 	}
 	
 	@RequestMapping(params = "action=add")
-	public String add(HttpSession session, ModelMap model) {
-		List<DictVO> msgTypeList = dictBO.findByType(Constants.DICT_DICTTYPE_COMMONLB);
+	public String add(String msgType, HttpSession session, ModelMap model) {
+		Map<String, String> msgTypeMap = dictBO.getDict(Constants.DICT_DICTTYPE_COMMONLB);
 		UserVO currentUser = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		model.addAttribute("currentUser", currentUser);
-		model.addAttribute("msgTypeList", msgTypeList);
-		model.addAttribute("messageVO", new MessageVO());
+		
+		model.addAttribute("msgTypeValue", msgTypeMap.get(msgType));
+		model.addAttribute("msgType", msgType);
+		MessageVO vo = new MessageVO();
+		vo.setMessageType(msgType);
+		model.addAttribute("messageVO", vo);
 		return "msg/add";
 	}
 	
@@ -85,7 +95,7 @@ public class MessageController {
 		msgVO.setCreator(currentUser.getUserId());
 		msgVO.setCreateDate(new Date());
 		messageBO.saveOrUpdate(msgVO);
-		return "redirect:msg.do";
+		return "redirect:msg.do?msgType=" + msgVO.getMessageType();
 	}
 	
 	
@@ -97,6 +107,9 @@ public class MessageController {
 		
 		MessageVO msgVO = messageBO.findById(msgId);
 		model.addAttribute("messageVO", msgVO);
+		
+		Map<String, String> msgTypeMap = dictBO.getDict(Constants.DICT_DICTTYPE_COMMONLB);
+		model.addAttribute("msgTypeValue", msgTypeMap.get(msgVO.getMessageType()));
 
 		UserVO userVO = userBO.findById(msgVO.getCreator());
 		model.addAttribute("userVO", userVO);
@@ -112,18 +125,23 @@ public class MessageController {
 		vo.setMessageType(msgVO.getMessageType());
 		vo.setCreator(currentUser.getUserId());
 		messageBO.saveOrUpdate(vo);
-		return "redirect:msg.do";
+		return "redirect:msg.do?msgType=" + msgVO.getMessageType();
 	}
 	
 	@RequestMapping(params = "action=del")
 	public String del(@ModelAttribute("messageBean") MessageBean msgBean,
 			@RequestParam(value = "pageNo", required = false) String pageNo, 
-			String msgId, HttpSession session, ModelMap model) {
+			String msgId, String msgType, HttpSession session, ModelMap model) {
 		MessageVO msgVO = messageBO.findById(msgId);
 		messageBO.delete(msgVO);
 		
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
+		
+		if(!StringUtil.isNull(msgType)) {
+			msgBean.setMessageType(msgType);
+		}
+		
 		List<MessageVO> msgVOList = messageBO.findByParams(
 				msgBean.getMessageType(), msgBean.getCreator(),
 				msgBean.getTitle(), msgBean.getStartDt(), msgBean.getEndDt(),

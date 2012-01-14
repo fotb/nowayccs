@@ -134,21 +134,21 @@ public class RecordController {
 		
 	
 		AgentVO agentVO = agentBO.findById(infoVO.getCreator());
-		if(!StringUtil.isNull(callId)) {
-			callId = callId.substring(0, callId.length() - 4);
-			
-			callId = callId.replace("_", "-");
-			Calendar calendar = new GregorianCalendar();
-			int year = calendar.get(Calendar.YEAR);
-			RecordInfoVO recordInfoVO = recordInfoBO.findById(callId, year);
-			if(null != recordInfoVO) {
-				String recordUrl = PropertyLoad.getInstance().getString("record.http.url");
-				final String fileName = recordInfoVO.getFileName();
-				String url = DateUtil.format(infoVO.getCreateTime(), "yyyyMMdd") + "/" + agentVO.getWorkNo() + "/" + fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
-				recordUrl = recordUrl + url;
-				recordUrlList.add(recordUrl);
-			}
-		} else {
+//		if(!StringUtil.isNull(callId)) {
+//			callId = callId.substring(0, callId.length() - 4);
+//			
+//			callId = callId.replace("_", "-");
+//			Calendar calendar = new GregorianCalendar();
+//			int year = calendar.get(Calendar.YEAR);
+//			RecordInfoVO recordInfoVO = recordInfoBO.findById(callId, year);
+//			if(null != recordInfoVO) {
+//				String recordUrl = PropertyLoad.getInstance().getString("record.http.url");
+//				final String fileName = recordInfoVO.getFileName();
+//				String url = DateUtil.format(infoVO.getCreateTime(), "yyyyMMdd") + "/" + agentVO.getWorkNo() + "/" + fileName.substring(fileName.lastIndexOf("\\") + 1, fileName.length());
+//				recordUrl = recordUrl + url;
+//				recordUrlList.add(recordUrl);
+//			}
+//		} else {
 			String callerNo = infoVO.getHelpTel();
 			if(callerNo.contains(",")) {
 				callerNo = callerNo.substring(0, callerNo.indexOf(",") );
@@ -168,7 +168,7 @@ public class RecordController {
 				final String recordUrl = PropertyLoad.getInstance().getString("record.http.url") + url;
 				recordUrlList.add(recordUrl);
 			}
-		}
+//		}
 		return recordUrlList;
 	}
 	
