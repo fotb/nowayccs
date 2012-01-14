@@ -118,7 +118,7 @@ $(document).ready(function(){
 	
 	$("#createTime" ).dynDateTime({
 		  showsTime: true,
-		  ifFormat: "%Y-%m-%d %H:%M",
+		  ifFormat: "%Y-%m-%d %H:%M:%S",
 		  button: ".next()" //next sibling to input field
 			});
 });
