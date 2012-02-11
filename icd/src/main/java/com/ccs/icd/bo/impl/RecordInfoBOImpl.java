@@ -1,5 +1,6 @@
 package com.ccs.icd.bo.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +18,29 @@ public class RecordInfoBOImpl implements IRecordInfoBO {
 
 	@Override
 	public RecordInfoVO findById(String callId, int year) {
-		return recordInfoDAO.findById(callId, getTableName(year));
+		RecordInfoVO infoVO = null;
+		for (int i = 1; i <= 12; i++) {
+			infoVO = recordInfoDAO.findById(callId,
+					"RecordInfo" + String.valueOf(i) + "VO");
+			if (null != infoVO) {
+				break;
+			}
+		}
+		return infoVO;
 	}
 
 	@Override
 	public List<RecordInfoVO> findRecordInfo(String callerNo, String agentId,
 			String beginTime, int year) {
-		return recordInfoDAO.findRecordInfo(callerNo, agentId, beginTime, getTableName(year));
-	}
-	
-	private String getTableName(int year) {
-		String tableName = "";
-		switch (year) {
-		case 2011:
-			tableName = "RecordInfo12VO";
-			break;
-		case 2012:
-			tableName = "RecordInfo1VO";
-			break;
-		default:
-			break;
+		List<RecordInfoVO> list = new ArrayList<RecordInfoVO>();
+		for (int i = 1; i <= 12; i++) {
+			list = recordInfoDAO.findRecordInfo(callerNo, agentId, beginTime,
+					"RecordInfo" + String.valueOf(i) + "VO");
+			if (!list.isEmpty()) {
+				break;
+			}
 		}
-		return tableName;
+		return list;
 	}
 
 }
