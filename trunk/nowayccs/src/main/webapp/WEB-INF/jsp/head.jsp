@@ -288,6 +288,10 @@ function Phone_OnSayFreeSuccess() {
     btnSayFree.disabled = true;
 }
 
+function Phone_CheckStatus() {
+	alert(Phone.IsSignIn());
+}
+
 </script>
 
 
@@ -392,6 +396,12 @@ Phone_OnSignInExFailure()
  Phone_OnAnswerRequestEx(1)
 //-->
 </SCRIPT>
+
+<SCRIPT LANGUAGE=javascript FOR=Phone EVENT=OnTimer>
+<!--
+ Phone_CheckStatus()
+//-->
+</SCRIPT>
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -461,8 +471,8 @@ document.write(""+date+week+"");
 <PARAM NAME="BellTime" VALUE='${agentVO.bellTime}'>
 <PARAM NAME="PlayStep" VALUE="2">
 <PARAM NAME="FreeStatus" VALUE='${agentVO.freeStatus}'>
-<PARAM NAME="TimerEnabled" VALUE="0">
-<PARAM NAME="TimerInterval" VALUE="1000">
+<PARAM NAME="TimerEnabled" VALUE="true">
+<PARAM NAME="TimerInterval" VALUE="5000">
 <PARAM NAME="MediaPlay" VALUE='${agentVO.mediaPlay}'>
 <PARAM NAME="MediaFileName" VALUE='${agentVO.mediaFilename}'>
 <PARAM NAME="Version" VALUE="3">
