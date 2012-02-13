@@ -36,6 +36,7 @@ $("#TextResult").html(sResult);
     //j = Phone.SignIn(3);
     j = Phone.SignInEx('TTT',i,'${agentVO.targetDevice}');
     sResult = Phone.GetPromptByErrorCode(j);
+postLog("signId", sResult);
     $("#TextResult").append('\n'+sResult);
     window.status = $("#TextResult").html();
   }
@@ -46,7 +47,9 @@ function btnSignOut_onclick() {
 var i,sResult;
 i = Phone.SignOutEx();
 sResult = Phone.GetPromptByErrorCode(i);
+postLog("signOut", sResult);
 TextResult.innerHTML = sResult;
+window.status = $("#TextResult").html();
 }
 
 function BtAns_onclick() {
@@ -58,6 +61,7 @@ function BtAns_onclick() {
     //lRetVal = Phone.Answer();
     sResult = Phone.GetPromptByErrorCode(lRetVal);
     TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
+postLog("answer", sResult);
     window.status = sResult;
     if(lRetVal == 0) {
       //window.open("/OprInforAccept_icdInit.do?callerNo="+Phone.GetCallerNo(), "", 'height=500, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
@@ -74,6 +78,7 @@ var MediaType,lRetVal,sResult;
     lRetVal = Phone.ReleaseCallEx(MediaType);
     sResult = Phone.GetPromptByErrorCode(lRetVal);
     TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
+postLog("Release", sResult);
     window.status = sResult;
 }
 
@@ -217,6 +222,7 @@ MediaType = 5;
 
     sResult = Phone.GetPromptByErrorCode(lRetVal);
     TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
+postLog("callOut", sResult);
     window.status = sResult;
 
 }
@@ -237,6 +243,7 @@ var i;
     else {
       sResult = Phone.GetPromptByErrorCode(i);
       TextResult.value =  TextResult.innerHTML+'\n'+sResult;
+postLog("trans", sResult);
       window.status = sResult;
     }
 
@@ -249,6 +256,7 @@ lRetVal = Phone.Hold(1,1);
 
     sResult = Phone.GetPromptByErrorCode(lRetVal);
     TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
+postLog("hold", sResult);
     window.status = sResult;
 }
 
@@ -259,6 +267,7 @@ lRetVal = Phone.GetHold(1,1);
 
     sResult = Phone.GetPromptByErrorCode(lRetVal);
     TextResult.innerHTML =  sResult;
+postLog("getHold", sResult);
     window.status = sResult;
 }
 
@@ -266,6 +275,7 @@ function btnSayBusy_onclick() {
 var i;
   i = Phone.SayBusy();
   sResult = Phone.GetPromptByErrorCode(i);
+postLog("sayBusy", sResult);
    window.status = sResult;
 }
 
@@ -273,6 +283,7 @@ function btnSayFree_onclick() {
 var i;
   i = Phone.SayFree();
   sResult = Phone.GetPromptByErrorCode(i);
+	postLog("sayFree", sResult);
    window.status = sResult;
 }
 
@@ -289,9 +300,15 @@ function Phone_OnSayFreeSuccess() {
 }
 
 function Phone_CheckStatus() {
-	alert(Phone.IsSignIn());
+	//alert(Phone.IsSignIn());
 }
 
+
+function postLog(action, logId) {
+	$.getJSON("index.do?action=icdLog&action=" + action + "&logId=" + logId, function(data) {
+		//do nothing
+	});
+}
 </script>
 
 
