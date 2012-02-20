@@ -1,11 +1,9 @@
 package com.ccs.web;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
-
-import net.sf.json.JSONArray;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IAgentBO;
+import com.ccs.icd.util.DateUtil;
 import com.ccs.util.Constants;
 import com.ccs.vo.AgentVO;
-import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.UserVO;
 
 @Controller
@@ -62,7 +60,7 @@ public class IndexController {
 	
 	@RequestMapping(params = "action=icdLog", method = RequestMethod.GET)
 	public @ResponseBody String getSubArea(@RequestParam String logId, String action) throws UnsupportedEncodingException {
-		logger.info(action + ": " + logId);
+		logger.info(DateUtil.format(new Date(), "yyyy/MM/dd HH:mm:ss") + " -- " + action + ": " + logId);
 		return "";
 	}
 	
