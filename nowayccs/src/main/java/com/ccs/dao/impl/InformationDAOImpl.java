@@ -2,12 +2,15 @@ package com.ccs.dao.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -22,6 +25,7 @@ import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
+import com.ccs.vo.HelpCountByPhoneBean;
 import com.ccs.vo.InformationVO;
 
 @Repository("informationDAO")
@@ -469,6 +473,75 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		final String hql = "select count(t.infoId) from InformationVO t where t.affairAcceptor = ? and t.status = ? and t.helpType = ?";
 		final Long count = (Long) getHibernateTemplate().find(hql, new Object[]{userId, status, helpType}).listIterator().next();
 		return count.intValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HelpCountByPhoneBean> getHelpCountByPhone(final Date startDt,
+			final Date endDt, final PageInfo pageInfo) {
+		final StringBuffer buffer = new StringBuffer();
+		buffer.append("select helpTel, telCount ");
+		buffer.append("from (select LTRIM(t.helptel, '573') as helptel, ");
+		buffer.append("count(t.informationid) as telCount ");
+		buffer.append("from hj_information t ");
+		buffer.append("where (t.createtime >= ? or ? is null) ");
+		buffer.append("and (t.createtime <= ? or ? is null) ");
+		buffer.append("group by LTRIM(t.helptel, '573')) a ");
+		buffer.append("order by a.telCount desc");
+		
+		List<Object[]> resultList = getHibernateTemplate().executeFind(new HibernateCallback<List<Object[]>>() {
+			@Override
+			public List<Object[]> doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				SQLQuery query = session.createSQLQuery(buffer.toString());
+//				query.setResultTransformer(Transformers.aliasToBean(HelpCountByPhoneBean.class));
+				query.setDate(0, startDt);
+				query.setDate(1, startDt);
+				query.setDate(2, endDt);
+				query.setDate(3, endDt);
+				
+				query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
+				query.setMaxResults(pageInfo.getPAGE_COUNT());
+				return query.list();
+			}
+		});
+		List<HelpCountByPhoneBean> result = new ArrayList<HelpCountByPhoneBean>();
+		for (Object[] objects : resultList) {
+			HelpCountByPhoneBean bean = new HelpCountByPhoneBean(objects[0].toString(), objects[1].toString());
+			result.add(bean);
+		}
+		return result;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getHelpCountByPhoneCount(final Date startDt, final Date endDt) {
+		final StringBuffer buffer = new StringBuffer();
+		buffer.append("select count(1) ");
+		buffer.append("from (select LTRIM(t.helptel, '573') as helptel, ");
+		buffer.append("count(t.informationid) as telCount ");
+		buffer.append("from hj_information t ");
+		buffer.append("where (t.createtime >= ? or ? is null) ");
+		buffer.append("and (t.createtime <= ? or ? is null) ");
+		buffer.append("group by LTRIM(t.helptel, '573')) a ");
+		buffer.append("order by a.telCount desc");
+		
+		List<Object> resultList = getHibernateTemplate().executeFind(new HibernateCallback<List<Object>>() {
+			@Override
+			public List<Object> doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				SQLQuery query = session.createSQLQuery(buffer.toString());
+				query.setDate(0, startDt);
+				query.setDate(1, startDt);
+				query.setDate(2, endDt);
+				query.setDate(3, endDt);
+				
+				return query.list();
+			}
+		});
+
+		return Integer.valueOf(resultList.get(0).toString());
 	}
 }
 

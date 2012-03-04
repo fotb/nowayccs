@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -34,15 +35,18 @@ import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IInfoReportBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
+import com.ccs.icd.util.DateUtil;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.EntpriseVO;
+import com.ccs.vo.HelpCountByPhoneBean;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.UserVO;
 import com.ccs.vo.VolunteerVO;
+import com.ccs.web.domain.HelpCountByPhoneSearchBean;
 
 @Controller
 @RequestMapping("/inforeport.do")
@@ -471,5 +475,37 @@ public class InfoReportController {
 		
 		model.addAttribute("dtoList", map.values());
 		return "inforeport/usertraffic";
+	}
+	
+	@RequestMapping(params = "action=phonecount")
+	public String TelCountReport(@ModelAttribute("helpCountByPhoneSearchBean") HelpCountByPhoneSearchBean bean,
+			@RequestParam(value = "pageNo", required = false) String pageNo,
+			ModelMap model) {
+		
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
+		final Date startDate = StringUtil.isNull(bean.getStartDt()) ? null : DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd");
+		final Date endDate = StringUtil.isNull(bean.getEndDt()) ? null : DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd");
+		List<HelpCountByPhoneBean> list = infoReportBO.getHelpCountByPhone(startDate, endDate, pageInfo);
+		model.addAttribute("countList", list);
+		model.addAttribute("pageInfo", pageInfo);
+		return "inforeport/helpcountbyphone";
+	}
+	
+	@RequestMapping(params = "action=phonecountexp")
+	public String TelCountReportToExcel(@ModelAttribute("helpCountByPhoneSearchBean") HelpCountByPhoneSearchBean bean,
+			@RequestParam(value = "pageNo", required = false) String pageNo,
+			ModelMap model) {
+		
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
+		
+		pageInfo.setRows(1000000000);
+		final Date startDate = StringUtil.isNull(bean.getStartDt()) ? null : DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd");
+		final Date endDate = StringUtil.isNull(bean.getEndDt()) ? null : DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd");
+		List<HelpCountByPhoneBean> list = infoReportBO.getHelpCountByPhone(startDate, endDate, pageInfo);
+		model.addAttribute("countList", list);
+		model.addAttribute("pageInfo", pageInfo);
+		return "inforeport/helpcountbyphone_excel";
 	}
 }
