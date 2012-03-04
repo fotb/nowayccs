@@ -68,7 +68,9 @@
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">信息查询</td>
       </tr>
       <tr id="ddTR" style="display: none" class="green">
-        <td><table width="100%"  border="0" cellpadding="1" cellspacing="0">
+        <td>
+        <div style="height:300px;overflow-y:scroll; border:0px solid;">
+        <table width="100%"  border="0" cellpadding="1" cellspacing="0">
             <tr>
               <td height="5"></td>
             </tr>
@@ -105,7 +107,9 @@
 			<tr>
               <td height="5"></td>
             </tr>
-        </table></td>
+        </table>
+        </div>
+        </td>
       </tr>
       <tr onclick="radioTable(5, 'refer.do')" style="cursor: hand">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务咨询</td>
