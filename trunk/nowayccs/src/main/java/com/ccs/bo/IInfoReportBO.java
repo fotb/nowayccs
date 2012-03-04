@@ -1,5 +1,6 @@
 package com.ccs.bo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import com.ccs.bean.InfoSearchBean;
 import com.ccs.bean.LifeInfoSearchBean;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
+import com.ccs.vo.HelpCountByPhoneBean;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.ReferInformationVO;
@@ -41,4 +43,6 @@ public interface IInfoReportBO {
 	int getAffairCount(AffairInfoSearchBean bean);
 	
 	Map<String, AffairInformationVO> findAffairInfoByInfoIds(List<String> infoIds);
+	
+	List<HelpCountByPhoneBean> getHelpCountByPhone(final Date startDt, final Date endDt, final PageInfo pageInfo);
 }

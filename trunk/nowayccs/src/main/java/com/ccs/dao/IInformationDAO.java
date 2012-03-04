@@ -1,11 +1,13 @@
 package com.ccs.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ccs.bean.AffairInfoSearchBean;
 import com.ccs.bean.InfoSearchBean;
 import com.ccs.bean.LifeInfoSearchBean;
 import com.ccs.util.PageInfo;
+import com.ccs.vo.HelpCountByPhoneBean;
 import com.ccs.vo.InformationVO;
 
 public interface IInformationDAO {
@@ -45,4 +47,7 @@ public interface IInformationDAO {
 	List<InformationVO> findAffairInfoByParams(AffairInfoSearchBean bean, PageInfo pageInfo);
 	
 	int getAffairCountByParams(AffairInfoSearchBean bean);
+	
+	List<HelpCountByPhoneBean> getHelpCountByPhone(final Date startDt, final Date endDt, final PageInfo pageInfo);
+	public int getHelpCountByPhoneCount(final Date startDt, final Date endDt);
 }

@@ -1,6 +1,7 @@
 package com.ccs.bo.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,7 @@ import com.ccs.dao.IReferInformationDAO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
+import com.ccs.vo.HelpCountByPhoneBean;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.ReferInformationVO;
@@ -161,5 +163,12 @@ public class InfoReportBOImpl implements IInfoReportBO {
 	@Override
 	public int getAffairCount(AffairInfoSearchBean bean) {
 		return informationDAO.getAffairCountByParams(bean);
+	}
+
+	@Override
+	public List<HelpCountByPhoneBean> getHelpCountByPhone(Date startDt,
+			Date endDt, PageInfo pageInfo) {
+		pageInfo.setTotalRecords(informationDAO.getHelpCountByPhoneCount(startDt, endDt));
+		return informationDAO.getHelpCountByPhone(startDt, endDt, pageInfo);
 	}
 }
