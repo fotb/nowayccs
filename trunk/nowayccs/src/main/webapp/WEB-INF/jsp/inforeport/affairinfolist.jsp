@@ -83,6 +83,7 @@ $("#myd").html(data.percent);
             <td width="18%"><a href="inforeport.do?action=lifeinforeport">2.生活类服务派单表</a></td>
             <td width="15%">3.事务移送记录表</td>
             <td width="15%"><a href="inforeport.do?action=usertrafficreport">4.话务量统计</a></td>
+            <td width="15%"><a href="inforeport.do?action=phonecount">5.电话求助量统计</a></td>
             <td>&nbsp;</td>
           </tr>
         </table>
