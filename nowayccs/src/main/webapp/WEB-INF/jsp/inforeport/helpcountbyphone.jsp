@@ -110,7 +110,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
     </table>
       <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-      	<td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:hand"/></td>
+      	<td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:hand"/>(导出前1000条记录)</td>
           <td height="30" align="right"> <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>
               <jsp:param name="pagename" value="pageNo"/>
