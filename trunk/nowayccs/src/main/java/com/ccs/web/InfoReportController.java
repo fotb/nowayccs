@@ -500,7 +500,7 @@ public class InfoReportController {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setCurrentPage(null == pageNo ? 1 : Integer.valueOf(pageNo));
 		
-		pageInfo.setRows(1000000000);
+		pageInfo.setRows(1000);
 		final Date startDate = StringUtil.isNull(bean.getStartDt()) ? null : DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd");
 		final Date endDate = StringUtil.isNull(bean.getEndDt()) ? null : DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd");
 		List<HelpCountByPhoneBean> list = infoReportBO.getHelpCountByPhone(startDate, endDate, pageInfo);
