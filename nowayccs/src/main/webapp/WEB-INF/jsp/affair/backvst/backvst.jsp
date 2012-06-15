@@ -73,6 +73,7 @@ function btnback_click(){
   $("form").submit();
 }
 
+<c:if test="${adminRight == 'Y'}">
 $(document).ready(function(){
 	$("#finishTime" ).dynDateTime({
   showsTime: true,
@@ -80,6 +81,7 @@ $(document).ready(function(){
   button: ".next()" //next sibling to input field
 	});
 });
+</c:if>
 </script>
 <body>
 <form:form method="post" action="bizaffairbackvst.do?action=backvstsave" commandName="affairBackVstDomain">

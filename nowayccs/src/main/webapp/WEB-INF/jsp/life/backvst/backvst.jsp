@@ -61,6 +61,7 @@ function btnback_click(){
   $("form").submit();
 }
 
+<c:if test="${adminRight == 'Y'}">
 $(document).ready(function(){
 	$("#finishTime" ).dynDateTime({
   showsTime: true,
@@ -68,6 +69,8 @@ $(document).ready(function(){
   button: ".next()" //next sibling to input field
 	});
 });
+</c:if>
+
 </script>
 <body>
 <form:form method="post" action="bizlifebackvst.do?action=backvstsave" commandName="lifeBackVstDomain">
@@ -182,7 +185,7 @@ $(document).ready(function(){
           <tr class="table_t2">
             <td align="right">结案时间：</td>
             <td>
-              <form:input path="finishTime" cssClass="form" size="10" />
+              <form:input path="finishTime" cssClass="form" size="10" readonly="true" />
             </td>
             <td width="90" align="right">求助者满意度：</td>
             <td colspan="3">

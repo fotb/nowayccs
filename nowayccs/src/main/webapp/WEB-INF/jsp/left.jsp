@@ -22,6 +22,9 @@
       <tr onclick="radioTable(1,'bizaccept.do')" style="cursor: hand;">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务受理</td>
       </tr>
+      <tr onclick="radioTable(1,'sms.do')" style="cursor: hand;">
+        <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">短信求助</td>
+      </tr>
       <tr onclick="radioTable(2)" style="cursor: hand">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务处理</td>
       </tr>
