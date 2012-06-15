@@ -57,7 +57,8 @@ public class BizAcceptController {
 	
 	@RequestMapping
 	public String accept(@RequestParam(value = "callNo", required = false) String callNo, 
-			@RequestParam(value = "flag", required = false) String flag, HttpSession session, 
+			@RequestParam(value = "flag", required = false) String flag, 
+			@RequestParam(value="qzfs", required = false) String qzfs, HttpSession session, 
 			ModelMap model) {
 		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = new BizAccept();
@@ -65,7 +66,7 @@ public class BizAcceptController {
 		bizAccept.setCreator(userVO.getUserId());
 		bizAccept.setPopupFlag(flag);
 		bizAccept.setCreateTime(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
-		
+		bizAccept.setHelpMode(qzfs);
 //		session.setAttribute("bizAccept", bizAccept);
 		
 		model.addAttribute("bizAccept", bizAccept);

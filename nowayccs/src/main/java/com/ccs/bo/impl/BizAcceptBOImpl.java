@@ -42,6 +42,10 @@ public class BizAcceptBOImpl implements IBizAcceptBO {
 			LifeInformationVO lifeInfoVO = new LifeInformationVO();
 			lifeInfoVO.setInfoId(vo.getInfoId());
 			lifeInformationDAO.saveOrUpdate(lifeInfoVO);
+			//if help mode is sms, update hj_recv table with status = "C"
+			if(Constants.HELP_MODE_SMS.equals(vo.getHelpMode())) {
+				
+			}
 		}
 	}
 	@Override
