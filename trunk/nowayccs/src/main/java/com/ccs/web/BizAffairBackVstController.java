@@ -72,6 +72,12 @@ public class BizAffairBackVstController {
 	@RequestMapping(params = "action=backvst")
 	public String backVst(String infoId, String pageNo, ModelMap model, HttpSession session) {
 		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		if(null != userBO.findUserRole(userVO.getUserId(), Constants.SYS_ROLE_ADMIN)) {
+			model.addAttribute("adminRight", "Y");
+		} else {
+			model.addAttribute("adminRight", "N");
+		}
+		
 		InformationVO infoVO = bizAffairBackVstBO.findInfoByInfoId(infoId);
 		
 		AffairInformationVO affairInfoVO = bizAffairBackVstBO.findAffairInfoByInfoId(infoId);

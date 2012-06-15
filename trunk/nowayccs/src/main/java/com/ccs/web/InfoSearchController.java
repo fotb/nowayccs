@@ -123,8 +123,8 @@ public class InfoSearchController {
 			
 			model.addAttribute("lifeInfoVO", lifeInfoVO);
 			
-			if(null != lifeInfoVO.getCaller()) {
-				model.addAttribute("caller", userBO.findById(lifeInfoVO.getCaller()));
+			if(null != lifeInfoVO.getPrincipal()) {
+				model.addAttribute("caller", userBO.findById(lifeInfoVO.getPrincipal()));
 			}
 		}
 		return "infosearch/lifeinfo";

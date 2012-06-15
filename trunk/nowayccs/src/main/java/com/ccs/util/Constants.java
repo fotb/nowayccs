@@ -154,7 +154,8 @@ public class Constants {
 
     }
 
-
+public static final String HELP_MODE_SMS = "4";
+    
     /*求助类型*/
     /*
     public static final int HELP_TYPE_QUERY = 1; //咨询服务类
