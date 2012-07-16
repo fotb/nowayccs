@@ -311,7 +311,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           </tr>
           <tr class="table_t1">
             <td>求助时间：</td>
-            <td><form:input path="createTime" size="20"/></td>
+            <td><form:input path="createTime" size="20" readonly="true"/></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
