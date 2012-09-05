@@ -1,12 +1,10 @@
 package com.ccs.util;
 
 /**
- * @Functionality: 系统级异常基类
  */
 public class SystemException extends BaseException {
 
         /**
-         * @Functionality: 构造函数
          * @param :
          * @return :
          */
@@ -15,8 +13,6 @@ public class SystemException extends BaseException {
         }
 
         /**
-         * @Functionality: 构造函数
-         * @param : 异常消息
          * @return :
          */
         public SystemException(String message){
@@ -24,7 +20,6 @@ public class SystemException extends BaseException {
         }
 
         /**
-         * @Functionality: 构造函数
          * @param :
          * @return :
          */
@@ -33,7 +28,6 @@ public class SystemException extends BaseException {
         }
 
         /**
-         * @Functionality: 构造函数
          * @param :
          * @return :
          */
