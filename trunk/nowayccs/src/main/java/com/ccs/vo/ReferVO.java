@@ -1,6 +1,7 @@
 package com.ccs.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,11 @@ public class ReferVO implements Serializable {
 	@Column(name = "ADDRESS")
 	private String address;
 
+	@Column(name = "LASTUPDATOR")
+	private String lastUpdator;
+	@Column(name = "LASTUPDATEDT")
+	private Date lastUpdateDt;
+	
 	public String getReferId() {
 		return referId;
 	}
@@ -81,6 +87,22 @@ public class ReferVO implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getLastUpdator() {
+		return lastUpdator;
+	}
+
+	public void setLastUpdator(String lastUpdator) {
+		this.lastUpdator = lastUpdator;
+	}
+
+	public Date getLastUpdateDt() {
+		return lastUpdateDt;
+	}
+
+	public void setLastUpdateDt(Date lastUpdateDt) {
+		this.lastUpdateDt = lastUpdateDt;
 	}
 
 	@Override
