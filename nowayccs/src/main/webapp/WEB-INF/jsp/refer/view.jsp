@@ -75,6 +75,21 @@ function btnback_click(){
               <textarea cols="120" rows="10" class="form" readonly>${referVO.content}</textarea>
             </td>
           </tr>
+           <tr class="table_t1">
+            <td width="10%">最后修改人：</td>
+            <td>
+              ${lastUpdator}
+            </td>
+          </tr>
+			<tr class="table_t1">
+            <td width="10%">最后修改时间：</td>
+            <td>
+            	<c:if test="${not empty referVO.lastUpdateDt}"> 
+              <fmt:formatDate value="${referVO.lastUpdateDt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+              </c:if>
+            </td>
+            
+          </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
