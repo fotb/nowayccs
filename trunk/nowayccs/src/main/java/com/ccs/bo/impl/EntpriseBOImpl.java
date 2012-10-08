@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IEntpriseBO;
@@ -77,12 +78,13 @@ public class EntpriseBOImpl implements IEntpriseBO {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void addCategoryToEntprise(String entpriseId, List<String> categoryIdList) {
 		List<ClassOfEntpriseVO> oldCategoryList = classOfEntpriseDAO.findByEntpriseId(entpriseId);
-		if(!oldCategoryList.isEmpty()) {
-			classOfEntpriseDAO.deleteAll(oldCategoryList);
-		}
+//		if(!oldCategoryList.isEmpty()) {
+//			classOfEntpriseDAO.deleteAll(oldCategoryList);
+//		}
+		
 		List<ClassOfEntpriseVO> coeVOList = new ArrayList<ClassOfEntpriseVO>();
 		for (Iterator<String> iter = categoryIdList.iterator(); iter.hasNext();) {
 			String categoryId = (String) iter.next();
@@ -93,9 +95,31 @@ public class EntpriseBOImpl implements IEntpriseBO {
 			coeVO.setId(coeIdVO);
 			coeVOList.add(coeVO);
 		}
-		if(!coeVOList.isEmpty()) {
-			classOfEntpriseDAO.saveOrUpdate(coeVOList);
+		List<ClassOfEntpriseVO> removeCoeVOList = new ArrayList<ClassOfEntpriseVO>();
+		List<ClassOfEntpriseVO> newCoeVOList = new ArrayList<ClassOfEntpriseVO>();
+		for (ClassOfEntpriseVO coeVO : coeVOList) {
+			if(!oldCategoryList.contains(coeVO)) {
+				newCoeVOList.add(coeVO);
+			}
 		}
+		
+		for (ClassOfEntpriseVO coeVO : oldCategoryList) {
+			if(!coeVOList.contains(coeVO)) {
+				removeCoeVOList.add(coeVO);
+			}
+		}
+		
+		if(!removeCoeVOList.isEmpty()) {
+			classOfEntpriseDAO.deleteAll(removeCoeVOList);
+		}
+		
+		if(!newCoeVOList.isEmpty()) {
+			classOfEntpriseDAO.saveOrUpdate(newCoeVOList);
+		}
+		
+//		if(!coeVOList.isEmpty()) {
+//			classOfEntpriseDAO.saveOrUpdate(coeVOList);
+//		}
 	}
 
 	@Override
