@@ -235,6 +235,7 @@ public class BizAcceptController {
 	@RequestMapping(params = "action=refersave")
 	public String acceptReferSave(@ModelAttribute("bizAccept") BizAccept bindBizAccept, HttpSession session, ModelMap model) {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		//?? Use the same name of "bizAccept" with ModelAttribute???
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
 		bizAccept.setResult(bindBizAccept.getResult());
 		
