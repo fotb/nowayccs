@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>  
 <html>
 <head>
@@ -21,7 +21,7 @@ function btnprovs_click() {
 }
 </script>
 <body>
-<form:form method="post" action="bizaccept.do">
+<form：form method="post" action="bizaccept.do">
 <input type="hidden" id="action" name="action" value="lifesave"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
@@ -59,7 +59,7 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              ${bizAccept.helpTel}<c:if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c:if>
+              ${bizAccept.helpTel}<c：if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c：if>
             </td>
           </tr>
           <tr class="line">
@@ -78,12 +78,12 @@ function btnprovs_click() {
             <td>求助内容：</td>
             <td>
             <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent}</textarea>
-            <c:if test="${not empty bizAccept.helpContent2}">
+            <c：if test="${not empty bizAccept.helpContent2}">
              <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent2}</textarea>
-            </c:if>
-            <c:if test="${not empty bizAccept.helpContent3}">
+            </c：if>
+            <c：if test="${not empty bizAccept.helpContent3}">
             <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent3}</textarea>
-            </c:if>
+            </c：if>
             </td>
           </tr>
 
@@ -110,7 +110,7 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>受理人群：</td>
             <td>
-            <c:if test="${not empty bizAccept.helpGroup}">${slrqMap[bizAccept.helpGroup]}</c:if>
+            <c：if test="${not empty bizAccept.helpGroup}">${slrqMap[bizAccept.helpGroup]}</c：if>
             </td>
           </tr>
           <tr class="line">
@@ -135,6 +135,6 @@ function btnprovs_click() {
       </td>
     </tr>
   </table>
-</form:form>
+</form：form>
 </body>
 </html>

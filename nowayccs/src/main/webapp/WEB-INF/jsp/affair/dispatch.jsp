@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>  
 <html>
 <head>
@@ -38,16 +38,16 @@ function btnback_click(){
 
 $(document).ready(function(){
 	$("#moveTime" ).dynDateTime({
-  showsTime: true,
-  ifFormat: "%Y-%m-%d %H:%M",
-  button: ".next()" //next sibling to input field
+  showsTime： true,
+  ifFormat： "%Y-%m-%d %H：%M",
+  button： ".next()" //next sibling to input field
 	});
 });
 </script>
 <body>
-<form:form method="post" action="bizaffair.do?action=dispatchsave" commandName="affairDispatchBean">
+<form：form method="post" action="bizaffair.do?action=dispatchsave" commandName="affairDispatchBean">
 <input type="hidden" name="pageNo" id="pageNo" value="${pageNo}"/>
-<form:hidden path="infoId"/>
+<form：hidden path="infoId"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -111,7 +111,7 @@ $(document).ready(function(){
           <tr class="table_t1">
             <td>求助时间：</td>
             <td>
-            <fmt:formatDate value="${infoVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+            <fmt：formatDate value="${infoVO.createTime}" pattern="yyyy-MM-dd HH：mm：ss"/>
             </td>
           </tr>
           <tr class="line">
@@ -128,22 +128,22 @@ $(document).ready(function(){
           </tr>
           <tr class="table_t1">
             <td>移送方向：</td>
-            <td><form:input path="moveWay" cssStyle="form" size="70"/></td>
+            <td><form：input path="moveWay" cssStyle="form" size="70"/></td>
           </tr>
           <tr class="table_t1">
             <td>接洽人：</td>
-            <td><form:input path="moveAcceptor" cssStyle="form" size="30"/></td>
+            <td><form：input path="moveAcceptor" cssStyle="form" size="30"/></td>
           </tr>
           <tr class="table_t1">
             <td>电话：</td>
-            <td><form:input path="acceptorTel" cssStyle="form" size="30"/></td>
+            <td><form：input path="acceptorTel" cssStyle="form" size="30"/></td>
           </tr>
           <tr class="table_t1">
             <td>移送方式：</td>
             <td>
-              <form:select path="moveMode">
-              	<form:options items="${pdfsList}" itemLabel="value" itemValue="sortIndex"/>
-              </form:select>
+              <form：select path="moveMode">
+              	<form：options items="${pdfsList}" itemLabel="value" itemValue="sortIndex"/>
+              </form：select>
             </td>
           </tr>
           <tr class="line">
@@ -160,7 +160,7 @@ $(document).ready(function(){
           <tr class="table_t1">
             <td>移送时间：</td>
             <td>
-			<form:input path="moveTime" readonly="true"/>
+			<form：input path="moveTime" readonly="true"/>
             </td>
           </tr>
           <tr class="line">
@@ -176,6 +176,6 @@ $(document).ready(function(){
       </td>
     </tr>
   </table>
-</form:form>
+</form：form>
 </body>
 </html>

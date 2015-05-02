@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>  
 <html>
 <head>
@@ -26,7 +26,7 @@ function btnprovs_click() {
 }
 </script>
 <body>
-<form:form method="post" action="bizaccept.do?action=affairsave" commandName="bizAccept">
+<form：form method="post" action="bizaccept.do?action=affairsave" commandName="bizAccept">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -63,7 +63,7 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              ${bizAccept.helpTel}<c:if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c:if>
+              ${bizAccept.helpTel}<c：if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c：if>
             </td>
           </tr>
           <tr class="line">
@@ -108,7 +108,7 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>受理人群：</td>
             <td>
-				<c:if test="${not empty bizAccept.helpGroup}">${slrqMap[bizAccept.helpGroup]}</c:if>
+				<c：if test="${not empty bizAccept.helpGroup}">${slrqMap[bizAccept.helpGroup]}</c：if>
             </td>
           </tr>
           <tr class="line">
@@ -124,10 +124,10 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>接受人：</td>
             <td>
-              <form:select path="handAcceptor">
-              	<form:option value=" ">选择</form:option>
-              	<form:options items="${userList}" itemLabel="userName" itemValue="userId"/>
-              </form:select>
+              <form：select path="handAcceptor">
+              	<form：option value=" ">选择</form：option>
+              	<form：options items="${userList}" itemLabel="userName" itemValue="userId"/>
+              </form：select>
             </td>
           </tr>
           <tr class="line">
@@ -136,7 +136,7 @@ function btnprovs_click() {
           <!-- 
           <tr class="table_t1">
             <td>移交时间：</td>
-            <td><bean:write name="curDatetime"/></td>
+            <td><bean：write name="curDatetime"/></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
@@ -152,6 +152,6 @@ function btnprovs_click() {
       </td>
     </tr>
   </table>
-</form:form>
+</form：form>
 </body>
 </html>

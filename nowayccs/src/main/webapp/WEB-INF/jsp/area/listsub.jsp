@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>   
 <html>
 <head>
@@ -31,7 +31,7 @@
             <td width="50%">街道名称</td>
             <td colspan="2">操作</td>
           </tr>
-          <c:forEach items="${SubAreaList}" var="area">
+          <c：forEach items="${SubAreaList}" var="area">
           	<tr class='table_blue' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
                 <td>
                   ${area.name}
@@ -43,14 +43,14 @@
                 </td>
                 <td width="5%">
 
-                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${area.areaSubId}');" style="cursor:hand">
+                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${area.areaSubId}');" style="cursor：hand">
 
                 </td>
               </tr>
               <tr class="line">
                 <td height="1" colspan="4">                </td>
               </tr>
-          </c:forEach>          
+          </c：forEach>          
         </table>
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>

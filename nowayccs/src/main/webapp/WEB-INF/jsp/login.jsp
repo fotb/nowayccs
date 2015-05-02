@@ -28,11 +28,11 @@ $(document).keypress(function(e) {
 	}
 });
 </script>
-<body topmargin="0" leftmargin="0">
+<body topmargin="0" leftmargin="0" style="background: url('images/bg_login.gif');">
 <form:form action="login.do?action=login" method="post" commandName="loginBean">
-<table width="100%" height="100%"  border="0" cellpadding="0" cellspacing="0" background="images/bg_login.gif">
+<table width="100%"  height="600" border="0" cellpadding="0" cellspacing="0" >
   <tr>
-    <td><table width="683" height="408"  border="0" align="center" cellpadding="0" cellspacing="0">
+    <td><table width="683" height="408"  border="0" align="center" cellpadding="0" cellspacing="0" style="vertical-align: middle;">
       <tr>
         <td valign="bottom" background="images/login.jpg">
           <table width="70%" border="0" align="center" cellpadding="0" cellspacing="0">

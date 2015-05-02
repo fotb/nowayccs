@@ -8,7 +8,7 @@
 	# text-align : center; /*IE */
 	letter-spacing: 4px;
 	line-height: 22px;
-	vertical-align: bottom;
+	vertical-align: middle;
 	text-align: center;
 }
 
@@ -84,6 +84,19 @@
 	border-right: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
 	border-left: 1px solid #666666;
+}
+
+.form_accept {
+	font-family: sans-serif;
+	font-size: 14px;
+	font-weight:bold;
+	color: #333333;
+	background-color: #FFFFFF;
+	border-top: 1px solid #666666;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #666666;
+	height: 25px;
 }
 
 .font_inscribed {

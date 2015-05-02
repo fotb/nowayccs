@@ -91,6 +91,7 @@ function showAffairInfo(id) {
 
 
 $(document).ready(function(){
+	getLonelyFamily($("#helpTel").val());
 	loadHist();
 	getPhoneLevels($("#helpTel").val());
 	$("#helpTel").change(function(){
@@ -186,6 +187,33 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
 	return "<a href=\"infosearch.do?action=showinfo&infoId=" + options.rowId + "\" target=\"_blank\">"+cellValue+"</a>";
 }
 
+function getLonelyFamily(phone) {
+	if(phone == "") {
+		phone = "${bizAccept.helpTel}";
+	}
+	$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(data) {
+		if(null != data) {
+			$("#manName").text(data.manName);
+			$("#manSex").text(data.manSex);
+			$("#manBirthday").text(data.birthday);
+			$("#idCardNo").text(data.idCardNo);
+			$("#manArea").text(data.area);
+			$("#manAddr").text(data.address);
+			$("#manTelphone").text(data.telphone);
+			if("L" == data.familyType) {
+				$("#familyType").text("孤寡、空巢老人");
+			} else if("D" == data.familyType) {
+				$("#familyType").text("困难残疾家庭");
+			}
+			
+			$("#familyInfo").text(data.familyInfo);
+		} else {
+			$("#lonelyManTb").hide();
+			$("#lonelyFamilyDiv").hide();
+		}
+		
+	});
+}
 
 </script>
 <body>
@@ -193,7 +221,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
 <input type="hidden" name="action" id="action"/>
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
-      <td>
+      <td colspan="2">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr class="table_t1">
             <td width="3%" align="center">
@@ -216,7 +244,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td width="15%">求助者姓名：</td>
             <td>
-              <form:input path="helpName" cssClass="form" size="40" tabindex="1"/>
+              <form:input path="helpName" cssClass="form_accept" size="30" tabindex="1"/>
             </td>
           </tr>
           <tr class="line">
@@ -225,7 +253,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助方式：</td>
             <td>
-              <form:select path="helpMode" cssClass="form" items="${qzfsList}" itemLabel="value" itemValue="sortIndex" />
+              <form:select path="helpMode" cssClass="form_accept" items="${qzfsList}" itemLabel="value" itemValue="sortIndex" />
             </td>
           </tr>
           <tr class="line">
@@ -235,22 +263,28 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
             <td>求助电话：</td>
             <td>
             <c:choose>
-            <c:when test="${not empty bizAccept.popupFlag}">${bizAccept.helpTel}<form:hidden path="helpTel" /></c:when>
-            <c:otherwise><form:input path="helpTel" cssClass="form" size="40"/></c:otherwise>
+            <c:when test="${not empty bizAccept.popupFlag}"><font style="font-family: sans-serif;font-size: 14px;font-weight:bold;color: #333333;">${bizAccept.helpTel}</font><form:hidden path="helpTel" /></c:when>
+            <c:otherwise><form:input path="helpTel" cssClass="form_accept" size="30"/></c:otherwise>
             </c:choose>
             <span id="phonelevels" style="color: black"></span>
-            <c:if test="${not empty bizAccept.popupFlag}">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form:input path="otherTel" cssClass="form" size="40"/>
-            </c:if>
             </td>
+            </tr>
+            <c:if test="${not empty bizAccept.popupFlag}">
+                      <tr class="line">
+            <td height="1" colspan="2">            </td>
           </tr>
+            <tr class="table_t1">
+            <td>其他联系电话：</td>
+            <td><form:input path="otherTel" cssClass="form_accept" size="30"/></td>
+          </tr>
+           </c:if>
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
           <tr class="table_t1">
             <td>详细地址：</td>
             <td>
-              <form:input path="helpAddr" cssClass="form" size="70" tabindex="2"/>
+              <form:input path="helpAddr" cssClass="form_accept" size="50" tabindex="2"/>
             </td>
           </tr>
           <tr class="line">
@@ -259,9 +293,9 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助内容：<br><br><input type="button" value="+" id="addContent"/><input type="button" value="-" id="reduceContent"/></td>
             <td>
-              <form:textarea path="helpContent" cssClass="form" cols="120" rows="4" tabindex="3"/>
-              <form:textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>
-              <form:textarea path="helpContent3" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>              
+              <form:textarea path="helpContent" cssClass="form_accept" cols="1" rows="4" tabindex="3" cssStyle="width:440px;height:60px;"/>
+              <form:textarea path="helpContent2" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;"/>
+              <form:textarea path="helpContent3" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;"/>              
             </td>
           </tr>
           
@@ -272,7 +306,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助类型：</td>
             <td>
-              <form:select path="helpType" cssClass="form" >
+              <form:select path="helpType" cssClass="form_accept" >
                 <form:option value=" ">选择</form:option>
                 <form:options items="${helpTypeMap}"/>
               </form:select>
@@ -284,7 +318,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助区域：</td>
             <td>
-              <form:select path="helpArea" cssClass="form" items="${qzqyList}" itemLabel="value" itemValue="sortIndex" />              
+              <form:select path="helpArea" cssClass="form_accept" items="${qzqyList}" itemLabel="value" itemValue="sortIndex" />              
             </td>
           </tr>
           <tr class="line">
@@ -293,7 +327,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
               <tr class="table_t1">
             <td>受理人群：</td>
             <td>
-              <form:select path="helpGroup" cssClass="form">
+              <form:select path="helpGroup" cssClass="form_accept">
                 <option value=" ">选择</option>
                 <form:options items="${slrqList}" itemLabel="value" itemValue="sortIndex"/>
               </form:select>
@@ -304,45 +338,89 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           </tr>
           <tr class="table_t1">
             <td>服务者：</td>
-            <td>${user.userName}</td>
+            <td><font style="font-family: sans-serif;font-size: 14px;font-weight:bold;color: #333333;">${user.userName}</font></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
           <tr class="table_t1">
             <td>求助时间：</td>
-            <td><form:input path="createTime" size="20" readonly="true"/></td>
+            <td><form:input path="createTime" size="20" readonly="true" cssClass="form_accept"/></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
-          <tr align="center" class="table_t1">
-            <td colspan="4">
-              <img src="images/button_next.gif" width="60" height="18" onclick="btnnext_click()"/>
-            </td>
-          </tr>
+         
         </table>
       </td>
     </tr>
-    <tr>
-    <td>
-    <table width="100%" border="0" align="center" cellpadding="0"
-			cellspacing="0" class="table_gray">
-			<!-- 
-			<tr class="table_t1">
-				<td width="3%" align="center"><img src="images/icon_01.gif"
-					width="5" height="17" alt=""></td>
-				<td class="font_no">近期求助记录</td>
-			</tr>
-			 -->
-			<tr>
-				<td colspan="1">
-					<table id="histList"></table>
-					<div id="histPagerNav"></div>
+ <tr >
+            <td  align="center">
+              <div style="position: absolute;padding-left: 300px;" id="lonelyFamilyDiv"><input type="checkbox" id="lonelyFamilyDeal" style="vertical-align: middle;"/>结对家庭业务</div><img style="vertical-align: middle;"   src="images/button_next.gif" width="60" height="18" onclick="btnnext_click()"/>
+            </td>
+          </tr>         
+              <tr class="line">
+            <td height="1" colspan="2">            </td>
+          </tr>
+    <tr style="padding-top: 20px;" >
+    <td colspan="2">
+
+					<table width="100%" border="0" align="center" cellpadding="0" id="lonelyManTb">
+						<tr class="table_t1">
+							<td colspan="5" class="font_no">
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr class="table_t1">
+										<td width="3%" align="center"><img
+											src="images/icon_01.gif" width="5" height="17" alt="">
+										</td>
+										<td class="font_no">结对家庭信息</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr class="table_t1" style="height: 20px;">
+							<td width="90">姓名：</td>
+							<td align="left" id="manName"></td>
+							<td width="40">性别：</td>
+							<td align="left" id="manSex"></td>
+							<td width="60">出生日期：</td>
+							<td align="left" id="manBirthday"></td>
+						</tr>
+						<tr class="table_t2" style="height: 20px;">
+							<td>身份证号码：</td>
+							<td colspan="5" id="idCardNo"></td>
+						</tr>
+						<tr class="table_t1" style="height: 20px;">
+							<td>所属区域：</td>
+							<td colspan="5" id="manArea"></td>
+						</tr>
+						<tr class="table_t2" style="height: 20px;">
+							<td>家庭地址：</td>
+							<td colspan="5" id="manAddr"></td>
+						</tr>
+						<tr class="table_t1" style="height: 20px;">
+							<td>固定联系电话：</td>
+							<td colspan="5" id="manTelphone"></td>
+						</tr>
+						<tr class="table_t2" style="height: 20px;">
+							<td>家庭类别：</td>
+							<td colspan="5" id="familyType"></td>
+						</tr>
+						<tr class="table_t1" style="height: 40px;">
+							<td>家庭基本情况：</td>
+							<td colspan="5" id="familyInfo"></td>
+						</tr>
+					</table>
+					<table width="100%" border="0" align="center" cellpadding="0"
+						cellspacing="0" class="table_gray">
+						<tr>
+							<td colspan="1">
+								<table id="histList"></table>
+								<div id="histPagerNav"></div>
+							</td>
+						</tr>
+					</table>
 				</td>
-			</tr>
-		</table>
-    </td>
     </tr>
   </table>
   <form:hidden path="creator"/>

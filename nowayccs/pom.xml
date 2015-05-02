@@ -16,13 +16,9 @@
 		<hibernate.version>3.6.0.Final</hibernate.version>
 		<junit.version>3.8.1</junit.version>
 	</properties>
-<!-- 
-	<scm>
-		<connection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</connection>
-		<developerConnection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</developerConnection>
-		<url>http://somerepository.com/view.cvs</url>
-	</scm>
- -->
+	<!-- <scm> <connection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</connection> 
+		<developerConnection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</developerConnection> 
+		<url>http://somerepository.com/view.cvs</url> </scm> -->
 
 	<build>
 		<plugins>
@@ -79,19 +75,9 @@
 					</execution>
 				</executions>
 			</plugin>
-<!-- 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-scm-plugin</artifactId>
-				<version>1.6</version>
-				<configuration>
-					<configuration>
-						<username>noway.white@gmail.com</username>
-						<password>password</password>
-					</configuration>
-				</configuration>
-			</plugin>
-			 -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-scm-plugin</artifactId> 
+				<version>1.6</version> <configuration> <configuration> <username>noway.white@gmail.com</username> 
+				<password>password</password> </configuration> </configuration> </plugin> -->
 		</plugins>
 		<resources>
 			<resource>
@@ -397,15 +383,8 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>com.ccs</groupId>
-			<artifactId>sms</artifactId>
-			<version>0.0.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		 -->
+		<!-- <dependency> <groupId>com.ccs</groupId> <artifactId>sms</artifactId> 
+			<version>0.0.1</version> <type>jar</type> <scope>compile</scope> </dependency> -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -426,6 +405,16 @@
 			<version>0.0.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.rpc</groupId>
+			<artifactId>jaxrpc</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
 		</dependency>
 	</dependencies>
 </project>

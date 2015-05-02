@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp"%>
 <html>
 <head>
@@ -17,7 +17,7 @@ function btnback_click(){
 </script>
 </head>
 <body>
-<form:form method="post" action="agent.do?action=view" commandName="agent">
+<form：form method="post" action="agent.do?action=view" commandName="agent">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -81,17 +81,17 @@ function btnback_click(){
           </tr>
           <tr class="table_t1">
             <td width="15%" colspan="4">
-            <form:checkbox path="autoAnswer" disabled="true"/>自动应答
+            <form：checkbox path="autoAnswer" disabled="true"/>自动应答
             &nbsp;
-             <form:checkbox path="autoRelease" disabled="true"/>自动释放
+             <form：checkbox path="autoRelease" disabled="true"/>自动释放
             &nbsp;
-             <form:checkbox path="autoReconnect" disabled="true"/>自动重连
+             <form：checkbox path="autoReconnect" disabled="true"/>自动重连
             &nbsp;
-              <form:checkbox path="freeStatus" disabled="true"/>空闲/工作状态
+              <form：checkbox path="freeStatus" disabled="true"/>空闲/工作状态
             &nbsp;
-             <form:checkbox path="haveBell" disabled="true"/>铃声提示
+             <form：checkbox path="haveBell" disabled="true"/>铃声提示
             &nbsp;
-             <form:checkbox path="mediaPlay" disabled="true"/>多媒体铃声
+             <form：checkbox path="mediaPlay" disabled="true"/>多媒体铃声
             &nbsp;
             </td>
           </tr>
@@ -118,6 +118,6 @@ function btnback_click(){
       </td>
     </tr>
   </table>
-</form:form>
+</form：form>
 </body>
 </html>
