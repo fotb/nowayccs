@@ -168,4 +168,13 @@ public static final String HELP_MODE_SMS = "4";
         HELP_TYPE_HASHMAP.put(String.valueOf(HELP_TYPE_TRANSACTION), "事务服务类");
     }
     */
+
+	public static final String 	SPECIAL_FAMILY_LONELY = "L";
+	public static final String 	SPECIAL_FAMILY_DIFFICULT = "D";
+	
+	public static final Map<String, String> SPECIAL_FAMILY_MAP = new HashMap<String, String>();
+	static {
+		SPECIAL_FAMILY_MAP.put(SPECIAL_FAMILY_LONELY, "孤寡、空巢老人");
+		SPECIAL_FAMILY_MAP.put(SPECIAL_FAMILY_DIFFICULT, "困难残疾家庭");
+	}
 }

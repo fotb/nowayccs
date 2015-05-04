@@ -40,22 +40,28 @@ function btnnext_click(){
     return;
   }
   
-  if(!isValidStringObj( form.helpType,"求助类型",true)){
-    return;
-  }
-  if(!isValidStringObj( form.helpArea,"求助区域",true)){
-    return;
-  }
-  
-  if("2" == $("#helpType").val()) {
-	$("#action").val("life");
-	$("form").submit();
-  } else if("3" == $("#helpType").val()) {
-		$("#action").val("affair");
-		$("form").submit();
-  } else if("1" == $("#helpType").val() || "4" == $("#helpType").val()) {
-		$("#action").val("refer");
-		$("form").submit();
+  if($("#lonelyFamilyDeal").attr("checked") == "checked") {
+	  //结对家庭求助处理
+	  $("#bizAccept").attr("action", "lonelyFamily.do");
+	  $("#action").val("accept");
+	  $("form").submit();
+  } else {
+  	if(!isValidStringObj( form.helpType,"求助类型",true)){
+    	return;
+  	}
+  	if(!isValidStringObj( form.helpArea,"求助区域",true)){
+    	return;
+  	}
+    if("2" == $("#helpType").val()) {
+  	$("#action").val("life");
+  	$("form").submit();
+    } else if("3" == $("#helpType").val()) {
+  		$("#action").val("affair");
+  		$("form").submit();
+    } else if("1" == $("#helpType").val() || "4" == $("#helpType").val()) {
+  		$("#action").val("refer");
+  		$("form").submit();
+    }
   }
 }
 
