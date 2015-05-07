@@ -21,7 +21,7 @@
   </script>
 </head>
 <body>
-<form：form action="area.do" method="post">
+<form:form action="area.do" method="post">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -75,6 +75,6 @@
     </tr>
   </table>
   <input type="hidden" name="pageNo" value="${pageInfo.currentPage}">
-</form：form>
+</form:form>
 </body>
 </html>

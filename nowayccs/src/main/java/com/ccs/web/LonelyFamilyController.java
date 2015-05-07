@@ -1,6 +1,7 @@
 package com.ccs.web;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ccs.bo.IDictBO;
 import com.ccs.bo.ILonelyFamilyBO;
 import com.ccs.util.Constants;
+import com.ccs.util.StringUtil;
+import com.ccs.vo.DictVO;
+import com.ccs.vo.LonelyHelpVO;
 import com.ccs.vo.LonelyManInfoVO;
 import com.ccs.vo.PartyMemberForLonelyVO;
 import com.ccs.vo.UserVO;
@@ -31,6 +36,9 @@ public class LonelyFamilyController {
 	
 	@Autowired
 	private ILonelyFamilyBO lonelyFamilyBO;
+	
+	@Autowired
+	private IDictBO dictBO;
 	
 	@RequestMapping(params = "action=lonelyManInfo", method = RequestMethod.GET)
 	public @ResponseBody String loadFamilyInfo(@RequestParam(value = "callNo", required = false) String callNo) throws UnsupportedEncodingException {
@@ -54,6 +62,9 @@ public class LonelyFamilyController {
 		
 		List<PartyMemberForLonelyVO> pmflList = lonelyFamilyBO.findByManId(vo.getManId());
 		
+		model.addAttribute("pmflList", pmflList);
+		
+		session.setAttribute("bizAccept", bizAccept);
 		
 //		List<DictVO> qzfsList = dictBO.findByType(Constants.DICT_DICTTYPE_QZFS);
 //		model.addAttribute("qzfsList", qzfsList);
@@ -67,6 +78,52 @@ public class LonelyFamilyController {
 //		model.addAttribute("slrqList", slrqList);
 		
 		return "specialfamily/lonelyaccept";
+	}
+	
+	@RequestMapping(params = "action=back")
+	public String backAccept(HttpSession session, ModelMap model) {
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+
+		model.addAttribute("bizAccept", bizAccept);
+		model.addAttribute("user", userVO);
+		
+		List<DictVO> qzfsList = dictBO.findByType(Constants.DICT_DICTTYPE_QZFS);
+		model.addAttribute("qzfsList", qzfsList);
+				
+		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+		
+		List<DictVO> qzqyList = dictBO.findByType(Constants.DICT_DICTTYPE_QZQY);
+		model.addAttribute("qzqyList", qzqyList);
+		
+		List<DictVO> slrqList = dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ);
+		model.addAttribute("slrqList", slrqList);
+		
+		return "bizaccept/accept2";
+	}
+	
+	
+	@RequestMapping(params = "action=save")
+	public String save(@RequestParam("lonelyManId") String lonelyManId, @RequestParam("memberId") String memberId, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		
+		System.out.println("dddd-----" + memberId);
+		LonelyHelpVO vo = new LonelyHelpVO();
+		vo.setLonelyManId(lonelyManId);
+		vo.setHelpContent(bizAccept.getHelpContent());
+		vo.setDeliverer(memberId);
+		vo.setCreateTime(new Date());
+		vo.setCreator(user.getUserId());
+		vo.setStatus("E");
+		lonelyFamilyBO.helpSave(vo);
+		
+		session.setAttribute("bizAccept", null);
+		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+			return "common/selfclose";
+		} else {
+			return "redirect:bizaccept.do";
+		}
 	}
 
 }

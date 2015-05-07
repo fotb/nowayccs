@@ -13,4 +13,6 @@ public interface IPartyMemberForLonelyDAO {
 	PartyMemberForLonelyVO findById(final String memberId);
 	
 	List<PartyMemberForLonelyVO> findByManId(final String manId);
+	
+	List<String> findMemberIds(final String memberName);
 }

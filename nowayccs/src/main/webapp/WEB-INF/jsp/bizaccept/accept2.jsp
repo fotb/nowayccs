@@ -135,8 +135,8 @@ function getPhoneLevels(phone) {
 		phone = "${bizAccept.helpTel}";
 	}
 	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(data) {
-		$("#phonelevels").html("");
 		if(data != "") {
+			$("#phonelevels").html("");
 			if(data[0].levels < 0) {
 				$("#phonelevels").css("color", "black");
 			} else {
@@ -213,11 +213,13 @@ function getLonelyFamily(phone) {
 			}
 			
 			$("#familyInfo").text(data.familyInfo);
+			
+			$("#phonelevels").append("<div style='color:red;font-weight:bold;'>（结对家庭求助电话）</div>");
+			
 		} else {
 			$("#lonelyManTb").hide();
 			$("#lonelyFamilyDiv").hide();
 		}
-		
 	});
 }
 
@@ -269,10 +271,10 @@ function getLonelyFamily(phone) {
             <td>求助电话：</td>
             <td>
             <c:choose>
-            <c:when test="${not empty bizAccept.popupFlag}"><font style="font-family: sans-serif;font-size: 14px;font-weight:bold;color: #333333;">${bizAccept.helpTel}</font><form:hidden path="helpTel" /></c:when>
+            <c:when test="${not empty bizAccept.popupFlag}"><div style="font-family: sans-serif;font-size: 14px;font-weight:bold;color: #333333;float:left">${bizAccept.helpTel}</div><form:hidden path="helpTel" /></c:when>
             <c:otherwise><form:input path="helpTel" cssClass="form_accept" size="30"/></c:otherwise>
             </c:choose>
-            <span id="phonelevels" style="color: black"></span>
+            <div id="phonelevels" style="color: black;vertical-align: middle;"></div>
             </td>
             </tr>
             <c:if test="${not empty bizAccept.popupFlag}">

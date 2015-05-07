@@ -29,7 +29,7 @@ function option_delete(phoneId) {
 </script>
 
 <body>
-<form：form method="POST" action="blacklist.do" commandName="dict">
+<form:form method="POST" action="blacklist.do" commandName="dict">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -127,6 +127,6 @@ function option_delete(phoneId) {
       </td>
     </tr>
   </table><input type="hidden" name="pageNo" value="${pageInfo.currentPage}" />
-  </form：form>
+  </form:form>
 </body>
 </html>

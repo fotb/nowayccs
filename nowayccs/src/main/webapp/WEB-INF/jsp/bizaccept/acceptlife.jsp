@@ -21,7 +21,7 @@ function btnprovs_click() {
 }
 </script>
 <body>
-<form：form method="post" action="bizaccept.do">
+<form:form method="post" action="bizaccept.do">
 <input type="hidden" id="action" name="action" value="lifesave"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
@@ -135,6 +135,6 @@ function btnprovs_click() {
       </td>
     </tr>
   </table>
-</form：form>
+</form:form>
 </body>
 </html>

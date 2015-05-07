@@ -26,7 +26,7 @@ function btnprovs_click() {
 }
 </script>
 <body>
-<form：form method="post" action="bizaccept.do?action=affairsave" commandName="bizAccept">
+<form:form method="post" action="bizaccept.do?action=affairsave" commandName="bizAccept">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -124,10 +124,10 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>接受人：</td>
             <td>
-              <form：select path="handAcceptor">
-              	<form：option value=" ">选择</form：option>
-              	<form：options items="${userList}" itemLabel="userName" itemValue="userId"/>
-              </form：select>
+              <form:select path="handAcceptor">
+              	<form:option value=" ">选择</form:option>
+              	<form:options items="${userList}" itemLabel="userName" itemValue="userId"/>
+              </form:select>
             </td>
           </tr>
           <tr class="line">
@@ -152,6 +152,6 @@ function btnprovs_click() {
       </td>
     </tr>
   </table>
-</form：form>
+</form:form>
 </body>
 </html>

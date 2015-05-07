@@ -11,18 +11,33 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script src="js/function.js" type="text/javascript"></script>
 <script language="javascript" type="">
-function btnnext_click(){
+function btnsave_click() {
+if($('input:radio[name="chkMemberId"]').is(":checked")) {
+	$("input[name='chkMemberId']").each(function(){
+          if ($(this).attr('checked') =="checked") {
+				$("#memberId").val($(this).val());
+            }
+     });
+	$("#action").val("save");
 	$("form").submit();
+} else {
+	alert("请选择党员志愿者！");
+	return;
+}
+
+
 }
 function btnprovs_click() {
-	$("form").attr("action", "bizaccept.do");
+	$("form").attr("action", "lonelyFamily.do");
 	$("#action").val("back");
 	$("form").submit();
 }
 </script>
 <body>
-<form：form method="post" action="lonelyFamily.do">
-<input type="hidden" id="action" name="action" value="lifesave"/>
+<form:form method="post" action="lonelyFamily.do">
+<input type="hidden" id="lonelyManId" name="lonelyManId" value="${lonelyManInfoVO.manId }"/>
+<input type="hidden" id="memberId" name="memberId"/>
+<input type="hidden" id="action" name="action" value="save"/>
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -98,22 +113,19 @@ function btnprovs_click() {
 			<tr class="line">
             	<td height="1" colspan="6">            </td>
           	</tr>
-			<tr class="table_t1">
+			<tr class="table_t1" style="height: 20px;">
  				<td>服务者：</td>
  				<td colspan="5">${bizAccept.creator}</td>
 			</tr>
 			<tr class="line">
  				<td height="1" colspan="6"></td>
 			</tr>
-			<tr align="center" class="table_t1">
- 				<td colspan="6">
-  	 				<img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click();"/>
-   					<img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click();"/>
- 				</td>
-			</tr>
 		</table>
       </td>
     </tr>
+    			<tr >
+ 				<td height="10" ></td>
+			</tr>
     <tr>
     <td>
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -132,56 +144,70 @@ function btnprovs_click() {
         <tr>
         <td>
 		<table width="100%" border=0 cellspacing=0 cellpadding=0>
+		<c:forEach items="${pmflList}" var="pmfl">
 			<tr class="table_t1">
-				<td width="100" rowspan=6 align="center"><input type="checkbox" id="vvvv" style="vertical-align: middle; margin-right: 10px;"/>张三</td>
-				<td width="1" style="background-color: #E6E6E6;"> </td>
+				<td width="100" align="center"><input
+					type="radio" id="chkMemberId" name="chkMemberId"  value="${pmfl.memberId}"
+					style="vertical-align: middle; margin-right: 10px;" />${pmfl.memberName}</td>
+				<td width="1" style="background-color: #E6E6E6;"></td>
 				<td>
-				<table width="100%" border=0 cellspacing=0 cellpadding=0 style="padding-left: 2px;">
-				<tr class="table_t1">
-				<td width="80">性别：</td>
-				<td >男</td>
-				<td width="80">出生年月：</td>
-				<td >11111111</td>
-				</tr>
-				<tr class="line">
-            	<td height="1" colspan="4">            </td>
-          		</tr>			
-			<tr class="table_t2">
-				<td  >工作单位：</td>
-				<td colspan=4>1</td>
-			</tr>
-				<tr class="line">
-            	<td height="1" colspan="4">            </td>
-          		</tr>
-			<tr class="table_t1">
-				<td  >联系电话：</td>
-				<td colspan=4>1</td>
-			</tr>
-				<tr class="line">
-            	<td height="1" colspan="4">            </td>
-          		</tr>
-			<tr class="table_t2">
-				<td  >家庭地址：</td>
-				<td colspan=4>1</td>
-			</tr>
-				<tr class="line">
-            	<td height="1" colspan="4">            </td>
-          		</tr>
-			<tr class="table_t1">
-				<td >特长：</td>
-				<td colspan=4>1</td>
-			</tr>
-				<tr class="line">
-            	<td height="1" colspan="4">            </td>
-          		</tr>
-				</table>
+					<table width="100%" border=0 cellspacing=0 cellpadding=0
+						style="padding-left: 2px;">
+						<tr class="table_t1" style="height: 20px;">
+							<td width="80">性别：</td>
+							<td><c:choose>
+									<c:when test="${pmfl.memberSex =='M'}">男</c:when>
+									<c:otherwise>女</c:otherwise>
+								</c:choose></td>
+							<td width="80">出生年月：</td>
+							<td>${pmfl.birthday }</td>
+						</tr>
+						<tr class="line">
+							<td height="1" colspan="4"></td>
+						</tr>
+						<tr class="table_t2" style="height: 20px;">
+							<td>工作单位：</td>
+							<td colspan=4>${pmfl.workDept }</td>
+						</tr>
+						<tr class="line">
+							<td height="1" colspan="4"></td>
+						</tr>
+						<tr class="table_t1" style="height: 20px;">
+							<td>联系电话：</td>
+							<td colspan=4>${pmfl.linkPhone }</td>
+						</tr>
+						<tr class="line">
+							<td height="1" colspan="4"></td>
+						</tr>
+						<tr class="table_t2" style="height: 20px;">
+							<td>家庭地址：</td>
+							<td colspan=4>${pmfl.address }</td>
+						</tr>
+						<tr class="line">
+							<td height="1" colspan="4"></td>
+						</tr>
+						<tr class="table_t1" style="height: 20px;">
+							<td>特长：</td>
+							<td colspan=4>${pmfl.specialty }</td>
+						</tr>
+
+					</table>
 				</td>
 			</tr>
-			
-		</table>
+			<tr style="background-color: #E6E6E6; height: 4px;">
+				<td height="1" colspan="4"></td>
+			</tr>
+		</c:forEach>
+	</table>
 	</td>
     </tr>
-  </table>
-</form：form>
+	<tr align="center" class="table_t1">
+		<td colspan="6">
+			<img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click();" />
+			<img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click();" />
+		</td>
+	</tr>
+</table>
+</form:form>
 </body>
 </html>

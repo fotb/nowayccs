@@ -187,7 +187,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
 
 </script>
 <body>
-<form：form method="post" action="bizaccept.do" commandName="bizAccept">
+<form:form method="post" action="bizaccept.do" commandName="bizAccept">
 <input type="hidden" name="action" id="action"/>
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
@@ -214,7 +214,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td width="15%">求助者姓名：</td>
             <td>
-              <form：input path="helpName" cssClass="form" size="40" tabindex="1"/>
+              <form:input path="helpName" cssClass="form" size="40" tabindex="1"/>
             </td>
           </tr>
           <tr class="line">
@@ -223,7 +223,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助方式：</td>
             <td>
-              <form：select path="helpMode" cssClass="form" items="${qzfsList}" itemLabel="value" itemValue="sortIndex" />
+              <form:select path="helpMode" cssClass="form" items="${qzfsList}" itemLabel="value" itemValue="sortIndex" />
             </td>
           </tr>
           <tr class="line">
@@ -232,7 +232,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              <form：input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color： black"></span><!-- &nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form：input path="otherTel" cssClass="form" size="40"/> -->
+              <form:input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color： black"></span><!-- &nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form:input path="otherTel" cssClass="form" size="40"/> -->
             </td>
           </tr>
           <tr class="line">
@@ -241,7 +241,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>详细地址：</td>
             <td>
-              <form：input path="helpAddr" cssClass="form" size="70" tabindex="2"/>
+              <form:input path="helpAddr" cssClass="form" size="70" tabindex="2"/>
             </td>
           </tr>
           <tr class="line">
@@ -250,9 +250,9 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助内容：<br><br><input type="button" value="+" id="addContent"/><input type="button" value="-" id="reduceContent"/></td>
             <td>
-              <form：textarea path="helpContent" cssClass="form" cols="120" rows="4" tabindex="3"/>
-              <form：textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display：none;"/>
-              <form：textarea path="helpContent3" cssClass="form" cols="120" rows="4" cssStyle="display：none;"/>              
+              <form:textarea path="helpContent" cssClass="form" cols="120" rows="4" tabindex="3"/>
+              <form:textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display：none;"/>
+              <form:textarea path="helpContent3" cssClass="form" cols="120" rows="4" cssStyle="display：none;"/>              
             </td>
           </tr>
           
@@ -263,10 +263,10 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助类型：</td>
             <td>
-              <form：select path="helpType" cssClass="form" >
-                <form：option value=" ">选择</form：option>
-                <form：options items="${helpTypeMap}"/>
-              </form：select>
+              <form:select path="helpType" cssClass="form" >
+                <form:option value=" ">选择</form:option>
+                <form:options items="${helpTypeMap}"/>
+              </form:select>
             </td>
           </tr>
           <tr class="line">
@@ -275,7 +275,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助区域：</td>
             <td>
-              <form：select path="helpArea" cssClass="form" items="${qzqyList}" itemLabel="value" itemValue="sortIndex" />              
+              <form:select path="helpArea" cssClass="form" items="${qzqyList}" itemLabel="value" itemValue="sortIndex" />              
             </td>
           </tr>
           <tr class="line">
@@ -284,10 +284,10 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
               <tr class="table_t1">
             <td>受理人群：</td>
             <td>
-              <form：select path="helpGroup" cssClass="form">
+              <form:select path="helpGroup" cssClass="form">
                 <option value=" ">选择</option>
-                <form：options items="${slrqList}" itemLabel="value" itemValue="sortIndex"/>
-              </form：select>
+                <form:options items="${slrqList}" itemLabel="value" itemValue="sortIndex"/>
+              </form:select>
             </td>
           </tr>
           <tr class="line">
@@ -302,7 +302,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           </tr>
           <tr class="table_t1">
             <td>求助时间：</td>
-            <td><form：input path="createTime" size="20" readonly="true"/></td>
+            <td><form:input path="createTime" size="20" readonly="true"/></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
@@ -336,9 +336,9 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
     </td>
     </tr>
   </table>
-  <form：hidden path="creator"/>
-  <form：hidden path="createTime"/>
-		<form：hidden path="popupFlag"/>
-	</form：form>
+  <form:hidden path="creator"/>
+  <form:hidden path="createTime"/>
+		<form:hidden path="popupFlag"/>
+	</form:form>
 </body>
 </html>

@@ -26,7 +26,7 @@ function btnback_click(){
 }
 </script>
 <body>
-<form：form method="post" action="blacklist.do?action=addsave" commandName="blackListVO">
+<form:form method="post" action="blacklist.do?action=addsave" commandName="blackListVO">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -45,7 +45,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td width="10%">电话号码：</td>
             <td>
-            	<form：input path="phoneNum" cssClass="form" size="20"/>&nbsp;&nbsp;&nbsp;&nbsp;<font color="red"><form：errors path="phoneNum"/></font>
+            	<form:input path="phoneNum" cssClass="form" size="20"/>&nbsp;&nbsp;&nbsp;&nbsp;<font color="red"><form:errors path="phoneNum"/></font>
             </td>
           </tr>
           <tr class="line">
@@ -54,25 +54,25 @@ function btnback_click(){
           <tr class="table_t1">
             <td width="10%">等级：</td>
             <td>
-            <form：select path="levels">
-	            <form：option value="-5" >-5</form：option>
-	            <form：option value="-4" >-4</form：option>
-	            <form：option value="-3" >-3</form：option>
-	            <form：option value="-2" >-2</form：option>
-	            <form：option value="-1" >-1</form：option>
-            	<form：option value="0" >0</form：option>
-            	<form：option value="1" >1</form：option>
-            	<form：option value="2" >2</form：option>
-            	<form：option value="3" >3</form：option>
-            	<form：option value="4" >4</form：option>
-            	<form：option value="5" >5</form：option>
-            </form：select>
+            <form:select path="levels">
+	            <form:option value="-5" >-5</form:option>
+	            <form:option value="-4" >-4</form:option>
+	            <form:option value="-3" >-3</form:option>
+	            <form:option value="-2" >-2</form:option>
+	            <form:option value="-1" >-1</form:option>
+            	<form:option value="0" >0</form:option>
+            	<form:option value="1" >1</form:option>
+            	<form:option value="2" >2</form:option>
+            	<form:option value="3" >3</form:option>
+            	<form:option value="4" >4</form:option>
+            	<form:option value="5" >5</form:option>
+            </form:select>
             </td>
           </tr>
           <tr class="table_t1">
             <td width="10%">备注：</td>
             <td>
-            <form：textarea path="remark" cssClass="form"/>
+            <form:textarea path="remark" cssClass="form"/>
             </td>
           </tr>
           <tr class="line">
@@ -88,6 +88,6 @@ function btnback_click(){
       </td>
     </tr>
   </table>
-</form：form>
+</form:form>
 </body>
 </html>

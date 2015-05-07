@@ -19,7 +19,7 @@ function option_delete(id){
 }
 </script>
 <body>
-<form：form method="post" action="bizaffair.do">
+<form:form method="post" action="bizaffair.do">
 <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
   <tr>
     <td>
@@ -86,6 +86,6 @@ function option_delete(id){
   </tr>
 </table>
 <input type="hidden" name="pageNo" value="${pageInfo.currentPage}">
-</form：form>
+</form:form>
 </body>
 </html>

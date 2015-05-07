@@ -17,17 +17,11 @@ public class LonelyHelpVO implements Serializable {
 	@Id
 	@GeneratedValue(generator = "hibernate-uuid")
 	@org.hibernate.annotations.GenericGenerator(name = "hibernate-uuid", strategy = "uuid")
-	@Column(name = "HELPDI")
+	@Column(name = "HELPID")
 	private String helpId;
 	
-	@Column(name = "HELPNAME")
-	private String helpName;
-	
-	@Column(name = "HELPTEL")
-	private String helpTel;
-	
-	@Column(name = "HELPADDR")
-	private String helpAddr;
+	@Column(name = "LONELYMANID")
+	private String lonelyManId;
 	
 	@Column(name = "HELPCONTENT")
 	private String helpContent;
@@ -44,7 +38,7 @@ public class LonelyHelpVO implements Serializable {
 	@Column(name = "STATUS")
 	private String status;
 	
-	@Column(name = "DELIVERVER")
+	@Column(name = "DELIVERER")
 	private String deliverer;
 
 	public String getHelpId() {
@@ -55,28 +49,12 @@ public class LonelyHelpVO implements Serializable {
 		this.helpId = helpId;
 	}
 
-	public String getHelpName() {
-		return helpName;
+	public String getLonelyManId() {
+		return lonelyManId;
 	}
 
-	public void setHelpName(String helpName) {
-		this.helpName = helpName;
-	}
-
-	public String getHelpTel() {
-		return helpTel;
-	}
-
-	public void setHelpTel(String helpTel) {
-		this.helpTel = helpTel;
-	}
-
-	public String getHelpAddr() {
-		return helpAddr;
-	}
-
-	public void setHelpAddr(String helpAddr) {
-		this.helpAddr = helpAddr;
+	public void setLonelyManId(String lonelyManId) {
+		this.lonelyManId = lonelyManId;
 	}
 
 	public String getHelpContent() {

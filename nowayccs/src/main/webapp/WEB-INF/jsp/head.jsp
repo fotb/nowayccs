@@ -209,7 +209,7 @@ function Phone_test() {
 $("#BtAns").attr("disabled", true); 
   $("#BtRelease").attr("disabled", false); 
 //window.parent.frames("main").location = "bizaccept.do?flag=Y&callNo=13958186722&qzfs=4";
-  window.open("bizaccept.do?flag=Y&callNo=057312345678&qzfs=4", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+  window.open("bizaccept.do?flag=Y&callNo=12345678&qzfs=4", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 
 //呼出

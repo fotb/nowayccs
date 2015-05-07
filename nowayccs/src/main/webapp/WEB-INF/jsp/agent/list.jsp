@@ -11,7 +11,7 @@
 <link href="css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<form：form action="agent.do" method="post">
+	<form:form action="agent.do" method="post">
 		<table width="865" border="0" align="center" cellpadding="0"
 			cellspacing="0" class="table_gray">
 			<tr>
@@ -67,6 +67,6 @@
 					</td>
 			</tr>
 		</table>
-	</form：form>
+	</form:form>
 </body>
 </html>

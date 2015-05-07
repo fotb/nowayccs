@@ -31,7 +31,7 @@ function btnprovs_click() {
 }
 </script>
 <body>
-<form：form method="post" action="bizaccept.do?action=refersave" commandName="bizAccept">
+<form:form method="post" action="bizaccept.do?action=refersave" commandName="bizAccept">
   <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -126,7 +126,7 @@ function btnprovs_click() {
           </tr>
           <tr class="table_t1">
             <td>咨询处理描述</td>
-            <td><form：textarea path="result" cols="60" rows="6"/></td>
+            <td><form:textarea path="result" cols="60" rows="6"/></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
@@ -141,6 +141,6 @@ function btnprovs_click() {
       </td>
     </tr>
   </table>
-</form：form>
+</form:form>
 </body>
 </html>

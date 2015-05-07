@@ -12,4 +12,6 @@ public interface ILonelyManInfoDAO {
 	LonelyManInfoVO findById(final String manId);
 	
 	List<LonelyManInfoVO> findByTelphone(final String telphone);
+	
+	List<String> findLonelyManIds(final String lonelyManName, final String telphone);
 }
