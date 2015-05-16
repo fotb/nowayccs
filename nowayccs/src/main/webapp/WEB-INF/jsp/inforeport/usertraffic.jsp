@@ -91,6 +91,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
         <td>生活服务类</td>
         <td>事务服务类</td>
         <td>生产力服务</td>
+        <td>结对家庭服务</td>
         <td>总计</td>
         </tr>
 		<c:forEach items="${dtoList}" var="dto">
@@ -101,10 +102,11 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
         <td>${dto.lifeTraffic}</td>
         <td>${dto.affairTraffic}</td>
         <td>${dto.sclTraffic}</td>
+        <td>${dto.jdjtTraffic}</td>
         <td>${dto.totalTraffic}</td>
         </tr>
       <tr class="line">
-        <td height="1" colspan="6"></td>
+        <td height="1" colspan="8"></td>
         </tr>
 	  </c:forEach>
     </table>

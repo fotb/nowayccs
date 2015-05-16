@@ -32,4 +32,5 @@ public interface IUserDAO {
 	
 	List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean);
 	
+	List<UserTrafficBean> findUserJdjtTraffic(TrafficSearchBean bean);
 }

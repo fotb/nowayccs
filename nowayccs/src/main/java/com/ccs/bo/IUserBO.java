@@ -41,6 +41,8 @@ public interface IUserBO {
 	
 	List<UserTrafficBean> findUserTraffic(TrafficSearchBean bean);
 	
+	List<UserTrafficBean> findUserJdjtTraffic(TrafficSearchBean bean);
+	
 	Map<String, OperationVO> findUserOpertaionRightByUserId(String userId);
 	
 	UserRoleVO findUserRole(String userId, String roleId);

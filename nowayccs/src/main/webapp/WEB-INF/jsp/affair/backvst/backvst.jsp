@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../../common/includes.jsp" %>  
 <html>
 <head>
@@ -73,15 +73,15 @@ function btnback_click(){
   $("form").submit();
 }
 
-<c：if test="${adminRight == 'Y'}">
+<c:if test="${adminRight == 'Y'}">
 $(document).ready(function(){
 	$("#finishTime" ).dynDateTime({
-  showsTime： true,
-  ifFormat： "%Y-%m-%d",
-  button： ".next()" //next sibling to input field
+  showsTime: true,
+  ifFormat: "%Y-%m-%d",
+  button: ".next()" //next sibling to input field
 	});
 });
-</c：if>
+</c:if>
 </script>
 <body>
 <form:form method="post" action="bizaffairbackvst.do?action=backvstsave" commandName="affairBackVstDomain">
@@ -135,7 +135,7 @@ $(document).ready(function(){
           <tr class="table_t1">
             <td align="right">求助时间：</td>
             <td width="120">
-              <fmt：formatDate value="${infoVO.createTime}" pattern="yyyy-MM-dd HH：mm：ss"/>
+              <fmt:formatDate value="${infoVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
             <td align="right">求助区域：</td>
             <td align="left" width="100">
@@ -156,7 +156,7 @@ $(document).ready(function(){
             <td align="right">联系电话：</td>
             <td>${affairInfoVO.moveAcceptTel }</td>
             <td align="right">移送时间：</td>
-            <td><fmt：formatDate value="${affairInfoVO.moveTime}" pattern="yyyy-MM-dd HH：mm：ss"/></td>
+            <td><fmt:formatDate value="${affairInfoVO.moveTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
@@ -238,9 +238,9 @@ $(document).ready(function(){
           </tr>
           <tr align="center">
             <td colspan="6" class="table_t2">
-              <img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()" style="cursor： pointer;"/>
-              <img src="images/button_end.gif" width="60" height="18" onclick="btnfinish_click()" style="cursor： pointer;"/>
-              <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()" style="cursor： pointer;"/>
+              <img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()" style="cursor: pointer;"/>
+              <img src="images/button_end.gif" width="60" height="18" onclick="btnfinish_click()" style="cursor: pointer;"/>
+              <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()" style="cursor: pointer;"/>
             </td>
           </tr>
         </table>

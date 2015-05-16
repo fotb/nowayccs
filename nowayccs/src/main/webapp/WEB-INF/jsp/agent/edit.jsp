@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp"%>
 <html>
 <head>
@@ -89,7 +89,7 @@ function btnback_click(){
           <tr class="table_t1">
             <td width="15%">坐席类型：</td>
             <td>
-              <form:select path="agentType" cssStyle="HEIGHT： 22px; WIDTH： 132px">
+              <form:select path="agentType" cssStyle="HEIGHT: 22px; WIDTH: 132px">
 				<form:option value="4">PCPHONE</form:option>
 				<form:option value="2">1B1D</form:option>
 				<form:option value="5">2B1D</form:option>
@@ -98,7 +98,7 @@ function btnback_click(){
             </td>
             <td width="15%">APC卡类型：</td>
             <td>
-               <form:select path="cardType" cssStyle="HEIGHT： 22px; WIDTH： 132px" >
+               <form:select path="cardType" cssStyle="HEIGHT: 22px; WIDTH: 132px" >
 					<form:option value="3">CQ04</form:option>
 					<form:option value="0">CQ01</form:option>
 					<form:option value="1">CQ05</form:option>
@@ -123,7 +123,7 @@ function btnback_click(){
             </td>
             <td width="15%">服务器类型：</td>
             <td>
-              <form:select path="serverType" cssStyle="HEIGHT： 22px; WIDTH： 132px">
+              <form:select path="serverType" cssStyle="HEIGHT: 22px; WIDTH: 132px">
 	              <form:option value="22">MCP</form:option>
 	              <form:option value="20">UIS</form:option>
               </form:select>
@@ -155,8 +155,8 @@ function btnback_click(){
           </tr>
           <tr align="center" class="table_t1">
             <td colspan="2">
-              <img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()" style="cursor： pointer;"/>
-              <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()" style="cursor： pointer;"/>
+              <img src="images/button_save.gif" width="60" height="18" onclick="btnsave_click()" style="cursor: pointer;"/>
+              <img src="images/button_back.gif" alt="返回前一页面" width="60" height="18" border="0" onclick="btnback_click()" style="cursor: pointer;"/>
             </td>
           </tr>
         </table>

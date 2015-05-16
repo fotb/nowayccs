@@ -444,11 +444,12 @@ Phone_OnSignInExFailure()
           &nbsp;&nbsp;
             <INPUT id =btnCallOut  name=button12  type=button value=呼出 disabled LANGUAGE=javascript onclick="return btnCallOut_onclick()">
           <INPUT id =btnTrans name=button11  type=button value=呼叫转移 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
-		  	<input id="test" name="testbt" type="button" onclick="Phone_test();" value="test">
+		  	<!-- <input id="test" name="testbt" type="button" onclick="Phone_test();" value="test"> -->
         </logic:present>
-          <div style="position:absolute;top:120;left:595; " id="TextResult"></div>
+
+          <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div>
         </td>
-        <td align="center">
+        <td align="center" nowrap="nowrap">
           <script language=JavaScript>
 <!--
 today=new Date();

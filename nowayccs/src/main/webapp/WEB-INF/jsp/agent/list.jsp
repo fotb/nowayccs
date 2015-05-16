@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp"%>
 <html>
 <head>
@@ -28,23 +28,23 @@
 						<tr class='table_white'
 							onmouseover="this.style.backgroundColor='#F0F0F0'"
 							onmouseout="this.style.backgroundColor='#ffffff'">
-							<td><c：if test="${not empty agent}"><a href="agent.do?action=view&userId=${agent.userId}">${user.userName}</a></c：if></td>
+							<td><c:if test="${not empty agent}"><a href="agent.do?action=view&userId=${agent.userId}">${user.userName}</a></c:if></td>
 							<td>${agent.workNo}</td>
 							<td>
-								<c：if test="${agent.agentType == '4'}">PCPHONE</c：if>
-								<c：if test="${agent.agentType != '4'}">${agent.agentType}</c：if>
+								<c:if test="${agent.agentType == '4'}">PCPHONE</c:if>
+								<c:if test="${agent.agentType != '4'}">${agent.agentType}</c:if>
 							</td>
 							<td>
-								<c：if test="${agent.cardType == '3'}">CQ04</c：if>
-								<c：if test="${agent.cardType != '3'}">${agent.cardType}</c：if>
+								<c:if test="${agent.cardType == '3'}">CQ04</c:if>
+								<c:if test="${agent.cardType != '3'}">${agent.cardType}</c:if>
 							</td>
 							<td>${agent.mainCcsIp}</td>
 							<td width="5%">
-								<c：if test="${not empty agent}">
+								<c:if test="${not empty agent}">
 									<a href="agent.do?action=edit&userId=${agent.userId}">
 										<img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
 									</a>
-								</c：if>
+								</c:if>
 							</td>
 						</tr>
 						<tr class="line">
@@ -52,7 +52,7 @@
 						</tr>
 					</table> 
 					
-					<c：if test="${empty agent}">
+					<c:if test="${empty agent}">
 						<table width="97%" border="0" align="center" cellpadding="0"
 							cellspacing="0">
 							<tr>
@@ -63,7 +63,7 @@
 								</td>	
 							</tr>
 						</table>
-					</c：if>
+					</c:if>
 					</td>
 			</tr>
 		</table>

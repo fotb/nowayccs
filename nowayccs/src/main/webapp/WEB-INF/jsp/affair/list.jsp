@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>  
 <html>
 <head>
@@ -46,9 +46,9 @@ function option_delete(id){
 	        <td width="5%">&nbsp;</td>
 	        <td width="5%">&nbsp;</td>
         </tr>
-		<c：forEach items="${infoList}" var="info">
+		<c:forEach items="${infoList}" var="info">
 			<tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
-              <td><fmt：formatDate value="${info.createTime}" pattern="yyyy-MM-dd HH：mm：ss"/></td>
+              <td><fmt:formatDate value="${info.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			        <td>${info.helpName}</td>
 			        <td>${info.helpTel}</td>
 			        <td>${info.helpAddr}</td>
@@ -61,24 +61,24 @@ function option_delete(id){
                   </a>
               </td>
               <td>
-                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor：pointer;">
+                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor:pointer;">
               </td>
             </tr>
             <tr class="line">
               <td height="1" colspan="7">              </td>
             </tr>
-          </c：forEach>
+          </c:forEach>
       </table>
       <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
           <td height="30">
           </td>
           <td align="right">
-          <jsp：include page="../common/pageinfo.jsp" flush="true">
-            <jsp：param name="formname" value="forms[0]"/>
-            <jsp：param name="pagename" value="pageNo"/>
-            <jsp：param name="actionname" value="bizaffair.do"/>
-          </jsp：include>
+          <jsp:include page="../common/pageinfo.jsp" flush="true">
+            <jsp:param name="formname" value="forms[0]"/>
+            <jsp:param name="pagename" value="pageNo"/>
+            <jsp:param name="actionname" value="bizaffair.do"/>
+          </jsp:include>
           </td>
         </tr>
       </table>

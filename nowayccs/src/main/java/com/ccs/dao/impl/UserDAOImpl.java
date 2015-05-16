@@ -133,4 +133,24 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 		return getHibernateTemplate().find(buffer.toString(), objs.toArray());
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserTrafficBean> findUserJdjtTraffic(TrafficSearchBean bean) {
+		List<Object> objs = new ArrayList<Object>();
+		StringBuffer buffer = new StringBuffer(1000);
+		buffer.append("select new com.ccs.bean.UserTrafficBean(u.userId, u.loginName, u.userName, count(i.helpId) as traffic) from UserVO u, LonelyHelpVO i ");
+		buffer.append("where i.creator = u.userId ");
+		buffer.append("and (u.loginName = ? or ? is null) ");
+		objs.add(bean.getLoginName());
+		objs.add(bean.getLoginName());
+		buffer.append("and (trunc(i.createTime) >= ? or ? is null) ");
+		objs.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		objs.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
+		buffer.append("and (trunc(i.createTime) <= ? or ? is null) ");
+		objs.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		objs.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
+		buffer.append("group by u.loginName, u.userId, u.userName");
+		return getHibernateTemplate().find(buffer.toString(), objs.toArray());
+	}
+	
 }

@@ -216,6 +216,9 @@ function getLonelyFamily(phone) {
 			
 			$("#phonelevels").append("<div style='color:red;font-weight:bold;'>（结对家庭求助电话）</div>");
 			
+			$("#helpName").val(data.manName);
+			$("#helpAddr").val(data.address);
+			
 		} else {
 			$("#lonelyManTb").hide();
 			$("#lonelyFamilyDiv").hide();
@@ -346,14 +349,14 @@ function getLonelyFamily(phone) {
           </tr>
           <tr class="table_t1">
             <td>服务者：</td>
-            <td><font style="font-family: sans-serif;font-size: 14px;font-weight:bold;color: #333333;">${user.userName}</font></td>
+            <td>${user.userName}</td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
           <tr class="table_t1">
             <td>求助时间：</td>
-            <td><form:input path="createTime" size="20" readonly="true" cssClass="form_accept"/></td>
+            <td><form:input path="createTime" size="20" readonly="true"/></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>

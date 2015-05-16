@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ccs.bo.ILonelyFamilyBO;
+import com.ccs.bo.IUserBO;
 import com.ccs.dao.ILonelyHelpDAO;
 import com.ccs.dao.ILonelyManInfoDAO;
 import com.ccs.dao.IPartyMemberForLonelyDAO;
@@ -17,6 +18,8 @@ import com.ccs.util.StringUtil;
 import com.ccs.vo.LonelyHelpVO;
 import com.ccs.vo.LonelyManInfoVO;
 import com.ccs.vo.PartyMemberForLonelyVO;
+import com.ccs.vo.UserVO;
+import com.ccs.web.domain.LfMgrForm;
 import com.ccs.web.domain.ShsForm;
 import com.ccs.web.domain.ShsResultDTO;
 
@@ -31,6 +34,10 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 
 	@Autowired
 	private ILonelyHelpDAO lonelyHelpDAO;
+	
+	@Autowired
+	private IUserBO userBO;
+	
 	
 	@Override
 	public LonelyManInfoVO findLonelyManInfo(String telPhone) {
@@ -73,6 +80,9 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 			dto.setLhVO(lonelyHelpVO);
 			dto.setLmiVO(lonelyManInfoDAO.findById(lonelyHelpVO.getLonelyManId()));
 			dto.setPmflVO(partyMemberForLonelyDAO.findById(lonelyHelpVO.getDeliverer()));
+			UserVO userVO = userBO.findById(lonelyHelpVO.getCreator());
+			dto.setUserId(userVO.getUserId());
+			dto.setUserName(userVO.getUserName());
 			dtoList.add(dto);
 		}
 		return dtoList;
@@ -96,5 +106,42 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 		Date endDt = shsForm.getEndDt() == null ? null : DateUtil.parse(shsForm.getEndDt(), "yyyy-MM-dd");
 		
 		return lonelyHelpDAO.queryCount(manIdList, memberIds, startDt, endDt);		
+	}
+
+	@Override
+	public LonelyHelpVO findLonelyHelpByHelpId(String helpId) {
+		return lonelyHelpDAO.findById(helpId);
+	}
+
+	@Override
+	public LonelyManInfoVO findLonelyManInfoByManId(String manId) {
+		return lonelyManInfoDAO.findById(manId);
+	}
+
+	@Override
+	public PartyMemberForLonelyVO findPartyMemberForLonelyById(String memberId) {
+		return partyMemberForLonelyDAO.findById(memberId);
+	}
+
+	@Override
+	public List<LonelyManInfoVO> queryLonelyManInfo(LfMgrForm lfMgrForm,
+			PageInfo pageInfo) {
+		return lonelyManInfoDAO.queryManInfo(lfMgrForm, pageInfo);
+	}
+
+	@Override
+	public void saveOrUpdate(LonelyManInfoVO lmiVO) {
+		lonelyManInfoDAO.saveOrUpdate(lmiVO);
+	}
+
+	@Override
+	public void saveOrUpdate(PartyMemberForLonelyVO pmVO) {
+		partyMemberForLonelyDAO.saveOrUpdate(pmVO);
+	}
+
+	@Override
+	public void pmDel(String memberId) {
+		PartyMemberForLonelyVO pmVO = partyMemberForLonelyDAO.findById(memberId);
+		partyMemberForLonelyDAO.delete(pmVO);
 	}
 }

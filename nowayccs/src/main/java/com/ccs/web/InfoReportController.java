@@ -33,6 +33,7 @@ import com.ccs.bean.UserTrafficDTO;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IInfoReportBO;
+import com.ccs.bo.ILonelyFamilyBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
 import com.ccs.icd.util.DateUtil;
@@ -47,6 +48,7 @@ import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.UserVO;
 import com.ccs.vo.VolunteerVO;
 import com.ccs.web.domain.HelpCountByPhoneSearchBean;
+import com.ccs.web.domain.ShsForm;
 
 @Controller
 @RequestMapping("/inforeport.do")
@@ -66,6 +68,9 @@ public class InfoReportController {
 	
 	@Autowired
 	private IEntpriseBO entpriseBO;
+	
+	@Autowired
+	private ILonelyFamilyBO lfBO;
 	
 	@RequestMapping
 	public String list(
@@ -129,6 +134,21 @@ public class InfoReportController {
 		infoSearchBean.setHelpContent(helpContent);
 		
 		Map<String, String> map = new HashMap<String, String>();
+		
+		//for lonelyhelp start
+		ShsForm shsForm = new ShsForm();
+		shsForm.setStartDt(startDt);
+		shsForm.setEndDt(endDt);
+		int jdjtcount = lfBO.countSpecialHelp(shsForm);
+		
+		shsForm.setStartDt("");
+		int jdjt = lfBO.countSpecialHelp(shsForm);
+		
+		map.put("jdjtcount", String.valueOf(jdjtcount));
+		map.put("jdjt", String.valueOf(jdjt));
+//		for lonelyhelp end
+		
+		
 		if(StringUtil.isNull(helpType)) {
 			infoSearchBean.setHelpType(Constants.INFOMATION_HELPTYPE_LIFE);
 			int lifeCount = infoReportBO.getCountByParams(infoSearchBean);
@@ -146,10 +166,10 @@ public class InfoReportController {
 			int fertilityCount = infoReportBO.getCountByParams(infoSearchBean);
 			map.put("fertilityCount", String.valueOf(fertilityCount));
 			
-			map.put("count", String.valueOf(lifeCount + affairCount + referCount + fertilityCount));
+			map.put("count", String.valueOf(lifeCount + affairCount + referCount + fertilityCount + jdjtcount));
 		} else {
 			int count = infoReportBO.getCountByParams(infoSearchBean);
-			map.put("count", String.valueOf(count));
+			map.put("count", String.valueOf(count + jdjtcount));
 			if(helpType.equals(Constants.INFOMATION_HELPTYPE_LIFE)) {
 				map.put("lifeCount", String.valueOf(count));
 			} else {
@@ -181,7 +201,12 @@ public class InfoReportController {
 		map.put("affair", String.valueOf(affair));
 		map.put("refer", String.valueOf(refer));
 		map.put("fertility", String.valueOf(fertility));
-		map.put("total", String.valueOf(life + affair + refer + fertility));
+		
+
+		
+		
+		
+		map.put("total", String.valueOf(life + affair + refer + fertility + jdjt));
 		
 		
 		JSONObject jsonObject = JSONObject.fromObject(map);
@@ -467,6 +492,24 @@ public class InfoReportController {
 				dto.setLoginName(userTrafficBean.getLoginName());
 				dto.setUserName(userTrafficBean.getUserName());
 				dto.setSclTraffic(userTrafficBean.getTraffic());
+				map.put(dto.getUserId(), dto);
+			}
+		}
+		
+		//jdjt:lonelyhelp
+		bean.setHelpType("LONELYHELP");
+		List<UserTrafficBean> lhList = userBO.findUserJdjtTraffic(bean);
+		for (Iterator<UserTrafficBean> iter = lhList.iterator(); iter.hasNext();) {
+			UserTrafficBean userTrafficBean = iter.next();
+			if(map.containsKey(userTrafficBean.getUserId())) {
+				UserTrafficDTO dto = map.get(userTrafficBean.getUserId());
+				dto.setJdjtTraffic(userTrafficBean.getTraffic());
+			} else {
+				UserTrafficDTO dto = new UserTrafficDTO();
+				dto.setUserId(userTrafficBean.getUserId());
+				dto.setLoginName(userTrafficBean.getLoginName());
+				dto.setUserName(userTrafficBean.getUserName());
+				dto.setJdjtTraffic(userTrafficBean.getTraffic());
 				map.put(dto.getUserId(), dto);
 			}
 		}

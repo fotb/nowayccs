@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>   
 <html>
 <head>
@@ -13,7 +13,7 @@
 <script type="text/javascript" >
 $(document).ready(function(){
 	  //$( "#headnav" ).tabs("select",3);
-	//$("#subDictTable>tbody>tr：even").addClass("table_blue");
+	//$("#subDictTable>tbody>tr:even").addClass("table_blue");
 });
 function btn_search(){
 	  var form = document.forms[0];
@@ -49,7 +49,7 @@ function option_delete(phoneId) {
                   <td>
 						<input type="text" name="levels" id="levels" class="from" value="${levels}">
                   </td>
-				  <td><img width="60" height="18" src="images/button_search.gif" onclick="btn_search();" style="cursor：hand"/></td>
+				  <td><img width="60" height="18" src="images/button_search.gif" onclick="btn_search();" style="cursor:hand"/></td>
                 </tr>
               </table>
             </td>
@@ -66,26 +66,26 @@ function option_delete(phoneId) {
             <td colspan="2"></td>
           </tr>
           <tbody>
-          <c：forEach items="${blackListVOList}" var="phone">
+          <c:forEach items="${blackListVOList}" var="phone">
           	<tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
           		<td>${phone.phoneNum}</td>
             	<td align="left">${phone.levels} (
-            	<c：choose>
-            		<c：when test="${fn：contains (phone.levels,'-')}">
+            	<c:choose>
+            		<c:when test="${fn:contains (phone.levels,'-')}">
 						<font color=black>
-							<c：forEach begin="1" end="${fn：substring(phone.levels, '1', '2')}">
+							<c:forEach begin="1" end="${fn:substring(phone.levels, '1', '2')}">
 							★
-							</c：forEach>
+							</c:forEach>
 						</font>
-					</c：when>
-            		<c：otherwise>
+					</c:when>
+            		<c:otherwise>
             		<font color=red>
-							<c：forEach begin="1" end="${phone.levels}">
+							<c:forEach begin="1" end="${phone.levels}">
 							★
-							</c：forEach>
+							</c:forEach>
 						</font>
-            		</c：otherwise>
-            	</c：choose>
+            		</c:otherwise>
+            	</c:choose>
             	)
             	</td>
             	<td>${phone.remark}</td>
@@ -95,13 +95,13 @@ function option_delete(phoneId) {
                   </a>
                 </td>
                 <td width="5%">
-                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${phone.phoneId}');" style="cursor：hand">
+                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${phone.phoneId}');" style="cursor:hand">
                 </td>
               </tr>
               <tr class="line">
                 <td height="1" colspan="5">                </td>
               </tr>
-          </c：forEach>
+          </c:forEach>
           </tbody>
         </table>
         
@@ -114,13 +114,13 @@ function option_delete(phoneId) {
             </td>
           </tr>
         <tr>
-       <!--  <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor：pointer;"/></td> -->
+       <!--  <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td> -->
           <td height="30" align="right">
-            <jsp：include page="../common/pageinfo.jsp" flush="true">
-              <jsp：param name="formname" value="forms[0]"/>
-              <jsp：param name="pagename" value="pageNo"/>
-              <jsp：param name="actionname" value="blacklist.do"/>
-            </jsp：include> </td>
+            <jsp:include page="../common/pageinfo.jsp" flush="true">
+              <jsp:param name="formname" value="forms[0]"/>
+              <jsp:param name="pagename" value="pageNo"/>
+              <jsp:param name="actionname" value="blacklist.do"/>
+            </jsp:include> </td>
 
         </tr>
         </table>

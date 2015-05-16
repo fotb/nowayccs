@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>  
 <html>
 <head>
@@ -38,9 +38,9 @@ function btnback_click(){
 
 $(document).ready(function(){
 	$("#moveTime" ).dynDateTime({
-  showsTime： true,
-  ifFormat： "%Y-%m-%d %H：%M",
-  button： ".next()" //next sibling to input field
+  showsTime: true,
+  ifFormat: "%Y-%m-%d %H:%M",
+  button: ".next()" //next sibling to input field
 	});
 });
 </script>
@@ -111,7 +111,7 @@ $(document).ready(function(){
           <tr class="table_t1">
             <td>求助时间：</td>
             <td>
-            <fmt：formatDate value="${infoVO.createTime}" pattern="yyyy-MM-dd HH：mm：ss"/>
+            <fmt:formatDate value="${infoVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
             </td>
           </tr>
           <tr class="line">

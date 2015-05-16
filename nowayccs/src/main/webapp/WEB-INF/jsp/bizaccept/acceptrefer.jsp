@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>  
 <html>
 <head>
@@ -68,7 +68,7 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              ${bizAccept.helpTel}<c：if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c：if>
+              ${bizAccept.helpTel}<c:if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c:if>
             </td>
           </tr>
           <tr class="line">
@@ -112,7 +112,7 @@ function btnprovs_click() {
           <tr class="table_t1">
             <td>受理人群：</td>
             <td>
-            <c：if test="${not empty bizAccept.helpGroup}">${slrqMap[bizAccept.helpGroup]}</c：if>
+            <c:if test="${not empty bizAccept.helpGroup}">${slrqMap[bizAccept.helpGroup]}</c:if>
             </td>
           </tr>
           <tr class="line">

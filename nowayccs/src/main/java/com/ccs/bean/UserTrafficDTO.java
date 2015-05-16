@@ -22,11 +22,13 @@ public class UserTrafficDTO implements Serializable {
 	private int affairTraffic;
 
 	private int sclTraffic;
+	
+	private int jdjtTraffic;
 
 	private int totalTraffic;
 	
 	public int getTotalTraffic() {
-		return referTraffic + lifeTraffic + affairTraffic + sclTraffic;
+		return referTraffic + lifeTraffic + affairTraffic + sclTraffic + jdjtTraffic;
 	}
 	
 	public void setTotalTraffic(int totalTraffic) {
@@ -90,4 +92,11 @@ public class UserTrafficDTO implements Serializable {
 		this.sclTraffic = sclTraffic;
 	}
 
+	public int getJdjtTraffic() {
+		return jdjtTraffic;
+	}
+
+	public void setJdjtTraffic(int jdjtTraffic) {
+		this.jdjtTraffic = jdjtTraffic;
+	}
 }

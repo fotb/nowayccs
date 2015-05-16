@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../common/includes.jsp" %>  
 <html>
 <head>
@@ -92,7 +92,7 @@ $(document).ready(function(){
 	loadHist();
 	getPhoneLevels($("#helpTel").val());
 	$("#helpTel").change(function(){
-		jQuery("#histList").setGridParam({url："bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+""});
+		jQuery("#histList").setGridParam({url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+""});
 		jQuery("#histList").trigger("reloadGrid");
 		
 		getPhoneLevels($("#helpTel").val());
@@ -115,9 +115,9 @@ $(document).ready(function(){
 	});
 	
 	$("#createTime" ).dynDateTime({
-		  showsTime： true,
-		  ifFormat： "%Y-%m-%d %H：%M",
-		  button： ".next()" //next sibling to input field
+		  showsTime: true,
+		  ifFormat: "%Y-%m-%d %H:%M",
+		  button: ".next()" //next sibling to input field
 			});
 });
 
@@ -146,29 +146,29 @@ function getPhoneLevels(phone) {
 function loadHist() {
 	var lastsel;
 	jQuery("#histList").jqGrid({ 
-		url："bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+"", 
-		datatype： "json", 
-		colNames：['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 ', ''], 
-		colModel：[ 
-		           {name：'helpName',index：'helpName', formatter：bizShowLinkFormatter, width：'90'}, 
-		           {name：'createTime',index：'createTime',width：'120'}, 
-		           {name：'helpAddr',index：'helpAddr',width：'200'}, 
-		           {name：'helpContent',index：'helpContent', align："left",width：'200'}, 
-		           {name：'helpType',index：'helpType', align："right",width：'80'}, 
-		           {name：'creator',index：'creator', align："right",width：'60'},
-		           {name：'finishTime',index：'finishTime',width：'120'}, 
-		           {name：'status',index：'status', sortable：false,width：'50'} ,
-		           {name：'infoId', index：'infoId', hidden：true}
+		url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+"", 
+		datatype: "json", 
+		colNames:['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 ', ''], 
+		colModel:[ 
+		           {name:'helpName',index:'helpName', formatter:bizShowLinkFormatter, width:'90'}, 
+		           {name:'createTime',index:'createTime',width:'120'}, 
+		           {name:'helpAddr',index:'helpAddr',width:'200'}, 
+		           {name:'helpContent',index:'helpContent', align:"left",width:'200'}, 
+		           {name:'helpType',index:'helpType', align:"right",width:'80'}, 
+		           {name:'creator',index:'creator', align:"right",width:'60'},
+		           {name:'finishTime',index:'finishTime',width:'120'}, 
+		           {name:'status',index:'status', sortable:false,width:'50'} ,
+		           {name:'infoId', index:'infoId', hidden:true}
 		], 
-		rowNum：10, 
-		rowList：[10,20,30], 
-		pager： '#histPagerNav', 
-		sortname： 'createTime', 
-		viewrecords： true, 
-		sortorder： "desc", 
-		caption："近期求助记录"
+		rowNum:10, 
+		rowList:[10,20,30], 
+		pager: '#histPagerNav', 
+		sortname: 'createTime', 
+		viewrecords: true, 
+		sortorder: "desc", 
+		caption:"近期求助记录"
 		/*
-		onSelectRow： function(id){ 
+		onSelectRow: function(id){ 
 			//alert(id);
 			//if(id && id!==lastsel){ 
 					window.open("infosearch.do?action=showinfo&infoId=" + id, "", 'height=700, width=750, top=0, left=100, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no'); 
@@ -177,7 +177,7 @@ function loadHist() {
 			}
 		*/
 	}); 
-	jQuery("#histList").jqGrid('navGrid','#histPagerNav',{edit：false,add：false,del：false});	
+	jQuery("#histList").jqGrid('navGrid','#histPagerNav',{edit:false,add:false,del:false});	
 }
 
 function bizShowLinkFormatter(cellValue, options, rowObj) {
@@ -232,7 +232,7 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
           <tr class="table_t1">
             <td>求助电话：</td>
             <td>
-              <form:input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color： black"></span><!-- &nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form:input path="otherTel" cssClass="form" size="40"/> -->
+              <form:input path="helpTel" cssClass="form" size="40"/><span id="phonelevels" style="color: black"></span><!-- &nbsp;&nbsp;&nbsp;&nbsp;其他联系电话：<form:input path="otherTel" cssClass="form" size="40"/> -->
             </td>
           </tr>
           <tr class="line">
@@ -251,8 +251,8 @@ function bizShowLinkFormatter(cellValue, options, rowObj) {
             <td>求助内容：<br><br><input type="button" value="+" id="addContent"/><input type="button" value="-" id="reduceContent"/></td>
             <td>
               <form:textarea path="helpContent" cssClass="form" cols="120" rows="4" tabindex="3"/>
-              <form:textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display：none;"/>
-              <form:textarea path="helpContent3" cssClass="form" cols="120" rows="4" cssStyle="display：none;"/>              
+              <form:textarea path="helpContent2" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>
+              <form:textarea path="helpContent3" cssClass="form" cols="120" rows="4" cssStyle="display:none;"/>              
             </td>
           </tr>
           

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http：//www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="../../common/includes.jsp" %>  
 <html>
 <head>
@@ -37,20 +37,20 @@ function option_delete(id){
                   <td>移送人：</td>
                   <td>
                     <select id="deliverer" name="deliverer" >
-                      <c：forEach items="${userList}" var="user">
-                      	<c：choose>
-                      	<c：when test="${user.userId == deliverer}">
+                      <c:forEach items="${userList}" var="user">
+                      	<c:choose>
+                      	<c:when test="${user.userId == deliverer}">
                       		<option value="${user.userId}" selected="selected">${user.userName}</option>
-                      	</c：when>
-                      	<c：otherwise>
+                      	</c:when>
+                      	<c:otherwise>
                       		<option value="${user.userId}">${user.userName}</option>
-                      	</c：otherwise>
-                      </c：choose>
-                      </c：forEach>
+                      	</c:otherwise>
+                      </c:choose>
+                      </c:forEach>
                     </select>
                   </td>
                   <td width="55%">
-                    <A href="javascript：btnsearch_click()">
+                    <A href="javascript:btnsearch_click()">
                       <img src="images/button_search.gif" width="60" height="18" alt="" border="0">
                     </A>
                   </td>
@@ -72,7 +72,7 @@ function option_delete(id){
             <td width="15%">&nbsp;</td>
             <td width="10%">&nbsp;</td>
           </tr>
-          <c：forEach items="${infoList}" var="info" varStatus="status">
+          <c:forEach items="${infoList}" var="info" varStatus="status">
               <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
                 <td>
                   ${status.index + 1}
@@ -84,32 +84,32 @@ function option_delete(id){
                   ${info.helpTel}
                 </td>
                 <td>
-                  <fmt：formatDate value="${info.createTime}" pattern="yyyy-MM-dd HH：mm：ss"/>
+                  <fmt:formatDate value="${info.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                 </td>
                 <td>
-                  <fmt：formatDate value="${info.deliverTime}" pattern="yyyy-MM-dd HH：mm：ss"/>
+                  <fmt:formatDate value="${info.deliverTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                 </td>
                 <td>
                     <a href="bizaffairbackvst.do?action=backvst&infoId=${info.infoId}&pageNo=${pageInfo.currentPage}">进行回访</a>
                 </td>
                 <td>
-					<img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor： pointer;">
+					<img src="images/del.gif" alt="删除" width="11" height="14" border="0" onclick="option_delete('${info.infoId}');" style="cursor: pointer;">
                 </td>
               </tr>
               <tr class="line">
                 <td height="1" colspan="7">                </td>
               </tr>
-            </c：forEach>
+            </c:forEach>
         </table>
         <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td height="30">            </td>
             <td align="right">
-            <jsp：include page="../../common/pageinfo.jsp" flush="true">
-              <jsp：param name="formname" value="forms[0]"/>
-              <jsp：param name="pagename" value="pageNO"/>
-              <jsp：param name="actionname" value="OprAffairInforBack_list.do"/>
-            </jsp：include>
+            <jsp:include page="../../common/pageinfo.jsp" flush="true">
+              <jsp:param name="formname" value="forms[0]"/>
+              <jsp:param name="pagename" value="pageNO"/>
+              <jsp:param name="actionname" value="OprAffairInforBack_list.do"/>
+            </jsp:include>
             </td>
           </tr>
         </table>

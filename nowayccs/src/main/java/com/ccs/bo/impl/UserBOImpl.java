@@ -167,6 +167,11 @@ public class UserBOImpl implements IUserBO {
 	}
 
 	@Override
+	public List<UserTrafficBean> findUserJdjtTraffic(TrafficSearchBean bean) {
+		return userDAO.findUserJdjtTraffic(bean);
+	}
+	
+	@Override
 	public Map<String, OperationVO> findUserOpertaionRightByUserId(String userId) {
 		List<OperationVO> list = operationDAO.findByUserId(userId);
 		Map<String, OperationVO> map = new HashMap<String, OperationVO>();

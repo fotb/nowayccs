@@ -83,7 +83,7 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
 					throws HibernateException, SQLException {
-				String hql = "select count(vo.lonelyManId) from LonelyHelpVO vo where 1 = 1 ";
+				String hql = "select count(vo.helpId) from LonelyHelpVO vo where 1 = 1 ";
 				if(!lonelyManIds.isEmpty()) {
 					hql += "and (vo.lonelyManId in (:manId1) or :manId2 is null) ";
 				}
