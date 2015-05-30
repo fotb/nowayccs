@@ -100,12 +100,12 @@ $(document).ready(function(){
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr class="table_green">
               <td>编号</td>
-	          <td>姓名</td>
+	          <td nowrap="nowrap">姓名</td>
 	          <td>性别</td>
-	          <td>出身年月</td>
+	          <td nowrap="nowrap">出身年月</td>
 	          <td>联系电话</td>
-	          <td>身份证号码</td>
-	          <td>所属区域</td>
+	          <td nowrap="nowrap">身份证号码</td>
+	          <td nowrap="nowrap">所属区域</td>
               <td>地址</td>
               <td>家庭类别</td>
               <td>基本信息</td>   
@@ -115,13 +115,13 @@ $(document).ready(function(){
 			<c:forEach items="${lmiVOList}" var="lmiVO"  varStatus="index">
               <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
               <td>${index.index + 1 + pageInfo.PAGE_COUNT*(pageInfo.currentPage-1)}</td>
-               <td>
+               <td nowrap="nowrap">
                   ${lmiVO.manName}
                 </td>
-                <td>
+                <td nowrap="nowrap">
                     ${lmiVO.manSex}
                 </td>
-                <td>
+                <td nowrap="nowrap">
  					${lmiVO.birthday}
                 </td>
                 <td>
@@ -130,13 +130,13 @@ $(document).ready(function(){
                 <td nowrap="nowrap">
 					${lmiVO.idCardNo}
                 </td>
-                <td>
+                <td nowrap="nowrap">
                 	${lmiVO.area}
                 </td>
-                <td>
+                <td nowrap="nowrap">
                 	${lmiVO.address}
                 </td>
-                <td>
+                <td nowrap="nowrap">
                 	${sftMap[lmiVO.familyType]}
                 </td>
                 <td>

@@ -209,7 +209,7 @@ function Phone_test() {
 $("#BtAns").attr("disabled", true); 
   $("#BtRelease").attr("disabled", false); 
 //window.parent.frames("main").location = "bizaccept.do?flag=Y&callNo=13958186722&qzfs=4";
-  window.open("bizaccept.do?flag=Y&callNo=12345678&qzfs=4", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+  window.open("bizaccept.do?flag=Y&callNo=82626090&qzfs=4", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 
 //呼出
@@ -444,7 +444,7 @@ Phone_OnSignInExFailure()
           &nbsp;&nbsp;
             <INPUT id =btnCallOut  name=button12  type=button value=呼出 disabled LANGUAGE=javascript onclick="return btnCallOut_onclick()">
           <INPUT id =btnTrans name=button11  type=button value=呼叫转移 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
-		  	<!-- <input id="test" name="testbt" type="button" onclick="Phone_test();" value="test"> -->
+		  	<input id="test" name="testbt" type="button" onclick="Phone_test();" value="test">
         </logic:present>
 
           <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div>

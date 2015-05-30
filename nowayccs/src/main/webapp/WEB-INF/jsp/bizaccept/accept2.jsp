@@ -197,6 +197,7 @@ function getLonelyFamily(phone) {
 	if(phone == "") {
 		phone = "${bizAccept.helpTel}";
 	}
+	if(phone != "") {
 	$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(data) {
 		if(null != data) {
 			$("#manName").text(data.manName);
@@ -224,6 +225,10 @@ function getLonelyFamily(phone) {
 			$("#lonelyFamilyDiv").hide();
 		}
 	});
+	} else {
+		$("#lonelyManTb").hide();
+		$("#lonelyFamilyDiv").hide();
+	}
 }
 
 </script>
@@ -367,7 +372,7 @@ function getLonelyFamily(phone) {
     </tr>
  <tr >
             <td  align="center">
-              <div style="position: absolute;padding-left: 300px;" id="lonelyFamilyDiv"><input type="checkbox" id="lonelyFamilyDeal" style="vertical-align: middle;"/>结对家庭业务</div><img style="vertical-align: middle;"   src="images/button_next.gif" width="60" height="18" onclick="btnnext_click()"/>
+              <div style="position: absolute;float:left;left:100px;" id="lonelyFamilyDiv"><input type="checkbox" id="lonelyFamilyDeal" style="vertical-align: middle;"/>结对家庭业务</div><img style="vertical-align: middle;"   src="images/button_next.gif" width="60" height="18" onclick="btnnext_click()"/>
             </td>
           </tr>         
               <tr class="line">

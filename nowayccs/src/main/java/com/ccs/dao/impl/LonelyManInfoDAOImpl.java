@@ -42,7 +42,7 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<LonelyManInfoVO> findByTelphone(String telphone) {
-		return getHibernateTemplate().find("from LonelyManInfoVO vo where vo.telphone = ?", telphone);
+		return getHibernateTemplate().find("from LonelyManInfoVO vo where vo.telphone like ?", "%" + telphone + "%");
 	}
 
 	@SuppressWarnings("unchecked")

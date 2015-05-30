@@ -42,6 +42,17 @@ public class LonelyFamilyController {
 	
 	@RequestMapping(params = "action=lonelyManInfo", method = RequestMethod.GET)
 	public @ResponseBody String loadFamilyInfo(@RequestParam(value = "callNo", required = false) String callNo) throws UnsupportedEncodingException {
+		if(null != callNo) {
+			if(callNo.startsWith("573")) {
+				callNo = callNo.substring(3);
+			} else if(callNo.startsWith("0573")) {
+				callNo = callNo.substring(4);
+			} else if(callNo.startsWith("+86")) {
+				callNo = callNo.substring(3);
+			} else if(callNo.startsWith("86")) {
+				callNo = callNo.substring(2);
+			}
+		}
 		LonelyManInfoVO vo = lonelyFamilyBO.findLonelyManInfo(callNo);
 		return JSONObject.fromObject(vo).toString();
 	}
@@ -108,7 +119,6 @@ public class LonelyFamilyController {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
 		
-		System.out.println("dddd-----" + memberId);
 		LonelyHelpVO vo = new LonelyHelpVO();
 		vo.setLonelyManId(lonelyManId);
 		vo.setHelpContent(bizAccept.getHelpContent());

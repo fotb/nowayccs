@@ -61,7 +61,7 @@ function btnback_click(){
                   ${pmVO.memberName}
                 </td>
                 <td>
-                    ${pmVO.memberSex}
+                    <c:choose><c:when test="${pmVO.memberSex =='M'}">男</c:when>	<c:otherwise>女</c:otherwise></c:choose>
                 </td>
                 <td>
  					${pmVO.birthday}

@@ -126,6 +126,7 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 	@Override
 	public List<LonelyManInfoVO> queryLonelyManInfo(LfMgrForm lfMgrForm,
 			PageInfo pageInfo) {
+		pageInfo.setTotalRecords(lonelyManInfoDAO.countManInfo(lfMgrForm));
 		return lonelyManInfoDAO.queryManInfo(lfMgrForm, pageInfo);
 	}
 
