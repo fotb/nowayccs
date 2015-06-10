@@ -42,7 +42,7 @@ public class LonelyFamilyController {
 	
 	@RequestMapping(params = "action=lonelyManInfo", method = RequestMethod.GET)
 	public @ResponseBody String loadFamilyInfo(@RequestParam(value = "callNo", required = false) String callNo) throws UnsupportedEncodingException {
-		if(null != callNo) {
+		if(null != callNo && !callNo.equals("")) {
 			if(callNo.startsWith("573")) {
 				callNo = callNo.substring(3);
 			} else if(callNo.startsWith("0573")) {
@@ -52,9 +52,12 @@ public class LonelyFamilyController {
 			} else if(callNo.startsWith("86")) {
 				callNo = callNo.substring(2);
 			}
+			LonelyManInfoVO vo = lonelyFamilyBO.findLonelyManInfo(callNo);
+			return JSONObject.fromObject(vo).toString();
+		} else {
+			return null;
 		}
-		LonelyManInfoVO vo = lonelyFamilyBO.findLonelyManInfo(callNo);
-		return JSONObject.fromObject(vo).toString();
+		
 	}
 	
 	@RequestMapping(params = "action=accept")

@@ -75,6 +75,14 @@ function btnback_click(){
 
 <c:if test="${adminRight == 'Y'}">
 $(document).ready(function(){
+	$("#callTime" ).dynDateTime({
+  showsTime: true,
+  ifFormat: "%Y-%m-%d  %H:%M:%S",
+  button: ".next()" //next sibling to input field
+	});
+});
+
+$(document).ready(function(){
 	$("#finishTime" ).dynDateTime({
   showsTime: true,
   ifFormat: "%Y-%m-%d",

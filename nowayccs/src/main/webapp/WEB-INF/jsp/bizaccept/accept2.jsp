@@ -198,7 +198,7 @@ function getLonelyFamily(phone) {
 		phone = "${bizAccept.helpTel}";
 	}
 	if(phone != "") {
-	$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(data) {
+		$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(data) {
 		if(null != data) {
 			$("#manName").text(data.manName);
 			$("#manSex").text(data.manSex);
@@ -279,21 +279,21 @@ function getLonelyFamily(phone) {
             <td>求助电话：</td>
             <td>
             <c:choose>
-            <c:when test="${not empty bizAccept.popupFlag}"><div style="font-family: sans-serif;font-size: 14px;font-weight:bold;color: #333333;float:left">${bizAccept.helpTel}</div><form:hidden path="helpTel" /></c:when>
-            <c:otherwise><form:input path="helpTel" cssClass="form_accept" size="30"/></c:otherwise>
-            </c:choose>
-            <div id="phonelevels" style="color: black;vertical-align: middle;"></div>
+				<c:when test="${not empty bizAccept.popupFlag}">
+				<div style="margin-top:4px;font-family: sans-serif; font-size: 14px; font-weight: bold; color: #333333; height:25px;float: left;vertical-align: middle;">${bizAccept.helpTel}</div>
+				<form:hidden path="helpTel" />
+				</c:when>
+				<c:otherwise>
+				<form:input path="helpTel" cssClass="form_accept" size="30" />
+				</c:otherwise>
+			</c:choose>
+			<div id="phonelevels" style="color: black;vertical-align: middle;"></div>
+            <c:if test="${not empty bizAccept.popupFlag}">
+               <div style="vertical-align: middle; float:left;padding-left: 20px;">其他联系电话：<form:input path="otherTel" cssClass="form_accept" size="30"/></div>
+            </c:if>
             </td>
             </tr>
-            <c:if test="${not empty bizAccept.popupFlag}">
-                      <tr class="line">
-            <td height="1" colspan="2">            </td>
-          </tr>
-            <tr class="table_t1">
-            <td>其他联系电话：</td>
-            <td><form:input path="otherTel" cssClass="form_accept" size="30"/></td>
-          </tr>
-           </c:if>
+
           <tr class="line">
             <td height="1" colspan="2">            </td>
           </tr>
@@ -310,8 +310,8 @@ function getLonelyFamily(phone) {
             <td>求助内容：<br><br><input type="button" value="+" id="addContent"/><input type="button" value="-" id="reduceContent"/></td>
             <td>
               <form:textarea path="helpContent" cssClass="form_accept" cols="1" rows="4" tabindex="3" cssStyle="width:440px;height:60px;"/>
-              <form:textarea path="helpContent2" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;"/>
-              <form:textarea path="helpContent3" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;"/>              
+              <form:textarea path="helpContent2" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;width:440px;height:60px;"/>
+              <form:textarea path="helpContent3" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;width:440px;height:60px;"/>              
             </td>
           </tr>
           
