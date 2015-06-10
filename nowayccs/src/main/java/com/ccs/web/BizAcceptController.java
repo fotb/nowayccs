@@ -106,7 +106,7 @@ public class BizAcceptController {
 		List<DictVO> slrqList = dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ);
 		model.addAttribute("slrqList", slrqList);
 		
-		return "bizaccept/accept";
+		return "bizaccept/accept2";
 	}
 	
 	@RequestMapping(params = "action=life")
@@ -139,6 +139,9 @@ public class BizAcceptController {
 		if(!StringUtil.isNull(bizAccept.getHelpContent3())) {
 			list.add(getInformationVO(bizAccept, user, "3", session));
 		}
+		if(!StringUtil.isNull(bizAccept.getHelpContent4())) {
+			list.add(getInformationVO(bizAccept, user, "4", session));
+		}
 		bizAcceptBO.acceptLife(list);
 		
 		session.setAttribute("bizAccept", null);
@@ -162,6 +165,8 @@ public class BizAcceptController {
 			vo.setHelpContent(bizAccept.getHelpContent2());
 		} else if("3".equals(index)) {
 			vo.setHelpContent(bizAccept.getHelpContent3());
+		} else if("4".equals(index)) {
+			vo.setHelpContent(bizAccept.getHelpContent4());
 		}
 		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
 		vo.setHelpMode(bizAccept.getHelpMode());

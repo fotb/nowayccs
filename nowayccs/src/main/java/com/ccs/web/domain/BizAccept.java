@@ -18,6 +18,8 @@ public class BizAccept implements Serializable {
 	
 	private String helpContent3; //第三求助内容，针对生活类服务
 	
+	private String helpContent4; //第四求助内容，针对生活类服务
+	
 	private String helpType; // 求助类型
 	private String helpArea; // 求助区域
 	private String creator; // 创建者
@@ -156,4 +158,13 @@ public class BizAccept implements Serializable {
 	public void setHelpGroup(String helpGroup) {
 		this.helpGroup = helpGroup;
 	}
+
+	public String getHelpContent4() {
+		return helpContent4;
+	}
+
+	public void setHelpContent4(String helpContent4) {
+		this.helpContent4 = helpContent4;
+	}
+	
 }

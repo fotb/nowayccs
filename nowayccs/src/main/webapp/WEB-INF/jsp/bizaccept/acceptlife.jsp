@@ -84,6 +84,9 @@ function btnprovs_click() {
             <c:if test="${not empty bizAccept.helpContent3}">
             <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent3}</textarea>
             </c:if>
+                        <c:if test="${not empty bizAccept.helpContent4}">
+            <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent4}</textarea>
+            </c:if>
             </td>
           </tr>
 

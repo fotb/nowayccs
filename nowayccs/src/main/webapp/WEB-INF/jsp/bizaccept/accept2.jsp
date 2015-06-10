@@ -110,13 +110,18 @@ $(document).ready(function(){
 	$("#addContent").click(function(){
 		if($("#helpContent2").css("display") != "block") {
 			$("#helpContent2").css("display", "block");
-		} else {
+		} else if($("#helpContent3").css("display") != "block"){
 			$("#helpContent3").css("display", "block");
+		} else {
+		alert("dafa");
+			$("#helpContent4").css("display", "block");
 		}
 	});
 	
 	$("#reduceContent").click(function(){
-		if($("#helpContent3").css("display") == "block") {
+		if($("#helpContent4").css("display") == "block") {
+			$("#helpContent4").css("display", "none");
+		} else if($("#helpContent3").css("display") == "block"){
 			$("#helpContent3").css("display", "none");
 		} else {
 			$("#helpContent2").css("display", "none");
@@ -311,7 +316,8 @@ function getLonelyFamily(phone) {
             <td>
               <form:textarea path="helpContent" cssClass="form_accept" cols="1" rows="4" tabindex="3" cssStyle="width:440px;height:60px;"/>
               <form:textarea path="helpContent2" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;width:440px;height:60px;"/>
-              <form:textarea path="helpContent3" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;width:440px;height:60px;"/>              
+              <form:textarea path="helpContent3" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;width:440px;height:60px;"/> 
+              <form:textarea path="helpContent4" cssClass="form_accept" cols="1" rows="4" cssStyle="display:none;width:440px;height:60px;"/>              
             </td>
           </tr>
           
