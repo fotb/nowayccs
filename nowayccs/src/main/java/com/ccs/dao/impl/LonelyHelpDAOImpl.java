@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.ILonelyHelpDAO;
+import com.ccs.icd.util.DateUtil;
 import com.ccs.util.PageInfo;
+import com.ccs.util.Utils;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LonelyHelpVO;
 
@@ -50,8 +52,9 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 				if(!memberIds.isEmpty()) {
 					hql += "and (vo.deliverer in (:memberId1) or :memberId2 is null) ";
 				}
-				hql +="and (trunc(vo.createTime) >= :startDt1 or :startDt2 is null) ";
-				hql +="and (trunc(vo.createTime) <= :endDt1 or :endDt2 is null) ";
+//				hql +="and (vo.createTime >= :startDt1 or :startDt2 is null) ";
+//				hql +="and (vo.createTime <= :endDt1 or :endDt2 is null) ";
+				hql +="and (vo.createTime between :startDt and :endDt) ";
 				hql += " order by vo.createTime Desc";
 				
 				Query query = session.createQuery(hql);
@@ -63,10 +66,20 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 					query.setParameterList("memberId1", memberIds);
 					query.setParameter("memberId2", memberIds.isEmpty() ? null : memberIds.toString());
 				}
-				query.setParameter("startDt1", startDt);
-				query.setParameter("startDt2", startDt);
-				query.setParameter("endDt1", endDt);
-				query.setParameter("endDt2", endDt);
+				if(null == startDt) {
+					query.setParameter("startDt", DateUtil.parse("1900-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss"));
+				} else {
+					query.setParameter("startDt", startDt);
+				}
+				if(null == endDt) {
+					query.setParameter("endDt", new Date());
+				} else {
+					query.setParameter("endDt", endDt);
+				}
+//				query.setParameter("startDt1", startDt);
+//				query.setParameter("startDt2", startDt);
+//				query.setParameter("endDt1", endDt);
+//				query.setParameter("endDt2", endDt);
 				
 				query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
 				query.setMaxResults(pageInfo.getPAGE_COUNT());
@@ -90,8 +103,9 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 				if(!memberIds.isEmpty()) {
 					hql += "and (vo.deliverer in (:memberId1) or :memberId2 is null) ";
 				}
-				hql +="and (trunc(vo.createTime) >= :startDt1 or :startDt2 is null) ";
-				hql +="and (trunc(vo.createTime) <= :endDt1 or :endDt2 is null) ";
+//				hql +="and (vo.createTime >= :startDt1 or :startDt2 is null) ";
+//				hql +="and (vo.createTime <= :endDt1 or :endDt2 is null) ";
+				hql +="and (vo.createTime between :startDt and :endDt) ";
 				hql += " order by vo.createTime Desc";
 				
 				Query query = session.createQuery(hql);
@@ -103,10 +117,21 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 					query.setParameterList("memberId1", memberIds);
 					query.setParameter("memberId2", memberIds.isEmpty() ? null : memberIds.toString());
 				}
-				query.setParameter("startDt1", startDt);
-				query.setParameter("startDt2", startDt);
-				query.setParameter("endDt1", endDt);
-				query.setParameter("endDt2", endDt);
+//				query.setParameter("startDt1", startDt);
+//				query.setParameter("startDt2", startDt);
+//				query.setParameter("endDt1", endDt);
+//				query.setParameter("endDt2", endDt);
+				
+				if(null == startDt) {
+					query.setParameter("startDt", DateUtil.parse("1900-01-01 00:00:00", "yyyy-MM-dd HH:mm:ss"));
+				} else {
+					query.setParameter("startDt", startDt);
+				}
+				if(null == endDt) {
+					query.setParameter("endDt", new Date());
+				} else {
+					query.setParameter("endDt", endDt);
+				}
 				
 				return query.list();
 			}
