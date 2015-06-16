@@ -292,7 +292,7 @@ function getLonelyFamily(phone) {
 				<form:input path="helpTel" cssClass="form_accept" size="30" />
 				</c:otherwise>
 			</c:choose>
-			<div id="phonelevels" style="color: black;vertical-align: middle;"></div>
+			<div id="phonelevels" style="margin-top:4px;color: black;vertical-align: middle;float:left;"></div>
             <c:if test="${not empty bizAccept.popupFlag}">
                <div style="vertical-align: middle; float:left;padding-left: 20px;">其他联系电话：<form:input path="otherTel" cssClass="form_accept" size="30"/></div>
             </c:if>
