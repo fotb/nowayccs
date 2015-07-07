@@ -105,6 +105,8 @@ $(document).ready(function(){
 		jQuery("#histList").trigger("reloadGrid");
 		
 		getPhoneLevels($("#helpTel").val());
+		
+		getLonelyFamily($("#helpTel").val());
 	});
 	
 	$("#addContent").click(function(){
@@ -202,6 +204,7 @@ function getLonelyFamily(phone) {
 	if(phone == "") {
 		phone = "${bizAccept.helpTel}";
 	}
+	
 	if(phone != "") {
 		$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(data) {
 		if(null != data) {
@@ -224,6 +227,9 @@ function getLonelyFamily(phone) {
 			
 			$("#helpName").val(data.manName);
 			$("#helpAddr").val(data.address);
+			
+			$("#lonelyManTb").show();
+			$("#lonelyFamilyDiv").show();
 			
 		} else {
 			$("#lonelyManTb").hide();
