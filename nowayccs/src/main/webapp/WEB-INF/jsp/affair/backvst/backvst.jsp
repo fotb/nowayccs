@@ -89,6 +89,15 @@ $(document).ready(function(){
   button: ".next()" //next sibling to input field
 	});
 });
+
+$(document).ready(function(){
+	$("#answerTime" ).dynDateTime({
+  showsTime: true,
+  ifFormat: "%Y-%m-%d  %H:%M:%S",
+  button: ".next()" //next sibling to input field
+	});
+});
+
 </c:if>
 </script>
 <body>
@@ -103,7 +112,7 @@ $(document).ready(function(){
             <td width="3%" align="center">
               <img src="images/icon_01.gif" width="5" height="17" alt="">
             </td>
-            <td class="font_no">生活服务类业务回访</td>
+            <td class="font_no">事务服务类业务回访</td>
           </tr>
         </table>
         <table width="100%" border="0" cellpadding="0" cellspacing="1">

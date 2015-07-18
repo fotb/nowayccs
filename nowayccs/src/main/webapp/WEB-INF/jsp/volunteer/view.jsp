@@ -71,7 +71,7 @@ $(document).ready(function(){
 
 
 	if("${volunteerVO.areaSubId}" != "") {
-		fillAreaSub(${volunteerVO.areaId});
+		fillAreaSub('${volunteerVO.areaId}');
 	}
 
 	$("#areaId").change(function() {

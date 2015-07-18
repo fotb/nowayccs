@@ -59,6 +59,7 @@ function btnback_click(){
 
 $(document).ready(function(){
 	$.getJSON("volunteer.do?action=area", function(data) {
+
 		$("#areaId").append("<option value=' '>全部</option>");
 		$.each(data, function(i, item) {
 			if("${volunteerVO.areaId}" == item.areaId) {
@@ -71,7 +72,7 @@ $(document).ready(function(){
 
 
 	if("${volunteerVO.areaSubId}" != "") {
-		fillAreaSub(${volunteerVO.areaId});
+		fillAreaSub('${volunteerVO.areaId}');
 	}
 
 	$("#areaId").change(function() {
