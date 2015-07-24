@@ -105,6 +105,7 @@ $(document).ready(function(){
 		jQuery("#histList").trigger("reloadGrid");
 		
 		getPhoneLevels($("#helpTel").val());
+		getLonelyFamily($("#helpTel").val());
 	});
 	
 	$("#addContent").click(function(){
@@ -225,6 +226,8 @@ function getLonelyFamily(phone) {
 			$("#helpName").val(data.manName);
 			$("#helpAddr").val(data.address);
 			
+			$("#lonelyManTb").show();
+			$("#lonelyFamilyDiv").show();
 		} else {
 			$("#lonelyManTb").hide();
 			$("#lonelyFamilyDiv").hide();

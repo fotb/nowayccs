@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.ILonelyFamilyBO;
 import com.ccs.bo.IUserBO;
@@ -144,5 +145,16 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 	public void pmDel(String memberId) {
 		PartyMemberForLonelyVO pmVO = partyMemberForLonelyDAO.findById(memberId);
 		partyMemberForLonelyDAO.delete(pmVO);
+	}
+
+	@Override
+	@Transactional
+	public void delLonelyFamily(String manId) {
+		List<PartyMemberForLonelyVO> pmList = partyMemberForLonelyDAO.findByManId(manId);
+		for (PartyMemberForLonelyVO partyMemberForLonelyVO : pmList) {
+			partyMemberForLonelyDAO.delete(partyMemberForLonelyVO);
+		}
+		LonelyManInfoVO lmiVO = lonelyManInfoDAO.findById(manId);
+		lonelyManInfoDAO.delete(lmiVO);
 	}
 }

@@ -32,4 +32,6 @@ public interface ILonelyFamilyBO {
 	void saveOrUpdate(final PartyMemberForLonelyVO pmVO);
 	
 	void pmDel(final String memberId);
+	
+	void delLonelyFamily(final String manId);
 }

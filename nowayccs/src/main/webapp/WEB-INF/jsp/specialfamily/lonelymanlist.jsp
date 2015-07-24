@@ -71,18 +71,31 @@ $(document).ready(function(){
               <table width="98%" border="0" align="center" cellpadding="0" cellspacing="1">
                 <tr>                 
                   <tr>
-                  <td width="80">
+                  <td width="40">
                   	姓名:
                   </td>
-                   <td width="200">
+                   <td width="40">
                    	<form:input path="manName" cssClass="form"/>
                   </td>
                   
                    <td width="80">
                   	电话:
                   </td>
-                   <td width="200">
-                   	<form:input path="telphone" cssClass="form" size="40"/>
+                   <td width="40">
+                   	<form:input path="telphone" cssClass="form" size="20"/>
+                  </td>
+                  <td nowrap="nowrap">
+                  	所属区域:
+                  </td>
+                   <td width="40">
+                   	<form:input path="area" cssClass="form" size="20"/>
+                  </td>
+                  
+                  <td width="80">
+                  	地址:
+                  </td>
+                   <td width="40">
+                   	<form:input path="address" cssClass="form" size="20"/>
                   </td>
                   <td>
                     <A href="javascript:btnsearch_click()">
@@ -139,8 +152,8 @@ $(document).ready(function(){
                 <td nowrap="nowrap">
                 	${sftMap[lmiVO.familyType]}
                 </td>
-                <td>
-                	${lmiVO.familyInfo}
+                <td width="60">
+                	<img src="images/read.gif" title="${lmiVO.familyInfo}" border="0" style="cursor: pointer;">
                 </td>
                 <td width="8%">
 					<a href="lfmgr.do?action=pmlist&manId=${lmiVO.manId}&pageNo=${pageInfo.currentPage}">
@@ -150,6 +163,10 @@ $(document).ready(function(){
                 <td width="8%">
                   <a href="lfmgr.do?action=update&manId=${lmiVO.manId}&pageNo=${pageInfo.currentPage}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
+                  </a>
+                  |
+                  <a href="lfmgr.do?action=del&manId=${lmiVO.manId}&pageNo=${pageInfo.currentPage}">
+                    <img src="images/del.gif" alt="删除" width="11" height="14" border="0">
                   </a>
                 </td>
               </tr>

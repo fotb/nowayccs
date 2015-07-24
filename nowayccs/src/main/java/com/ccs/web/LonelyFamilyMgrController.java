@@ -86,6 +86,13 @@ public class LonelyFamilyMgrController {
 	}
 	
 	
+	
+	@RequestMapping(params = "action=del")
+	public String delete(@RequestParam String manId, @RequestParam String pageNo, ModelMap model) {
+		lonelyFamilyBO.delLonelyFamily(manId);
+		return "redirect:lfmgr.do?pageNo=" + pageNo;
+	}
+	
 	@RequestMapping(params = "action=pmlist")
 	public String pmList(@RequestParam String manId, HttpSession session, ModelMap model) {
 
