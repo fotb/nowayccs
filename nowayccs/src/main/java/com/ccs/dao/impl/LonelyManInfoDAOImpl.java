@@ -69,8 +69,8 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 		valList.add(StringUtil.emptyToNull(lfMgrForm.getTelphone()));
 		valList.add(StringUtil.emptyToNull("%" + lfMgrForm.getArea()) + "%");
 		valList.add(StringUtil.emptyToNull(lfMgrForm.getArea()));
-		valList.add(StringUtil.emptyToNull("%" + lfMgrForm.getAddress()) + "%");
-		valList.add(StringUtil.emptyToNull(lfMgrForm.getAddress()));
+		valList.add(StringUtil.emptyToNull("%" + lfMgrForm.getArea()) + "%");
+		valList.add(StringUtil.emptyToNull(lfMgrForm.getArea()));
 
 
 		
@@ -86,8 +86,7 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 				String hql = "from LonelyManInfoVO vo where 1 = 1 ";
 				hql += " and (vo.manName like ? or ? is null)";
 				hql += " and (vo.telphone like ? or ? is null)";
-				hql += " and (vo.area like ? or ? is null)";
-				hql += " and (vo.address like ? or ? is null)";
+				hql += " and ((vo.area like ? or ? is null) or (vo.address like ? or ? is null))";
 				
 				Query query = session.createQuery(hql);
 				query.setParameters(valList.toArray(), types);
@@ -109,8 +108,8 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 		valList.add(StringUtil.emptyToNull(lfMgrForm.getTelphone()));
 		valList.add(StringUtil.emptyToNull("%" + lfMgrForm.getArea()) + "%");
 		valList.add(StringUtil.emptyToNull(lfMgrForm.getArea()));
-		valList.add(StringUtil.emptyToNull("%" + lfMgrForm.getAddress()) + "%");
-		valList.add(StringUtil.emptyToNull(lfMgrForm.getAddress()));
+		valList.add(StringUtil.emptyToNull("%" + lfMgrForm.getArea()) + "%");
+		valList.add(StringUtil.emptyToNull(lfMgrForm.getArea()));
 
 		
 		final StringType[] types = new StringType[valList.size()];
@@ -125,8 +124,7 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 				String hql = "select count(vo.manId) from LonelyManInfoVO vo where 1 = 1 ";
 				hql += " and (vo.manName like ? or ? is null)";
 				hql += " and (vo.telphone like ? or ? is null)";
-				hql += " and (vo.area like ? or ? is null)";
-				hql += " and (vo.address like ? or ? is null)";
+				hql += " and ((vo.area like ? or ? is null) or (vo.address like ? or ? is null))";
 				
 				Query query = session.createQuery(hql);
 				query.setParameters(valList.toArray(), types);

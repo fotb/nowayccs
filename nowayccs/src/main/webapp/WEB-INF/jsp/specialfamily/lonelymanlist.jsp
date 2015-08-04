@@ -82,20 +82,13 @@ $(document).ready(function(){
                   	电话:
                   </td>
                    <td width="40">
-                   	<form:input path="telphone" cssClass="form" size="20"/>
+                   	<form:input path="telphone" cssClass="form" size="30"/>
                   </td>
                   <td nowrap="nowrap">
-                  	所属区域:
+                  	所属区域或地址:
                   </td>
                    <td width="40">
-                   	<form:input path="area" cssClass="form" size="20"/>
-                  </td>
-                  
-                  <td width="80">
-                  	地址:
-                  </td>
-                   <td width="40">
-                   	<form:input path="address" cssClass="form" size="20"/>
+                   	<form:input path="area" cssClass="form" size="30"/>
                   </td>
                   <td>
                     <A href="javascript:btnsearch_click()">
@@ -112,9 +105,9 @@ $(document).ready(function(){
         </table>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr class="table_green">
-              <td>编号</td>
+              <td nowrap="nowrap">编号</td>
 	          <td nowrap="nowrap">姓名</td>
-	          <td>性别</td>
+	          <td nowrap="nowrap">性别</td>
 	          <td nowrap="nowrap">出身年月</td>
 	          <td>联系电话</td>
 	          <td nowrap="nowrap">身份证号码</td>
@@ -122,7 +115,7 @@ $(document).ready(function(){
               <td>地址</td>
               <td>家庭类别</td>
               <td>基本信息</td>   
-              <td>结对志愿者</td>   
+              <td>结对<br/>志愿者</td>   
               <td>操作</td>              
 	        </tr>
 			<c:forEach items="${lmiVOList}" var="lmiVO"  varStatus="index">
@@ -155,7 +148,7 @@ $(document).ready(function(){
                 <td width="60">
                 	<img src="images/read.gif" title="${lmiVO.familyInfo}" border="0" style="cursor: pointer;">
                 </td>
-                <td width="8%">
+                <td width="5%">
 					<a href="lfmgr.do?action=pmlist&manId=${lmiVO.manId}&pageNo=${pageInfo.currentPage}">
                     <img src="images/edit.gif" alt="修改" width="11" height="14" border="0">
                   </a>
