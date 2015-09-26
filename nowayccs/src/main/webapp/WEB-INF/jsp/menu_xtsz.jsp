@@ -43,6 +43,10 @@
     <td class="leftmenu_02"><a href="lfmgr.do" target="main"><img src="images/leftpic_08.gif" width="70" height="30" border="0"><br>
     <font color="#FFFFFF">结对家庭信息查询</font></a></td>
   </tr>
+      <tr>
+    <td class="leftmenu_02"><a href="power/list.html" target="main"><img src="images/leftpic_08.gif" width="70" height="30" border="0"><br>
+    <font color="#FFFFFF">光明电力服务员工</font></a></td>
+  </tr>
   <tr>
     <td class="leftmenu_02"><a href="dict.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>
     <font color="#FFFFFF">数据字典维护</font></a></td>
