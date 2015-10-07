@@ -1,9 +1,8 @@
 package com.ccs.web;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
-
-import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ccs.bo.IAreaBO;
 import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IUserBO;
+import com.ccs.util.ChomboBoxContainer;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
 import com.ccs.vo.EntCategoryVO;
 import com.ccs.vo.UserVO;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/json.do")
@@ -47,7 +49,7 @@ public class CommonJsonController {
 		return jsonObj.toString();
 	}
 	
-	@RequestMapping(params = "action=subarea", method = RequestMethod.GET)
+	@RequestMapping(params = "action=subarea")
 	public @ResponseBody String getSubArea(@RequestParam String areaId) throws UnsupportedEncodingException {
 		List<AreaSubVO> list = areaBO.findAreaSubByAreaId(areaId);
 		JSONArray jsonObj = JSONArray.fromObject(list);
@@ -61,5 +63,31 @@ public class CommonJsonController {
 		return jsonObj.toString();
 	}
 	
+	@RequestMapping(params = "action=arealist", method = RequestMethod.GET)
+	public @ResponseBody String getAreaForChomboBox() throws UnsupportedEncodingException {
+		List<AreaVO> list = areaBO.findAllArea();
+		List<ChomboBoxContainer> cbList = new ArrayList<ChomboBoxContainer>();
+		for (AreaVO areaVO : list) {
+			ChomboBoxContainer cb = new ChomboBoxContainer();
+			cb.setText(areaVO.getName());
+			cb.setValue(areaVO.getAreaId());
+			cbList.add(cb);
+		}
+		JSONArray jsonObj = JSONArray.fromObject(cbList);
+		return jsonObj.toString();
+	}
 	
+	@RequestMapping(params = "action=subarealist")
+	public @ResponseBody String getSubAreaForChomboBox(@RequestParam String areaId) throws UnsupportedEncodingException {
+		List<AreaSubVO> list = areaBO.findAreaSubByAreaId(areaId);
+		List<ChomboBoxContainer> cbList = new ArrayList<ChomboBoxContainer>();
+		for (AreaSubVO areaSubVO : list) {
+			ChomboBoxContainer cb = new ChomboBoxContainer();
+			cb.setText(areaSubVO.getName());
+			cb.setValue(areaSubVO.getAreaSubId());
+			cbList.add(cb);
+		}
+		JSONArray jsonObj = JSONArray.fromObject(cbList);
+		return jsonObj.toString();
+	}
 }

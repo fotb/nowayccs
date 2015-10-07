@@ -11,8 +11,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenericGenerator;
-
 
 /**
  * 
@@ -33,29 +31,33 @@ public class BaseEntity implements Serializable {
      * 主键标示
      */
 	@Id
-	@GeneratedValue(generator = "_increment")
-	@GenericGenerator(name = "_increment", strategy = "increment")
+	@GeneratedValue(generator = "hibernate-uuid")
+	@org.hibernate.annotations.GenericGenerator(name = "hibernate-uuid", strategy = "uuid")
 	@Column(length=32)
-	private Integer pid;
+	private String pid;
+	
+	@Temporal(TemporalType.TIMESTAMP)																																				
+	@Column(name = "CREATETIME")
+	private Date createTime;
 	
 	/**
 	 * 删除标志  1已经删除，0 正常
 	 */
-	@Column(precision = 1,name ="DELETE_FLAG")
+	@Column(precision = 1,name ="DELETEFLAG")
 	private Integer deleteFlag = DELETE_FLAG_NO ;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "UPDATE_DT")
+	@Column(name = "UPDATEDT")
 	private  Date updateDT  = new Date ();
 	
-	@Column(name = "LAST_HANDLER")
+	@Column(name = "LASTHANDLER")
 	private String lastHandler;
 
-	public Integer getPid() {
+	public String getPid() {
 		return pid;
 	}
 
-	public void setPid(Integer pid) {
+	public void setPid(String pid) {
 		this.pid = pid;
 	}
 
@@ -82,5 +84,37 @@ public class BaseEntity implements Serializable {
 	public void setLastHandler(String lastHandler) {
 		this.lastHandler = lastHandler;
 	}
-	
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pid == null) ? 0 : pid.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BaseEntity other = (BaseEntity) obj;
+		if (pid == null) {
+			if (other.pid != null)
+				return false;
+		} else if (!pid.equals(other.pid))
+			return false;
+		return true;
+	}
 }

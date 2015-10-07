@@ -43,7 +43,7 @@ public interface IBaseDAO<E extends BaseEntity> {
 	 * @param pid
 	 * @return
 	 */
-	E get(Integer pid);
+	E get(String pid);
 	
 	void evict(Object entity);
 

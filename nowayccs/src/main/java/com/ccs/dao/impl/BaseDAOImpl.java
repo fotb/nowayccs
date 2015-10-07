@@ -14,12 +14,13 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.dao.IBaseDAO;
 import com.ccs.util.GenericUtil;
 import com.ccs.vo.BaseEntity;
 
-
+@Transactional
 public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport implements IBaseDAO<E> {
 	
 	private Logger log = Logger.getLogger(this.getClass());
@@ -60,7 +61,9 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<E> getAll() {
+		System.out.println("------:" + this.clazz.getName());
 		String hql = "from " + this.clazz.getName() + "  where deleteFlag=0  order by createTime" ;
+		System.out.println("hql--------:" + hql);
 		return this.getSessionFactory().getCurrentSession().createQuery(hql).list();
 	}
 
@@ -78,7 +81,7 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public E get(Integer pid) {
+	public E get(String pid) {
 		return (E) this.getSessionFactory().getCurrentSession().get(this.clazz, pid);
 	}
 

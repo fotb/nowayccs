@@ -18,6 +18,8 @@ public class PowerStaffVO extends BaseEntity implements Serializable {
 	private String phone;
 	@Column(name = "REMARK")
 	private String remark;
+	@Column(name = "CATEGORY")
+	private String category;
 
 	public String getName() {
 		return name;
@@ -43,4 +45,11 @@ public class PowerStaffVO extends BaseEntity implements Serializable {
 		this.remark = remark;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }

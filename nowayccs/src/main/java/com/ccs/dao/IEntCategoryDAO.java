@@ -3,7 +3,6 @@ package com.ccs.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.ccs.vo.ClassOfEntpriseVO;
 import com.ccs.vo.EntCategoryVO;
 
 public interface IEntCategoryDAO {
