@@ -11,6 +11,11 @@ import javax.persistence.Table;
 public class PowerStaffVO extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 6439274737938698609L;
+	
+	public static final String CATEGORY_1 = "1";
+	public static final String CATEGORY_2 = "2";
+	public static final String CATEGORY_3 = "3";
+	public static final String CATEGORY_4 = "4";
 
 	@Column(name = "NAME")
 	private String name;
