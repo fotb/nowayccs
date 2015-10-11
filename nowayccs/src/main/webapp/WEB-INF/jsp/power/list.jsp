@@ -14,10 +14,10 @@
 </head>
 <body>
 	<div id="tb" style="padding:5px;height:auto">
-		<div style="margin-bottom:5px">
-			<a href="lps.do?action=add" class="easyui-linkbutton" iconCls="icon-add" id="btAdd" plain="true">新增</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+		<div style="margin-bottom:5px" id="#tb">
+			<a href="lps.do?action=add" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:'true'" id="btAdd">新增</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:'true'" id="btRemove">删除</a>
 		</div>
 		<!--
 		<div>
@@ -45,6 +45,7 @@
                 animate: true,
                 collapsible: true,
                 fitColumns: true,
+                striped:true,
                 url: 'lps.do?action=buildtree',
                 method: 'get',
                 idField: 'id',
@@ -72,6 +73,7 @@
                         rows: data  
                     }
                 }
+                
                 var dg = $(this);  
                 var state = dg.data('treegrid');
                 var opts = dg.treegrid('options');  
@@ -170,12 +172,29 @@
        
         $(function(){
             $('#tg').treegrid().treegrid('clientPaging');
+            
+            $("#btRemove").click(function (){
+            	var row = $("#tg").treegrid("getSelected");
+            	if(null == row) {
+            		$.messager.alert("提示", '请选择需要删除的记录！');
+            	} else if($("#tg").treegrid("getChildren", row.id).length > 0) {
+            		$.messager.alert("提示", '请删除具体某个员工！');
+            	} else {
+            		$.messager.confirm("提示", '确认删除员工？',function(r){
+            		    if (r){
+            		    	$("#tg").treegrid("remove", row.id);
+        					
+                    		$.post("lps.do?action=del", {id:row.id},
+        						function(data,status){
+                    				$.getJSON("lps.do?action=buildtree", function(data){
+                    					$("#tg").treegrid("loadData", data);
+                    				});
+        						});
+            		    }
+            		});
+            	}
+            });
         })
-        
-        $("btAdd").click(function (){
-        	alert("test");
-        	this.location="lps.do?action=add";        	
-        });
         
 		function formatCategory(value){
 			var s = "";

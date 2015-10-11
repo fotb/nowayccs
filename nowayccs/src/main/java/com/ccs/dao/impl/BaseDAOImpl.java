@@ -61,22 +61,20 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<E> getAll() {
-		System.out.println("------:" + this.clazz.getName());
 		String hql = "from " + this.clazz.getName() + "  where deleteFlag=0  order by createTime" ;
-		System.out.println("hql--------:" + hql);
 		return this.getSessionFactory().getCurrentSession().createQuery(hql).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public E queryForObject(String hql, Object[] parameters) {
+	public List<E> queryForObject(String hql, Object[] parameters) {
 		Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
 		if (parameters != null) {
 			for (int i = 0, len = parameters.length; i < len; i++) {
 				query.setParameter(i, parameters[i]);
 			}
 		}
-		return (E) query.uniqueResult();
+		return (List<E>) query.list();
 	}
 
 	@SuppressWarnings("unchecked")

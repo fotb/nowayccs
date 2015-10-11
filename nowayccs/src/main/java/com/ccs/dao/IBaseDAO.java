@@ -36,7 +36,7 @@ public interface IBaseDAO<E extends BaseEntity> {
 	 * @param parameters
 	 * @return
 	 */
-	E queryForObject(String hql, Object[] parameters);
+	List<E> queryForObject(String hql, Object[] parameters);
 	
 	/**
 	 * 根据主键pid 获取对应实体信息
