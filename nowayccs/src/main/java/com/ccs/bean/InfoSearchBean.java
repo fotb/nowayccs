@@ -15,6 +15,8 @@ public class InfoSearchBean implements Serializable {
 	private String helpType;
 
 	private String helpArea;
+	
+	private String helpMode;
 
 	private String helpGroup;
 
@@ -99,6 +101,14 @@ public class InfoSearchBean implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getHelpMode() {
+		return helpMode;
+	}
+
+	public void setHelpMode(String helpMode) {
+		this.helpMode = helpMode;
 	}
 
 }

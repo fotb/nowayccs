@@ -134,7 +134,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 					throws HibernateException, SQLException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
-						Type[] types = new Type[18];
+						Type[] types = new Type[20];
 						buffer.append("from InformationVO t where ");
 						buffer.append("(t.creator = ? or ? is null) ");
 						values.add(bean.getCreator());
@@ -180,7 +180,14 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 						values.add("%" + bean.getHelpContent() + "%");
 						values.add(bean.getHelpContent());
 						types[16] = StandardBasicTypes.STRING;
-						types[17] = StandardBasicTypes.STRING;					
+						types[17] = StandardBasicTypes.STRING;		
+						
+						buffer.append("and (t.helpMode = ? or ? is null) ");
+						values.add(bean.getHelpMode());
+						values.add(bean.getHelpMode());
+						types[18] = StandardBasicTypes.STRING;
+						types[19] = StandardBasicTypes.STRING;	
+						
 						buffer.append("order by t.createTime desc");
 						
 						Query query = session.createQuery(buffer.toString());
@@ -209,6 +216,9 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("and (t.helpGroup = ? or ? is null) ");
 		values.add(bean.getHelpGroup());
 		values.add(bean.getHelpGroup());
+		buffer.append("and (t.helpMode = ? or ? is null) ");
+		values.add(bean.getHelpMode());
+		values.add(bean.getHelpMode());
 		buffer.append("and (trunc(t.createTime) >= ? or ? is null) ");
 		values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));
 		values.add(DateUtil.parse(bean.getStartDt(), "yyyy-MM-dd"));

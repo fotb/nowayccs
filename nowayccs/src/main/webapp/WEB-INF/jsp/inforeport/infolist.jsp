@@ -103,6 +103,11 @@ $("#jdjtcount").html(data.jdjtcount);
                 <form:option value="">全部</form:option>
                 <form:options items="${helpAreaList}" itemLabel="value" itemValue="sortIndex"/>
             </form:select></td>
+            <td>求助方式：</td>
+              <form:select path="helpMode" cssClass="form">
+              <form:option value="">全部</form:option>
+              <form:options items="${qzfsList}" itemLabel="value" itemValue="sortIndex"/>
+              </form:select>
             <td>受理人群：</td>
             <td width="20%"><form:select cssClass="form" path="helpGroup">
                 <form:option value="">全部</form:option>
