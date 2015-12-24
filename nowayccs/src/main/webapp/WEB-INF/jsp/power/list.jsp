@@ -14,10 +14,12 @@
 </head>
 <body>
 	<div id="tb" style="padding:5px;height:auto">
-		<div style="margin-bottom:5px" id="#tb">
+		<div style="margin-bottom:1px" id="#tb">
 			<a href="lps.do?action=add" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:'true'" id="btAdd">新增</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:'true'" id="btRemove">停止服务</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:'true'" id="btRemove">删除</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btSave">保存</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消</a>
 		</div>
 		<!--
 		<div>
@@ -36,12 +38,13 @@
 		-->
 	</div>
 	
-	<div style="margin:20px 0;"></div>
+	<div style="margin:10px 0;"></div>
 	
-	<table id="tg" title="光明电力服务员工" style="width:100%;height:100%"
+	<table id="tg" title="光明电力服务员工" style="width:100%;height:400"
             data-options="
                 iconCls: 'icon-ok',
                 rownumbers: true,
+                lines: true,
                 animate: true,
                 collapsible: true,
                 fitColumns: true,
@@ -57,10 +60,11 @@
             ">
         <thead>
             <tr>
-                <th data-options="field:'name',width:100,align:'left'">姓名</th>
-                <th data-options="field:'phone',width:80">电话</th>
+                <th data-options="field:'name',width:100,align:'left',editor:'text'">姓名</th>
+                <th data-options="field:'phone',width:80,editor:'text'">电话</th>
+                <!-- <th data-options="field:'category',width:80,formatter:formatCategory,editor:{type:'combobox',options:{valueField:'category', textField:'categoryName', data:[{'category':1,'categoryName':1},{'category':2,'categoryName':2}]}}">职务</th> -->
                 <th data-options="field:'category',width:80,formatter:formatCategory">职务</th>
-                <th data-options="field:'remark',width:40">备注</th>
+                <th data-options="field:'remark',width:40,editor:'text'">备注</th>
             </tr>
         </thead>
     </table>
@@ -193,6 +197,41 @@
             		    }
             		});
             	}
+            });
+            
+            
+            var editingId;
+            $("#btEdit").click(function (){
+            	alert("fadf");
+                if (editingId != undefined){
+                    $('#tg').treegrid('select', editingId);
+                    return;
+                }
+                var row = $('#tg').treegrid('getSelected');
+                alert(row.id);
+                if (row){
+                    editingId = row.id
+                    $('#tg').treegrid('beginEdit', editingId);
+                }
+            });
+            
+            $("#btSave").click(function (){
+                if (editingId != undefined){
+                    var t = $('#tg');
+                    t.treegrid('endEdit', editingId);
+                    editingId = undefined;
+                    var persons = 0;
+                    var row = t.treegrid('getSelected');
+	                 alert(row.name);
+	                 $.post("lps.do?action=saveLps", {id:row.id, name:row.name, phone:row.phone, remark:row.remark});
+                }
+            });
+            
+            $("#btCancel").click(function (){
+                if (editingId != undefined){
+                    $('#tg').treegrid('cancelEdit', editingId);
+                    editingId = undefined;
+                }
             });
         })
         

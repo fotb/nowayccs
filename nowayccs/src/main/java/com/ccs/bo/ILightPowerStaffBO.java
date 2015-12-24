@@ -1,5 +1,6 @@
 package com.ccs.bo;
 
+import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
 import com.ccs.web.domain.PowerStaffDomain;
@@ -11,5 +12,9 @@ public interface ILightPowerStaffBO {
 	LightPowerStaffTreeBean buildLPSTree() throws Exception;
 	
 	void deleteLPS(String id, UserVO userVO) throws Exception;
+	
+	PowerStaffVO findPowerStaffById(String id) throws Exception;
+	
+	void updatePowerStaff(PowerStaffVO psVO) throws Exception;
 	
 }

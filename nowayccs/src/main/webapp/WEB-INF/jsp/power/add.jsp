@@ -72,13 +72,14 @@
 											valueField:'value',
 											textField:'text',
 											panelHeight:'auto',
+											required:true,
 											onSelect:function(record){
 												$('#areaSubId').combobox('setValues', '');
 												$('#areaSubId').combobox('reload', 'json.do?action=subarealist&areaId='+record.value);
 											}" ></form:input>
 							
 							<form:input class="easyui-combobox" path="areaSubId" style="width:200px" 
-	    						data-options="multiple:true,valueField:'value',textField:'text',panelHeight:'auto',
+	    						data-options="multiple:true,valueField:'value',textField:'text',panelHeight:'auto',required:true,
 	    										onSelect:function(record){
 													setComboValue(record.value);
 											}" ></form:input>

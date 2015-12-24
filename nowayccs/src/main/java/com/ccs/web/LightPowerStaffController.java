@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.ILightPowerStaffBO;
 import com.ccs.util.Constants;
+import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
 import com.ccs.web.domain.PowerStaffDomain;
@@ -45,7 +46,7 @@ public class LightPowerStaffController {
 		
 		jsonObj.put("rows", jsonArray.toString());
 		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
-		System.out.println("json: " + jsonObj.toString());
+//		System.out.println("json: " + jsonObj.toString());
 		return jsonObj.toString();
 	}
 	
@@ -65,6 +66,15 @@ public class LightPowerStaffController {
 		lpsBO.saveLPS(powerStaffDomain, user);
 		
 		return "power/list";
+	}
+	
+	@RequestMapping(params = "action=saveLps")
+	public @ResponseBody void save(@RequestParam String id, @RequestParam String name, @RequestParam String phone, @RequestParam String remark, HttpSession session, ModelMap model) throws Exception {
+		PowerStaffVO psVO = lpsBO.findPowerStaffById(id);
+		psVO.setName(name);
+		psVO.setPhone(phone);
+		psVO.setRemark(remark);
+		lpsBO.updatePowerStaff(psVO);
 	}
 	
 	@RequestMapping(params = "action=del")

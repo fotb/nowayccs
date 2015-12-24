@@ -70,8 +70,6 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			psaVO.setLastHandler(userVO.getUserId());
 			lpsaDAO.save(psaVO);
 		}
-		
-		
 	}
 
 	@Override
@@ -164,5 +162,15 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			powerStaffAreaVO.setDeleteFlag(PowerStaffAreaVO.DELETE_FLAG_YES);
 			lpsaDAO.update(powerStaffAreaVO);
 		}
+	}
+
+	@Override
+	public PowerStaffVO findPowerStaffById(String id) throws Exception {
+		return lpsDAO.get(id);
+	}
+
+	@Override
+	public void updatePowerStaff(PowerStaffVO psVO) throws Exception {
+		lpsDAO.update(psVO);
 	}
 }
