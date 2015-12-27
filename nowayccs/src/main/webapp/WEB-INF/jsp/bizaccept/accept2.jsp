@@ -61,6 +61,9 @@ function btnnext_click(){
     } else if("1" == $("#helpType").val() || "4" == $("#helpType").val()) {
   		$("#action").val("refer");
   		$("form").submit();
+    } else if("5" == $("#helpType").val()) {
+    	$("#action").val("power");
+  		$("form").submit();
     }
   }
 }
