@@ -279,6 +279,8 @@ public class BizAcceptController {
 		}
 	}
 	
+	
+	
 	@RequestMapping(params = "action=helphist", method = RequestMethod.GET)
 	public @ResponseBody String getHelpHist(@RequestParam(value = "callNo", required = false) String callNo, 
 			@RequestParam("_search") String _search,
@@ -339,5 +341,22 @@ public class BizAcceptController {
 	public @ResponseBody void postRecordFileName(String callId, HttpSession session) {
 		session.setAttribute(CALL_ID, callId);
 		logger.info("Got callId: " + callId);
+	}
+	
+	
+	@RequestMapping(params = "action=power")
+	public String acceptPower(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
+		bizAccept.setCreator(user.getUserName());
+		session.setAttribute("bizAccept", bizAccept);
+		
+		model.addAttribute("bizAccept", bizAccept);
+		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
+		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+		model.addAttribute("qzqyMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+		model.addAttribute("slrqMap", dictBO.getDict(Constants.DICT_DICTTYPE_SLRQ));
+		model.addAttribute("userList", userBO.findUserByOpertaionId(Constants.SYS_PERMISSION_SWYWCL));
+		return "bizaccept/acceptpower";
 	}
 }
