@@ -34,6 +34,10 @@ import com.ccs.vo.ReferInformationVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.BizAccept;
 import com.ccs.web.domain.InfoBean;
+import com.ccs.web.domain.LightPowerStaffTreeBean;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/bizaccept.do")
@@ -358,5 +362,23 @@ public class BizAcceptController {
 		model.addAttribute("slrqMap", dictBO.getDict(Constants.DICT_DICTTYPE_SLRQ));
 		model.addAttribute("userList", userBO.findUserByOpertaionId(Constants.SYS_PERMISSION_SWYWCL));
 		return "bizaccept/acceptpower";
+	}
+	
+	
+	@RequestMapping(params = "action=pslist", method = RequestMethod.GET)
+	public @ResponseBody String buildLPSTree(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="areaSubId", required=false) String areaSubId) throws Exception {
+		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
+//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+//		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("total", lpsTreeBean.getTotal());
+		
+		
+		JSONArray jsonArray = JSONArray.fromObject(lpsTreeBean.getRows());
+		
+		jsonObj.put("rows", jsonArray.toString());
+		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
+//		System.out.println("json: " + jsonObj.toString());
+		return jsonObj.toString();
 	}
 }
