@@ -16,17 +16,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ccs.bean.InfoSearchBean;
 import com.ccs.bean.InfoSearchResultDTO;
+import com.ccs.bo.IAreaBO;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IInfoSearchBO;
+import com.ccs.bo.ILightPowerStaffBO;
+import com.ccs.bo.IPowerInformationBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
+import com.ccs.vo.AreaSubVO;
+import com.ccs.vo.AreaVO;
 import com.ccs.vo.EntpriseVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
+import com.ccs.vo.PowerInformationVO;
+import com.ccs.vo.PowerStaffAreaVO;
+import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.ReferInformationVO;
 import com.ccs.vo.UserVO;
 import com.ccs.vo.VolunteerVO;
@@ -50,6 +58,16 @@ public class InfoSearchController {
 	@Autowired
 	private IEntpriseBO entpriseBO;
 	
+	@Autowired
+	private IPowerInformationBO powerInforBO;
+	
+	@Autowired
+	private ILightPowerStaffBO lpsBO;
+	
+	@Autowired
+	private IAreaBO areaBO;
+	
+		
 	@RequestMapping
 	public String list(
 			@ModelAttribute("infoSearchBean") InfoSearchBean infoSearchBean,
@@ -186,6 +204,40 @@ public class InfoSearchController {
 		return "infosearch/affairinfo";
 	}
 	
+	@RequestMapping(params = "action=powerinfo")
+	public String powerInfo(String infoId, ModelMap model) throws Exception {
+		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		model.addAttribute("infoVO", infoVO);
+		model.addAttribute("statusMap", Constants.SYS_INFOMATION_STATES_HASHMAP);
+		
+		model.addAttribute("areaMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+		model.addAttribute("pdfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_LLFS));
+		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
+		model.addAttribute("mydMap", dictBO.getDict(Constants.DICT_DICTTYPE_MYD));
+		
+		model.addAttribute("dealer", userBO.findById(infoVO.getCreator()));
+
+		PowerInformationVO piVO = powerInforBO.findByInfoId(infoId).get(0);
+		
+		if(null != piVO) {
+			model.addAttribute("piVO", piVO);
+			
+			if(null != piVO.getPowerStaffId()) {
+				PowerStaffVO psVO = lpsBO.findPowerStaffById(piVO.getPowerStaffId());
+				model.addAttribute("psVO", psVO);
+				
+				PowerStaffAreaVO psaVO = lpsBO.findPSAById(psVO.getPid()).get(0);
+				AreaSubVO asVO = areaBO.findByAreaSubId(psaVO.getAreaSubId());
+				model.addAttribute("asVO", asVO);
+				AreaVO areaVO = areaBO.findByAreaId(asVO.getAreaId());
+				model.addAttribute("areaVO", areaVO);
+				
+			}
+		}
+		return "infosearch/powerinfo";
+	}
+	
 	@RequestMapping(params = "action=showinfo")
 	public String showInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
@@ -195,8 +247,12 @@ public class InfoSearchController {
 			return "redirect:infosearch.do?action=affairinfo&infoId=" + infoId;
 		} else if(Constants.INFOMATION_HELPTYPE_REFER.equals(infoVO.getHelpType())) {
 			return "redirect:infosearch.do?action=referinfo&infoId=" + infoId;
-		} else{// if(Constants.INFOMATION_HELPTYPE_FERTILITY.equals(infoVO.getHelpType())) {
+		} else if(Constants.INFOMATION_HELPTYPE_FERTILITY.equals(infoVO.getHelpType())) {
 			return "redirect:infosearch.do?action=productivityinfo&infoId=" + infoId;
+		} else if(Constants.INFOMATION_HELPTYPE_POWER.equals(infoVO.getHelpType())) {
+			return "redirect:infosearch.do?action=powerinfo&infoId=" + infoId;
+		} else {
+			return "";
 		}
 	}
 }

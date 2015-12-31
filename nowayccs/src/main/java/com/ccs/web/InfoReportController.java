@@ -166,6 +166,10 @@ public class InfoReportController {
 			int fertilityCount = infoReportBO.getCountByParams(infoSearchBean);
 			map.put("fertilityCount", String.valueOf(fertilityCount));
 			
+			infoSearchBean.setHelpType(Constants.INFOMATION_HELPTYPE_POWER);
+			int powerCount = infoReportBO.getCountByParams(infoSearchBean);
+			map.put("powerCount", String.valueOf(powerCount));
+			
 			map.put("count", String.valueOf(lifeCount + affairCount + referCount + fertilityCount + jdjtcount));
 		} else {
 			int count = infoReportBO.getCountByParams(infoSearchBean);
@@ -187,7 +191,9 @@ public class InfoReportController {
 			}
 			if(helpType.equals(Constants.INFOMATION_HELPTYPE_FERTILITY)) {
 				map.put("fertilityCount", String.valueOf(count));
-			} else {
+			} if(helpType.equals(Constants.INFOMATION_HELPTYPE_POWER)) {
+				map.put("powerCount", String.valueOf(count));
+			}else {
 				map.put("fertilityCount", "0");
 			}
 		}
@@ -196,17 +202,19 @@ public class InfoReportController {
 		int affair = infoReportBO.getInfoCount(Constants.INFOMATION_HELPTYPE_AFFAIR);
 		int refer = infoReportBO.getInfoCount(Constants.INFOMATION_HELPTYPE_REFER);
 		int fertility = infoReportBO.getInfoCount(Constants.INFOMATION_HELPTYPE_FERTILITY);
+		int power = infoReportBO.getInfoCount(Constants.INFOMATION_HELPTYPE_POWER);
 
 		map.put("life", String.valueOf(life));
 		map.put("affair", String.valueOf(affair));
 		map.put("refer", String.valueOf(refer));
 		map.put("fertility", String.valueOf(fertility));
+		map.put("power", String.valueOf(power));
 		
 
 		
 		
 		
-		map.put("total", String.valueOf(life + affair + refer + fertility + jdjt));
+		map.put("total", String.valueOf(life + affair + refer + fertility + power + jdjt));
 		
 		
 		JSONObject jsonObject = JSONObject.fromObject(map);
@@ -495,6 +503,24 @@ public class InfoReportController {
 				map.put(dto.getUserId(), dto);
 			}
 		}
+		
+		//power
+				bean.setHelpType(Constants.INFOMATION_HELPTYPE_POWER);
+				List<UserTrafficBean> powerList = userBO.findUserTraffic(bean);
+				for (Iterator<UserTrafficBean> iter = powerList.iterator(); iter.hasNext();) {
+					UserTrafficBean userTrafficBean = iter.next();
+					if(map.containsKey(userTrafficBean.getUserId())) {
+						UserTrafficDTO dto = map.get(userTrafficBean.getUserId());
+						dto.setPowerTraffic(userTrafficBean.getTraffic());
+					} else {
+						UserTrafficDTO dto = new UserTrafficDTO();
+						dto.setUserId(userTrafficBean.getUserId());
+						dto.setLoginName(userTrafficBean.getLoginName());
+						dto.setUserName(userTrafficBean.getUserName());
+						dto.setPowerTraffic(userTrafficBean.getTraffic());
+						map.put(dto.getUserId(), dto);
+					}
+				}
 		
 		//jdjt:lonelyhelp
 		bean.setHelpType("LONELYHELP");

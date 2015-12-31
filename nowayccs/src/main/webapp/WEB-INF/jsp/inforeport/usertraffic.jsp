@@ -91,6 +91,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
         <td>生活服务类</td>
         <td>事务服务类</td>
         <td>生产力服务</td>
+        <td>电力服务</td>
         <td>结对家庭服务</td>
         <td>总计</td>
         </tr>
@@ -102,6 +103,7 @@ $('tbody > tr:odd', $('#infoList')).toggleClass('table_blue');
         <td>${dto.lifeTraffic}</td>
         <td>${dto.affairTraffic}</td>
         <td>${dto.sclTraffic}</td>
+        <td>${dto.powerTraffic}</td>
         <td>${dto.jdjtTraffic}</td>
         <td>${dto.totalTraffic}</td>
         </tr>

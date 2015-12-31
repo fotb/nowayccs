@@ -48,6 +48,12 @@ form.action="infosearch.do?action=affairinfo&infoId=" + id;
   form.submit();
 }
 
+function showPowerInfo(id) {
+  var form=document.forms[0];
+	form.action="infosearch.do?action=powerinfo&infoId=" + id;
+  form.submit();
+}
+
 function playRecord(infoId) {
   var form=document.forms[0];
   form.action="record.do?infoId=" + infoId;
@@ -82,8 +88,13 @@ $(document).ready(function(){
       <tr>
         <td bgcolor="#F1F1F1"><table width="98%"  border="0" align="center" cellpadding="0" cellspacing="1">
           <tr>
-            <td>求助时间：</td>
-            <td><form:input cssClass="form" path="startDt" size="15" />到<form:input cssClass="form" path="endDt" size="15" /></td>
+            <td nowrap="nowrap">求助时间：</td>
+            <td colspan="4"><form:input cssClass="form" path="startDt" size="15" /> 到 <form:input cssClass="form" path="endDt" size="15" /></td>
+            </tr>
+          <tr class="line">
+            <td height="2" colspan="5">            </td>
+          </tr>
+            <tr>
             <td>求助电话：</td>
             <td><form:input cssClass="form" path="helpTel" size="20"/></td>
             <td>居住地址：</td>
@@ -138,6 +149,12 @@ $(document).ready(function(){
         <!--生产力服务-->
         <c:if test="${dto.helpType=='4'}">
         <a href="javascript:showProductivityInfo('${dto.infoId}')">
+        ${dto.helpName}
+        </a>
+        </c:if> 
+        <!--电力服务类-->
+        <c:if test="${dto.helpType=='5'}">
+        <a href="javascript:showPowerInfo('${dto.infoId}')">
         ${dto.helpName}
         </a>
         </c:if>

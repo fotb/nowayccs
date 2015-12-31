@@ -72,7 +72,7 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 		}
 		
 		Date startDt = shsForm.getStartDt() == null ? null : DateUtil.parse(shsForm.getStartDt(), "yyyy-MM-dd");
-		Date endDt = shsForm.getEndDt() == null ? null : DateUtil.parse(shsForm.getEndDt(), "yyyy-MM-dd");
+		Date endDt = shsForm.getEndDt() == null ? null : DateUtil.parse(shsForm.getEndDt() + "23:59:59", "yyyy-MM-dd hh:mm:ss");
 		List<LonelyHelpVO> voList = lonelyHelpDAO.query(manIdList, memberIds, startDt, endDt, pageInfo);
 		
 		List<ShsResultDTO> dtoList = new ArrayList<ShsResultDTO>();
@@ -104,7 +104,7 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 		}
 		
 		Date startDt = shsForm.getStartDt() == null ? null : DateUtil.parse(shsForm.getStartDt(), "yyyy-MM-dd");
-		Date endDt = shsForm.getEndDt() == null ? null : DateUtil.parse(shsForm.getEndDt(), "yyyy-MM-dd");
+		Date endDt = shsForm.getEndDt() == null ? null : DateUtil.parse(shsForm.getEndDt() + "23:59:59", "yyyy-MM-dd hh:mm:ss");
 		
 		return lonelyHelpDAO.queryCount(manIdList, memberIds, startDt, endDt);		
 	}

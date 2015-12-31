@@ -52,11 +52,13 @@ $("#lifecount").html(data.lifeCount);
 $("#affaircount").html(data.affairCount);
 $("#refercount").html(data.referCount);
 $("#fertilitycount").html(data.fertilityCount);
+$("#powercount").html(data.powerCount);
 $("#total").html(data.total);
 $("#life").html(data.life);
 $("#refer").html(data.refer);
 $("#affair").html(data.affair);
 $("#fertility").html(data.fertility);
+$("#power").html(data.power);
 
 $("#jdjt").html(data.jdjt);
 $("#jdjtcount").html(data.jdjtcount);
@@ -169,10 +171,10 @@ $("#jdjtcount").html(data.jdjtcount);
 
         </tr>
         <tr>
-          <td height="20" colspan="2">合计：<span id="count"></span>件 生活服务类：<span id="lifecount"></span>件  咨询类：<span id="refercount"></span>件  事务类：<span id="affaircount"></span>件 生产力服务类：<span id="fertilitycount"></span>件 结对家庭服务类：<span id="jdjtcount"></span>件<!--取消：<bean:write name="hjdelete"/>件--></td>
+          <td height="20" colspan="2">合计：<span id="count"></span>件 生活服务类：<span id="lifecount"></span>件  咨询类：<span id="refercount"></span>件  事务类：<span id="affaircount"></span>件 生产力服务类：<span id="fertilitycount"></span>件 电力服务类：<span id="powercount"></span>件 结对家庭服务类：<span id="jdjtcount"></span>件<!--取消：<bean:write name="hjdelete"/>件--></td>
         </tr>
         <tr>
-          <td height="20" colspan="2">总计：<span id="total"></span>件 生活服务类：<span id="life"></span>件  咨询类：<span id="refer"></span>件  事务类：<span id="affair"></span>件 生产力服务类：<span id="fertility"></span>件 结对家庭服务类：<span id="jdjt"></span>件<!--取消：<bean:write name="hjdelete"/>件--></td>
+          <td height="20" colspan="2">总计：<span id="total"></span>件 生活服务类：<span id="life"></span>件  咨询类：<span id="refer"></span>件  事务类：<span id="affair"></span>件 生产力服务类：<span id="fertility"></span>件 电力服务类：<span id="power"></span>件 结对家庭服务类：<span id="jdjt"></span>件<!--取消：<bean:write name="hjdelete"/>件--></td>
         </tr>
       </table></td>
   </tr>

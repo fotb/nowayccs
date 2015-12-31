@@ -16,12 +16,16 @@
 <base target="_self">
 <script language="javascript" type="">
 function btnnext_click(){
-  var form = document.forms[0];
-  if(!isValidStringObj( form.result,"咨询处理描述",true)){
-    return;
-  }
 
-  form.submit();
+	var row = $('#dg').datagrid('getSelected');
+	if(row == null) {
+		alert("fasdfa");
+	} else {
+		$("#powerStaffId").val(row.pid);
+	}
+
+	$("form").submit();
+	//$("#bizAccept").submit(function(){alert("success"); return false;});
 }
 
 function btnback_click(){
@@ -35,7 +39,8 @@ function btnprovs_click() {
 }
 </script>
 <body>
-<form:form method="post" action="bizaccept.do?action=refersave" commandName="bizAccept">
+<form:form method="post" action="bizaccept.do?action=powersave" commandName="bizAccept">
+	<input id="powerStaffId" type="hidden" name="powerStaffId">
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>
@@ -49,97 +54,88 @@ function btnprovs_click() {
         </table>
         <table width="100%" border="0" cellpadding="0" cellspacing="1">
            <tr class="line">
-            <td height="1" colspan="2">            </td>
+            <td height="1" colspan="4">            </td>
           </tr>
           <tr class="table_t1">
             <td width="10%">求助名姓名：</td>
             <td>
               ${bizAccept.helpName}
             </td>
-          </tr>
-          <tr class="line">
-            <td height="1" colspan="2">            </td>
-          </tr>
-          <tr class="table_t1">
-            <td>求助方式：</td>
+             <td>求助方式：</td>
             <td>
               ${qzfsMap[bizAccept.helpMode]}
             </td>
           </tr>
+
           <tr class="line">
-            <td height="1" colspan="2">            </td>
+            <td height="1" colspan="4">            </td>
           </tr>
           <tr class="table_t1">
             <td>求助电话：</td>
-            <td>
+            <td  colspan="3">
               ${bizAccept.helpTel}<c:if test="${not empty bizAccept.otherTel}">, ${bizAccept.otherTel}</c:if>
             </td>
           </tr>
           <tr class="line">
-            <td height="1" colspan="2">            </td>
+            <td height="1" colspan="4">            </td>
           </tr>
           <tr class="table_t1">
             <td>详细地址：</td>
-            <td>
+            <td  colspan="3"> 
               ${bizAccept.helpAddr}
             </td>
           </tr>
           <tr class="line">
-            <td height="1" colspan="2">            </td>
+            <td height="1" colspan="4">            </td>
           </tr>
           <tr class="table_t1">
             <td>求助内容：</td>
-            <td>
+            <td colspan="3">
             <textarea rows="4" cols="60" disabled="disabled">${bizAccept.helpContent}</textarea>
             </td>
           </tr>
           <tr class="line">
-            <td height="1" colspan="2">            </td>
+            <td height="1" colspan="4">            </td>
           </tr>
           <tr class="table_t1">
             <td>求助类型：</td>
             <td>
 			 ${helpTypeMap[bizAccept.helpType]}
             </td>
-          </tr>
-          <tr class="line">
-            <td height="1" colspan="2">            </td>
-          </tr>
-          <tr class="table_t1">
-            <td>求助区域：</td>
+            <td style="width: 100px">求助区域：</td>
             <td>
                ${qzqyMap[bizAccept.helpArea]}
             </td>
-          </tr> <tr class="line">
-            <td height="1" colspan="2">            </td>
           </tr>
+          <tr class="line">
+            <td height="1" colspan="4">            </td>
+          </tr>
+
           <tr class="table_t1">
             <td>受理人群：</td>
             <td>
             <c:if test="${not empty bizAccept.helpGroup}">${slrqMap[bizAccept.helpGroup]}</c:if>
             </td>
-          </tr>
-          <tr class="line">
-            <td height="1" colspan="2">            </td>
-          </tr>
-          <tr class="table_t1">
-            <td>服务者：</td>
+                        <td>服务者：</td>
             <td>
             ${bizAccept.creator}
             </td>
           </tr>
+          <tr class="line">
+            <td height="1" colspan="4">            </td>
+          </tr>
           
            <tr class="table_t1">
-            <td colspan="2">
-            <table id="dg" class="easyui-datagrid" title="请选择派送电工：" style="width:700px;height:250px"
+            <td colspan="4">
+            <table id="dg" class="easyui-datagrid" title="请选择派送电工：" style="width:90%;height:250px"
             data-options="rownumbers:true,singleSelect:true,url:'bizaccept.do?action=pslist',method:'get',toolbar:'#tb',pagination:true,
-                pageSize:10,footer:'#ft'">
+                pageSize:10">
 		        <thead>
 		            <tr>
-		                 <th data-options="field:'ck',checkbox:true"></th>
+		                 <th data-options="field:'pid',checkbox:true"></th>
 		                <th data-options="field:'name',width:100">姓名</th>
-		                <th data-options="field:'phone',width:80,align:'right'">电话</th>
-		                <th data-options="field:'remark',width:80,align:'right'">备注</th>
+		                <th data-options="field:'phone',width:100,align:'right'">电话</th>
+		                <th data-options="field:'remark',width:100,align:'right'">备注</th>
 		            </tr>
 		        </thead>
    			 </table>
@@ -162,7 +158,7 @@ function btnprovs_click() {
             </td>
           </tr>
           <tr class="line">
-            <td height="1" colspan="2">            </td>
+            <td height="1" colspan="4">            </td>
           </tr>
           <tr align="center" class="table_t1">
             <td colspan="4">
@@ -281,7 +277,6 @@ function btnprovs_click() {
         $(function(){
             $('#dg').datagrid().datagrid('clientPaging');
             
-            
             $("#btnSearch").click(function (){
             	var areaId = $("#areaId").combobox('getValue');
             	var areaSubId = $("#areaSubId").combobox('getValue');
@@ -294,7 +289,7 @@ function btnprovs_click() {
             		return;
             	}
                 $.getJSON("bizaccept.do?action=pslist&areaId=" + areaId + "&areaSubId=" + areaSubId, function(data){
-                	$("#dg").treegrid("loadData", data);
+                	$("#dg").datagrid("loadData", data);
                 });
             });
         });

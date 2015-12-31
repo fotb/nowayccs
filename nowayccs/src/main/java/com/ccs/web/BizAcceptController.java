@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IBizAcceptBO;
 import com.ccs.bo.IDictBO;
+import com.ccs.bo.IPowerInformationBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
@@ -28,13 +29,15 @@ import com.ccs.util.JQGridFormatterUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.util.Utils;
+import com.ccs.vo.BaseEntity;
 import com.ccs.vo.DictVO;
 import com.ccs.vo.InformationVO;
+import com.ccs.vo.PowerInformationVO;
+import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.ReferInformationVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.BizAccept;
 import com.ccs.web.domain.InfoBean;
-import com.ccs.web.domain.LightPowerStaffTreeBean;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -58,6 +61,9 @@ public class BizAcceptController {
 	
 	@Autowired
 	private IBizAcceptBO bizAcceptBO;
+	
+	@Autowired
+	private IPowerInformationBO powerInfoBO;
 	
 	@RequestMapping
 	public String accept(@RequestParam(value = "callNo", required = false) String callNo, 
@@ -367,18 +373,68 @@ public class BizAcceptController {
 	
 	@RequestMapping(params = "action=pslist", method = RequestMethod.GET)
 	public @ResponseBody String buildLPSTree(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="areaSubId", required=false) String areaSubId) throws Exception {
-		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
-//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+		List<PowerStaffVO> psVOList = powerInfoBO.findByAreaSubId(areaSubId);
+		//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
 //		
 		JSONObject jsonObj = new JSONObject();
-		jsonObj.put("total", lpsTreeBean.getTotal());
+		jsonObj.put("total", psVOList.size());
 		
 		
-		JSONArray jsonArray = JSONArray.fromObject(lpsTreeBean.getRows());
+		JSONArray jsonArray = JSONArray.fromObject(psVOList);
 		
 		jsonObj.put("rows", jsonArray.toString());
-		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
 //		System.out.println("json: " + jsonObj.toString());
 		return jsonObj.toString();
+	}
+	
+	
+	
+	@RequestMapping(params = "action=powersave")
+	public String acceptPowerSave(@ModelAttribute("bizAccept") BizAccept bindBizAccept, @RequestParam(value="powerStaffId") String powerStaffId,  HttpSession session, ModelMap model) throws Exception {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		//?? Use the same name of "bizAccept" with ModelAttribute???
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		bizAccept.setResult(bindBizAccept.getResult());
+		
+		Date date = new Date();
+		
+		InformationVO vo = new InformationVO();
+		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
+		vo.setCreator(user.getUserId());
+		vo.setHelpAddr(bizAccept.getHelpAddr());
+		vo.setHelpArea(bizAccept.getHelpArea());
+		vo.setHelpContent(bizAccept.getHelpContent());
+		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
+		vo.setHelpMode(bizAccept.getHelpMode());
+		vo.setHelpName(bizAccept.getHelpName());
+		final String helpTel = bizAccept.getHelpTel() + (StringUtil.isNull(bizAccept.getOtherTel()) ? "" : "," + bizAccept.getOtherTel());
+		vo.setHelpTel(helpTel);
+		vo.setHelpType(bizAccept.getHelpType());
+		String callId = (String) session.getAttribute(CALL_ID);
+		if(!StringUtil.isNull(callId)) {
+			vo.setCallId(callId);
+			vo.setRecordFlag(Constants.SYS_YESNO_YES);
+		} else {
+			vo.setRecordFlag(Constants.SYS_YESNO_NO);
+		}
+		
+		vo.setFinishTime(date);
+		
+		PowerInformationVO piVO = new PowerInformationVO();
+		piVO.setCreateTime(date);
+		piVO.setDeleteFlag(BaseEntity.DELETE_FLAG_NO);
+		piVO.setLastHandler(user.getUserId());
+		piVO.setPowerStaffId(powerStaffId);
+		piVO.setRemark("");
+		piVO.setUpdateDT(date);
+		
+		bizAcceptBO.acceptPower(vo, piVO);
+		
+		session.setAttribute("bizAccept", null);
+		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+			return "common/selfclose";
+		} else {
+			return "redirect:bizaccept.do";
+		}
 	}
 }

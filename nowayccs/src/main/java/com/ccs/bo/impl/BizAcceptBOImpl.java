@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IBizAcceptBO;
 import com.ccs.dao.IAffairInformationDAO;
+import com.ccs.dao.IBaseDAO;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.dao.ILifeInformationDAO;
 import com.ccs.dao.IReferInformationDAO;
@@ -16,6 +17,7 @@ import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
+import com.ccs.vo.PowerInformationVO;
 import com.ccs.vo.ReferInformationVO;
 
 @Service("bizAcceptBO")
@@ -32,6 +34,10 @@ public class BizAcceptBOImpl implements IBizAcceptBO {
 
 	@Autowired
 	private IReferInformationDAO referInformationDAO;
+	
+	@Autowired
+	private IBaseDAO<PowerInformationVO> piDAO;
+	
 	
 	@Override
 	@Transactional
@@ -72,5 +78,13 @@ public class BizAcceptBOImpl implements IBizAcceptBO {
 		pageInfo.setTotalRecords(informatinDAO.getTotalCount(helpTel));
 		return informatinDAO.findByHelpTel(helpTel, pageInfo);
 	}
-
+	@Override
+	@Transactional
+	public void acceptPower(InformationVO vo, PowerInformationVO piVO) throws Exception{
+		vo.setStatus(Constants.SYS_INFOMATION_STATES_YJA);
+		informatinDAO.saveOrUpate(vo);
+		
+		piVO.setInformationId(vo.getInfoId());
+		piDAO.saveOrUpdate(piVO);
+	}
 }

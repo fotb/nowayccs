@@ -173,4 +173,9 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	public void updatePowerStaff(PowerStaffVO psVO) throws Exception {
 		lpsDAO.update(psVO);
 	}
+
+	@Override
+	public List<PowerStaffAreaVO> findPSAById(String id) throws Exception {
+		return lpsaDAO.queryForObject("from PowerStaffAreaVO where staffId = ?", new String[]{id});
+	}
 }

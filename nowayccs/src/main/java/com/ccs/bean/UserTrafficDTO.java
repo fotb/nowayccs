@@ -24,6 +24,8 @@ public class UserTrafficDTO implements Serializable {
 	private int sclTraffic;
 	
 	private int jdjtTraffic;
+	
+	private int powerTraffic;
 
 	private int totalTraffic;
 	
@@ -99,4 +101,14 @@ public class UserTrafficDTO implements Serializable {
 	public void setJdjtTraffic(int jdjtTraffic) {
 		this.jdjtTraffic = jdjtTraffic;
 	}
+
+	public int getPowerTraffic() {
+		return powerTraffic;
+	}
+
+	public void setPowerTraffic(int powerTraffic) {
+		this.powerTraffic = powerTraffic;
+	}
+	
+	
 }
