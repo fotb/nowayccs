@@ -38,6 +38,12 @@ public class DateUtil {
 		}
 	}
 
+	
+	
+    public static Date parseDt(String strDate, final String pattern) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+       return sdf.parse(strDate);
+   }
 	/**
 	 * Check the date is correct
 	 * 

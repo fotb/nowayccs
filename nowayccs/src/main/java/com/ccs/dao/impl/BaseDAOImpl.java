@@ -132,5 +132,18 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		
 	}
 
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> queryFromObject(String hql, Object[] parameters) {
+		Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
+		if (parameters != null) {
+			for (int i = 0, len = parameters.length; i < len; i++) {
+				query.setParameter(i, parameters[i]);
+			}
+		}
+		return (List<Object[]>) query.list();
+	}
+
 }
 

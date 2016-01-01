@@ -14,14 +14,18 @@ import com.ccs.bo.ILightPowerStaffBO;
 import com.ccs.dao.IAreaDAO;
 import com.ccs.dao.IAreaSubDAO;
 import com.ccs.dao.IBaseDAO;
+import com.ccs.util.DateUtil;
+import com.ccs.util.StringUtil;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
+import com.ccs.vo.PowerInformationVO;
 import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LPSRowBean;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
 import com.ccs.web.domain.PowerStaffDomain;
+import com.ccs.web.domain.PowerStaffReportBean;
 
 @Service("lpsBO")
 public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
@@ -31,6 +35,9 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	
 	@Autowired
 	private IBaseDAO<PowerStaffAreaVO> lpsaDAO; 
+	
+	@Autowired
+	private IBaseDAO<PowerInformationVO> piDAO;
 	
 	@Autowired
 	private IAreaDAO areaDAO;
@@ -177,5 +184,117 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	@Override
 	public List<PowerStaffAreaVO> findPSAById(String id) throws Exception {
 		return lpsaDAO.queryForObject("from PowerStaffAreaVO where staffId = ?", new String[]{id});
+	}
+
+	@Override
+	public List<PowerStaffReportBean> powerStaffReport(String areaId, String areaSubId, String startDt, String endDt)
+			throws Exception {
+		
+		List<PowerStaffReportBean> psrBeanList = new ArrayList<PowerStaffReportBean>();
+		
+		String hql = "from PowerStaffAreaVO t where ";
+		List<Object> params = new ArrayList<Object>();
+		if(StringUtil.isNull(areaSubId)) {
+			List<AreaSubVO> asVOList = new ArrayList<AreaSubVO>();
+			if(StringUtil.isNull(areaId)) {
+				asVOList = areaSubDAO.findAll();
+			} else {
+				asVOList = areaSubDAO.findByAreaId(areaId);
+			}
+			if(asVOList.isEmpty()) {
+				hql += "t.areaSubId in (?)";
+				params.add("");
+			} else {
+				hql += "t.areaSubId in (";
+				int i = 1;
+				for (AreaSubVO areaSubVO : asVOList) {
+					if(i < asVOList.size()) {
+						hql += "?,";
+					} else {
+						hql += "?";
+					}
+					params.add(areaSubVO.getAreaSubId());
+					i++;
+				}
+				hql += ")";
+			}
+			
+		} else {
+			hql += "t.areaSubId = ?";
+			params.add(areaSubId);
+		}
+		
+		List<PowerStaffAreaVO> psaVOList = lpsaDAO.queryForObject(hql, params.toArray());
+		if(psaVOList.isEmpty()) {
+			return psrBeanList;
+		}
+		List<String> staffIdList = new ArrayList<String>();
+		Map<String, String> psaMap = new HashMap<String, String>();
+		for (PowerStaffAreaVO psaVO : psaVOList) {
+			staffIdList.add(String.valueOf(psaVO.getStaffId()));
+			psaMap.put(psaVO.getStaffId(), psaVO.getAreaSubId());
+		}		
+		
+		String hql1 = "from PowerStaffVO t where t.pid in (";
+		params.clear();
+		int i = 1;
+		for (String staffId : staffIdList) {
+			if(i < staffIdList.size()) {
+				hql1 += "?,";
+			} else {
+				hql1 += "?)";
+			}
+			params.add(staffId);
+			i++;
+		}
+		List<PowerStaffVO> psVOList = lpsDAO.queryForObject(hql1, params.toArray());
+		
+		String hql2 = "select t.powerStaffId, count(t.pid) from PowerInformationVO t where t.createTime between ? and ? group by t.powerStaffId";
+		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1) : DateUtil.parse(startDt, "yyyy-MM-dd");
+		Date eDt = StringUtil.isNull(endDt) ? new Date() : DateUtil.parseDt(endDt + " 23:59:59", "yyyy-MM-dd hh:mm:ss");
+		
+		
+		List<Object[]> countList = piDAO.queryFromObject(hql2, new Object[]{sDt, eDt});
+		Map<String, Integer> countMap = new HashMap<String, Integer>();
+		for (Object[] objs : countList) {
+			countMap.put(String.valueOf(objs[0]), ((Long)objs[1]).intValue());
+		}
+		
+		Date tDay = DateUtil.parseDt(DateUtil.format(DateUtil.getToday(),"yyyy-MM-dd"), "yyyy-MM-dd");
+		Date teDay = new Date();
+		List<Object[]> todayCountList = piDAO.queryFromObject(hql2, new Object[]{tDay, teDay});
+		Map<String, Integer> todayCountMap = new HashMap<String, Integer>();
+		for (Object[] objs : todayCountList) {
+			todayCountMap.put(String.valueOf(objs[0]), ((Long)objs[1]).intValue());
+		}
+		
+		List<AreaVO> aVOList = areaDAO.findAll();
+		Map<String, String> areaMap = new HashMap<String, String>();
+		for (AreaVO areaVO : aVOList) {
+			areaMap.put(areaVO.getAreaId(), areaVO.getName());
+		}
+		
+		List<AreaSubVO> asVOList = areaSubDAO.findAll();
+		Map<String, String> areaSubMap = new HashMap<String, String>();
+		Map<String, String> areaSubNameMap = new HashMap<String, String>();
+		for (AreaSubVO areaSubVO : asVOList) {
+			areaSubMap.put(areaSubVO.getAreaSubId(), areaSubVO.getName());
+			areaSubNameMap.put(areaSubVO.getAreaSubId(), areaMap.get(areaSubVO.getAreaId()));
+		}
+		
+		
+		for (PowerStaffVO psVO : psVOList) {
+			PowerStaffReportBean bean = new PowerStaffReportBean();
+			bean.setStaffId(psVO.getPid());
+			bean.setName(psVO.getName());
+			bean.setPhone(psVO.getPhone());
+			bean.setCount(countMap.get(psVO.getPid()) == null ? 0 : countMap.get(psVO.getPid()));
+			bean.setTodayCount(todayCountMap.get(psVO.getPid()) ==null ? 0 : todayCountMap.get(psVO.getPid()));
+			bean.setArea(areaSubNameMap.get(psaMap.get(psVO.getPid())));
+			bean.setAreaSub(areaSubMap.get(psaMap.get(psVO.getPid())));
+			psrBeanList.add(bean);
+		}
+		
+		return psrBeanList;
 	}
 }

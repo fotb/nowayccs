@@ -13,31 +13,13 @@
 	<base target="_self">
 </head>
 <body>
-	<div id="tb" style="padding:5px;height:auto">
-		<div style="margin-bottom:1px" id="#tb">
+		<div style="margin-bottom:1px" id="tb">
 			<a href="lps.do?action=add" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:'true'" id="btAdd">新增</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:'true'" id="btRemove">停止服务</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btSave">保存</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消修改</a>
 		</div>
-		<!--
-		<div>
-			Date From: <input class="easyui-datebox" style="width:80px">
-			To: <input class="easyui-datebox" style="width:80px">
-			Language: 
-			<select class="easyui-combobox" panelHeight="auto" style="width:100px">
-				<option value="java">Java</option>
-				<option value="c">C</option>
-				<option value="basic">Basic</option>
-				<option value="perl">Perl</option>
-				<option value="python">Python</option>
-			</select>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
-		</div>
-		-->
-	</div>
-	
 	<div style="margin:10px 0;"></div>
 	
 	<table id="tg" title="光明电力服务员工" style="width:100%;height:400"
@@ -54,8 +36,8 @@
                 idField: 'id',
                 treeField: 'name',
                 pagination: true,
-                pageSize: 2,
-                pageList: [2,5,10],
+                pageSize: 5,
+                pageList: [5,10,20],
                 toolbar:'#tb'
             ">
         <thead>
@@ -202,13 +184,11 @@
             
             var editingId;
             $("#btEdit").click(function (){
-            	alert("fadf");
                 if (editingId != undefined){
                     $('#tg').treegrid('select', editingId);
                     return;
                 }
                 var row = $('#tg').treegrid('getSelected');
-                alert(row.id);
                 if (row){
                     editingId = row.id
                     $('#tg').treegrid('beginEdit', editingId);
@@ -222,8 +202,12 @@
                     editingId = undefined;
                     var persons = 0;
                     var row = t.treegrid('getSelected');
-	                 alert(row.name);
-	                 $.post("lps.do?action=saveLps", {id:row.id, name:row.name, phone:row.phone, remark:row.remark});
+                    
+	                 $.post("lps.do?action=saveLps", {id:row.id, name:row.name, phone:row.phone, remark:row.remark},
+	                		 function(){
+	                	 	
+	                	 $("#tg").treegrid("reload");
+	                 });
                 }
             });
             

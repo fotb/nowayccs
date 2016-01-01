@@ -7,19 +7,23 @@ import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
 import com.ccs.web.domain.PowerStaffDomain;
+import com.ccs.web.domain.PowerStaffReportBean;
 
 public interface ILightPowerStaffBO {
-	
+
 	void saveLPS(PowerStaffDomain psDomain, UserVO userVO) throws Exception;
-	
+
 	LightPowerStaffTreeBean buildLPSTree() throws Exception;
-	
+
 	void deleteLPS(String id, UserVO userVO) throws Exception;
-	
+
 	PowerStaffVO findPowerStaffById(String id) throws Exception;
-	
+
 	void updatePowerStaff(PowerStaffVO psVO) throws Exception;
-	
+
 	List<PowerStaffAreaVO> findPSAById(String id) throws Exception;
-	
+
+	List<PowerStaffReportBean> powerStaffReport(String areaId, String areaSubId, String startDt, String endDt)
+			throws Exception;
+
 }

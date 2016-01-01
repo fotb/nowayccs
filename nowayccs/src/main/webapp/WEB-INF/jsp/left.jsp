@@ -96,6 +96,11 @@
               <td class="leftmenu_02"><a href="delivercount.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">派单量查询</font></a></td>
             </tr>
+            
+                        <tr>
+              <td class="leftmenu_02"><a href="preport.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+                <font color="#FFFFFF">电力服务派单查询</font></a></td>
+            </tr>
 
             <tr>
               <td class="leftmenu_02"><a href="volunteer.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
