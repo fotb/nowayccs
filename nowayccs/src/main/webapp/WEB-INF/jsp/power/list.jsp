@@ -11,46 +11,7 @@
 	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 	<base target="_self">
-</head>
-<body>
-		<div style="margin-bottom:1px" id="tb">
-			<a href="lps.do?action=add" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:'true'" id="btAdd">新增</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:'true'" id="btRemove">停止服务</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btSave">保存</a>
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消修改</a>
-		</div>
-	<div style="margin:10px 0;"></div>
-	
-	<table id="tg" title="光明电力服务员工" style="width:100%;height:400"
-            data-options="
-                iconCls: 'icon-ok',
-                rownumbers: true,
-                lines: true,
-                animate: true,
-                collapsible: true,
-                fitColumns: true,
-                striped:true,
-                url: 'lps.do?action=buildtree',
-                method: 'get',
-                idField: 'id',
-                treeField: 'name',
-                pagination: true,
-                pageSize: 5,
-                pageList: [5,10,20],
-                toolbar:'#tb'
-            ">
-        <thead>
-            <tr>
-                <th data-options="field:'name',width:100,align:'left',editor:'text'">姓名</th>
-                <th data-options="field:'phone',width:80,editor:'text'">电话</th>
-                <!-- <th data-options="field:'category',width:80,formatter:formatCategory,editor:{type:'combobox',options:{valueField:'category', textField:'categoryName', data:[{'category':1,'categoryName':1},{'category':2,'categoryName':2}]}}">职务</th> -->
-                <th data-options="field:'category',width:80,formatter:formatCategory">职务</th>
-                <th data-options="field:'remark',width:40,editor:'text'">备注</th>
-            </tr>
-        </thead>
-    </table>
-    <script type="text/javascript">
+	    <script type="text/javascript">
         (function($){
             function pagerFilter(data){
                 if ($.isArray(data)){ 
@@ -234,7 +195,48 @@
 	    	} 
 	    	return s;
 		}
+        
     </script>
+</head>
+<body>
+		<div style="margin-bottom:1px" id="tb">
+			<a href="lps.do?action=add" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:'true'" id="btAdd">新增</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:'true'" id="btRemove">停止服务</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btSave">保存</a>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消修改</a>
+		</div>
+	<div style="margin:10px 0;"></div>
+	
+	<table id="tg" title="光明电力服务员工" style="width:100%;height:400"
+            data-options="
+                iconCls: 'icon-ok',
+                rownumbers: true,
+                lines: true,
+                animate: true,
+                collapsible: true,
+                fitColumns: true,
+                striped:true,
+                url: 'lps.do?action=buildtree',
+                method: 'get',
+                idField: 'id',
+                treeField: 'name',
+                pagination: true,
+                pageSize: 5,
+                pageList: [5,10,20],
+                toolbar:'#tb'
+            ">
+        <thead>
+            <tr>
+                <th data-options="field:'name',width:100,align:'left',editor:'text'">姓名</th>
+                <th data-options="field:'phone',width:80,editor:'text'">电话</th>
+                <!-- <th data-options="field:'category',width:80,formatter:formatCategory,editor:{type:'combobox',options:{valueField:'category', textField:'categoryName', data:[{'category':1,'categoryName':1},{'category':2,'categoryName':2}]}}">职务</th> -->
+                <th data-options="field:'category',width:80,formatter:formatCategory">职务</th>
+                <th data-options="field:'remark',width:40,editor:'text'">备注</th>
+            </tr>
+        </thead>
+    </table>
+
  
 </body>
 </html>

@@ -10,10 +10,16 @@
 	<script type="text/javascript" src="easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+		<base target="_self">
 </head>
 <script>
 		function submitForm(){
-			$('#powerStaffDomain').form('submit');
+			//$('#powerStaffDomain').form('submit');
+			alert("dafd");
+			$("form").submit(function(e){
+				  alert("Submitted");
+				  this.location="lps.do?action=list";
+				});
 		}
 		
 		function clearForm(){
@@ -41,7 +47,11 @@
 				loadAreaSub("${powerStaffDomain.areaId}");
 			}
 			*/
-			
+			$("form").submit( function(){
+				alert("保存成功！");
+				this.location="lps.do?action=list";
+			} );
+
 		});
 		
 		function hideCombo() {
@@ -58,10 +68,11 @@
 		}
 	</script>
 <body>
+<form:form method="post" action="lps.do?action=save" commandName="powerStaffDomain">
 	<div style="margin:20px 0;"></div>
 	<div class="easyui-panel" title="新增" style="width:800px">
 		<div style="padding:10px 60px 20px 60px">
-	    <form:form method="post" action="lps.do?action=save" commandName="powerStaffDomain">
+	    
 	    	<table>
 	    		<tr>
 	    			<td>区域:</td>
@@ -114,13 +125,13 @@
 	    			<td><form:input cssClass="easyui-textbox" type="text" path="remark" style="width:220px;"></form:input></td>
 	    		</tr>
 	    	</table>
-	    </form:form>
+	    
 	    <div style="text-align:center;padding:5px">
-	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">保存</a>
+	    	<input type="submit" value="提交" />
 	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">重置</a>
 	    </div>
 	    </div>
 	</div>
-	
+	</form:form>
 </body>
 </html>
