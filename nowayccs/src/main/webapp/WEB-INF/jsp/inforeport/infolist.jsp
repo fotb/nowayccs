@@ -88,37 +88,42 @@ $("#jdjtcount").html(data.jdjtcount);
         </table>
           <table width="98%"  border="0" align="center" cellpadding="0" cellspacing="1">
           <tr>
-            <td>受理人：</td>
+            <td nowrap="nowrap">受理人：</td>
             <td>
             <form:select path="creator" cssClass="form">
 				<form:option value="">全部</form:option>
 				<form:options items="${users}" itemLabel="userName" itemValue="userId"/>
             </form:select>
             </td>
-            <td>求助类型：</td>
+            <td nowrap="nowrap">求助类型：</td>
             <td><form:select cssClass="form" path="helpType">
                 <form:option value="">全部</form:option>
 				<form:options items="${helpTypeMap}"/>
             </form:select></td>
-            <td>求助区域：</td>
+            <td nowrap="nowrap">求助区域：</td>
             <td width="20%"><form:select cssClass="form" path="helpArea">
                 <form:option value="">全部</form:option>
                 <form:options items="${helpAreaList}" itemLabel="value" itemValue="sortIndex"/>
             </form:select></td>
-            <td>受理人群：</td>
+            <td nowrap="nowrap">求助方式：</td>
+              <td width="10%"><form:select path="helpMode" cssClass="form">
+              <form:option value="">全部</form:option>
+              <form:options items="${qzfsList}" itemLabel="value" itemValue="sortIndex"/>
+              </form:select></td>
+            <td nowrap="nowrap">受理人群：</td>
             <td width="20%"><form:select cssClass="form" path="helpGroup">
                 <form:option value="">全部</form:option>
                 <form:options items="${slrqList}"  itemLabel="value" itemValue="sortIndex"/>
             </form:select></td>
           </tr>
           <tr>
-            <td>求助时间从：</td>
-            <td colspan="3"><form:input cssClass="form" path="startDt" size="20"/>
+            <td nowrap="nowrap">求助时间从：</td>
+            <td colspan="5"><form:input cssClass="form" path="startDt" size="20"/>
       到
         <form:input cssClass="form" path="endDt" size="20"/></td>
             
-          <td>求助内容</td>
-          <td><form:input cssClass="form" path="helpContent" size="30"/></td>
+          <td align="left">求助内容：</td>
+          <td colspan="2"><form:input cssClass="form" path="helpContent" size="30"/></td>
           <td><img width="60" height="18" src="images/button_search.gif" onclick="option_search(document.forms[0]);" style="cursor:pointer;"/></td>
           </tr>
         </table></td>

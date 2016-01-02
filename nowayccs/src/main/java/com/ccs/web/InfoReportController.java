@@ -116,6 +116,7 @@ public class InfoReportController {
 		model.addAttribute("helpAreaList", dictBO.findByType(Constants.DICT_DICTTYPE_QZQY));
 		model.addAttribute("slrqList", dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ));
 		model.addAttribute("users", userBO.findAllOnJob());
+		model.addAttribute("qzfsList", dictBO.findByType(Constants.DICT_DICTTYPE_QZFS));
 		return "inforeport/infolist";
 	}
 	
