@@ -128,7 +128,14 @@ $(function(){
         	$("#dg").datagrid("loadData", data);
         });
     });
+    
+    
+    var today = new Date();
+    $("#startDt").datebox("setValue", today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate());
+    $("#endDt").datebox("setValue", today.getFullYear()+"-"+(today.getMonth()+1 )+"-"+today.getDate());
 });
+
+
 </script>
 <body>
 	<table id="dg" class="easyui-datagrid" title="电力服务查询："
@@ -140,7 +147,7 @@ $(function(){
 				<th data-options="field:'name',width:100">姓名</th>
 				<th data-options="field:'phone',width:100,align:'right'">电话</th>
 				<th data-options="field:'area',width:100,align:'right'">区域</th>
-				<th data-options="field:'areaSub',width:100,align:'right'">小区（村）</th>
+				<th data-options="field:'areaSub',width:100,align:'right'">社区（村）</th>
 				<th data-options="field:'count',width:100,align:'right'">派单总量</th>
 				<th data-options="field:'todayCount',width:100,align:'right'">今日派单量</th>
 			</tr>

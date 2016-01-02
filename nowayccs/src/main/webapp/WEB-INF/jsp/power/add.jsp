@@ -10,12 +10,12 @@
 	<script type="text/javascript" src="easyui/jquery.min.js"></script>
 	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
-	<base target="_self">
 </head>
 <script>
 		function submitForm(){
 			$('#powerStaffDomain').form('submit');
 		}
+		
 		function clearForm(){
 			$('#powerStaffDomain').form('clear');
 		}

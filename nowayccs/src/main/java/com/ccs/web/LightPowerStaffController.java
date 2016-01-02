@@ -64,8 +64,7 @@ public class LightPowerStaffController {
 	public String save(@ModelAttribute("powerStaffDomain") PowerStaffDomain powerStaffDomain, HttpSession session, ModelMap model) throws Exception {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		lpsBO.saveLPS(powerStaffDomain, user);
-		
-		return "power/list";
+		return "redirect:lps.do?action=list";
 	}
 	
 	@RequestMapping(params = "action=saveLps")
