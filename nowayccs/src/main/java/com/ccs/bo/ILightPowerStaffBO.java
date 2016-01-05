@@ -26,4 +26,8 @@ public interface ILightPowerStaffBO {
 	List<PowerStaffReportBean> powerStaffReport(String areaId, String areaSubId, String startDt, String endDt)
 			throws Exception;
 
+	
+	List<PowerStaffVO> findAll() throws Exception;
+	
+	void saveOrUpdate(List<PowerStaffAreaVO> psaVOList) throws Exception;
 }

@@ -205,10 +205,11 @@
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btSave">保存</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消修改</a>
+			<a href="lps.do?action=associate" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">关联</a>
 		</div>
 	<div style="margin:10px 0;"></div>
 	
-	<table id="tg" title="光明电力服务员工" style="width:100%;height:400"
+	<table id="tg" title="光明电力服务员工" style="width:100%;height:450"
             data-options="
                 iconCls: 'icon-ok',
                 rownumbers: true,
@@ -222,8 +223,8 @@
                 idField: 'id',
                 treeField: 'name',
                 pagination: true,
-                pageSize: 5,
-                pageList: [5,10,20],
+                pageSize: 1,
+                pageList: [1,5,10],
                 toolbar:'#tb'
             ">
         <thead>

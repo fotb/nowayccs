@@ -1,5 +1,9 @@
 package com.ccs.web;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.ILightPowerStaffBO;
 import com.ccs.util.Constants;
+import com.ccs.vo.BaseEntity;
+import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
@@ -80,5 +86,41 @@ public class LightPowerStaffController {
 	public @ResponseBody void del(@RequestParam String id, HttpSession session, ModelMap model) throws Exception {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		lpsBO.deleteLPS(id, user);
+	}
+	
+	
+	@RequestMapping(params = "action=associate")
+	public String associate(ModelMap model) throws Exception {
+		return "power/associate";
+	}
+	
+	@RequestMapping(params = "action=pslist")
+	public @ResponseBody String psList(ModelMap model) throws Exception {
+		List<PowerStaffVO> list = lpsBO.findAll();
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("total", list.size());
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		
+		jsonObj.put("rows", jsonArray.toString());
+		return jsonObj.toString();
+	}
+	
+	
+	@RequestMapping(params = "action=associateSave")
+	public @ResponseBody void associateSave(@RequestParam String areaSubId, @RequestParam("pids[]") String[] pids,  HttpSession session,ModelMap model) throws Exception {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		Date date = new Date();
+		List<PowerStaffAreaVO> psaVOList = new ArrayList<PowerStaffAreaVO>();
+		for(String staffId: pids) {
+			PowerStaffAreaVO psaVO = new PowerStaffAreaVO();
+			psaVO.setAreaSubId(areaSubId);
+			psaVO.setStaffId(staffId);
+			psaVO.setCreateTime(date);
+			psaVO.setUpdateDT(date);
+			psaVO.setDeleteFlag(BaseEntity.DELETE_FLAG_NO);
+			psaVO.setLastHandler(user.getUserId());
+			psaVOList.add(psaVO);
+		}
+		lpsBO.saveOrUpdate(psaVOList);
 	}
 }

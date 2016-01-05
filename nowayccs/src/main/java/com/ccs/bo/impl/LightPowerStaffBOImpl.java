@@ -297,4 +297,17 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		
 		return psrBeanList;
 	}
+
+	@Override
+	public List<PowerStaffVO> findAll() throws Exception {
+		return lpsDAO.getAll();
+	}
+
+	@Override
+	@Transactional
+	public void saveOrUpdate(List<PowerStaffAreaVO> psaVOList) throws Exception {
+		for(PowerStaffAreaVO psaVO : psaVOList) {
+			lpsaDAO.saveOrUpdate(psaVO);
+		}
+	}
 }
