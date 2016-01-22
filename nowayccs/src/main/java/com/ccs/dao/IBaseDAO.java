@@ -30,6 +30,8 @@ public interface IBaseDAO<E extends BaseEntity> {
 	 */
 	List<E> getAll();
 	
+	List<E> getAllWithDeleted();
+	
 	/**
 	 * 查询数据
 	 * @param hql

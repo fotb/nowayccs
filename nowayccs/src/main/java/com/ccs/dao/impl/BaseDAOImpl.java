@@ -145,5 +145,13 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		return (List<Object[]>) query.list();
 	}
 
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<E> getAllWithDeleted() {
+		String hql = "from " + this.clazz.getName() + "  order by createTime" ;
+		return this.getSessionFactory().getCurrentSession().createQuery(hql).list();
+	}
+
 }
 

@@ -45,7 +45,7 @@
   </tr>
       <tr>
     <td class="leftmenu_02"><a href="lps.do?action=list" target="main"><img src="images/leftpic_08.gif" width="70" height="30" border="0"><br>
-    <font color="#FFFFFF">光明电力服务员工</font></a></td>
+    <font color="#FFFFFF">电力服务电工管理</font></a></td>
   </tr>
   <tr>
     <td class="leftmenu_02"><a href="dict.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>

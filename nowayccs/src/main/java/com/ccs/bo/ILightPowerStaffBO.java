@@ -7,6 +7,7 @@ import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
 import com.ccs.web.domain.PowerStaffDomain;
+import com.ccs.web.domain.PowerStaffListBean;
 import com.ccs.web.domain.PowerStaffReportBean;
 
 public interface ILightPowerStaffBO {
@@ -14,6 +15,10 @@ public interface ILightPowerStaffBO {
 	void saveLPS(PowerStaffDomain psDomain, UserVO userVO) throws Exception;
 
 	LightPowerStaffTreeBean buildLPSTree() throws Exception;
+	
+	List<PowerStaffListBean> buildList(String areaId, int page, int rows) throws Exception;
+	
+	int countBuildList(String areaId) throws Exception;
 
 	void deleteLPS(String id, UserVO userVO) throws Exception;
 

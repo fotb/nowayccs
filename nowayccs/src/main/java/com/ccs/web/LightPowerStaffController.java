@@ -23,6 +23,7 @@ import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
 import com.ccs.web.domain.PowerStaffDomain;
+import com.ccs.web.domain.PowerStaffListBean;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -41,6 +42,38 @@ public class LightPowerStaffController {
 	
 	@RequestMapping(params = "action=buildtree", method = RequestMethod.GET)
 	public @ResponseBody String buildLPSTree(@RequestParam(value="page", required=false) String page, @RequestParam(value="rows", required=false) String rows) throws Exception {
+		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
+//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+//		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("total", lpsTreeBean.getTotal());
+		
+		
+		JSONArray jsonArray = JSONArray.fromObject(lpsTreeBean.getRows());
+		
+		jsonObj.put("rows", jsonArray.toString());
+		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
+//		System.out.println("json: " + jsonObj.toString());
+		return jsonObj.toString();
+	}
+	
+	@RequestMapping(params = "action=buildlist", method = RequestMethod.GET)
+	public @ResponseBody String buildLPSList(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="page", required=false) String page, @RequestParam(value="rows", required=false) String rows) throws Exception {
+		List<PowerStaffListBean> beanList = lpsBO.buildList(areaId, Integer.valueOf(page), Integer.valueOf(rows));
+//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+//		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("total", lpsBO.countBuildList(areaId));
+		
+		
+		JSONArray jsonArray = JSONArray.fromObject(beanList);
+		jsonObj.put("rows", jsonArray.toString());
+		return jsonObj.toString();
+	}
+	
+	
+	@RequestMapping(params = "action=load", method = RequestMethod.GET)
+	public @ResponseBody String load(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="page", required=false) String page, @RequestParam(value="rows", required=false) String rows) throws Exception {
 		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
 //		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
 //		

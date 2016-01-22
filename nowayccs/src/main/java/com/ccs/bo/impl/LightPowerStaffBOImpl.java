@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,26 +27,27 @@ import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LPSRowBean;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
 import com.ccs.web.domain.PowerStaffDomain;
+import com.ccs.web.domain.PowerStaffListBean;
 import com.ccs.web.domain.PowerStaffReportBean;
 
 @Service("lpsBO")
 public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 
 	@Autowired
-	private IBaseDAO<PowerStaffVO> lpsDAO; 
-	
+	private IBaseDAO<PowerStaffVO> lpsDAO;
+
 	@Autowired
-	private IBaseDAO<PowerStaffAreaVO> lpsaDAO; 
-	
+	private IBaseDAO<PowerStaffAreaVO> lpsaDAO;
+
 	@Autowired
 	private IBaseDAO<PowerInformationVO> piDAO;
-	
+
 	@Autowired
 	private IAreaDAO areaDAO;
-	
+
 	@Autowired
 	private IAreaSubDAO areaSubDAO;
-	
+
 	@Override
 	@Transactional
 	public void saveLPS(PowerStaffDomain psDomain, UserVO userVO) throws Exception {
@@ -56,10 +59,8 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		psVO.setCategory(psDomain.getCategory());
 		psVO.setLastHandler(userVO.getUserId());
 		lpsDAO.save(psVO);
-		
-		
-		
-		if(PowerStaffVO.CATEGORY_4.equals(psDomain.getCategory())) {
+
+		if (PowerStaffVO.CATEGORY_4.equals(psDomain.getCategory())) {
 			String[] areaId = psDomain.getAreaSubId().split(",");
 			for (String id : areaId) {
 				PowerStaffAreaVO psaVO = new PowerStaffAreaVO();
@@ -81,29 +82,28 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 
 	@Override
 	public LightPowerStaffTreeBean buildLPSTree() throws Exception {
-		
+
 		List<AreaVO> areaList = areaDAO.findAll();
 		Map<String, AreaVO> areaMap = new HashMap<String, AreaVO>();
 		for (AreaVO areaVO : areaList) {
 			areaMap.put(areaVO.getAreaId(), areaVO);
 		}
-		
+
 		List<AreaSubVO> areaSubList = areaSubDAO.findAll();
 		Map<String, AreaSubVO> areaSubMap = new HashMap<String, AreaSubVO>();
 		for (AreaSubVO areaSubVO : areaSubList) {
 			areaSubMap.put(areaSubVO.getAreaSubId(), areaSubVO);
 		}
-		
-		
+
 		List<PowerStaffVO> list = lpsDAO.getAll();
 		Map<String, PowerStaffVO> psVOMap = new HashMap<String, PowerStaffVO>();
 		for (PowerStaffVO powerStaffVO : list) {
 			psVOMap.put(powerStaffVO.getPid(), powerStaffVO);
 		}
-		
+
 		Map<String, AreaVO> lpsAreaMap = new HashMap<String, AreaVO>();
 		Map<String, AreaSubVO> lpsAreaSubMap = new HashMap<String, AreaSubVO>();
-		
+
 		List<PowerStaffAreaVO> psaList = lpsaDAO.getAll();
 		LightPowerStaffTreeBean lpsTreeBean = new LightPowerStaffTreeBean();
 		List<LPSRowBean> lpsRowBeanList = new ArrayList<LPSRowBean>();
@@ -115,40 +115,40 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			lpsRowBean.setPhone(psVO.getPhone());
 			lpsRowBean.setRemark(psVO.getRemark());
 			lpsRowBean.setCategory(psVO.getCategory());
-//			lpsRowBean.setIconCls(LPSRowBean.ICON_OK);
+			// lpsRowBean.setIconCls(LPSRowBean.ICON_OK);
 			lpsRowBean.set_parentId(psaVO.getAreaSubId());
 			lpsRowBeanList.add(lpsRowBean);
-			
-			if(PowerStaffVO.CATEGORY_4.equals(psVO.getCategory())) {
-				if(!lpsAreaSubMap.containsKey(psaVO.getAreaSubId())) {
-				lpsAreaSubMap.put(psaVO.getAreaSubId(), areaSubMap.get(psaVO.getAreaSubId()));
+
+			if (PowerStaffVO.CATEGORY_4.equals(psVO.getCategory())) {
+				if (!lpsAreaSubMap.containsKey(psaVO.getAreaSubId())) {
+					lpsAreaSubMap.put(psaVO.getAreaSubId(), areaSubMap.get(psaVO.getAreaSubId()));
 				}
-			
+
 				String psAreaId = areaSubMap.get(psaVO.getAreaSubId()).getAreaId();
-				if(!lpsAreaMap.containsKey(psAreaId)) {
+				if (!lpsAreaMap.containsKey(psAreaId)) {
 					lpsAreaMap.put(psAreaId, areaMap.get(psAreaId));
 				}
 			} else {
-				if(!lpsAreaMap.containsKey(psaVO.getAreaSubId())) {
+				if (!lpsAreaMap.containsKey(psaVO.getAreaSubId())) {
 					lpsAreaMap.put(psaVO.getAreaSubId(), areaMap.get(psaVO.getAreaSubId()));
 				}
 			}
-			
+
 		}
-		
+
 		for (AreaVO areaVO : lpsAreaMap.values()) {
 			LPSRowBean lpsRowBean = new LPSRowBean();
 			lpsRowBean.setId(areaVO.getAreaId());
 			lpsRowBean.setName(areaVO.getName());
-//			lpsRowBean.setIconCls(LPSRowBean.ICON_OK);
+			// lpsRowBean.setIconCls(LPSRowBean.ICON_OK);
 			lpsRowBeanList.add(lpsRowBean);
 		}
-		
+
 		for (AreaSubVO areaSubVO : lpsAreaSubMap.values()) {
 			LPSRowBean lpsRowBean = new LPSRowBean();
 			lpsRowBean.setId(areaSubVO.getAreaSubId());
 			lpsRowBean.setName(areaSubVO.getName());
-//			lpsRowBean.setIconCls(LPSRowBean.ICON_OK);
+			// lpsRowBean.setIconCls(LPSRowBean.ICON_OK);
 			lpsRowBean.set_parentId(areaSubVO.getAreaId());
 			lpsRowBeanList.add(lpsRowBean);
 		}
@@ -164,7 +164,8 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		psVO.setUpdateDT(new Date());
 		psVO.setLastHandler(userVO.getUserId());
 		lpsDAO.update(psVO);
-		List<PowerStaffAreaVO> list = lpsaDAO.queryForObject("from PowerStaffAreaVO where staffId = ?", new String[]{id});
+		List<PowerStaffAreaVO> list = lpsaDAO.queryForObject("from PowerStaffAreaVO where staffId = ?",
+				new String[] { id });
 		for (PowerStaffAreaVO powerStaffAreaVO : list) {
 			powerStaffAreaVO.setDeleteFlag(PowerStaffAreaVO.DELETE_FLAG_YES);
 			lpsaDAO.update(powerStaffAreaVO);
@@ -183,32 +184,32 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 
 	@Override
 	public List<PowerStaffAreaVO> findPSAById(String id) throws Exception {
-		return lpsaDAO.queryForObject("from PowerStaffAreaVO where staffId = ?", new String[]{id});
+		return lpsaDAO.queryForObject("from PowerStaffAreaVO where staffId = ?", new String[] { id });
 	}
 
 	@Override
 	public List<PowerStaffReportBean> powerStaffReport(String areaId, String areaSubId, String startDt, String endDt)
 			throws Exception {
-		
+
 		List<PowerStaffReportBean> psrBeanList = new ArrayList<PowerStaffReportBean>();
-		
+
 		String hql = "from PowerStaffAreaVO t where ";
 		List<Object> params = new ArrayList<Object>();
-		if(StringUtil.isNull(areaSubId)) {
+		if (StringUtil.isNull(areaSubId)) {
 			List<AreaSubVO> asVOList = new ArrayList<AreaSubVO>();
-			if(StringUtil.isNull(areaId)) {
+			if (StringUtil.isNull(areaId)) {
 				asVOList = areaSubDAO.findAll();
 			} else {
 				asVOList = areaSubDAO.findByAreaId(areaId);
 			}
-			if(asVOList.isEmpty()) {
+			if (asVOList.isEmpty()) {
 				hql += "t.areaSubId in (?)";
 				params.add("");
 			} else {
 				hql += "t.areaSubId in (";
 				int i = 1;
 				for (AreaSubVO areaSubVO : asVOList) {
-					if(i < asVOList.size()) {
+					if (i < asVOList.size()) {
 						hql += "?,";
 					} else {
 						hql += "?";
@@ -218,14 +219,14 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 				}
 				hql += ")";
 			}
-			
+
 		} else {
 			hql += "t.areaSubId = ?";
 			params.add(areaSubId);
 		}
-		
+
 		List<PowerStaffAreaVO> psaVOList = lpsaDAO.queryForObject(hql, params.toArray());
-		if(psaVOList.isEmpty()) {
+		if (psaVOList.isEmpty()) {
 			return psrBeanList;
 		}
 		List<String> staffIdList = new ArrayList<String>();
@@ -233,13 +234,13 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		for (PowerStaffAreaVO psaVO : psaVOList) {
 			staffIdList.add(String.valueOf(psaVO.getStaffId()));
 			psaMap.put(psaVO.getStaffId(), psaVO.getAreaSubId());
-		}		
-		
+		}
+
 		String hql1 = "from PowerStaffVO t where t.pid in (";
 		params.clear();
 		int i = 1;
 		for (String staffId : staffIdList) {
-			if(i < staffIdList.size()) {
+			if (i < staffIdList.size()) {
 				hql1 += "?,";
 			} else {
 				hql1 += "?)";
@@ -248,32 +249,32 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			i++;
 		}
 		List<PowerStaffVO> psVOList = lpsDAO.queryForObject(hql1, params.toArray());
-		
+
 		String hql2 = "select t.powerStaffId, count(t.pid) from PowerInformationVO t where t.createTime between ? and ? group by t.powerStaffId";
-		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1) : DateUtil.parse(startDt, "yyyy-MM-dd");
+		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1)
+				: DateUtil.parse(startDt, "yyyy-MM-dd");
 		Date eDt = StringUtil.isNull(endDt) ? new Date() : DateUtil.parseDt(endDt + " 23:59:59", "yyyy-MM-dd hh:mm:ss");
-		
-		
-		List<Object[]> countList = piDAO.queryFromObject(hql2, new Object[]{sDt, eDt});
+
+		List<Object[]> countList = piDAO.queryFromObject(hql2, new Object[] { sDt, eDt });
 		Map<String, Integer> countMap = new HashMap<String, Integer>();
 		for (Object[] objs : countList) {
-			countMap.put(String.valueOf(objs[0]), ((Long)objs[1]).intValue());
+			countMap.put(String.valueOf(objs[0]), ((Long) objs[1]).intValue());
 		}
-		
-		Date tDay = DateUtil.parseDt(DateUtil.format(DateUtil.getToday(),"yyyy-MM-dd"), "yyyy-MM-dd");
+
+		Date tDay = DateUtil.parseDt(DateUtil.format(DateUtil.getToday(), "yyyy-MM-dd"), "yyyy-MM-dd");
 		Date teDay = new Date();
-		List<Object[]> todayCountList = piDAO.queryFromObject(hql2, new Object[]{tDay, teDay});
+		List<Object[]> todayCountList = piDAO.queryFromObject(hql2, new Object[] { tDay, teDay });
 		Map<String, Integer> todayCountMap = new HashMap<String, Integer>();
 		for (Object[] objs : todayCountList) {
-			todayCountMap.put(String.valueOf(objs[0]), ((Long)objs[1]).intValue());
+			todayCountMap.put(String.valueOf(objs[0]), ((Long) objs[1]).intValue());
 		}
-		
+
 		List<AreaVO> aVOList = areaDAO.findAll();
 		Map<String, String> areaMap = new HashMap<String, String>();
 		for (AreaVO areaVO : aVOList) {
 			areaMap.put(areaVO.getAreaId(), areaVO.getName());
 		}
-		
+
 		List<AreaSubVO> asVOList = areaSubDAO.findAll();
 		Map<String, String> areaSubMap = new HashMap<String, String>();
 		Map<String, String> areaSubNameMap = new HashMap<String, String>();
@@ -281,20 +282,19 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			areaSubMap.put(areaSubVO.getAreaSubId(), areaSubVO.getName());
 			areaSubNameMap.put(areaSubVO.getAreaSubId(), areaMap.get(areaSubVO.getAreaId()));
 		}
-		
-		
+
 		for (PowerStaffVO psVO : psVOList) {
 			PowerStaffReportBean bean = new PowerStaffReportBean();
 			bean.setStaffId(psVO.getPid());
 			bean.setName(psVO.getName());
 			bean.setPhone(psVO.getPhone());
 			bean.setCount(countMap.get(psVO.getPid()) == null ? 0 : countMap.get(psVO.getPid()));
-			bean.setTodayCount(todayCountMap.get(psVO.getPid()) ==null ? 0 : todayCountMap.get(psVO.getPid()));
+			bean.setTodayCount(todayCountMap.get(psVO.getPid()) == null ? 0 : todayCountMap.get(psVO.getPid()));
 			bean.setArea(areaSubNameMap.get(psaMap.get(psVO.getPid())));
 			bean.setAreaSub(areaSubMap.get(psaMap.get(psVO.getPid())));
 			psrBeanList.add(bean);
 		}
-		
+
 		return psrBeanList;
 	}
 
@@ -306,8 +306,77 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	@Override
 	@Transactional
 	public void saveOrUpdate(List<PowerStaffAreaVO> psaVOList) throws Exception {
-		for(PowerStaffAreaVO psaVO : psaVOList) {
+		for (PowerStaffAreaVO psaVO : psaVOList) {
 			lpsaDAO.saveOrUpdate(psaVO);
 		}
+	}
+
+	@Override
+	public List<PowerStaffListBean> buildList(String areaId, int page, int rows) throws Exception {
+		List<PowerStaffListBean> pslBeanList = new ArrayList<PowerStaffListBean>();
+
+		List<AreaSubVO> asVOList = new ArrayList<AreaSubVO>();
+		if (StringUtil.isNull(areaId)) {
+			asVOList = areaSubDAO.findAll();
+		} else {
+			asVOList = areaSubDAO.findByAreaId(areaId);
+		}
+
+		Map<String, String> areaSubMap = new HashMap<String, String>();
+
+		List<Object> params = new ArrayList<Object>();
+		for (AreaSubVO areaSubVO : asVOList) {
+			areaSubMap.put(areaSubVO.getAreaSubId(), areaSubVO.getName());
+		}
+ 
+		for (AreaSubVO areaSubVO : asVOList) {
+			params.add(areaSubVO.getAreaSubId());
+		}
+		
+		DetachedCriteria psaCriteria = DetachedCriteria.forClass(PowerStaffAreaVO.class);
+		psaCriteria.add(Restrictions.in("areaSubId", params));
+		
+		
+		List<PowerStaffAreaVO> psaVOList = lpsaDAO.findByDetachedCriteria(psaCriteria, page, rows);
+		
+		List<PowerStaffVO> psVOList = lpsDAO.getAllWithDeleted();
+		Map<String, PowerStaffVO> psMap = new HashMap<String, PowerStaffVO>();
+		for (PowerStaffVO powerStaffVO : psVOList) {
+			psMap.put(powerStaffVO.getPid(), powerStaffVO);
+		}
+		
+		for (PowerStaffAreaVO psaVO : psaVOList) {
+			PowerStaffListBean bean = new PowerStaffListBean();
+			PowerStaffVO psVO = psMap.get(psaVO.getStaffId());
+			bean.setName(psVO.getName());
+			bean.setPhone(psVO.getPhone());
+			bean.setCategory(psVO.getCategory());
+			bean.setAreaSubName(areaSubMap.get(psaVO.getAreaSubId()));
+			bean.setDeleteFlag(psVO.getDeleteFlag());
+			bean.setPid(psVO.getPid());
+			pslBeanList.add(bean);
+		}
+		
+		return pslBeanList;
+	}
+
+	@Override
+	public int countBuildList(String areaId) throws Exception {
+		List<AreaSubVO> asVOList = new ArrayList<AreaSubVO>();
+		if (StringUtil.isNull(areaId)) {
+			asVOList = areaSubDAO.findAll();
+		} else {
+			asVOList = areaSubDAO.findByAreaId(areaId);
+		}
+
+		List<Object> params = new ArrayList<Object>();
+		for (AreaSubVO areaSubVO : asVOList) {
+			params.add(areaSubVO.getAreaSubId());
+		}
+		
+		DetachedCriteria psaCriteria = DetachedCriteria.forClass(PowerStaffAreaVO.class);
+		psaCriteria.add(Restrictions.in("areaSubId", params));
+		
+		return lpsaDAO.getRowCountByDetachedCriteria(psaCriteria);
 	}
 }

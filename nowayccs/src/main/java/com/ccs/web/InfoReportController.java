@@ -171,7 +171,7 @@ public class InfoReportController {
 			int powerCount = infoReportBO.getCountByParams(infoSearchBean);
 			map.put("powerCount", String.valueOf(powerCount));
 			
-			map.put("count", String.valueOf(lifeCount + affairCount + referCount + fertilityCount + jdjtcount));
+			map.put("count", String.valueOf(lifeCount + affairCount + referCount + fertilityCount + jdjtcount + powerCount));
 		} else {
 			int count = infoReportBO.getCountByParams(infoSearchBean);
 			map.put("count", String.valueOf(count + jdjtcount));
