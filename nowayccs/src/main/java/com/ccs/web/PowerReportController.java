@@ -1,5 +1,6 @@
 package com.ccs.web;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -76,7 +77,7 @@ public class PowerReportController {
 		HttpSession session = request.getSession();
 		session.setAttribute("state", null);
 
-		String path = request.getSession().getServletContext().getRealPath("template/");
+		String path = request.getSession().getServletContext().getRealPath("template");
 
 		System.out.println(path);
 		// 生成提示信息，
@@ -96,8 +97,12 @@ public class PowerReportController {
 		// jsonObj.put("rows", jsonArray.toString());
 		HSSFWorkbook workbook = null;
 		try {
-
-			fs = new POIFSFileSystem(new FileInputStream(path + "power_template.xls"));
+			
+			if("\\".equals(File.separator)) { //windows
+				fs = new POIFSFileSystem(new FileInputStream(path + "\\power_template.xls"));
+			} else {  //linux
+				fs = new POIFSFileSystem(new FileInputStream(path + "/power_template.xls"));
+			}
 			// 进行转码，使其支持中文文件名
 			codedFileName = "电工派单量统计报表";
 			response.setHeader("content-disposition", "attachment;filename=" + new String( codedFileName.getBytes("UTF-8"), "ISO8859-1" ) + ".xls");
