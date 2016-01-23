@@ -99,8 +99,8 @@ public class PowerReportController {
 
 			fs = new POIFSFileSystem(new FileInputStream(path + "power_template.xls"));
 			// 进行转码，使其支持中文文件名
-			codedFileName = java.net.URLEncoder.encode("电工派单量统计报表", "UTF-8");
-			response.setHeader("content-disposition", "attachment;filename=" + codedFileName + ".xls");
+			codedFileName = "电工派单量统计报表";
+			response.setHeader("content-disposition", "attachment;filename=" + new String( codedFileName.getBytes("UTF-8"), "ISO8859-1" ) + ".xls");
 			// response.addHeader("Content-Disposition", "attachment; filename="
 			// + codedFileName + ".xls");
 			// 产生工作簿对象
