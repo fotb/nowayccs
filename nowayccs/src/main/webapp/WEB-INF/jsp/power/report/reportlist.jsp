@@ -133,6 +133,21 @@ $(function(){
     var today = new Date();
     $("#startDt").datebox("setValue", today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate());
     $("#endDt").datebox("setValue", today.getFullYear()+"-"+(today.getMonth()+1 )+"-"+today.getDate());
+    
+    
+    
+    
+    var pager = $('#dg').datagrid().datagrid('getPager');    // get the pager of datagrid
+    pager.pagination({
+        buttons:[{
+            iconCls:'icon-save',
+            handler:function(){
+            	var areaId = $("#areaId").combobox('getValue');
+            	var areaSubId = $("#areaSubId").combobox('getValue');
+                window.location.href = "preport.do?action=export&areaId=" + areaId + "&areaSubId=" + areaSubId + "&startdt=" + $("#startDt").datebox("getValue") + "&enddt=" + $("#endDt").datebox("getValue");
+            }
+        }]
+    });            
 });
 
 

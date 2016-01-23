@@ -38,14 +38,17 @@
             
             var editingId;
             $("#btEdit").click(function (){
-                if (editingId != undefined){
-                    $('#dg').datagrid('select', editingId);
-                    return;
-                }
-                var row = $('#dg').datagrid('getSelected');
-                if (row){
-                    editingId = row.id
-                    $('#dg').datagrid('beginEdit', editingId);
+                var row = $("#dg").datagrid('getSelected');
+                if (row !=null) {
+                    if (editingId != undefined) {
+                        $("#dg").datagrid('endEdit', editRow);
+                    }
+ 
+                    if (editingId == undefined) {
+                        var index = $("#dg").datagrid('getRowIndex', row);
+                        $("#dg").datagrid('beginEdit', index);
+                        editingId = index;
+                    }
                 }
             });
             
@@ -56,10 +59,9 @@
                     editingId = undefined;
                     var persons = 0;
                     var row = t.datagrid('getSelected');
-                    
-	                 $.post("lps.do?action=saveLps", {id:row.id, name:row.name, phone:row.phone, remark:row.remark},
+	                 $.post("lps.do?action=saveLps", {id:row.pid, name:row.name, phone:row.phone, remark:row.remark},
 	                		 function(){
-	                	 $("#dg").datagrid("loadData", data);
+	                	 $("#dg").datagrid("reload");
 	                 });
                 }
             });
@@ -119,19 +121,17 @@
 											valueField:'value',
 											textField:'text'" ></input>
 	    						
-			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btnSave">保存</a>
-			<span id="info" style="color: red; font-weight:bold;"></span>
 			<a href="lps.do?action=add" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:'true'" id="btAdd">新增</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:'true'" id="btRemove">停止服务</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btSave">保存</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消修改</a>
-			<a href="lps.do?action=associate" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">关联</a>
+			<!-- <a href="lps.do?action=associate" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">关联</a> -->
 		</div>
 	<div style="margin:10px 0;"></div>
 
 	<table id="dg" class="easyui-datagrid" title="电力服务电工" style="width: 100%; height: 450"
-		data-options="rownumbers:true,url:'lps.do?action=buildlist',method:'get',toolbar:'#tb',pagination:true,
+		data-options="rownumbers:true,singleSelect: true,url:'lps.do?action=buildlist',method:'get',toolbar:'#tb',pagination:true,
                 pageSize:10,
                 rowStyler: function(index,row){
                     if (row.deleteFlag == '1'){
@@ -144,8 +144,8 @@
 				<th data-options="field:'phone',width:120,editor:'text'">电话</th>
 				<!-- <th data-options="field:'category',width:80,formatter:formatCategory,editor:{type:'combobox',options:{valueField:'category', textField:'categoryName', data:[{'category':1,'categoryName':1},{'category':2,'categoryName':2}]}}">职务</th> -->
 				<th	data-options="field:'category',width:80,formatter:formatCategory">职务</th>
-				<th data-options="field:'areaSubName',width:180,editor:'text'">社区（村）</th>
-				<th data-options="field:'remark',width:240,editor:'text',formatter:formatRemark"">备注</th>
+				<th data-options="field:'areaSubName',width:180">社区（村）</th>
+				<th data-options="field:'remark',width:240,formatter:formatRemark"">备注</th>
 			</tr>
 		</thead>
 	</table>
