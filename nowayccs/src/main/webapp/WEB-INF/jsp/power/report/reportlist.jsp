@@ -125,6 +125,10 @@ $(function(){
     	var areaSubId = $("#areaSubId").combobox('getValue');
 
         $.getJSON("preport.do?action=list&areaId=" + areaId + "&areaSubId=" + areaSubId + "&startdt=" + $("#startDt").datebox("getValue") + "&enddt=" + $("#endDt").datebox("getValue"), function(data){
+        	
+			$("#dg").datagrid({
+                url:'preport.do?action=list&areaId=' + areaId + '&areaSubId=' + areaSubId + '&startdt=' + $('#startDt').datebox('getValue') + '&enddt=' + $('#endDt').datebox('getValue')
+            });
         	$("#dg").datagrid("loadData", data);
         });
     });
