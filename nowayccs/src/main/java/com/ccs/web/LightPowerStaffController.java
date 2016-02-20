@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.ILightPowerStaffBO;
 import com.ccs.util.Constants;
+import com.ccs.util.EasyUiTree;
 import com.ccs.vo.BaseEntity;
 import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
@@ -55,6 +56,17 @@ public class LightPowerStaffController {
 		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
 //		System.out.println("json: " + jsonObj.toString());
 		return jsonObj.toString();
+	}
+	
+	@RequestMapping(params = "action=areatree", method = RequestMethod.GET)
+	public @ResponseBody String buildAreaTree() throws Exception {
+		List<EasyUiTree> treeList = lpsBO.buildAreaTree();
+//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+//		
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArray = JSONArray.fromObject(treeList);
+
+		return jsonArray.toString();
 	}
 	
 	@RequestMapping(params = "action=buildlist", method = RequestMethod.GET)
@@ -139,21 +151,22 @@ public class LightPowerStaffController {
 	}
 	
 	
+	@RequestMapping(params = "action=subareapslist")
+	public @ResponseBody String psList(@RequestParam String areaSubId, @RequestParam(value="psname", required=false) String psname, @RequestParam(value="psphone", required=false) String psphone,  ModelMap model) throws Exception {
+		List<PowerStaffVO> list = lpsBO.queryAllOrderByAreaSubId(areaSubId, psname, psphone);
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("total", list.size());
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		
+		jsonObj.put("rows", jsonArray.toString());
+		
+		jsonObj.put("selectedRows", lpsBO.countPSByAreaSubId(areaSubId));
+		return jsonObj.toString();
+	}
+	
 	@RequestMapping(params = "action=associateSave")
-	public @ResponseBody void associateSave(@RequestParam String areaSubId, @RequestParam("pids[]") String[] pids,  HttpSession session,ModelMap model) throws Exception {
+	public @ResponseBody void associateSave(@RequestParam String areaSubId, @RequestParam(value="pids[]", required=false) String[] pids,  HttpSession session,ModelMap model) throws Exception {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
-		Date date = new Date();
-		List<PowerStaffAreaVO> psaVOList = new ArrayList<PowerStaffAreaVO>();
-		for(String staffId: pids) {
-			PowerStaffAreaVO psaVO = new PowerStaffAreaVO();
-			psaVO.setAreaSubId(areaSubId);
-			psaVO.setStaffId(staffId);
-			psaVO.setCreateTime(date);
-			psaVO.setUpdateDT(date);
-			psaVO.setDeleteFlag(BaseEntity.DELETE_FLAG_NO);
-			psaVO.setLastHandler(user.getUserId());
-			psaVOList.add(psaVO);
-		}
-		lpsBO.saveOrUpdate(psaVOList);
+		lpsBO.associateSave(user, areaSubId, pids);
 	}
 }

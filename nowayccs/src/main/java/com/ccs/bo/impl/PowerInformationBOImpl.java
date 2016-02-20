@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ccs.bo.IPowerInformationBO;
 import com.ccs.dao.IBaseDAO;
+import com.ccs.vo.BaseEntity;
 import com.ccs.vo.PowerInformationVO;
 import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
@@ -29,7 +30,7 @@ public class PowerInformationBOImpl implements IPowerInformationBO {
 	}
 	@Override
 	public List<PowerStaffVO> findByAreaSubId(String areaSubId) throws Exception {
-		List<PowerStaffAreaVO> psaVOList = lpsaDAO.queryForObject("from PowerStaffAreaVO where areaSubId = ?", new Object[]{areaSubId});
+		List<PowerStaffAreaVO> psaVOList = lpsaDAO.queryForObject("from PowerStaffAreaVO where deleteFlag=? and  areaSubId = ?", new Object[]{BaseEntity.DELETE_FLAG_NO, areaSubId});
 		List<String> psIdList = new ArrayList<String>();
 		for (PowerStaffAreaVO psaVO : psaVOList) {
 			psIdList.add(psaVO.getStaffId());

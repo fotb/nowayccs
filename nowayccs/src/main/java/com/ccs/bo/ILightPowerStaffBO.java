@@ -2,6 +2,7 @@ package com.ccs.bo;
 
 import java.util.List;
 
+import com.ccs.util.EasyUiTree;
 import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
@@ -34,5 +35,14 @@ public interface ILightPowerStaffBO {
 	
 	List<PowerStaffVO> findAll() throws Exception;
 	
+	List<PowerStaffVO> queryAllOrderByAreaSubId(String areaSubId, String psname, String psphone) throws Exception;
+	
+	int countPSByAreaSubId(String areaSubId) throws Exception;
+	
 	void saveOrUpdate(List<PowerStaffAreaVO> psaVOList) throws Exception;
+	
+	
+	List<EasyUiTree> buildAreaTree() throws Exception;
+	
+	void associateSave(UserVO user, String areaSubId, String[] staffIds) throws Exception;
 }

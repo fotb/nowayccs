@@ -1,6 +1,7 @@
 package com.ccs.bo.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +18,11 @@ import com.ccs.dao.IAreaDAO;
 import com.ccs.dao.IAreaSubDAO;
 import com.ccs.dao.IBaseDAO;
 import com.ccs.util.DateUtil;
+import com.ccs.util.EasyUiTree;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
+import com.ccs.vo.BaseEntity;
 import com.ccs.vo.PowerInformationVO;
 import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
@@ -224,7 +227,8 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			hql += "t.areaSubId = ?";
 			params.add(areaSubId);
 		}
-
+		hql += " and t.deleteFlag = ?";
+		params.add(BaseEntity.DELETE_FLAG_NO);
 		List<PowerStaffAreaVO> psaVOList = lpsaDAO.queryForObject(hql, params.toArray());
 		if (psaVOList.isEmpty()) {
 			return psrBeanList;
@@ -335,6 +339,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		
 		DetachedCriteria psaCriteria = DetachedCriteria.forClass(PowerStaffAreaVO.class);
 		psaCriteria.add(Restrictions.in("areaSubId", params));
+		psaCriteria.add(Restrictions.eq("deleteFlag", BaseEntity.DELETE_FLAG_NO));
 		
 		
 		List<PowerStaffAreaVO> psaVOList = lpsaDAO.findByDetachedCriteria(psaCriteria, page, rows);
@@ -376,7 +381,127 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		
 		DetachedCriteria psaCriteria = DetachedCriteria.forClass(PowerStaffAreaVO.class);
 		psaCriteria.add(Restrictions.in("areaSubId", params));
+		psaCriteria.add(Restrictions.eq("deleteFlag", BaseEntity.DELETE_FLAG_NO));
 		
 		return lpsaDAO.getRowCountByDetachedCriteria(psaCriteria);
 	}
+
+	@Override
+	public List<EasyUiTree> buildAreaTree() throws Exception {
+
+
+		List<AreaSubVO> asVOList = areaSubDAO.findAll();
+		Map<String, List<EasyUiTree>> areaSubMap = new HashMap<String, List<EasyUiTree>>();
+		for (AreaSubVO areaSubVO : asVOList) {
+			EasyUiTree tree = new EasyUiTree();
+			tree.setId(areaSubVO.getAreaSubId());
+			tree.setText(areaSubVO.getName());
+			List<EasyUiTree> easyUiTreeList = areaSubMap.get(areaSubVO.getAreaId());
+			if(null == easyUiTreeList ||  easyUiTreeList.isEmpty()) {
+				easyUiTreeList = new ArrayList<EasyUiTree>();
+			} 
+			easyUiTreeList.add(tree);
+			areaSubMap.put(areaSubVO.getAreaId(), easyUiTreeList);
+		}
+		
+		List<AreaVO> aVOList = areaDAO.findAll();
+		List<EasyUiTree> list = new ArrayList<EasyUiTree>();
+		for (AreaVO areaVO : aVOList) {
+			EasyUiTree tree = new EasyUiTree();
+			tree.setId(areaVO.getAreaId());
+			tree.setText(areaVO.getName());
+			tree.setChildren(areaSubMap.get(areaVO.getAreaId()));
+			tree.setState("closed");
+			list.add(tree);
+		}
+		
+		return list;
+	}
+
+	
+	
+	@Override
+	public List<PowerStaffVO> queryAllOrderByAreaSubId(String areaSubId, String psname, String psphone) throws Exception {
+		
+		String hql = "from PowerStaffVO where deleteFlag = ? and (name like ? or ? is null) and (phone like ? or ? is null)";
+		List<PowerStaffVO> psVOList = lpsDAO.queryForObject(hql, new Object[]{BaseEntity.DELETE_FLAG_NO, "%" + psname + "%", psname, "%" + psphone + "%", psphone});
+		
+		List<Object[]> staffIds = lpsaDAO.queryFromObject("select staffId from PowerStaffAreaVO where deleteFlag = ? and areaSubId = ?", new Object[] {BaseEntity.DELETE_FLAG_NO, areaSubId});
+		
+		if(!staffIds.isEmpty()) {
+			String hql1 = "from PowerStaffVO t where t.pid in (";
+			List<Object> params = new ArrayList<Object>();
+			for (int i = 0; i < staffIds.size(); i++) {
+				if (i < staffIds.size() - 1) {
+					hql1 += "?,";
+				} else {
+					hql1 += "?)";
+				}
+				params.add(staffIds.get(i));
+			}
+			List<PowerStaffVO> list = lpsDAO.queryForObject(hql1, params.toArray());
+			
+			for (PowerStaffVO powerStaffVO : list) {
+				psVOList.remove(powerStaffVO);
+			}
+			
+			
+			psVOList.addAll(0, list);
+		}
+		return psVOList;
+	}
+
+	@Override
+	public int countPSByAreaSubId(String areaSubId) throws Exception {
+		List<Object[]> staffIds = lpsaDAO.queryFromObject("select staffId from PowerStaffAreaVO where deleteFlag = ? and areaSubId = ?", new Object[] {BaseEntity.DELETE_FLAG_NO, areaSubId});
+		return staffIds.size();
+	}
+
+	@Override
+	@Transactional
+	public void associateSave(UserVO user, String areaSubId, String[] staffIds) throws Exception {
+		
+		List<PowerStaffAreaVO> psaVOList = lpsaDAO.queryForObject("from PowerStaffAreaVO where deleteFlag = ? and areaSubId = ?", new Object[] {BaseEntity.DELETE_FLAG_NO, areaSubId});
+		
+		List<String> existIds = new ArrayList<String>();
+		for(PowerStaffAreaVO vo : psaVOList) {
+			existIds.add(vo.getStaffId());
+		}
+		
+		if(null != staffIds) {
+			for (String id : staffIds) {
+				if(!existIds.contains(id)) {
+					lpsaDAO.save(convertToPSVO(user.getUserId(), areaSubId, id, BaseEntity.DELETE_FLAG_NO));
+				}
+			}
+		}	
+		
+		for(PowerStaffAreaVO vo : psaVOList) {
+			if(null != staffIds) {
+				List<String> staffIdList = Arrays.asList(staffIds);
+				if(!staffIdList.contains(vo.getStaffId())) {
+					vo.setDeleteFlag(BaseEntity.DELETE_FLAG_YES);
+					lpsaDAO.update(vo);
+				}
+			} else {
+				vo.setDeleteFlag(BaseEntity.DELETE_FLAG_YES);
+				lpsaDAO.update(vo);
+			}
+		}
+	}
+
+	private PowerStaffAreaVO convertToPSVO(String userId, String areaSubId, String staffId, int delFlag) {
+		Date date = new Date();
+		PowerStaffAreaVO psaVO = new PowerStaffAreaVO();
+		psaVO.setAreaSubId(areaSubId);
+		psaVO.setStaffId(staffId);
+		psaVO.setCreateTime(date);
+		psaVO.setUpdateDT(date);
+		psaVO.setDeleteFlag(delFlag);
+		psaVO.setLastHandler(userId);
+		return psaVO;
+	}
+	
+	
+	
 }
