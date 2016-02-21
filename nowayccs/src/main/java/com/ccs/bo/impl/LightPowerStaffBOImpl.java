@@ -1,5 +1,6 @@
 package com.ccs.bo.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -9,14 +10,19 @@ import java.util.Map;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StandardBasicTypes;
+import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ccs.bo.IDictBO;
 import com.ccs.bo.ILightPowerStaffBO;
+import com.ccs.bo.IUserBO;
 import com.ccs.dao.IAreaDAO;
 import com.ccs.dao.IAreaSubDAO;
 import com.ccs.dao.IBaseDAO;
+import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.EasyUiTree;
 import com.ccs.util.StringUtil;
@@ -29,6 +35,7 @@ import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LPSRowBean;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
+import com.ccs.web.domain.PowerInfoListBean;
 import com.ccs.web.domain.PowerStaffDomain;
 import com.ccs.web.domain.PowerStaffListBean;
 import com.ccs.web.domain.PowerStaffReportBean;
@@ -50,6 +57,12 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 
 	@Autowired
 	private IAreaSubDAO areaSubDAO;
+	
+	@Autowired
+	private IDictBO dictBO;
+	
+	@Autowired
+	private IUserBO userBO;
 
 	@Override
 	@Transactional
@@ -501,7 +514,131 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		psaVO.setLastHandler(userId);
 		return psaVO;
 	}
+
+	@Override
+	public List<PowerInfoListBean> queryPowerInfo(String startDt, String endDt,
+			int page, int rows) throws Exception {
+		String sql = "select t.informationid, t.helpname, t.helptel, t.helpmode, t.helpaddr, t.helpcontent, "
+				+ "t.creator, t.createtime,d.powerstaffid, p.name, p.phone, d.areasubid, s.name as areasubname, "
+				+ "a.name as areaname from hj_information t, HJ_POWERINFORMATION d, HJ_POWERSTAFF P, hj_area_sub s, hj_area a "
+				+ "where t.informationId = d.informationid and d.areasubid = s.areasubid and s.areaid = a.areaid "
+				+ "and d.POWERSTAFFID = p.pid "
+				+ "and t.createtime >= to_date(?, 'yyyy-mm-dd hh24:mi:ss') and t.createtime <= to_date(?, 'yyyy-mm-dd hh24:mi:ss')";
+		
+		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1)
+				: DateUtil.parse(startDt, "yyyy-MM-dd");
+		Date eDt = StringUtil.isNull(endDt) ? new Date() : DateUtil.parseDt(endDt + " 23:59:59", "yyyy-MM-dd hh:mm:ss");
+		
+		List<String> objs = new ArrayList<String>();
+		objs.add(DateUtil.format(sDt, "yyyy-MM-dd HH:mm:ss"));
+		objs.add(DateUtil.format(eDt, "yyyy-MM-dd HH:mm:ss"));
+//		List<Type> types = new ArrayList<Type>();
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+		
+		Type[] types = new Type[]{StandardBasicTypes.STRING, StandardBasicTypes.STRING};
+		
+		List<Object[]> list = piDAO.createSQLQuery(sql, objs.toArray(), types, page, rows, true);
+
+		List<PowerInfoListBean> beanList = new ArrayList<PowerInfoListBean>();
+		
+		Map<String, String> qzfsMap = dictBO.getDict(Constants.DICT_DICTTYPE_QZFS);
+		Map<String, UserVO> userMap = userBO.findAll();
+		
+		for (Object[] obj : list) {
+			PowerInfoListBean bean = new PowerInfoListBean();
+			bean.setHelpName(obj[1].toString());
+			bean.setHelpTel(obj[2].toString());
+			bean.setHelpMode(qzfsMap.get(obj[3].toString()));
+			bean.setHelpAddr(obj[4].toString());
+			bean.setHelpContent(obj[5].toString());
+			bean.setUserName(userMap.get(obj[6].toString()).getLoginName());
+			bean.setCreateDt(obj[7].toString());
+			bean.setPname(obj[9].toString());
+			bean.setPphone(obj[10].toString());
+			bean.setArea(obj[13].toString() + "-" + obj[12].toString());
+			beanList.add(bean);
+		}
+		
+		return beanList;
+	}
+
 	
-	
+	@Override
+	public List<PowerInfoListBean> queryPowerInfo(String startDt, String endDt) throws Exception {
+		String sql = "select t.informationid, t.helpname, t.helptel, t.helpmode, t.helpaddr, t.helpcontent, "
+				+ "t.creator, t.createtime,d.powerstaffid, p.name, p.phone, d.areasubid, s.name as areasubname, "
+				+ "a.name as areaname from hj_information t, HJ_POWERINFORMATION d, HJ_POWERSTAFF P, hj_area_sub s, hj_area a "
+				+ "where t.informationId = d.informationid and d.areasubid = s.areasubid and s.areaid = a.areaid "
+				+ "and d.POWERSTAFFID = p.pid "
+				+ "and t.createtime >= to_date(?, 'yyyy-mm-dd hh24:mi:ss') and t.createtime <= to_date(?, 'yyyy-mm-dd hh24:mi:ss')";
+		
+		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1)
+				: DateUtil.parse(startDt, "yyyy-MM-dd");
+		Date eDt = StringUtil.isNull(endDt) ? new Date() : DateUtil.parseDt(endDt + " 23:59:59", "yyyy-MM-dd hh:mm:ss");
+		
+		List<String> objs = new ArrayList<String>();
+		objs.add(DateUtil.format(sDt, "yyyy-MM-dd HH:mm:ss"));
+		objs.add(DateUtil.format(eDt, "yyyy-MM-dd HH:mm:ss"));
+//		List<Type> types = new ArrayList<Type>();
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+		
+		Type[] types = new Type[]{StandardBasicTypes.STRING, StandardBasicTypes.STRING};
+		
+		List<Object[]> list = piDAO.createSQLQuery(sql, objs.toArray(), types, 1, 10, false);
+
+		List<PowerInfoListBean> beanList = new ArrayList<PowerInfoListBean>();
+		
+		Map<String, String> qzfsMap = dictBO.getDict(Constants.DICT_DICTTYPE_QZFS);
+		Map<String, UserVO> userMap = userBO.findAll();
+		
+		for (Object[] obj : list) {
+			PowerInfoListBean bean = new PowerInfoListBean();
+			bean.setHelpName(obj[1].toString());
+			bean.setHelpTel(obj[2].toString());
+			bean.setHelpMode(qzfsMap.get(obj[3].toString()));
+			bean.setHelpAddr(obj[4].toString());
+			bean.setHelpContent(obj[5].toString());
+			bean.setUserName(userMap.get(obj[6].toString()).getLoginName());
+			bean.setCreateDt(obj[7].toString());
+			bean.setPname(obj[9].toString());
+			bean.setPphone(obj[10].toString());
+			bean.setArea(obj[13].toString() + "-" + obj[12].toString());
+			beanList.add(bean);
+		}
+		
+		return beanList;
+	}
+	@Override
+	public int queryPowerInfoCount(String startDt, String endDt) throws Exception {
+		String sql = "select count(t.informationid） as total "
+				+ " from hj_information t, HJ_POWERINFORMATION d, HJ_POWERSTAFF P, hj_area_sub s, hj_area a "
+				+ "where t.informationId = d.informationid and d.areasubid = s.areasubid and s.areaid = a.areaid "
+				+ "and d.POWERSTAFFID = p.pid "
+				+ "and t.createtime >= to_date(?, 'yyyy-mm-dd hh24:mi:ss') and t.createtime <= to_date(?, 'yyyy-mm-dd hh24:mi:ss')";
+		
+		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1)
+				: DateUtil.parse(startDt, "yyyy-MM-dd");
+		Date eDt = StringUtil.isNull(endDt) ? new Date() : DateUtil.parseDt(endDt + " 23:59:59", "yyyy-MM-dd hh:mm:ss");
+		
+		List<String> objs = new ArrayList<String>();
+		objs.add(DateUtil.format(sDt, "yyyy-MM-dd HH:mm:ss"));
+		objs.add(DateUtil.format(eDt, "yyyy-MM-dd HH:mm:ss"));
+//		List<Type> types = new ArrayList<Type>();
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+//		types.add(StandardBasicTypes.DATE);
+		
+		Type[] types = new Type[]{StandardBasicTypes.STRING, StandardBasicTypes.STRING};
+		
+		List<?> list = piDAO.createSQLQuery(sql, objs.toArray(), types);
+		return ((BigDecimal)list.get(0)).intValue();
+	}
 	
 }

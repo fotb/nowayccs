@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
+import org.hibernate.type.Type;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -151,6 +152,29 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 	public List<E> getAllWithDeleted() {
 		String hql = "from " + this.clazz.getName() + "  order by createTime" ;
 		return this.getSessionFactory().getCurrentSession().createQuery(hql).list();
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> createSQLQuery(String sql, Object[] args, Type[] types, int page, int rows, boolean isPagenation) throws Exception {
+		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
+		
+		query.setParameters(args, types);
+		if(isPagenation) {
+			query.setFirstResult((page - 1) * rows).setMaxResults(rows);
+		}
+		
+		return query.list();
+	}
+	
+	@Override
+	public List<?> createSQLQuery(String sql, Object[] args, Type[] types) throws Exception {
+		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
+		
+		query.setParameters(args, types);
+		
+		return query.list();
 	}
 
 }

@@ -32,75 +32,76 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping("lps.do")
 public class LightPowerStaffController {
-	
+
 	@Autowired
-	private ILightPowerStaffBO  lpsBO;
-	
+	private ILightPowerStaffBO lpsBO;
+
 	@RequestMapping(params = "action=list")
 	public String list(ModelMap model) throws Exception {
 		return "power/list";
 	}
-	
+
 	@RequestMapping(params = "action=buildtree", method = RequestMethod.GET)
-	public @ResponseBody String buildLPSTree(@RequestParam(value="page", required=false) String page, @RequestParam(value="rows", required=false) String rows) throws Exception {
+	public @ResponseBody String buildLPSTree(@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = "rows", required = false) String rows) throws Exception {
 		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
-//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
-//		
+		// JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+		//
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("total", lpsTreeBean.getTotal());
-		
-		
+
 		JSONArray jsonArray = JSONArray.fromObject(lpsTreeBean.getRows());
-		
+
 		jsonObj.put("rows", jsonArray.toString());
 		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
-//		System.out.println("json: " + jsonObj.toString());
+		// System.out.println("json: " + jsonObj.toString());
 		return jsonObj.toString();
 	}
-	
+
 	@RequestMapping(params = "action=areatree", method = RequestMethod.GET)
 	public @ResponseBody String buildAreaTree() throws Exception {
 		List<EasyUiTree> treeList = lpsBO.buildAreaTree();
-//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
-//		
+		// JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+		//
 		JSONObject jsonObj = new JSONObject();
 		JSONArray jsonArray = JSONArray.fromObject(treeList);
 
 		return jsonArray.toString();
 	}
-	
+
 	@RequestMapping(params = "action=buildlist", method = RequestMethod.GET)
-	public @ResponseBody String buildLPSList(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="page", required=false) String page, @RequestParam(value="rows", required=false) String rows) throws Exception {
+	public @ResponseBody String buildLPSList(@RequestParam(value = "areaId", required = false) String areaId,
+			@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = "rows", required = false) String rows) throws Exception {
 		List<PowerStaffListBean> beanList = lpsBO.buildList(areaId, Integer.valueOf(page), Integer.valueOf(rows));
-//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
-//		
+		// JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+		//
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("total", lpsBO.countBuildList(areaId));
-		
-		
+
 		JSONArray jsonArray = JSONArray.fromObject(beanList);
 		jsonObj.put("rows", jsonArray.toString());
 		return jsonObj.toString();
 	}
-	
-	
+
 	@RequestMapping(params = "action=load", method = RequestMethod.GET)
-	public @ResponseBody String load(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="page", required=false) String page, @RequestParam(value="rows", required=false) String rows) throws Exception {
+	public @ResponseBody String load(@RequestParam(value = "areaId", required = false) String areaId,
+			@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = "rows", required = false) String rows) throws Exception {
 		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
-//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
-//		
+		// JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+		//
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("total", lpsTreeBean.getTotal());
-		
-		
+
 		JSONArray jsonArray = JSONArray.fromObject(lpsTreeBean.getRows());
-		
+
 		jsonObj.put("rows", jsonArray.toString());
 		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
-//		System.out.println("json: " + jsonObj.toString());
+		// System.out.println("json: " + jsonObj.toString());
 		return jsonObj.toString();
 	}
-	
+
 	@RequestMapping(params = "action=add")
 	public String add(@ModelAttribute("powerStaffDomain") PowerStaffDomain powerStaffDomain, ModelMap model) {
 		if (null == powerStaffDomain) {
@@ -112,61 +113,66 @@ public class LightPowerStaffController {
 	}
 
 	@RequestMapping(params = "action=save")
-	public String save(@ModelAttribute("powerStaffDomain") PowerStaffDomain powerStaffDomain, HttpSession session, ModelMap model) throws Exception {
+	public String save(@ModelAttribute("powerStaffDomain") PowerStaffDomain powerStaffDomain, HttpSession session,
+			ModelMap model) throws Exception {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		lpsBO.saveLPS(powerStaffDomain, user);
 		return "redirect:lps.do?action=list";
 	}
-	
+
 	@RequestMapping(params = "action=saveLps")
-	public @ResponseBody void save(@RequestParam String id, @RequestParam String name, @RequestParam String phone, @RequestParam String remark, HttpSession session, ModelMap model) throws Exception {
+	public @ResponseBody void save(@RequestParam String id, @RequestParam String name, @RequestParam String phone,
+			@RequestParam String remark, HttpSession session, ModelMap model) throws Exception {
 		PowerStaffVO psVO = lpsBO.findPowerStaffById(id);
 		psVO.setName(name);
 		psVO.setPhone(phone);
 		psVO.setRemark(remark);
 		lpsBO.updatePowerStaff(psVO);
 	}
-	
+
 	@RequestMapping(params = "action=del")
 	public @ResponseBody void del(@RequestParam String id, HttpSession session, ModelMap model) throws Exception {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		lpsBO.deleteLPS(id, user);
 	}
-	
-	
+
 	@RequestMapping(params = "action=associate")
 	public String associate(ModelMap model) throws Exception {
 		return "power/associate";
 	}
-	
+
 	@RequestMapping(params = "action=pslist")
 	public @ResponseBody String psList(ModelMap model) throws Exception {
 		List<PowerStaffVO> list = lpsBO.findAll();
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("total", list.size());
 		JSONArray jsonArray = JSONArray.fromObject(list);
-		
+
 		jsonObj.put("rows", jsonArray.toString());
 		return jsonObj.toString();
 	}
-	
-	
+
 	@RequestMapping(params = "action=subareapslist")
-	public @ResponseBody String psList(@RequestParam String areaSubId, @RequestParam(value="psname", required=false) String psname, @RequestParam(value="psphone", required=false) String psphone,  ModelMap model) throws Exception {
+	public @ResponseBody String psList(@RequestParam String areaSubId,
+			@RequestParam(value = "psname", required = false) String psname,
+			@RequestParam(value = "psphone", required = false) String psphone, ModelMap model) throws Exception {
 		List<PowerStaffVO> list = lpsBO.queryAllOrderByAreaSubId(areaSubId, psname, psphone);
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("total", list.size());
 		JSONArray jsonArray = JSONArray.fromObject(list);
-		
+
 		jsonObj.put("rows", jsonArray.toString());
-		
+
 		jsonObj.put("selectedRows", lpsBO.countPSByAreaSubId(areaSubId));
 		return jsonObj.toString();
 	}
-	
+
 	@RequestMapping(params = "action=associateSave")
-	public @ResponseBody void associateSave(@RequestParam String areaSubId, @RequestParam(value="pids[]", required=false) String[] pids,  HttpSession session,ModelMap model) throws Exception {
+	public @ResponseBody void associateSave(@RequestParam String areaSubId,
+			@RequestParam(value = "pids[]", required = false) String[] pids, HttpSession session, ModelMap model)
+					throws Exception {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		lpsBO.associateSave(user, areaSubId, pids);
 	}
+
 }

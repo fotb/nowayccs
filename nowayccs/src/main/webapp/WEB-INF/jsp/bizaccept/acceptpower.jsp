@@ -19,11 +19,11 @@ function btnnext_click(){
 
 	var row = $('#dg').datagrid('getSelected');
 	if(row == null) {
-		alert("fasdfa");
+		alert("请选择电工！");
 	} else {
 		$("#powerStaffId").val(row.pid);
 	}
-
+	$("#areaSubId1").val($("#areaSubId").combobox('getValue'));
 	$("form").submit();
 	//$("#bizAccept").submit(function(){alert("success"); return false;});
 }
@@ -41,6 +41,7 @@ function btnprovs_click() {
 <body>
 <form:form method="post" action="bizaccept.do?action=powersave" commandName="bizAccept">
 	<input id="powerStaffId" type="hidden" name="powerStaffId">
+	<input id="areaSubId1" type="hidden" name="areaSubId1">
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
     <tr>
       <td>

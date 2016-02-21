@@ -390,7 +390,7 @@ public class BizAcceptController {
 	
 	
 	@RequestMapping(params = "action=powersave")
-	public String acceptPowerSave(@ModelAttribute("bizAccept") BizAccept bindBizAccept, @RequestParam(value="powerStaffId") String powerStaffId,  HttpSession session, ModelMap model) throws Exception {
+	public String acceptPowerSave(@ModelAttribute("bizAccept") BizAccept bindBizAccept, @RequestParam(value="powerStaffId") String powerStaffId,  @RequestParam(value="areaSubId1") String areaSubId, HttpSession session, ModelMap model) throws Exception {
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		//?? Use the same name of "bizAccept" with ModelAttribute???
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
@@ -425,6 +425,7 @@ public class BizAcceptController {
 		piVO.setDeleteFlag(BaseEntity.DELETE_FLAG_NO);
 		piVO.setLastHandler(user.getUserId());
 		piVO.setPowerStaffId(powerStaffId);
+		piVO.setAreaSubId(areaSubId);
 		piVO.setRemark("");
 		piVO.setUpdateDT(date);
 		

@@ -3,6 +3,7 @@ package com.ccs.dao;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.type.Type;
 
 import com.ccs.vo.BaseEntity;
 
@@ -92,5 +93,10 @@ public interface IBaseDAO<E extends BaseEntity> {
 	 * @throws Exception
 	 */
 	void deleteLogicByIds(String[] pidArray) throws Exception;
+	
+	
+	List<Object[]> createSQLQuery(String sql, Object[] args, Type[] types, int page, int rows, boolean isPagenation) throws Exception;
+	
+	List<?> createSQLQuery(String sql, Object[] args, Type[] types) throws Exception;
 }
 

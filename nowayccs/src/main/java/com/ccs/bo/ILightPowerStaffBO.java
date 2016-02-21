@@ -7,6 +7,7 @@ import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
+import com.ccs.web.domain.PowerInfoListBean;
 import com.ccs.web.domain.PowerStaffDomain;
 import com.ccs.web.domain.PowerStaffListBean;
 import com.ccs.web.domain.PowerStaffReportBean;
@@ -45,4 +46,10 @@ public interface ILightPowerStaffBO {
 	List<EasyUiTree> buildAreaTree() throws Exception;
 	
 	void associateSave(UserVO user, String areaSubId, String[] staffIds) throws Exception;
+	
+	List<PowerInfoListBean> queryPowerInfo(String startDt, String endDt, int page, int rows) throws Exception;
+	
+	int queryPowerInfoCount(String startDt, String endDt) throws Exception;
+	
+	List<PowerInfoListBean> queryPowerInfo(String startDt, String endDt) throws Exception;
 }

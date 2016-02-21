@@ -126,7 +126,7 @@
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:'true'" id="btEdit">修改</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save', plain:'true'" id="btSave">保存</a>
 			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">取消修改</a>
-			<a href="lps.do?action=associate" class="easyui-linkbutton" data-options="iconCls:'icon-cancel', plain:'true'" id="btCancel">关联</a>
+			<a href="lps.do?action=associate" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:'true'" id="btCancel">关联</a>
 		</div>
 	<div style="margin:10px 0;"></div>
 

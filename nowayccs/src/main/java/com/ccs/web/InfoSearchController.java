@@ -33,7 +33,6 @@ import com.ccs.vo.EntpriseVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.PowerInformationVO;
-import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.ReferInformationVO;
 import com.ccs.vo.UserVO;
@@ -227,8 +226,8 @@ public class InfoSearchController {
 				PowerStaffVO psVO = lpsBO.findPowerStaffById(piVO.getPowerStaffId());
 				model.addAttribute("psVO", psVO);
 				
-				PowerStaffAreaVO psaVO = lpsBO.findPSAById(psVO.getPid()).get(0);
-				AreaSubVO asVO = areaBO.findByAreaSubId(psaVO.getAreaSubId());
+//				PowerStaffAreaVO psaVO = lpsBO.findPSAById(psVO.getPid()).get(0);
+				AreaSubVO asVO = areaBO.findByAreaSubId(piVO.getAreaSubId());
 				model.addAttribute("asVO", asVO);
 				AreaVO areaVO = areaBO.findByAreaId(asVO.getAreaId());
 				model.addAttribute("areaVO", areaVO);

@@ -17,6 +17,8 @@ public class PowerInformationVO extends BaseEntity implements Serializable {
 	private String powerStaffId;
 	@Column(name = "REMARK")
 	private String remark;
+	@Column(name = "AREASUBID")
+	private String areaSubId;
 
 	public String getInformationId() {
 		return informationId;
@@ -41,5 +43,14 @@ public class PowerInformationVO extends BaseEntity implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
+	public String getAreaSubId() {
+		return areaSubId;
+	}
+
+	public void setAreaSubId(String areaSubId) {
+		this.areaSubId = areaSubId;
+	}
+	
 
 }
