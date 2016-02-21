@@ -52,4 +52,6 @@ public interface ILightPowerStaffBO {
 	int queryPowerInfoCount(String startDt, String endDt) throws Exception;
 	
 	List<PowerInfoListBean> queryPowerInfo(String startDt, String endDt) throws Exception;
+	
+	void fix() throws Exception;
 }

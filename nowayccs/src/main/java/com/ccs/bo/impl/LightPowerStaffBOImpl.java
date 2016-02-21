@@ -549,15 +549,15 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		
 		for (Object[] obj : list) {
 			PowerInfoListBean bean = new PowerInfoListBean();
-			bean.setHelpName(obj[1].toString());
-			bean.setHelpTel(obj[2].toString());
-			bean.setHelpMode(qzfsMap.get(obj[3].toString()));
-			bean.setHelpAddr(obj[4].toString());
-			bean.setHelpContent(obj[5].toString());
-			bean.setUserName(userMap.get(obj[6].toString()).getLoginName());
-			bean.setCreateDt(obj[7].toString());
-			bean.setPname(obj[9].toString());
-			bean.setPphone(obj[10].toString());
+			bean.setHelpName(null ==obj[1] ? "" : obj[1].toString());
+			bean.setHelpTel(null ==obj[2] ? "" : obj[2].toString());
+			bean.setHelpMode(null ==obj[3] ? "" : qzfsMap.get(obj[3].toString()));
+			bean.setHelpAddr(null ==obj[4] ? "" :obj[4].toString());
+			bean.setHelpContent(null ==obj[5] ? "" : obj[5].toString());
+			bean.setUserName(null ==obj[6] ? "" : userMap.get(obj[6].toString()).getLoginName());
+			bean.setCreateDt(null ==obj[7] ? "" : obj[7].toString());
+			bean.setPname(null ==obj[9] ? "" : obj[9].toString());
+			bean.setPphone(null ==obj[10] ? "" : obj[10].toString());
 			bean.setArea(obj[13].toString() + "-" + obj[12].toString());
 			beanList.add(bean);
 		}
@@ -599,15 +599,15 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		
 		for (Object[] obj : list) {
 			PowerInfoListBean bean = new PowerInfoListBean();
-			bean.setHelpName(obj[1].toString());
-			bean.setHelpTel(obj[2].toString());
-			bean.setHelpMode(qzfsMap.get(obj[3].toString()));
-			bean.setHelpAddr(obj[4].toString());
-			bean.setHelpContent(obj[5].toString());
-			bean.setUserName(userMap.get(obj[6].toString()).getLoginName());
-			bean.setCreateDt(obj[7].toString());
-			bean.setPname(obj[9].toString());
-			bean.setPphone(obj[10].toString());
+			bean.setHelpName(null ==obj[1] ? "" : obj[1].toString());
+			bean.setHelpTel(null ==obj[2] ? "" : obj[2].toString());
+			bean.setHelpMode(null ==obj[3] ? "" : qzfsMap.get(obj[3].toString()));
+			bean.setHelpAddr(null ==obj[4] ? "" :obj[4].toString());
+			bean.setHelpContent(null ==obj[5] ? "" : obj[5].toString());
+			bean.setUserName(null ==obj[6] ? "" : userMap.get(obj[6].toString()).getLoginName());
+			bean.setCreateDt(null ==obj[7] ? "" : obj[7].toString());
+			bean.setPname(null ==obj[9] ? "" : obj[9].toString());
+			bean.setPphone(null ==obj[10] ? "" : obj[10].toString());
 			bean.setArea(obj[13].toString() + "-" + obj[12].toString());
 			beanList.add(bean);
 		}
@@ -639,6 +639,18 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 		
 		List<?> list = piDAO.createSQLQuery(sql, objs.toArray(), types);
 		return ((BigDecimal)list.get(0)).intValue();
+	}
+
+	@Override
+	@Transactional
+	public void fix() throws Exception {
+		List<PowerInformationVO> piVOList = piDAO.getAll();
+		for (PowerInformationVO piVO : piVOList) {
+			String powerStaffId = piVO.getPowerStaffId();
+			List<PowerStaffAreaVO> psVOList = lpsaDAO.queryForObject("from PowerStaffAreaVO where staffId = ?", new Object[]{powerStaffId});
+			piVO.setAreaSubId(psVOList.get(0).getAreaSubId());
+			piDAO.update(piVO);
+		}
 	}
 	
 }

@@ -268,4 +268,11 @@ public class PowerReportController {
 		}
 		System.out.println("文件生成...");
 	}
+	
+	
+	@RequestMapping(params = "action=fix")
+	public String associate(ModelMap model) throws Exception {
+		lpsBO.fix();
+		return "";
+	}
 }
