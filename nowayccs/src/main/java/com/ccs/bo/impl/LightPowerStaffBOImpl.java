@@ -523,7 +523,8 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 				+ "a.name as areaname from hj_information t, HJ_POWERINFORMATION d, HJ_POWERSTAFF P, hj_area_sub s, hj_area a "
 				+ "where t.informationId = d.informationid and d.areasubid = s.areasubid and s.areaid = a.areaid "
 				+ "and d.POWERSTAFFID = p.pid "
-				+ "and t.createtime >= to_date(?, 'yyyy-mm-dd hh24:mi:ss') and t.createtime <= to_date(?, 'yyyy-mm-dd hh24:mi:ss')";
+				+ "and t.createtime >= to_date(?, 'yyyy-mm-dd hh24:mi:ss') and t.createtime <= to_date(?, 'yyyy-mm-dd hh24:mi:ss') "
+				+ "order by t.createtime desc";
 		
 		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1)
 				: DateUtil.parse(startDt, "yyyy-MM-dd");
@@ -554,7 +555,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			bean.setHelpMode(null ==obj[3] ? "" : qzfsMap.get(obj[3].toString()));
 			bean.setHelpAddr(null ==obj[4] ? "" :obj[4].toString());
 			bean.setHelpContent(null ==obj[5] ? "" : obj[5].toString());
-			bean.setUserName(null ==obj[6] ? "" : userMap.get(obj[6].toString()).getLoginName());
+			bean.setUserName(null ==obj[6] ? "" : userMap.get(obj[6].toString()).getUserName());
 			bean.setCreateDt(null ==obj[7] ? "" : obj[7].toString());
 			bean.setPname(null ==obj[9] ? "" : obj[9].toString());
 			bean.setPphone(null ==obj[10] ? "" : obj[10].toString());
@@ -573,7 +574,8 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 				+ "a.name as areaname from hj_information t, HJ_POWERINFORMATION d, HJ_POWERSTAFF P, hj_area_sub s, hj_area a "
 				+ "where t.informationId = d.informationid and d.areasubid = s.areasubid and s.areaid = a.areaid "
 				+ "and d.POWERSTAFFID = p.pid "
-				+ "and t.createtime >= to_date(?, 'yyyy-mm-dd hh24:mi:ss') and t.createtime <= to_date(?, 'yyyy-mm-dd hh24:mi:ss')";
+				+ "and t.createtime >= to_date(?, 'yyyy-mm-dd hh24:mi:ss') and t.createtime <= to_date(?, 'yyyy-mm-dd hh24:mi:ss') "
+				+ "order by t.createtime desc";
 		
 		Date sDt = StringUtil.isNull(startDt) ? DateUtil.addMonth(DateUtil.getToday(), -1)
 				: DateUtil.parse(startDt, "yyyy-MM-dd");
@@ -604,7 +606,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			bean.setHelpMode(null ==obj[3] ? "" : qzfsMap.get(obj[3].toString()));
 			bean.setHelpAddr(null ==obj[4] ? "" :obj[4].toString());
 			bean.setHelpContent(null ==obj[5] ? "" : obj[5].toString());
-			bean.setUserName(null ==obj[6] ? "" : userMap.get(obj[6].toString()).getLoginName());
+			bean.setUserName(null ==obj[6] ? "" : userMap.get(obj[6].toString()).getUserName());
 			bean.setCreateDt(null ==obj[7] ? "" : obj[7].toString());
 			bean.setPname(null ==obj[9] ? "" : obj[9].toString());
 			bean.setPphone(null ==obj[10] ? "" : obj[10].toString());
@@ -616,7 +618,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	}
 	@Override
 	public int queryPowerInfoCount(String startDt, String endDt) throws Exception {
-		String sql = "select count(t.informationid） as total "
+		String sql = "select count(t.informationid) as total "
 				+ " from hj_information t, HJ_POWERINFORMATION d, HJ_POWERSTAFF P, hj_area_sub s, hj_area a "
 				+ "where t.informationId = d.informationid and d.areasubid = s.areasubid and s.areaid = a.areaid "
 				+ "and d.POWERSTAFFID = p.pid "
