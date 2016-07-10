@@ -92,7 +92,7 @@ $(document).ready(function(){
 		});
 	});
 	if("" != "${receiverSearchDomain.areaId}") {
-		loadAreaSub(${receiverSearchDomain.areaId});
+		loadAreaSub('${receiverSearchDomain.areaId}');
 	}
 
 	$("#areaId").change(function() {
