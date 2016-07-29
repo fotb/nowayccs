@@ -20,11 +20,11 @@ public class AjUploadVO implements Serializable {
 	private String otherlink;
 	private String transactiontype;
 	private String transactionlclass;
-	private String transactionscalss;
+	private String transactionsclass;
 	private String helptime;
 	private String helpcontent;
 	private String helptitle;
-	private String Replycontent;
+	private String replycontent;
 	private String replytime;
 	private String helpstate;
 	private String entername;
@@ -99,12 +99,12 @@ public class AjUploadVO implements Serializable {
 		this.transactionlclass = transactionlclass;
 	}
 
-	public String getTransactionscalss() {
-		return transactionscalss;
+	public String getTransactionsclass() {
+		return transactionsclass;
 	}
 
-	public void setTransactionscalss(String transactionscalss) {
-		this.transactionscalss = transactionscalss;
+	public void setTransactionsclass(String transactionsclass) {
+		this.transactionsclass = transactionsclass;
 	}
 
 	public String getHelptime() {
@@ -131,12 +131,13 @@ public class AjUploadVO implements Serializable {
 		this.helptitle = helptitle;
 	}
 
+
 	public String getReplycontent() {
-		return Replycontent;
+		return replycontent;
 	}
 
 	public void setReplycontent(String replycontent) {
-		Replycontent = replycontent;
+		this.replycontent = replycontent;
 	}
 
 	public String getReplytime() {
