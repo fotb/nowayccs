@@ -99,5 +99,5 @@ public class UserStatusBOImpl implements IUserStatusBO {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-	}
+  	}
 }

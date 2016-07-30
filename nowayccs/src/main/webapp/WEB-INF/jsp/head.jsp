@@ -305,10 +305,22 @@ function Phone_CheckStatus() {
 
 
 function postLog(action, logId) {
-	$.getJSON("index.do?action=icdLog&action=" + action + "&logId=" + logId, function(data) {
+	$.getJSON("index.do?action=icdLog&actionType=" + action + "&logId=" + logId, function(data) {
 		//do nothing
 	});
 }
+$(document).ready(function(){
+
+
+function sessionHeartBeat(){
+   	$.getJSON("index.do?action=sessionHeartBeat", function(data) {
+		//do nothing
+	});
+}
+//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
+setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
+});
+
 </script>
 
 

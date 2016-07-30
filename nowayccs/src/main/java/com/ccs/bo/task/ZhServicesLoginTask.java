@@ -9,9 +9,9 @@ import com.ccs.services.client.ZhServiceSoapProxy;
 import com.ccs.util.DateUtil;
 
 @Component("loginTask")  
-public class LoginTask {
+public class ZhServicesLoginTask {
 	
-	private static final Logger LOG = Logger.getLogger(LoginTask.class);
+	private static final Logger LOG = Logger.getLogger(ZhServicesLoginTask.class);
 	
 
 	@Scheduled(cron="0 0/20 * * * ?")
