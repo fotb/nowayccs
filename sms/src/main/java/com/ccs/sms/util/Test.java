@@ -11,7 +11,7 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ISmsRecvBO smsRecvBO = (ISmsRecvBO) SpringUtil.getBean("smsRecvBO");
+		ISmsRecvBO smsRecvBO = (ISmsRecvBO) SmsSpringUtil.getBean("smsRecvBO");
 		
 		List<SmsRecvVO> list = smsRecvBO.findByAll();
 		
