@@ -14,6 +14,7 @@ import com.ccs.dao.ILifeInformationDAO;
 import com.ccs.services.client.ZhServiceConstants;
 import com.ccs.services.client.ZhServiceSoapProxy;
 import com.ccs.services.vo.AjUploadVO;
+import com.ccs.services.vo.CallTelUploadVO;
 import com.ccs.services.vo.UploadUtils;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
@@ -24,35 +25,36 @@ import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.UpInfoStatusVO;
 
-@Component("infoUploadTask")  
+@Component("infoUploadTask")
 public class InfoUploadTask {
-	
+
 	private static final Logger LOG = Logger.getLogger(InfoUploadTask.class);
-	
+
 	@Autowired
 	private IBaseDAO<UpInfoStatusVO> upInfoStatusDAO;
-	
+
 	@Autowired
 	private IInformationDAO informationDAO;
-	
+
 	@Autowired
 	private ILifeInformationDAO lifeInformationDAO;
-	
+
 	@Autowired
 	private IAgentDAO agentDAO;
 
-	@Scheduled(cron="0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	public void doJob() {
-		
+
 		try {
-			//query all unupload data
+			// query all unupload data
 			String hql = "from UpInfoStatusVO where upStatus = ?";
-			List<UpInfoStatusVO> uisVOList = upInfoStatusDAO.queryForObject(hql, new String[]{UpInfoStatusVO.UPLOAD_STATUS_NO});
-			
+			List<UpInfoStatusVO> uisVOList = upInfoStatusDAO.queryForObject(hql,
+					new String[] { UpInfoStatusVO.UPLOAD_STATUS_NO });
+
 			for (UpInfoStatusVO upInfoStatusVO : uisVOList) {
 				String infoId = upInfoStatusVO.getInfomationId();
 				InformationVO infoVO = informationDAO.findById(infoId);
-	
+
 				AjUploadVO ajuVO = new AjUploadVO();
 				ajuVO.setOriginalid(infoId);
 				ajuVO.setQuerytype(UploadUtils.getQuerytype(infoVO.getHelpMode()));
@@ -66,9 +68,9 @@ public class InfoUploadTask {
 				ajuVO.setHelptime(DateUtil.format(infoVO.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
 				ajuVO.setHelpcontent(infoVO.getHelpContent());
 				ajuVO.setHelptitle("");
-				
-				//如果是生活类服务器，且已经结案，则记录Reply信息
-				if(Constants.INFOMATION_HELPTYPE_LIFE.equals(infoVO.getHelpType()) 
+
+				// 如果是生活类服务器，且已经结案，则记录Reply信息
+				if (Constants.INFOMATION_HELPTYPE_LIFE.equals(infoVO.getHelpType())
 						&& Constants.SYS_INFOMATION_STATES_YJA.equals(infoVO.getStatus())) {
 					LifeInformationVO lInfoVO = lifeInformationDAO.findByInfoId(infoVO.getInfoId());
 					ajuVO.setReplycontent(StringUtil.isNull(lInfoVO.getCallResult()) ? "" : lInfoVO.getCallResult());
@@ -77,38 +79,56 @@ public class InfoUploadTask {
 					ajuVO.setReplycontent("");
 					ajuVO.setReplytime("");
 				}
-	
+
 				ajuVO.setHelpstate(UploadUtils.getHelpState(infoVO.getStatus()));
 				ajuVO.setEntername("");
 				ajuVO.setServqual("");
 				ajuVO.setEnterlevel("");
 				ajuVO.setHostdepart("");
 				ajuVO.setHelpbuild("1");
-				
+
 				AgentVO agentVO = agentDAO.findById(infoVO.getCreator());
 				ajuVO.setSeatname(agentVO.getWorkNo());
 				ajuVO.setSeatip(agentVO.getTargetDevice());
-				
-				String xml = XmlUtil.toXml(ajuVO);
+
 				ZhServiceSoapProxy proxy = new ZhServiceSoapProxy();
-				//String login = proxy.login(ZhServiceConstants.USER, ZhServiceConstants.PW);
-				//if(ZhServiceConstants.LOGIN_STATUS_0.equals(login)) {
-					
-					LOG.warn("start to upload info with infoId = " + infoVO.getInfoId());
-					
-					String result = proxy.AJ_Upload(ZhServiceConstants.USER, ZhServiceConstants.PW, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + xml);
-					if(ZhServiceConstants.RETURN_CODE_1000.equals(result)) {
-						LOG.warn("Success to upload info with infoId = " + infoVO.getInfoId());
-						upInfoStatusVO.setUpStatus(UpInfoStatusVO.UPLOAD_STATUS_YES);
-						upInfoStatusVO.setResult(result);
-						upInfoStatusDAO.update(upInfoStatusVO);
+				// String login = proxy.login(ZhServiceConstants.USER,
+				// ZhServiceConstants.PW);
+				// if(ZhServiceConstants.LOGIN_STATUS_0.equals(login)) {
+
+				if (Constants.SYS_INFOMATION_STATES_DB.equals(infoVO.getStatus())) {
+					agentVO = agentDAO.findById(infoVO.getCreator());
+					CallTelUploadVO ctuVO = new CallTelUploadVO();
+					ctuVO.setSeatname(agentVO.getWorkNo());
+					ctuVO.setSeatip(agentVO.getTargetDevice());
+					ctuVO.setCalltel(infoVO.getHelpTel());
+					ctuVO.setDealtime(DateUtil.format(infoVO.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+					ctuVO.setDealstatus("1");
+
+					String xml = XmlUtil.toXml(ctuVO);
+					LOG.warn("start to upload calltel with infoId = " + infoVO.getInfoId());
+					String result = proxy.calltel_Upload(ZhServiceConstants.USER, ZhServiceConstants.PW,
+							"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + xml);
+					if (ZhServiceConstants.RETURN_CODE_1000.equals(result)) {
+						LOG.warn("Success to upload calltel with infoId = " + infoVO.getInfoId());
 					}
-				//}
+				}
+
+				LOG.warn("start to upload info with infoId = " + infoVO.getInfoId());
+
+				String xml = XmlUtil.toXml(ajuVO);
+				String result = proxy.AJ_Upload(ZhServiceConstants.USER, ZhServiceConstants.PW,
+						"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + xml);
+				if (ZhServiceConstants.RETURN_CODE_1000.equals(result)) {
+					LOG.warn("Success to upload info with infoId = " + infoVO.getInfoId());
+					upInfoStatusVO.setUpStatus(UpInfoStatusVO.UPLOAD_STATUS_YES);
+					upInfoStatusVO.setResult(result);
+					upInfoStatusDAO.update(upInfoStatusVO);
+				}
 			}
-		
+
 		} catch (Exception e) {
 			LOG.error("Upload Aj Fail: " + e.getMessage());
 		}
-		
 	}
 }
