@@ -42,7 +42,7 @@ $(document).ready(function(){
 	});
 
 	if("" != "${receiverSearchDomain.bigEntCategoryId}") {
-		loadSubEntCategory(${receiverSearchDomain.bigEntCategoryId});
+		loadSubEntCategory('${receiverSearchDomain.bigEntCategoryId}');
 	}
 
 	$("#bigEntCategoryId").change(function() {
@@ -60,7 +60,7 @@ $(document).ready(function(){
 	});
 
 	if("" != "${receiverSearchDomain.subEntCategoryId}") {
-		loadEntCategory(${receiverSearchDomain.subEntCategoryId});
+		loadEntCategory('${receiverSearchDomain.subEntCategoryId}');
 	}
 
 	$("#subEntCategoryId").change(function() {
