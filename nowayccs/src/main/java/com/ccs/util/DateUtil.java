@@ -303,4 +303,21 @@ public class DateUtil {
 		secondCalendar.setTime(secendDate);
 		return firstCalendar.after(secondCalendar);
 	}
+	
+	
+	
+	public static int getIntervalMinutes(Date startDay, Date endDay){
+		
+		final Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTime(startDay);
+		
+		final Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTime(endDay);
+		
+		long sl=startCalendar.getTimeInMillis();
+		long el=endCalendar.getTimeInMillis();
+
+		long ei=el-sl;
+		return (int)(ei/(1000*60));
+		}
 }

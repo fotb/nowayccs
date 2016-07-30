@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IAgentBO;
+import com.ccs.bo.IUserStatusBO;
 import com.ccs.icd.util.DateUtil;
 import com.ccs.util.Constants;
 import com.ccs.vo.AgentVO;
+import com.ccs.vo.UserStatusVO;
 import com.ccs.vo.UserVO;
 
 @Controller
@@ -26,6 +28,9 @@ public class IndexController {
 	private static final Logger logger = Logger.getLogger(IndexController.class);
 	@Autowired
 	private IAgentBO agentBO;
+	
+	@Autowired
+	private IUserStatusBO userStatusBO;
 
 	@RequestMapping
 	public String index(ModelMap model) {
@@ -59,8 +64,20 @@ public class IndexController {
 	}
 	
 	@RequestMapping(params = "action=icdLog", method = RequestMethod.GET)
-	public @ResponseBody String getSubArea(@RequestParam String logId, String action) throws UnsupportedEncodingException {
-		logger.info(DateUtil.format(new Date(), "yyyy/MM/dd HH:mm:ss") + " -- " + action + ": " + logId);
+	public @ResponseBody String getSubArea(@RequestParam String logId, String actionType) throws UnsupportedEncodingException {
+		logger.info(DateUtil.format(new Date(), "yyyy/MM/dd HH:mm:ss") + " -- " + actionType + ": " + logId);
+		return "";
+	}
+	
+	
+	@RequestMapping(params = "action=sessionHeartBeat", method = RequestMethod.GET)
+	public @ResponseBody String sessionHeartBeat(HttpSession session, ModelMap model) throws UnsupportedEncodingException {
+		UserVO vo = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		if(null == vo) {
+			logger.info("Info:------session time Out!");
+		} else {
+			userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_1, session.getId());
+		}
 		return "";
 	}
 	
