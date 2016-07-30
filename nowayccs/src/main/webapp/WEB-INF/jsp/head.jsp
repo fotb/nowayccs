@@ -318,7 +318,7 @@ function sessionHeartBeat(){
 	});
 }
 //setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
-setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
+setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！
 });
 
 </script>
