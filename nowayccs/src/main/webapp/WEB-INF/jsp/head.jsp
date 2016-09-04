@@ -6,7 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>Untitled Document</title>
+	<link rel="stylesheet" type="text/css" href="easyui/themes/gray/easyui.css">
+	<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script language="javascript" type="">
@@ -202,6 +206,14 @@ $("#BtAns").attr("disabled", true);
 }
 
 function Phone_test() {
+
+
+	alert("isLogon:" + Phone.IsInitial);
+	alert("IsSignIn:" + Phone.IsSignIn);
+alert("isFree:" + Phone.IsFree);
+alert("FreeStatus:" + Phone.FreeStatus);
+alert("IsTalking:" + Phone.IsTalking);
+
     //BtAns.disabled    = false;
   //alert("success");
 //alert(Phone.GetCallerNo());
@@ -212,8 +224,39 @@ $("#BtAns").attr("disabled", true);
   window.open("bizaccept.do?flag=Y&callNo=82626090&qzfs=4", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 
-//呼出
 function btnCallOut_onclick() {
+	//window.open("agent.do?action=callout", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+
+
+	TextResult.innerHTML = "";
+	var MediaType,lRetVal,sResult;
+	MediaType = 5;
+  	alert("Phone.GetCallerNo():" + Phone.GetCallerNo());
+ 	lRetVal = Phone.TransOutEx2(MediaType,"", "1183120534582611263","2",0, "");
+	
+	alert("stesdfasdf");
+
+    sResult = Phone.GetPromptByErrorCode(lRetVal);
+    TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
+	postLog("TransOutEx2", sResult);
+    window.status = sResult;
+}
+
+function calloutEx(callNo) {
+	TextResult.innerHTML = "";
+	var MediaType,lRetVal,sResult;
+	MediaType = 5;
+  	alert("Phone.GetCallerNo():" + Phone.GetCallerNo());
+ 	lRetVal = Phone.TransOutEx2(MediaType,"", callNo + Phone.GetCallerNo(),"3",0, "");
+
+    sResult = Phone.GetPromptByErrorCode(lRetVal);
+    TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
+	postLog("TransOutEx2", sResult);
+    window.status = sResult;
+}
+
+//呼出
+function btnCallOut_onclick_bak() {
       TextResult.innerHTML = "";
 var MediaType,lRetVal,sResult;
 MediaType = 5;
@@ -310,15 +353,13 @@ function postLog(action, logId) {
 	});
 }
 $(document).ready(function(){
-
-
-function sessionHeartBeat(){
-   	$.getJSON("index.do?action=sessionHeartBeat", function(data) {
-		//do nothing
-	});
-}
-//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
-setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！
+	function sessionHeartBeat(){
+   		$.getJSON("index.do?action=sessionHeartBeat", function(data) {
+			//do nothing
+		});
+	}
+	//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
+	setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！
 });
 
 </script>
@@ -434,7 +475,9 @@ Phone_OnSignInExFailure()
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><img src="images/head.jpg" width="100%" height="115"></td>
+    <td>
+    <img src="images/head.jpg" width="100%" height="115">
+    </td>
   </tr>
   <tr>
     <td height="24" valign="bottom" background="images/bg_top.gif">
@@ -454,11 +497,10 @@ Phone_OnSignInExFailure()
           <INPUT id=btnHold name=btnHold type=button value=保持 LANGUAGE=javascript onclick="return btnHold_onclick()" style="VISIBILITY: visible">
             <INPUT id=btnGetHold name=btnGetHold type=button value=取保持 LANGUAGE=javascript onclick="return btnGetHold_onclick()" style="VISIBILITY: visible">
           &nbsp;&nbsp;
-            <INPUT id =btnCallOut  name=button12  type=button value=呼出 disabled LANGUAGE=javascript onclick="return btnCallOut_onclick()">
+            <INPUT id =btnCallOut  name=button12  type=button value=呼出 LANGUAGE=javascript onclick="return btnCallOut_onclick()">
           <INPUT id =btnTrans name=button11  type=button value=呼叫转移 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
 		  	<input id="test" name="testbt" type="button" onclick="Phone_test();" value="test">
         </logic:present>
-
           <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div>
         </td>
         <td align="center" nowrap="nowrap">

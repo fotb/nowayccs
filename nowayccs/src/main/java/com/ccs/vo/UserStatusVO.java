@@ -32,6 +32,17 @@ public class UserStatusVO extends BaseEntity implements Serializable {
 	@Column(name = "STATUS")
 	private String status;
 
+	@Column(name = "AGENTSTATUS")
+	private String agentStatus;
+	
+	public String getAgentStatus() {
+		return agentStatus;
+	}
+
+	public void setAgentStatus(String agentStatus) {
+		this.agentStatus = agentStatus;
+	}
+
 	public String getUserId() {
 		return userId;
 	}

@@ -73,8 +73,13 @@ public class InfoUploadTask {
 				if (Constants.INFOMATION_HELPTYPE_LIFE.equals(infoVO.getHelpType())
 						&& Constants.SYS_INFOMATION_STATES_YJA.equals(infoVO.getStatus())) {
 					LifeInformationVO lInfoVO = lifeInformationDAO.findByInfoId(infoVO.getInfoId());
-					ajuVO.setReplycontent(StringUtil.isNull(lInfoVO.getCallResult()) ? "" : lInfoVO.getCallResult());
-					ajuVO.setReplytime(DateUtil.format(lInfoVO.getCallTime(), "yyyy-MM-dd HH:mm:ss"));
+					if( null == lInfoVO) {
+						ajuVO.setReplycontent("");
+						ajuVO.setReplytime("");
+					} else {
+						ajuVO.setReplycontent(StringUtil.isNull(lInfoVO.getCallResult()) ? "" : lInfoVO.getCallResult());
+						ajuVO.setReplytime(DateUtil.format(lInfoVO.getCallTime(), "yyyy-MM-dd HH:mm:ss"));
+					}
 				} else {
 					ajuVO.setReplycontent("");
 					ajuVO.setReplytime("");

@@ -21,7 +21,7 @@ public class UpdateUserStatusTask {
 	public void doJob() {
 		try {
 			System.out.println("update user status-------------");
-			
+			//每隔5分钟检查用户状态，如果已经超过5分钟没有状态，则告诉当前用户已经退出。
 			userStatusBO.updateTimeoutUserStatus(new Date());
 		} catch (Exception e) {
 			logger.error("UpdateUserStatusTask: " + e.getMessage());

@@ -26,7 +26,18 @@ public class UserStatusHistVO extends BaseEntity implements Serializable {
 	private Date lastHbDt;
 
 	@Column(name = "STATUS")
-	private String status;
+	private String status;	
+	
+	@Column(name = "AGENTSTATUS")
+	private String agentStatus;
+	
+	public String getAgentStatus() {
+		return agentStatus;
+	}
+
+	public void setAgentStatus(String agentStatus) {
+		this.agentStatus = agentStatus;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -59,8 +70,4 @@ public class UserStatusHistVO extends BaseEntity implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
-
 }

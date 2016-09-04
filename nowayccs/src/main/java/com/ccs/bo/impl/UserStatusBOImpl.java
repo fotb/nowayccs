@@ -88,13 +88,13 @@ public class UserStatusBOImpl implements IUserStatusBO {
 					ushVO.setSessionId(userStatusVO.getSessionId());
 					ushVO.setLastHbDt(userStatusVO.getLastHbDt());
 					ushVO.setStatus(userStatusVO.getStatus());
+					ushVO.setAgentStatus(userStatusVO.getAgentStatus());
 					ushVO.setCreateTime(userStatusVO.getCreateTime());
 					ushVO.setUpdateDT(userStatusVO.getUpdateDT());
 					ushVO.setDeleteFlag(userStatusVO.getDeleteFlag());
 					ushVO.setLastHandler(userStatusVO.getLastHandler());
 					userStatusHistDAO.save(ushVO);
 				}
-
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
