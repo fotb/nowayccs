@@ -128,7 +128,7 @@ function Phone_OnSignOutSuccess() {
     BtRelease.disabled = true;
     btnCallOut.disabled = true;
     btnTrans.disabled = true;
-
+	btnTransOut.disabled = true;
     btnSayBusy.disabled = true;
     btnSayFree.disabled = true;
 }
@@ -139,6 +139,7 @@ function Phone_OnSignInExSuccess() {
     BtAns.disabled = false;
     BtRelease.disabled = false;
     btnCallOut.disabled = false;
+	btnTransOut.disabled = false;
     btnTrans.disabled = false;
     btnSayBusy.disabled = false;
     btnSayFree.disabled = true;
@@ -224,17 +225,36 @@ $("#BtAns").attr("disabled", true);
   window.open("bizaccept.do?flag=Y&callNo=82626090&qzfs=4", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 }
 
-function btnCallOut_onclick() {
-	//window.open("agent.do?action=callout", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+var w;//open 窗口对象  
+var wTimer;//计时器变量, 监听窗口关闭 
+function wisclosed(){  
+  if(w.closed){  
+    //alert(w.returnValue);//子窗体返回值  
+    //alert(transOutPhoneNo.value);//子窗体返回值  
+    window.clearInterval(wTimer);
+    //外呼转
+	btnTransOut(transOutPhoneNo.value);
+  }  
+} 
 
+function btnTransOut_onclick() {
+	w = window.open("agent.do?action=transout", "", 'height=400, width=450, top=100, left=100, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+	if(w) {
+		window.w.focus();
+	}
+	wTimer=window.setInterval("wisclosed()",500);  
+}
 
+function btnTransOut(transOutNo) {
 	TextResult.innerHTML = "";
 	var MediaType,lRetVal,sResult;
 	MediaType = 5;
-  	alert("Phone.GetCallerNo():" + Phone.GetCallerNo());
- 	lRetVal = Phone.TransOutEx2(MediaType,"", "1183120534582611263","2",0, "");
+  	//alert("Phone.GetCallerNo():" + Phone.GetCallerNo());
+ 	//lRetVal = Phone.TransOutEx2(MediaType,"", "1183120534582611263","3",0, "");
+	//alert(transOutNo + Phone.GetCallerNo());
+	lRetVal = Phone.TransOutEx2(MediaType,"", transOutNo + Phone.GetCallerNo(),"3",0, "");
 	
-	alert("stesdfasdf");
+	//alert("stesdfasdf");
 
     sResult = Phone.GetPromptByErrorCode(lRetVal);
     TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
@@ -246,7 +266,7 @@ function calloutEx(callNo) {
 	TextResult.innerHTML = "";
 	var MediaType,lRetVal,sResult;
 	MediaType = 5;
-  	alert("Phone.GetCallerNo():" + Phone.GetCallerNo());
+  	//alert("Phone.GetCallerNo():" + Phone.GetCallerNo());
  	lRetVal = Phone.TransOutEx2(MediaType,"", callNo + Phone.GetCallerNo(),"3",0, "");
 
     sResult = Phone.GetPromptByErrorCode(lRetVal);
@@ -256,16 +276,16 @@ function calloutEx(callNo) {
 }
 
 //呼出
-function btnCallOut_onclick_bak() {
+function btnCallOut_onclick() {
       TextResult.innerHTML = "";
-var MediaType,lRetVal,sResult;
-MediaType = 5;
+	var MediaType,lRetVal,sResult;
+	MediaType = 5;
   var test=window.prompt("请输入被叫号码:", "");
  lRetVal = Phone.CallOutEx2(MediaType,test,"",0,65535,test);
 
     sResult = Phone.GetPromptByErrorCode(lRetVal);
     TextResult.innerHTML =  TextResult.innerHTML+'\n'+sResult;
-postLog("callOut", sResult);
+	postLog("callOut", sResult);
     window.status = sResult;
 
 }
@@ -278,15 +298,15 @@ function Phone_OnCallOutSuccess() {
 function btnTrans_onclick() {
       TextResult.innerHTML = "";
       var MediaType,lRetVal,sResult;
-  var deskNo=window.prompt("请输入转移工号:", "");
-var i;
+      var deskNo=window.prompt("请输入转移工号:", "");
+ 	var i;
     i = Phone.TransToAgent(5,2,deskNo);
     if (i==0 ){
     }
     else {
       sResult = Phone.GetPromptByErrorCode(i);
       TextResult.value =  TextResult.innerHTML+'\n'+sResult;
-postLog("trans", sResult);
+		postLog("trans", sResult);
       window.status = sResult;
     }
 
@@ -475,8 +495,8 @@ Phone_OnSignInExFailure()
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td>
-    <img src="images/head.jpg" width="100%" height="115">
+    <td style="height:115px;width:100%;border: 0px;background-image: url(images/head.jpg);background-repeat:repeat-y">
+    <!-- <img src="images/head.jpg" width="100%" height="115"> -->
     </td>
   </tr>
   <tr>
@@ -498,8 +518,10 @@ Phone_OnSignInExFailure()
             <INPUT id=btnGetHold name=btnGetHold type=button value=取保持 LANGUAGE=javascript onclick="return btnGetHold_onclick()" style="VISIBILITY: visible">
           &nbsp;&nbsp;
             <INPUT id =btnCallOut  name=button12  type=button value=呼出 LANGUAGE=javascript onclick="return btnCallOut_onclick()">
-          <INPUT id =btnTrans name=button11  type=button value=呼叫转移 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
-		  	<input id="test" name="testbt" type="button" onclick="Phone_test();" value="test">
+          <INPUT id =btnTrans name=button11  type=button value=内呼转 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
+          <INPUT id =btnTransOut name=btnTransOut  type=button value=外呼转 disabled LANGUAGE=javascript onclick="return btnTransOut_onclick()">
+          <input id=transOutPhoneNo name=transOutPhoneNo type=hidden value="no No">
+		  	<!-- input id="test" name="testbt" type="button" onclick="Phone_test();" value="test"> -->
         </logic:present>
           <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div>
         </td>
@@ -519,7 +541,7 @@ date=(today.getFullYear())+"年"+(today.getMonth()+1)+"月"+today.getDate()+"日
 document.write(""+date+week+"");
 // -->
           </script></td>
-        <td width="8%" valign="top"><A href="#" border=0><img src="images/topbutton_exit.gif" width="70" height="18" onclick="logout()" border=0></A></td>
+        <td width="7%" valign="top"><A href="#" border=0><img src="images/topbutton_exit.gif" width="70" height="18" onclick="logout()" border=0></A></td>
       </tr>
     </table></td>
   </tr>
