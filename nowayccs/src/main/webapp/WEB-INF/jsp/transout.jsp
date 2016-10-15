@@ -16,19 +16,21 @@
 		if (window.opener) {
 			transOutPhoneNo = window.opener.document
 					.getElementById("transOutPhoneNo");
+			transOutRegion = window.opener.document
+			.getElementById("transOutRegion");
 			//alert(transOutPhoneNo.value);
 			
 			var checkedItems = $('#dg').datagrid('getChecked');
 			$.each(checkedItems, function(index, item){
 				transOutPhoneNo.value = item.Id;
+				transOutRegion.value = item.Region;
 			});  
-			//alert(transOutPhoneNo.value);
 			window.close();
 		}
 	}
 
 	function load(mode) {
-		$('#tt').datagrid({
+		$('#dg').datagrid({
 			url : 'data/ts-'+mode+'.json'
 		});
 	}
@@ -38,7 +40,8 @@
 
 	<div style="margin-bottom: 10px">
 		<select onchange="load(this.value)" style="width:200px">
-			<option value="hz">杭州</option>
+			<option value="mzt">省民政厅</option>
+			<option value="hz" selected="selected">杭州</option>
 			<option value="nb">宁波</option>
 			<option value="wz">温州</option>
 			<option value="sx">绍兴</option>
@@ -54,14 +57,14 @@
 	</div>
 
 	<table id="dg" class="easyui-datagrid" title="智能网模块站点内码" 
-		style="width: 420px; height: 300px"
+		style="width: 420px; height: 300px;font-weight: bold;"
 		data-options="rownumbers:true,singleSelect:true,
                 url:'data/ts-hz.json',
                 autoRowHeight:false,pageSize:50">
 		<thead>
 			<tr>
 			 	<th data-options="field:'Id',checkbox:true"></th>
-				<th field="Region" width="80">平台区域</th>
+				<th field="Region" width="180">平台区域</th>
 				<th field="Code" width="100">智能网码号</th>
 			</tr>
 		</thead>

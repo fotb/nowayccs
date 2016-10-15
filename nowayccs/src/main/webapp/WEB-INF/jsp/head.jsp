@@ -128,7 +128,7 @@ function Phone_OnSignOutSuccess() {
     BtRelease.disabled = true;
     btnCallOut.disabled = true;
     btnTrans.disabled = true;
-	btnTransOut.disabled = true;
+	//btnTransOut.disabled = true;
     btnSayBusy.disabled = true;
     btnSayFree.disabled = true;
 }
@@ -139,7 +139,7 @@ function Phone_OnSignInExSuccess() {
     BtAns.disabled = false;
     BtRelease.disabled = false;
     btnCallOut.disabled = false;
-	btnTransOut.disabled = false;
+	//btnTransOut.disabled = false;
     btnTrans.disabled = false;
     btnSayBusy.disabled = false;
     btnSayFree.disabled = true;
@@ -233,7 +233,11 @@ function wisclosed(){
     //alert(transOutPhoneNo.value);//子窗体返回值  
     window.clearInterval(wTimer);
     //外呼转
-	btnTransOut(transOutPhoneNo.value);
+	if(transOutPhoneNo.value != "" && confirm("确定要把当前电话转接到【" + transOutRegion.value + "】？")) {
+		btnTransOut(transOutPhoneNo.value);
+	}
+	transOutPhoneNo.value = "";
+	transOutRegion.value = "";
   }  
 } 
 
@@ -519,8 +523,9 @@ Phone_OnSignInExFailure()
           &nbsp;&nbsp;
             <INPUT id =btnCallOut  name=button12  type=button value=呼出 LANGUAGE=javascript onclick="return btnCallOut_onclick()">
           <INPUT id =btnTrans name=button11  type=button value=内呼转 disabled LANGUAGE=javascript onclick="return btnTrans_onclick()">
-          <INPUT id =btnTransOut name=btnTransOut  type=button value=外呼转 disabled LANGUAGE=javascript onclick="return btnTransOut_onclick()">
-          <input id=transOutPhoneNo name=transOutPhoneNo type=hidden value="no No">
+          <INPUT id =btnTransOut name=btnTransOut  type=button value=外呼转 LANGUAGE=javascript onclick="return btnTransOut_onclick()">
+          <input id=transOutPhoneNo name=transOutPhoneNo type=hidden value="">
+          <input id=transOutRegion name=transOutRegion type=hidden value="">
 		  	<!-- input id="test" name="testbt" type="button" onclick="Phone_test();" value="test"> -->
         </logic:present>
           <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div>
