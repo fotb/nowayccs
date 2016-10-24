@@ -94,6 +94,7 @@ public interface IBaseDAO<E extends BaseEntity> {
 	 */
 	void deleteLogicByIds(String[] pidArray) throws Exception;
 	
+	void delete(E entity) throws Exception;
 	
 	List<Object[]> createSQLQuery(String sql, Object[] args, Type[] types, int page, int rows, boolean isPagenation) throws Exception;
 	

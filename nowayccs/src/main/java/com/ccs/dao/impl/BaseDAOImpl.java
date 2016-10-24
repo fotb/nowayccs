@@ -118,9 +118,9 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		
 		query.setInteger(0, BaseEntity.DELETE_FLAG_YES);
 		
-		List<Integer> _tempList = new ArrayList<Integer>();
+		List<String> _tempList = new ArrayList<String>();
 		for(int i = 0; i < pidArray.length ; i++){
-			_tempList.add(Integer.parseInt(pidArray[i]));
+			_tempList.add(pidArray[i]);
 		}
 		
 		query.setParameterList("pids", _tempList);
@@ -175,6 +175,12 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		query.setParameters(args, types);
 		
 		return query.list();
+	}
+
+
+	@Override
+	public void delete(E entity) throws Exception {
+			this.getSessionFactory().getCurrentSession().delete(entity);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.ccs.bo.task;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -21,8 +22,10 @@ import com.ccs.util.DateUtil;
 import com.ccs.util.StringUtil;
 import com.ccs.util.XmlUtil;
 import com.ccs.vo.AgentVO;
+import com.ccs.vo.BaseEntity;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
+import com.ccs.vo.UpInfoStatusHistVO;
 import com.ccs.vo.UpInfoStatusVO;
 
 @Component("infoUploadTask")
@@ -32,6 +35,9 @@ public class InfoUploadTask {
 
 	@Autowired
 	private IBaseDAO<UpInfoStatusVO> upInfoStatusDAO;
+	
+	@Autowired
+	private IBaseDAO<UpInfoStatusHistVO> upInfoStatusHistDAO;
 
 	@Autowired
 	private IInformationDAO informationDAO;
@@ -128,7 +134,8 @@ public class InfoUploadTask {
 					LOG.warn("Success to upload info with infoId = " + infoVO.getInfoId());
 					upInfoStatusVO.setUpStatus(UpInfoStatusVO.UPLOAD_STATUS_YES);
 					upInfoStatusVO.setResult(result);
-					upInfoStatusDAO.update(upInfoStatusVO);
+					upInfoStatusHistDAO.save(createUishVO(upInfoStatusVO));
+					upInfoStatusDAO.delete(upInfoStatusVO);
 				}
 			}
 
@@ -136,4 +143,21 @@ public class InfoUploadTask {
 			LOG.error("Upload Aj Fail: " + e.getMessage());
 		}
 	}
+	
+	public UpInfoStatusHistVO createUishVO(UpInfoStatusVO uisVO) {
+		UpInfoStatusHistVO uishVO = new UpInfoStatusHistVO();
+		uishVO.setInfomationId(uisVO.getInfomationId());
+		uishVO.setUpStatus(uisVO.getUpStatus());
+		uishVO.setUpLoadDt(uisVO.getUpLoadDt());
+		uishVO.setResult(uisVO.getResult());
+		uishVO.setRemark(uisVO.getRemark());
+		uishVO.setCreateTime(new Date());
+		uishVO.setDeleteFlag(BaseEntity.DELETE_FLAG_NO);
+		uishVO.setLastHandler(uisVO.getLastHandler());
+		uishVO.setPid(uisVO.getPid());
+		uishVO.setUpdateDT(new Date());
+		
+		return uishVO;
+	}
+
 }
