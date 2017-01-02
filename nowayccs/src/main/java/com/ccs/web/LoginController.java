@@ -44,7 +44,7 @@ public class LoginController {
 			UserVO vo = userBO.login(loginBean.getLoginName(), loginBean.getLoginPassword());
 			session.setAttribute(Constants.SESSION_USER_KEY, vo);
 			
-			userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_1, session.getId());
+			userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_1, "6", "", session.getId());
 		}
 		return "redirect:index.do";
 	}
@@ -54,7 +54,7 @@ public class LoginController {
 		UserVO vo = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		
 		session.setAttribute(Constants.SESSION_USER_KEY, null);
-		userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_0, session.getId());
+		userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_0, "6", "", session.getId());
 		return "redirect:login.do";
 	}
 	

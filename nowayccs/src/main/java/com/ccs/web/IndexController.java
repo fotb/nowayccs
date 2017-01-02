@@ -70,13 +70,13 @@ public class IndexController {
 	}
 	
 	
-	@RequestMapping(params = "action=sessionHeartBeat", method = RequestMethod.GET)
-	public @ResponseBody String sessionHeartBeat(HttpSession session, ModelMap model) throws UnsupportedEncodingException {
+	@RequestMapping(params = "action=sessionHeartBeat", method = RequestMethod.POST)
+	public @ResponseBody String sessionHeartBeat(@RequestParam String status, @RequestParam String phoneNo, HttpSession session, ModelMap model) throws UnsupportedEncodingException {
 		UserVO vo = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		if(null == vo) {
 			logger.info("Info:------session time Out!");
 		} else {
-			userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_1, session.getId());
+			userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_1, status, phoneNo, session.getId());
 		}
 		return "";
 	}
