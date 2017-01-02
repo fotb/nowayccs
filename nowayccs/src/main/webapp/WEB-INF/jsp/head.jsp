@@ -14,6 +14,8 @@
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script language="javascript" type="">
+ var isSignIn = false;
+
 function logout(){
   window.open("login.do?action=logout","_parent");
 }
@@ -377,13 +379,47 @@ function postLog(action, logId) {
 	});
 }
 $(document).ready(function(){
+
+
+//	alert("isLogon:" + Phone.IsInitial);
+//	alert("IsSignIn:" + Phone.IsSignIn); //
+//alert("isFree:" + Phone.IsFree);  
+//alert("FreeStatus:" + Phone.FreeStatus);
+//alert("IsTalking:" + Phone.IsTalking);
+
+
+//alert(Phone.GetCallerNo()
 	function sessionHeartBeat(){
-   		$.getJSON("index.do?action=sessionHeartBeat", function(data) {
+		phone_status = "";
+		phone_no = "";
+		try {
+			alert(Phone.IsSignIn());
+			if(Phone.IsInitial()) {
+				if(Phone.isTalking()) {  //通话中
+					phone_status = "3";
+					phone_no = Phone.GetCallerNo();
+				} else {
+					if(Phone.IsFree()) {
+						phone_status = "1";  //空闲中
+					} else {
+						phone_status = "5";
+					}
+				}
+			} else {
+				phone_status = "6";  //未登录（退出）
+			}
+		} catch(e) {
+			alert(e.message);
+			phone_status = "6";  //未登录（退出）
+		}
+
+   		$.post("index.do?action=sessionHeartBeat", {status: phone_status, phoneNo: phone_no}, function(data) {
 			//do nothing
 		});
 	}
 	//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
-	setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！
+	setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
+
 });
 
 </script>

@@ -27,7 +27,7 @@ public class UserStatusBOImpl implements IUserStatusBO {
 
 	@Override
 	@Transactional
-	public void updateUserStatus(String userId, String status, String sessionId) {
+	public void updateUserStatus(String userId, String status, String agentStatus, String phoneNo, String sessionId) {
 		try {
 			// query if user status is exist
 			List<UserStatusVO> usVOList = userStatusDAO.queryForObject("from UserStatusVO where userId = ?",
@@ -42,7 +42,9 @@ public class UserStatusBOImpl implements IUserStatusBO {
 				usVO.setSessionId(sessionId);
 				usVO.setLastHbDt(curDate);
 				usVO.setUpdateDT(curDate);
-				usVO.setDeleteFlag(usVO.DELETE_FLAG_NO);
+				usVO.setDeleteFlag(UserStatusVO.DELETE_FLAG_NO);
+				usVO.setAgentStatus(agentStatus);
+				usVO.setPhoneNo(phoneNo);
 				userStatusDAO.save(usVO);
 			} else {
 				UserStatusVO usVO = usVOList.get(0);
@@ -50,6 +52,8 @@ public class UserStatusBOImpl implements IUserStatusBO {
 				usVO.setSessionId(sessionId);
 				usVO.setLastHbDt(curDate);
 				usVO.setUpdateDT(curDate);
+				usVO.setAgentStatus(agentStatus);
+				usVO.setPhoneNo(phoneNo);
 				userStatusDAO.update(usVO);
 
 				UserStatusHistVO ushVO = new UserStatusHistVO();
@@ -61,6 +65,8 @@ public class UserStatusBOImpl implements IUserStatusBO {
 				ushVO.setUpdateDT(usVO.getUpdateDT());
 				ushVO.setDeleteFlag(usVO.getDeleteFlag());
 				ushVO.setLastHandler(usVO.getLastHandler());
+				ushVO.setAgentStatus(agentStatus);
+				ushVO.setPhoneNo(phoneNo);
 				userStatusHistDAO.save(ushVO);
 			}
 		} catch (Exception e) {
@@ -99,5 +105,5 @@ public class UserStatusBOImpl implements IUserStatusBO {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-  	}
+	}
 }

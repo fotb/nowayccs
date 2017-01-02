@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ include file="common/includes.jsp" %>
+<%@ include file="common/includes.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zh-CN">
 
@@ -12,18 +12,19 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Bootstrap Admin Template</title>
+<title>嘉兴96345社区服务求助中心</title>
 
 <link rel="stylesheet" href="css/animate.min.css">
 
 <!-- Bootstrap Core CSS -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 
 <!-- Custom CSS -->
 <link href="bootstrap/css/sb-admin.css" rel="stylesheet">
 
 <!-- Morris Charts CSS -->
-<link href="bootstrap/css/plugins/morris.css" rel="stylesheet">
+<!-- <link href="bootstrap/css/plugins/morris.css" rel="stylesheet"> -->
 
 <!-- Custom Fonts -->
 <link href="bootstrap/font-awesome/css/font-awesome.min.css"
@@ -37,34 +38,33 @@
     <![endif]-->
 <style>
 #img_status {
-position:relative;
-animation-duration:2s;
-animation-timing-function:linear;
-animation-delay:1s;
-animation-iteration-count:infinite;
-animation-direction:alternate;
-animation-play-state:running;
+	position: relative;
+	animation-duration: 2s;
+	animation-timing-function: linear;
+	animation-delay: 1s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-play-state: running;
 }
 </style>
 </head>
 
 <body>
-5
 	<div id="wrapper">
 
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-ex1-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.html">SB Admin</a>
-			</div>
-			<!-- Top Menu Items -->
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header-user">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="index.html">嘉兴96345社区求助服务中心--服务状态展示中心</a>
+		</div>
+		<!-- Top Menu Items --> <!-- 
 			<ul class="nav navbar-right top-nav">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"><i class="fa fa-envelope"></i> <b
@@ -155,36 +155,16 @@ animation-play-state:running;
 								Out</a></li>
 					</ul></li>
 			</ul>
-			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<ul class="nav navbar-nav side-nav">
-					<li class="active"><a href="index.html"><i
-							class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
-					<li><a href="charts.html"><i
-							class="fa fa-fw fa-bar-chart-o"></i> Charts</a></li>
-					<li><a href="tables.html"><i class="fa fa-fw fa-table"></i>
-							Tables</a></li>
-					<li><a href="forms.html"><i class="fa fa-fw fa-edit"></i>
-							Forms</a></li>
-					<li><a href="bootstrap-elements.html"><i
-							class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a></li>
-					<li><a href="bootstrap-grid.html"><i
-							class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a></li>
-					<li><a href="javascript:;" data-toggle="collapse"
-						data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i>
-							Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-						<ul id="demo" class="collapse">
-							<li><a href="#">Dropdown Item</a></li>
-							<li><a href="#">Dropdown Item</a></li>
-						</ul></li>
-					<li><a href="blank-page.html"><i class="fa fa-fw fa-file"></i>
-							Blank Page</a></li>
-					<li><a href="index-rtl.html"><i
-							class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</nav>
+			 --> <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav side-nav">
+				<li class="active"><a href="dashboard.do"><i
+						class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
+				<li><a href="dashboard.do"><i
+						class="fa fa-fw fa-bar-chart-o"></i> Charts</a></li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse --> </nav>
 
 		<div id="page-wrapper">
 
@@ -193,101 +173,413 @@ animation-play-state:running;
 
 				<!-- Page Heading -->
 
-				<div class="row">
+<!-- 				<div class="row">
 					<div class="col-lg-12">
-						<!--                         <h1 class="page-header">
+						                        <h1 class="page-header">
                             Dashboard <small>Statistics Overview</small>
-                        </h1> -->
+                        </h1>
 						<ol class="breadcrumb">
-							<li class="active"><i class="fa fa-dashboard"></i> Dashboard
+							<li class="active"><i class="fa fa-dashboard"></i>坐席状态
 							</li>
 						</ol>
 					</div>
-				</div>
+				</div> -->
 				<!-- /.row -->
 
- <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-5">
-                                        <div class="animated pulse " align="center" id="img_status"><img alt="" src="images/offline.png"></div>
-                                        <div align="center">陈银洁</div>
-                                    </div>
-                                    <div class="col-xs-7 text-right">
-                                        <div>离线</div>
-                                        
-                                        <div>
-											今日话务量：100
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-black">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="animated pulse" align="center" id="img_status">
+											<img alt="" src="images/call-center-worker.png">
 										</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                       <div class="animated pulse " align="center" id="img_status"><img alt="" src="images/online.png"></div>
-                                        <i>陈银洁</i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div>
-                                        	<table>
-                                        	<tr><td>状态</td><td>离线</td></tr>
-                                        	<tr><td>今日话务量</td><td>100</td></tr>
-                                        	</table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i><img alt="" src="images/busy.png"></i>
-                                        <i>陈银洁</i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div>
-                                        	<table>
-                                        	<tr><td>状态</td><td>离线</td></tr>
-                                        	<tr><td>今日话务量</td><td>100</td></tr>
-                                        	</table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i><img alt="" src="images/46010.png"></i>
-                                        <i>陈银洁</i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div>
-                                        	<table>
-                                        	<tr><td>状态</td><td>离线</td></tr>
-                                        	<tr><td>今日话务量</td><td>100</td></tr>
-                                        	</table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>离线</div>
+										<div>今日话务量：100</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-black">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="animated pulse " align="center" id="img_status">
+											<img alt="" src="images/worker-blue.png">
+										</div>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<div>离线</div>
+
+											<div>今日话务量：100</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-black">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/worker-blue.png"></i>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-black">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/worker-red.png"></i> <i>陈银洁</i>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-black">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="animated pulse " align="center" id="img_status">
+											<img alt="" src="images/worker-red.png">
+										</div>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>离线</div>
+
+										<div>今日话务量：100</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-black">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="animated pulse " align="center" id="img_status">
+											<img alt="" src="images/worker-gray.png">
+										</div>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<div>离线</div>
+
+											<div>今日话务量：100</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/46010.png"></i>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/46010.png"></i> <i>陈银洁</i>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="animated pulse " align="center" id="img_status">
+											<img alt="" src="images/46010.png">
+										</div>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>离线</div>
+
+										<div>今日话务量：100</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="animated pulse " align="center" id="img_status">
+											<img alt="" src="images/46010.png">
+										</div>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<div>离线</div>
+
+											<div>今日话务量：100</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/46010.png"></i>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/46010.png"></i> <i>陈银洁</i>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<div class="animated pulse " align="center" id="img_status">
+											<img alt="" src="images/46010.png">
+										</div>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>离线</div>
+
+										<div>今日话务量：100</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/46010.png"></i>
+										<div align="center">陈银洁</div>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/46010.png"></i> <i>陈银洁</i>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">
+										<i><img alt="" src="images/46010.png"></i> <i>陈银洁</i>
+									</div>
+									<div class="col-xs-7 text-right">
+										<div>
+											<table>
+												<tr>
+													<td>状态</td>
+													<td>离线</td>
+												</tr>
+												<tr>
+													<td>今日话务量</td>
+													<td>100</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="panel panel-black">
+							<div class="panel-body">
+								<div id="area-chart"></div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-lg-6">
+						<div class="panel panel-black">
+							<div class="panel-body">
+								<div id="pie-chart"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- /.container-fluid -->
 
 		</div>
@@ -302,10 +594,133 @@ animation-play-state:running;
 	<!-- Bootstrap Core JavaScript -->
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 
+
+	<script src="highcharts/highcharts.js" type="text/javascript"></script>
+	<script src="highcharts/themes/dark-unica.js" type="text/javascript"></script>
+
 	<!-- Morris Charts JavaScript -->
-	<script src="bootstrap/js/plugins/morris/raphael.min.js"></script>
+	<!-- 	<script src="bootstrap/js/plugins/morris/raphael.min.js"></script>
 	<script src="bootstrap/js/plugins/morris/morris.min.js"></script>
-	<script src="bootstrapjs/plugins/morris/morris-data.js"></script>
+	<script src="bootstrapjs/plugins/morris/morris-data.js"></script> -->
+	<script>
+
+
+	$(function () {
+
+		 $.getJSON("dashboard.do?action=monthChart",function(data) { 
+				xStr = "";
+				yStr = "";
+			 i = 1;
+			 $.each(data, function(n, value) {
+				 if(i >= data.length) {
+					 xStr += "'" + value.date + "'";
+					 yStr += value.count;
+				 } else {
+					 xStr += "'" + value.date + "',";
+					 yStr += value.count + ",";
+				 }
+				 i++;
+			 });
+			 //xStr = "[" + xStr+ "]";
+			 //yStr = "[" + yStr+ "]";
+				    $('#area-chart').highcharts({
+				        chart: {
+				            type: 'column'
+				        },
+				        title: {
+				            text: '按月统计求助电话'
+				        },
+/* 				        subtitle: {
+				            text: 'Source: WorldClimate.com'
+				        }, */
+				        xAxis: {
+				            categories: eval("[" + xStr + "]"),
+				            crosshair: true
+				        },
+				        yAxis: {
+				            min: 0,
+				            title: {
+				                text: '求助电话 (个)'
+				            }
+				        },
+				        tooltip: {
+				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y} mm</b></td></tr>',
+				            footerFormat: '</table>',
+				            shared: true,
+				            useHTML: true
+				        },
+				        plotOptions: {
+				            column: {
+				                pointPadding: 0.2,
+				                borderWidth: 0
+				            }
+				        },
+				        series: [{
+				            name: '每月话务量',
+				            colorByPoint: true,
+				            data: eval("[" + yStr + "]"),
+				            dataLabels: {
+				                enabled: true,
+				                rotation: -90,
+				                color: '#FFFFFF',
+				                align: 'right',
+				                format: '{point.y}', // one decimal
+				                y: 10, // 10 pixels down from the top
+				                style: {
+				                    fontSize: '13px',
+				                    fontFamily: 'Verdana, sans-serif'
+				                }
+				            }
+				        }]			            
+				    });
+		 });
+		 
+		 
+		 $.getJSON("dashboard.do?action=helpTypeCount",function(data) {
+			 
+			 seriesStr = "";
+			 $.each(data, function(n, value) {
+				 seriesStr += "['" + value.helpType + "', " + value.count + "],";
+			 });
+			 seriesStr = seriesStr.substring(0, seriesStr.length - 1);
+			 $(function () {
+				    $('#pie-chart').highcharts({
+				        chart: {
+				            plotBackgroundColor: null,
+				            plotBorderWidth: null,
+				            plotShadow: false
+				        },
+				        title: {
+				            text: '求组类型比例图'
+				        },
+				        tooltip: {
+				            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				        },
+				        plotOptions: {
+				            pie: {
+				                allowPointSelect: true,
+				                cursor: 'pointer',
+				                dataLabels: {
+				                    enabled: true,
+				                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+				                    style: {
+				                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+				                    }
+				                }
+				            }
+				        },
+				        series: [{
+				            type: 'pie',
+				            name: '比例',
+				            data: eval("[" + seriesStr + "]")
+				        }]
+				    });
+				});
+		 });
+	});
+	</script>
 
 </body>
 

@@ -35,6 +35,9 @@ public class UserStatusVO extends BaseEntity implements Serializable {
 	@Column(name = "AGENTSTATUS")
 	private String agentStatus;
 	
+	@Column(name = "PHONENO")
+	private String phoneNo;
+	
 	public String getAgentStatus() {
 		return agentStatus;
 	}
@@ -74,4 +77,13 @@ public class UserStatusVO extends BaseEntity implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	
 }
