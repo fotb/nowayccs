@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.report.bo.IReportBO;
+import com.ccs.util.AgentStatusBean;
 import com.ccs.util.CountHelpTypeBean;
 import com.ccs.util.DateUtil;
 import com.ccs.util.YearCountBean;
@@ -34,7 +35,7 @@ public class DashboardController {
 
 	
 	@RequestMapping(params = "action=monthChart")
-	public @ResponseBody String monthChart(HttpSession session, ModelMap model) throws Exception {
+	public @ResponseBody String MonthChart(HttpSession session, ModelMap model) throws Exception {
 		Date lastYear = DateUtil.addYear(new Date(), -1);
 		List<YearCountBean> list = reportBO.queryInfoCountByMonth(DateUtil.format(lastYear, "yyyyMM"), DateUtil.format(new Date(), "yyyyMM"));
 		System.out.println(JSONArray.fromObject(list).toString());
@@ -42,10 +43,23 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(params = "action=helpTypeCount")
-	public @ResponseBody String helpTypeCount(HttpSession session, ModelMap model) throws Exception {
+	public @ResponseBody String HelpTypeCount(HttpSession session, ModelMap model) throws Exception {
 		Date lastYear = DateUtil.addYear(new Date(), -1);
 		List<CountHelpTypeBean> list = reportBO.countInfoByHelpType(DateUtil.format(lastYear, "yyyyMM"), DateUtil.format(new Date(), "yyyyMM"));
 		System.out.println(JSONArray.fromObject(list).toString());
+		return JSONArray.fromObject(list).toString();
+	}
+	
+	
+	@RequestMapping(params = "action=agentStatus")
+	public @ResponseBody String AgentStatus(HttpSession session, ModelMap model) throws Exception {
+		List<AgentStatusBean> list = reportBO.queryAgentStatus();
+		return JSONArray.fromObject(list).toString();
+	}
+	
+	@RequestMapping(params = "action=count")
+	public @ResponseBody String Count(HttpSession session, ModelMap model) throws Exception {
+		List<AgentStatusBean> list = reportBO.countPhone(new Date());
 		return JSONArray.fromObject(list).toString();
 	}
 }

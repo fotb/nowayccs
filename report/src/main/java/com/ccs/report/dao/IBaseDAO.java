@@ -99,5 +99,7 @@ public interface IBaseDAO<E extends BaseEntity> {
 	List<Object[]> createSQLQuery(String sql, Object[] args, Type[] types, int page, int rows, boolean isPagenation) throws Exception;
 	
 	List<?> createSQLQuery(String sql, Object[] args, Type[] types) throws Exception;
+	
+	List<?> createSQLQuery(String sql) throws Exception;
 }
 

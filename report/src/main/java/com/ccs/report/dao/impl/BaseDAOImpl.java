@@ -176,6 +176,13 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		
 		return query.list();
 	}
+	
+	@Override
+	public List<?> createSQLQuery(String sql) throws Exception {
+		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
+		
+		return query.list();
+	}
 
 
 	@Override

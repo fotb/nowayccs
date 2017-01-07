@@ -33,7 +33,7 @@ body {
 
 @media ( min-width :768px) {
 	#wrapper {
-		padding-left: 225px;
+		padding-left: 80px;
 	}
 	#page-wrapper {
 		padding: 10px;
@@ -109,9 +109,9 @@ ul.alert-dropdown {
 	.side-nav {
 		position: fixed;
 		top: 81px;
-		left: 225px;
-		width: 225px;
-		margin-left: -225px;
+		left: 80px;
+		width: 80px;
+		margin-left: -80px;
 		border: none;
 		border-radius: 0;
 		overflow-y: auto;
@@ -121,7 +121,7 @@ ul.alert-dropdown {
 		padding-bottom: 40px;
 	}
 	.side-nav>li>a {
-		width: 225px;
+		width: 80px;
 	}
 	.side-nav li a:hover, .side-nav li a:focus {
 		outline: none;
@@ -233,6 +233,59 @@ ul.alert-dropdown {
 }
 
 .navbar-header-user {
+display: block;
 	margin: 0 auto;
 	text-align: center;
+}
+
+.table-count {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0px;
+  margin-top: 2px;
+}
+.table-count-bordered {
+  border: 0px solid #ddd;
+}
+.table-count-bordered > thead > tr > th,
+.table-count-bordered > tbody > tr > th,
+.table-count-bordered > tfoot > tr > th,
+.table-count-bordered > thead > tr > td,
+.table-count-bordered > tbody > tr > td,
+.table-count-bordered > tfoot > tr > td {
+  border: 0px solid #ddd;
+}
+.table-count-bordered > thead > tr > th,
+.table-count-bordered > thead > tr > td {
+  border-bottom-width: 0px;
+}
+
+.table-count > thead > tr > th,
+.table-count > tbody > tr > th,
+.table-count > tfoot > tr > th,
+.table-count > thead > tr > td,
+.table-count > tbody > tr > td,
+.table-count > tfoot > tr > td {
+  padding: 3px;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  border-top: 0px solid #ddd;
+}
+.table-count > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+}
+.table-count > caption + thead > tr:first-child > th,
+.table-count > colgroup + thead > tr:first-child > th,
+.table-count > thead:first-child > tr:first-child > th,
+.table-count > caption + thead > tr:first-child > td,
+.table-count > colgroup + thead > tr:first-child > td,
+.table-count > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.table-count > tbody + tbody {
+  border-top: 2px solid #ddd;
+}
+.table-count .table {
+  background-color: #fff;
 }
