@@ -12,6 +12,8 @@ public class AgentStatusBean implements Serializable {
 	private String userId;
 
 	private String userName;
+	
+	private String agentId;
 
 	private String targetDevice;
 
@@ -99,4 +101,12 @@ public class AgentStatusBean implements Serializable {
 		this.yearCount = yearCount;
 	}
 
+	public String getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(String agentId) {
+		this.agentId = agentId;
+	}
+	
 }

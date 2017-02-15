@@ -67,20 +67,21 @@ public class ReportBOImpl implements IReportBO {
 
 	@Override
 	public List<AgentStatusBean> queryAgentStatus() throws Exception {
-		final String sql = "select a.userid,c.username, a.targetdevice, b.status, b.agentstatus, b.phoneno "
-				+ "from hj_agent a left join hj_userstatus b on a.userid=b.userid "
-				+ "left join hj_user c on a.userid=c.userid "
-				+ "where c.onjob='1' and b.status = '1' order by a.targetdevice";
+		
+		final String sql = "select trim(t.agentid), u.userid, u.username, a.targetdevice, trim(t.status), s.phoneno "
+				+ "from cti_agentstatus t, hj_agent a,hj_user u, hj_userstatus s "
+				+ "where a.workno = trim(t.agentid) and u.userid = a.userid and u.userid = s.userid and u.onjob='1' and trim(t.status) != '0'";
+		
 		List<?> list = reportDAO.createSQLQuery(sql);
 		List<AgentStatusBean> beanList = new ArrayList<AgentStatusBean>();
 		for (Object obj : list) {
 			AgentStatusBean bean = new AgentStatusBean();
 			Object[] arrs = (Object[]) obj;
-			bean.setUserId(String.valueOf(arrs[0]));
-			bean.setUserName(String.valueOf(arrs[1]));
-			bean.setTargetDevice(String.valueOf(arrs[2]));
-			bean.setStatus(String.valueOf(arrs[3]));
-			bean.setAgentStatus(String.valueOf(arrs[4]));
+			bean.setAgentId(String.valueOf(arrs[0]));
+			bean.setUserId(String.valueOf(arrs[1]));
+			bean.setUserName(String.valueOf(arrs[2]));
+			bean.setTargetDevice(String.valueOf(arrs[3]));
+			bean.setStatus(String.valueOf(arrs[4]));
 			bean.setPhoneNo(String.valueOf(arrs[5]));
 			beanList.add(bean);
 		}

@@ -7,7 +7,7 @@
 /* Global Styles */
 body {
 	margin-top: 100px;
-	background-color: #222;
+	background-color: #FFF;
 }
 
 @media ( min-width :768px) {
@@ -23,7 +23,7 @@ body {
 #page-wrapper {
 	width: 100%;
 	padding: 0;
-	background-color: #222;
+	background-color: #FFF;
 }
 
 .huge {
@@ -33,7 +33,7 @@ body {
 
 @media ( min-width :768px) {
 	#wrapper {
-		padding-left: 80px;
+		padding-left: 10px;
 	}
 	#page-wrapper {
 		padding: 10px;
@@ -157,8 +157,13 @@ ul.alert-dropdown {
 
 /* Custom Colored Panels */
 .huge {
-	font-size: 40px;
+	font-size: 30px;
 }
+
+.huge-1 {
+	font-size: 20px;
+}
+
 
 .panel-green {
 	border-color: #5cb85c;
