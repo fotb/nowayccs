@@ -30,6 +30,10 @@ public class CountHelpTypeBean implements java.io.Serializable {
 	private int count;
 
 	public String getHelpType() {
+		return helpType;
+	}
+	
+	public String getHelpTypeName() {
 		return INFOMATION_HELPTYPE_HASHMAP.get(helpType);
 	}
 
