@@ -60,7 +60,17 @@
 		</div>
 		</nav>
 
-		<div id="page-wrapper">
+<div id="myCarousel" class="carousel slide">
+   <!-- 轮播（Carousel）指标 -->
+<!--    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+   </ol>   -->
+   <!-- 轮播（Carousel）项目 -->
+   <div class="carousel-inner">
+      <div class="item active">
+         <div id="page-wrapper">
 			<div class="row">
 				<div class="container-fluid col-lg-6" >
 					<div class="panel panel-default">
@@ -116,7 +126,7 @@
 							</table>
 							</div>
 							<div class="col-lg-6">
-								<div id="pie-chart" style="height: 100%"></div>
+								<div id="pie-chart" style="height: 100%" ></div>
 							</div>
 					</div>
 							</div>
@@ -136,7 +146,7 @@
 							</h3>
 						</div>
 						<div class="panel-body">
-								<div id="container" style="min-width: 310px; height: 160px; margin: 0 auto"></div>
+								<div id="container" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
 							</div>
 						</div>
 						
@@ -147,23 +157,79 @@
 								</h3>
 							</div>
 							<div class="panel-body">
-									<div id="area-chart" style="height: 160px; margin: 0 auto"></div>
+									<div id="area-chart" style="height: 220px; margin: 0 auto"></div>
 								</div>
 							</div>
 					</div>
-				   
-				</div>
-				
-				<div class="row">
-					 <div class="container-fluid col-lg-6">
-							
+					
+					<div class="container-fluid col-lg-6">
+						<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-pie-chart fa-fw"></i> 市区求助统计
+							</h3>
 						</div>
+						<div class="panel-body">
+								<div id="area-pie-chart" style="height: 513px"></div>
+							</div>
+						</div>
+				   
 				</div>
 			</div>
 			<!-- /.container-fluid -->
 
 		</div>
 		<!-- /#page-wrapper -->
+      </div>
+      <div class="item">
+         <div id="page-wrapper">
+			<div class="row">
+				<div class="container-fluid col-lg-6" >
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-user fa-fw"></i> 社区志愿者
+							</h3>
+						</div>
+						<div class="panel-body" id="11">
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="container-fluid col-lg-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-pie-chart fa-fw"></i> 服务企业
+							</h3>
+						</div>
+						<div class="panel-body">
+						
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /#page-wrapper -->
+      </div>
+   </div>
+   <!-- 轮播（Carousel）导航 -->
+
+			<a class="left carousel-control" href="#myCarousel" role="button"
+				data-slide="prev"> <span
+				class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a> <a class="right carousel-control" href="#myCarousel"
+				role="button" data-slide="next"> <span
+				class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+	</div> 
+
+		
 
 	</div>
 	<!-- /#wrapper -->
@@ -185,6 +251,8 @@
 	<script src="bootstrapjs/plugins/morris/morris-data.js"></script> -->
 	<script>
 		$(function() {
+			
+			
 			var shtml = "";
 			for (i = 1; i <= 3; i++) {
 
@@ -412,6 +480,11 @@
 			}
 			
 			
+			$('.carousel').carousel({
+				  interval: 0
+				})
+			
+			
 			$.getJSON("dashboard.do?action=monthChart",
 							function(data) {
 								xStr = "";
@@ -429,9 +502,7 @@
 								});
 								//xStr = "[" + xStr+ "]";
 								//yStr = "[" + yStr+ "]";
-								$('#area-chart')
-										.highcharts(
-												{
+								$('#area-chart').highcharts({
 												    credits: {  
 												        enabled: false  
 												      },  
@@ -543,6 +614,59 @@
 									});
 								});
 							});
+			
+			
+			$.getJSON("dashboard.do?action=areacount",function(data) {
+						seriesStr = "";
+						$.each(data, function(n, value) {
+							seriesStr += "['" + value.areaName + "', "+ value.count + "],";
+						});
+						seriesStr = seriesStr.substring(0,
+								seriesStr.length - 1);
+						$(function() {
+							Highcharts.chart('area-pie-chart', {
+							    credits: {  
+							        enabled: false  
+							      },  
+							    chart: {
+							    	//height: 335,
+							        type: 'pie',
+							        options3d: {
+							            enabled: true,
+							            alpha: 45,
+							            beta: 0
+							        }
+							    },
+							    title: {
+							        text: ''
+							    },
+							    tooltip: {
+							        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+							    },
+							    plotOptions: {
+							        pie: {
+							            allowPointSelect: true,
+							            cursor: 'pointer',
+							    		colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+							            innerSize: 60,
+							            depth: 65,
+							            dataLabels: {
+							                enabled: true,
+									    	style: {
+									    		fontSize: '15px'
+									        },
+							                format: '{point.name}({point.y})'
+							            }
+							        }
+							    },
+							    series: [{
+							        type: 'pie',
+							        name: '比例',
+							        data: eval("["+ seriesStr+ "]")
+							    }]
+							});
+						});
+					});
 		
 		
 		      Highcharts.setOptions({  

@@ -247,11 +247,11 @@ public class ReportBOImpl implements IReportBO {
 			InfoAreaCountBean bean = new InfoAreaCountBean();
 			Object[] arrs = (Object[]) obj;
 			bean.setAreaId(String.valueOf(arrs[0]));
-			bean.setCount(String.valueOf(1));
+			bean.setCount(String.valueOf(arrs[1]));
 			beanList.add(bean);
 		}
-		final String areaSql = "select sortindex, val from hj_dict t where t.dicttype = ?";
-		List<?> areaList = reportDAO.createSQLQuery(areaSql, new String[]{"QZQY"}, new Type[]{StandardBasicTypes.STRING});
+		final String areaSql = "select CAST(t.sortindex AS varchar2(32)), CAST(t.val as varchar2(100)) from hj_dict t where t.dicttype = 'QZQY'";
+		List<?> areaList = reportDAO.createSQLQuery(areaSql);
 		Map<String, String> map = new HashMap<String, String>();
 		for (Object obj : areaList) {
 			Object[] arrs = (Object[]) obj;
