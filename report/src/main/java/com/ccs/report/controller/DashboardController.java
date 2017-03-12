@@ -1,5 +1,6 @@
 package com.ccs.report.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.report.bo.IReportBO;
-import com.ccs.util.AgentStatusBean;
-import com.ccs.util.CountHelpTypeBean;
-import com.ccs.util.DateUtil;
-import com.ccs.util.InfoAreaCountBean;
-import com.ccs.util.YearCountBean;
+import com.ccs.report.util.AgentStatusBean;
+import com.ccs.report.util.CountHelpTypeBean;
+import com.ccs.report.util.DateUtil;
+import com.ccs.report.util.InfoAreaCountBean;
+import com.ccs.report.util.InfoDateCountBean;
+import com.ccs.report.util.YearCountBean;
+import com.ccs.report.vo.HistCountVO;
 
 import net.sf.json.JSONArray;
 
@@ -39,6 +42,8 @@ public class DashboardController {
 	}
 
 	
+
+
 	@RequestMapping(params = "action=monthChart")
 	public @ResponseBody String MonthChart(HttpSession session, ModelMap model) throws Exception {
 		Date lastYear = DateUtil.addYear(new Date(), -1);
@@ -132,5 +137,40 @@ public class DashboardController {
 	public @ResponseBody String areaCount(HttpSession session, ModelMap model) throws Exception {
 		List<InfoAreaCountBean> list = reportBO.countInfoByArea();
 		return JSONArray.fromObject(list).toString();
+	}
+	
+	@RequestMapping(params = "action=2")
+	public String navToDateCount(HttpSession session, ModelMap model) throws Exception {
+		return "infodatecount";
+	}
+	
+	@RequestMapping(params = "action=datecount")
+	public @ResponseBody String dateCount(HttpSession session, @RequestParam(value = "fromDate", required=false) String fromDate, ModelMap model) throws Exception {
+		if(null == fromDate || ("").equals(fromDate)) {
+			fromDate = "20150101";
+		}
+		List<InfoDateCountBean> list = reportBO.countByDate(fromDate);
+		List<Object[]> l = new ArrayList<Object[]>();
+		for (InfoDateCountBean bean : list) {
+			Object[] sArr = new Object[]{bean.getSdate(), bean.getCount()};
+			l.add(sArr);
+		}
+		return JSONArray.fromObject(l).toString();
+	}
+	
+	
+	@RequestMapping(params = "action=3")
+	public String navToYearCount(HttpSession session, ModelMap model) throws Exception {
+		return "infoyearcount";
+	}
+	@RequestMapping(params = "action=yearcount")
+	public @ResponseBody String yearCount(HttpSession session, ModelMap model) throws Exception {
+		List<HistCountVO> list = reportBO.countHsitByYear();
+		List<Object[]> objList = new ArrayList<Object[]>();
+		for (HistCountVO bean : list) {
+			Object[] sArr = new Object[]{bean.getYear(), Float.valueOf(bean.getCount())};
+			objList.add(sArr);
+		}
+		return JSONArray.fromObject(objList).toString();
 	}
 }

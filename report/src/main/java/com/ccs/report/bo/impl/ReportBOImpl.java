@@ -15,12 +15,14 @@ import org.springframework.util.StringUtils;
 
 import com.ccs.report.bo.IReportBO;
 import com.ccs.report.dao.IBaseDAO;
+import com.ccs.report.util.AgentStatusBean;
+import com.ccs.report.util.CountHelpTypeBean;
+import com.ccs.report.util.DateUtil;
+import com.ccs.report.util.InfoAreaCountBean;
+import com.ccs.report.util.InfoDateCountBean;
+import com.ccs.report.util.YearCountBean;
 import com.ccs.report.vo.BaseEntity;
-import com.ccs.util.AgentStatusBean;
-import com.ccs.util.CountHelpTypeBean;
-import com.ccs.util.DateUtil;
-import com.ccs.util.InfoAreaCountBean;
-import com.ccs.util.YearCountBean;
+import com.ccs.report.vo.HistCountVO;
 
 @Service("reportBO")
 public class ReportBOImpl implements IReportBO {
@@ -259,6 +261,36 @@ public class ReportBOImpl implements IReportBO {
 		}
 		for (InfoAreaCountBean bean : beanList) {
 			bean.setAreaName(map.get(bean.getAreaId()));
+		}
+		return beanList;
+	}
+
+	@Override
+	public List<InfoDateCountBean> countByDate(String fromDate) throws Exception {
+		final String sql = "select sdate, count from hj_info_date_count where sdate >= ? order by sdate asc";
+		List<?> list = reportDAO.createSQLQuery(sql, new String[]{fromDate}, new Type[]{StandardBasicTypes.STRING});
+		List<InfoDateCountBean> beanList = new ArrayList<InfoDateCountBean>();
+		for (Object obj : list) {
+			Object[] arrs = (Object[]) obj;
+			InfoDateCountBean bean = new InfoDateCountBean();
+			bean.setSdate(String.valueOf(arrs[0]));
+			bean.setCount(String.valueOf(arrs[1]));
+			beanList.add(bean);
+		}
+		return beanList;
+	}
+
+	@Override
+	public List<HistCountVO> countHsitByYear() throws Exception {
+		final String sql = "select year, count from hj_hist_count order by year asc";
+		List<?> list = reportDAO.createSQLQuery(sql);
+		List<HistCountVO> beanList = new ArrayList<HistCountVO>();
+		for (Object obj : list) {
+			Object[] arrs = (Object[]) obj;
+			HistCountVO bean = new HistCountVO();
+			bean.setYear(String.valueOf(arrs[0]));
+			bean.setCount(String.valueOf(arrs[1]));
+			beanList.add(bean);
 		}
 		return beanList;
 	}

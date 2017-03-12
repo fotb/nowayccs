@@ -1,4 +1,4 @@
-package com.ccs.util;
+package com.ccs.report.util;
 
 import java.io.Serializable;
 

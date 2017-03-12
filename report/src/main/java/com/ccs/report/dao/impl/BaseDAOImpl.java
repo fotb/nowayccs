@@ -18,8 +18,8 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.report.dao.IBaseDAO;
+import com.ccs.report.util.GenericUtil;
 import com.ccs.report.vo.BaseEntity;
-import com.ccs.util.GenericUtil;
 
 @Transactional
 public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport implements IBaseDAO<E> {
@@ -183,6 +183,7 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		
 		return query.list();
 	}
+
 
 
 	@Override

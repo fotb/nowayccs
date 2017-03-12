@@ -362,13 +362,13 @@
 							$("#i_"+ index +'').attr("class", "fa fa-user-circle fa-3x mouse-hand");
 							$('#div_status_' + index + '').html("示忙中");
 							break;
-						case "4":
+						case "5":
 							$('#div_' + index + '').attr("class", "panel panel-red");
 							$("#i_"+ index +'').attr("class", "fa fa-phone fa-3x mouse-hand animated pulse talking")
 							$('#div_status_' + index + '').html("振铃");
 							break;
 
-						case "5":
+						case "4":
 							$('#div_' + index + '').attr("class", "panel panel-green");
 							$("#i_"+ index +'').attr("class", "fa fa-volume-control-phone fa-3x mouse-hand animated pulse talking")
 							$('#div_status_' + index + '').html("通话中");

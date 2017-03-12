@@ -56,7 +56,7 @@
 		<property name="hibernateProperties" ref="hibernateProperties" />
 		<property name="packagesToScan">
 			<list>
-				<value>com.ccs.vo</value>
+				<value>com.ccs.report.vo</value>
 			</list>
 		</property>
 	</bean>
