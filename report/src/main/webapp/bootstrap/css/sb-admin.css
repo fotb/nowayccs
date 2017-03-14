@@ -13,7 +13,7 @@ body {
 @media ( min-width :768px) {
 	body {
 		margin-top: 80px;
-		
+
 	}
 }
 
@@ -38,6 +38,7 @@ body {
 	}
 	#page-wrapper {
 		padding: 15px;
+		padding-bottom: 80px;
 	}
 }
 
@@ -166,12 +167,12 @@ ul.alert-dropdown {
 
 .huge-1 {
 	font-size: 20px;
-	position: absolute; 
-	top: 50%; 
-	-webkit-transform: translateY(50%); 
-	-moz-transform: translateY(50%); 
-	-ms-transform: translateY(50%); 
-	-o-transform: translateY(50%); 
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(50%);
+	-moz-transform: translateY(50%);
+	-ms-transform: translateY(50%);
+	-o-transform: translateY(50%);
 	transform: translateY(50%);
 }
 
@@ -321,7 +322,7 @@ display: block;
   z-index: 1060;
   display: none;
   max-width: 2000px;
-  width:300px;
+  width:260px;
   padding: 1px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -342,7 +343,7 @@ display: block;
   -webkit-background-clip: padding-box;
           background-clip: padding-box;
   border: 1px solid #428bca;
-  
+
   border-radius: 6px;
   -webkit-box-shadow: 0 5px 10px #428bca;
           box-shadow: 0 5px 10px #428bca;
@@ -453,23 +454,42 @@ display: block;
 
 
 .milky {
-    
+
     border-radius: 20px;
     color: #ffffff;
     display: block;
     /* font-family: "Arial Rounded MT Bold","Helvetica Rounded",Arial,sans-serif; */
     font-family: "Helvetica Neue","Helvetica","Arial","PingFang SC","Hiragino Sans GB", "Microsoft YaHei","WenQuanYi Micro Hei", sans-serif;
-    font-size: 45px;
+    font-size: 30px;
     font-weight: bold;
-    left: 50%;
+    left: 17%;
     letter-spacing: 4px;
-    top: 15px;
+    top: 20px;
     position: absolute;
     text-align: center;
     text-shadow: 0 4px 5px #729fcf, 0 -1px 1px #fff;
     text-transform: uppercase;
     transform: translate(-50%, -50%);
 }
+
+.totalphone {
+
+    border-radius: 20px;
+    color: #ffffff;
+    display: block;
+    /* font-family: "Arial Rounded MT Bold","Helvetica Rounded",Arial,sans-serif; */
+    font-family: "Helvetica Neue","Helvetica","Arial","PingFang SC","Hiragino Sans GB", "Microsoft YaHei","WenQuanYi Micro Hei", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    left: 17%;
+    letter-spacing: 2px;
+    top: 30px;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translate(-50%, -50%);
+}
+
 
 .navbar-user {
   background: -webkit-linear-gradient(#0065B5, #3d8cca); /* Safari 5.1 - 6.0 */
@@ -484,4 +504,36 @@ display: block;
 
 .highcharts-container {
 	font-size: 2em;
+}
+
+.agent_site {
+	background-image: url('../../images/agent.png');
+	background-repeat: no-repeat;
+	width: 200px;
+	height: 143px;
+	margin-bottom: 20px;
+}
+
+.status_lamp{
+	position: absolute;
+	padding-left:60px;
+}
+
+.status_default{
+	color:#fff;
+}
+
+.status_free{
+	color:#337ab7;
+}
+
+.status_busy{
+	color:#f0ad4e;
+}
+
+.status_ring{
+	color:#d9534f;
+}
+.status_talking{
+	color:#5cb85c;
 }

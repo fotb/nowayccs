@@ -40,15 +40,11 @@ public class DashboardController {
 	public String init(HttpSession session, ModelMap model) throws Exception {
 		return "dashboard";
 	}
-
 	
-
-
 	@RequestMapping(params = "action=monthChart")
 	public @ResponseBody String MonthChart(HttpSession session, ModelMap model) throws Exception {
 		Date lastYear = DateUtil.addYear(new Date(), -1);
 		List<YearCountBean> list = reportBO.queryInfoCountByMonth(DateUtil.format(lastYear, "yyyyMM"), DateUtil.format(new Date(), "yyyyMM"));
-		System.out.println(JSONArray.fromObject(list).toString());
 		return JSONArray.fromObject(list).toString();
 	}
 	
@@ -56,7 +52,6 @@ public class DashboardController {
 	public @ResponseBody String HelpTypeCount(HttpSession session, ModelMap model) throws Exception {
 		Date lastYear = DateUtil.addYear(new Date(), -1);
 		List<CountHelpTypeBean> list = reportBO.countInfoByHelpType(DateUtil.format(lastYear, "yyyyMMdd"), DateUtil.format(new Date(), "yyyyMMdd"));
-		System.out.println(JSONArray.fromObject(list).toString());
 		return JSONArray.fromObject(list).toString();
 	}
 	
@@ -66,7 +61,6 @@ public class DashboardController {
         Date firstDay = DateUtil.getYearFirst(currCal.get(Calendar.YEAR));
         Date lastDay = DateUtil.getYearLast(currCal.get(Calendar.YEAR));
 		List<CountHelpTypeBean> list = reportBO.countInfoByHelpType(DateUtil.format(firstDay, "yyyyMMdd"), DateUtil.format(lastDay, "yyyyMMdd"));
-		System.out.println(JSONArray.fromObject(list).toString());
 		return JSONArray.fromObject(list).toString();
 	}
 	
@@ -76,7 +70,6 @@ public class DashboardController {
         Date firstDay = DateUtil.getYearFirst(currCal.get(Calendar.YEAR -1));
         Date lastDay = DateUtil.getYearLast(currCal.get(Calendar.YEAR -1));
 		List<CountHelpTypeBean> list = reportBO.countInfoByHelpType(DateUtil.format(firstDay, "yyyyMMdd"), DateUtil.format(lastDay, "yyyyMMdd"));
-		System.out.println(JSONArray.fromObject(list).toString());
 		return JSONArray.fromObject(list).toString();
 	}
 	
@@ -145,10 +138,16 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(params = "action=datecount")
-	public @ResponseBody String dateCount(HttpSession session, @RequestParam(value = "fromDate", required=false) String fromDate, ModelMap model) throws Exception {
-		if(null == fromDate || ("").equals(fromDate)) {
-			fromDate = "20150101";
+	public @ResponseBody String dateCount(HttpSession session, @RequestParam(value = "provsMonth", required=false) String provsMonth, ModelMap model) throws Exception {
+		String fromDate = "";
+		if(null == provsMonth || ("").equals(provsMonth)) {
+			Date pDate = DateUtil.getDayOfProvsMonth(new Date(), 12);
+			fromDate = DateUtil.format(pDate, "yyyyMMdd");
+		} else {
+			Date pDate = DateUtil.getDayOfProvsMonth(new Date(), Integer.valueOf(provsMonth));
+			fromDate = DateUtil.format(pDate, "yyyyMMdd");
 		}
+		
 		List<InfoDateCountBean> list = reportBO.countByDate(fromDate);
 		List<Object[]> l = new ArrayList<Object[]>();
 		for (InfoDateCountBean bean : list) {
@@ -172,5 +171,34 @@ public class DashboardController {
 			objList.add(sArr);
 		}
 		return JSONArray.fromObject(objList).toString();
+	}
+	
+	@RequestMapping(params = "action=volunteer")
+	public @ResponseBody String volunteerCount(HttpSession session, @RequestParam(value = "top", required=true) String top, ModelMap model) throws Exception {
+		List<Object[]> list = reportBO.queryTopVolunteer(Integer.valueOf(top));
+		int total = reportBO.countVolunteer();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		map.put("top", list);
+		return JSONArray.fromObject(map).toString();
+	}
+	
+	@RequestMapping(params = "action=entprise")
+	public @ResponseBody String entpriseCount(HttpSession session, @RequestParam(value = "top", required=true) String top, ModelMap model) throws Exception {
+		List<Object[]> list = reportBO.queryTopEntprise(Integer.valueOf(top));
+		int total = reportBO.countEntprise();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		map.put("top", list);
+		return JSONArray.fromObject(map).toString();
+	}
+	
+	
+	@RequestMapping(params = "action=sumtotal")
+	public @ResponseBody String sumTotal(HttpSession session, ModelMap model) throws Exception {
+		int total = reportBO.sumTotalInfo();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", total);
+		return JSONArray.fromObject(map).toString();
 	}
 }

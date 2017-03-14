@@ -283,6 +283,12 @@ public class DateUtil {
 		return addMonth(gc.getTime(), -1);
 	}
 
+	
+	public static Date getDayOfProvsMonth(final Date date, final int provsMonth ) {
+		final GregorianCalendar gc = (GregorianCalendar) Calendar.getInstance();
+		gc.setTime(date);
+		return addMonth(gc.getTime(), -provsMonth);
+	}
 	/**
 	 * get now date
 	 * 

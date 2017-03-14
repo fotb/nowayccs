@@ -29,4 +29,14 @@ public interface IReportBO {
 	List<InfoDateCountBean> countByDate(String fromDate) throws Exception;
 	
 	List<HistCountVO> countHsitByYear() throws Exception;
+	
+	List<Object[]> queryTopVolunteer(int top) throws Exception;
+	
+	List<Object[]> queryTopEntprise(int top) throws Exception;
+	
+	int countVolunteer() throws Exception;
+	
+	int countEntprise() throws Exception;
+	
+	int sumTotalInfo() throws Exception;
 }

@@ -294,7 +294,51 @@ public class ReportBOImpl implements IReportBO {
 		}
 		return beanList;
 	}
-	
-	
 
+	@Override
+	public List<Object[]> queryTopEntprise(int top) throws Exception {
+		final String sql = "select e.ENTPRISENAME, a.count from (select RECEIVERID, count(*) as count from hj_lifeinformation t where RECEIVERTYPE = '2' group by t.RECEIVERID order by count desc ) a, hj_entprise e where a.receiverid = e.ENTPRISEID and rownum <=?";
+		
+		List<?> list = reportDAO.createSQLQuery(sql, new Integer[]{top}, new Type[]{StandardBasicTypes.INTEGER});
+		List<Object[]> beanList = new ArrayList<Object[]>();
+		for (Object obj : list) {
+			Object[] arrs = (Object[]) obj;
+			beanList.add(arrs);
+		}
+		return beanList;
+	}
+
+	@Override
+	public List<Object[]> queryTopVolunteer(int top) throws Exception {
+		final String sql = "select e.VOLUNTEERNAME, a.count from (select RECEIVERID, count(*) as count from hj_lifeinformation t where RECEIVERTYPE = '1' group by t.RECEIVERID order by count desc ) a, hj_volunteer e where a.receiverid = e.volunteerid and rownum <=?";
+			
+		List<?> list = reportDAO.createSQLQuery(sql, new Integer[]{top}, new Type[]{StandardBasicTypes.INTEGER});
+		List<Object[]> beanList = new ArrayList<Object[]>();
+		for (Object obj : list) {
+			Object[] arrs = (Object[]) obj;
+			beanList.add(arrs);
+		}
+		return beanList;
+	}
+
+	@Override
+	public int countVolunteer() throws Exception {
+		final String sql = "select count(volunteerid) from hj_volunteer";
+		List<?> list = reportDAO.createSQLQuery(sql);
+		return Integer.valueOf(list.toArray()[0].toString());
+	}
+
+	@Override
+	public int countEntprise() throws Exception {
+		final String sql = "select count(entpriseid) from HJ_entprise";
+		List<?> list = reportDAO.createSQLQuery(sql);
+		return Integer.valueOf(list.toArray()[0].toString());
+	}
+
+	@Override
+	public int sumTotalInfo() throws Exception {
+		final String sql = "select sum(count) from hj_hist_count";
+		List<?> list = reportDAO.createSQLQuery(sql);
+		return Integer.valueOf(list.toArray()[0].toString());
+	}
 }
