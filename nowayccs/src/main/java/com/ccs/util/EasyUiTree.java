@@ -1,6 +1,7 @@
 package com.ccs.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EasyUiTree implements Serializable {
@@ -18,7 +19,7 @@ public class EasyUiTree implements Serializable {
 	
 	private boolean isChecked;
 	
-	private List<EasyUiTree> children;
+	private List<EasyUiTree> children = new ArrayList<EasyUiTree>();
 
 	public String getId() {
 		return id;

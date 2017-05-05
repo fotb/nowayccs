@@ -1,7 +1,5 @@
 package com.ccs.web;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ccs.bo.ILightPowerStaffBO;
 import com.ccs.util.Constants;
 import com.ccs.util.EasyUiTree;
-import com.ccs.vo.BaseEntity;
-import com.ccs.vo.PowerStaffAreaVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.UserVO;
 import com.ccs.web.domain.LightPowerStaffTreeBean;
