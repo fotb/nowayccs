@@ -113,5 +113,16 @@ public class XzspListBOImpl implements IXzspListBO {
 		List<XzspListVO> list = xzspListDAO.queryForObject("from XzspListVO t where (t.listCode like ? or ? is null) or (t.itemName like ? or ? is null) order by pid", new String[]{"%" + key + "%", key, "%" + key + "%", key,});
 		return list;
 	}
+
+	@Override
+	public void save(XzspListVO vo) throws Exception {
+		xzspListDAO.save(vo);
+	}
+
+	@Override
+	public List<XzspListVO> findByListCode(String code) throws Exception {
+		List<XzspListVO> list = xzspListDAO.queryForObject("from XzspListVO t where t.listCode = ? order by pid", new String[]{code});
+		return list;
+	}
 	
 }

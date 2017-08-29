@@ -10,6 +10,7 @@ import com.ccs.web.domain.XzspListDomain;
 public interface IXzspListBO {
 	
 	public void save(XzspListDomain domain, UserVO user) throws Exception;
+	public void save(XzspListVO vo) throws Exception;
 	
 	public List<XzspListVO> findAll() throws Exception;
 	
@@ -22,5 +23,7 @@ public interface IXzspListBO {
 	public EasyUiTree buildListCodeTree() throws Exception;
 	
 	public List<XzspListVO> search(String key) throws Exception;
+	
+	public List<XzspListVO> findByListCode(String code) throws Exception;
 
 }

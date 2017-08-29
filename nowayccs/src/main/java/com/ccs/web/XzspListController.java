@@ -63,6 +63,18 @@ public class XzspListController {
 		return jsonObj.toString();
 	}
 	
+	@RequestMapping(params = "action=load")
+	public @ResponseBody String load(@RequestParam(value = "key", required = false) String key, ModelMap model) throws Exception {
+		
+		List<XzspListVO> list = xzspListBO.findByListCode(key);
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("total", list.size());
+		JSONArray jsonArray = JSONArray.fromObject(list);
+
+		jsonObj.put("rows", jsonArray.toString());
+		return jsonObj.toString();
+	}
+	
 
 	@RequestMapping(params = "action=add")
 	public String add(@ModelAttribute("xzspListDomain") XzspListDomain xzspListDomain, ModelMap model) {

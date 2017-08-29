@@ -76,7 +76,7 @@
             $('#areaTree').tree({
             	onClick: function(node){
             		$("#dg").datagrid({  
-                        url:"xzsp.do?action=search&key=" + node.id,//加载的URL  
+                        url:"xzsp.do?action=load&key=" + node.id,//加载的URL  
                         rownumbers:true,
                         method:'get',
                         toolbar:'#tb',
