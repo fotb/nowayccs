@@ -7,14 +7,13 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.ILonelyHelpDAO;
-import com.ccs.icd.util.DateUtil;
+import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
-import com.ccs.util.Utils;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LonelyHelpVO;
 
@@ -37,14 +36,14 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 		return getHibernateTemplate().get(LonelyHelpVO.class, helpId);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<LonelyHelpVO> query(final List<String> lonelyManIds,
 			final List<String> memberIds, final Date startDt, final Date endDt, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<LonelyHelpVO>) getHibernateTemplate().execute(new HibernateCallback<List<LonelyHelpVO>>() {
 			@Override
-			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+			public List<LonelyHelpVO> doInHibernate(Session session)
+					throws HibernateException {
 				String hql = "from LonelyHelpVO vo where 1 = 1 ";
 				if(!lonelyManIds.isEmpty()) {
 					hql += "and (vo.lonelyManId in (:manId1) or :manId2 is null) ";
@@ -88,14 +87,14 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 		});
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public int queryCount(final List<String> lonelyManIds, final List<String> memberIds,
 			final Date startDt, final Date endDt) {
-		List<Long> list = getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		List<Long> list = (List<Long>) getHibernateTemplate().execute(new HibernateCallback<List<Long>>() {
 			@Override
-			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+			public List<Long> doInHibernate(Session session)
+					throws HibernateException {
 				String hql = "select count(vo.helpId) from LonelyHelpVO vo where 1 = 1 ";
 				if(!lonelyManIds.isEmpty()) {
 					hql += "and (vo.lonelyManId in (:manId1) or :manId2 is null) ";

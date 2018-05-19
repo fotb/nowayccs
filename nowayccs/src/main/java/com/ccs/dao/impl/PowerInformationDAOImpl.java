@@ -5,8 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.ccs.icd.util.DateUtil;
+import com.ccs.util.DateUtil;
 import com.ccs.vo.PowerInformationVO;
 
 @Repository("piDAO")

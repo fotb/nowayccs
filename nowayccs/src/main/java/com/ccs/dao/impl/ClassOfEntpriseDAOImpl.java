@@ -25,7 +25,7 @@ public class ClassOfEntpriseDAOImpl extends DefaultDAOSupport implements
 
 	@Override
 	public void saveOrUpdate(List<ClassOfEntpriseVO> list) {
-		getHibernateTemplate().saveOrUpdateAll(list);
+		getHibernateTemplate().saveOrUpdate(list);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class ClassOfEntpriseDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ClassOfEntpriseVO> findByEntpriseId(String entpriseId) {
-		return getHibernateTemplate().find("from ClassOfEntpriseVO vo where vo.id.entpriseId = ?", entpriseId);
+		return (List<ClassOfEntpriseVO>) getHibernateTemplate().find("from ClassOfEntpriseVO vo where vo.id.entpriseId = ?", entpriseId);
 	}
 
 	@Override

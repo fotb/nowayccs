@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.bean.TrafficSearchBean;
@@ -44,10 +44,11 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserVO> findAll(final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(
+		
+		return (List<UserVO>) getHibernateTemplate().execute(
 				new HibernateCallback<Object>() {
 					public Object doInHibernate(Session s)
-							throws HibernateException, SQLException {
+							throws HibernateException {
 						Query query = s.createQuery("from UserVO vo order by vo.loginName");
 						query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
 						query.setMaxResults(pageInfo.getPAGE_COUNT());
@@ -59,7 +60,7 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public UserVO findByLoginNameAndPwd(String loginName, String pwd) {
-		List<UserVO> list = getHibernateTemplate()
+		List<UserVO> list = (List<UserVO>) getHibernateTemplate()
 				.find("from UserVO vo where vo.loginName = ? and vo.loginPassword = ? and vo.onJob = ?",
 						loginName, pwd, UserVO.ONJOB_YES);
 		return list.isEmpty() ? null : list.get(0);
@@ -76,13 +77,13 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserVO> findByLoginName(String loginName) {
-		return getHibernateTemplate().find("from UserVO vo where vo.loginName = ?", loginName);
+		return (List<UserVO>) getHibernateTemplate().find("from UserVO vo where vo.loginName = ?", loginName);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserVO> findAllOnJob() {
-		return getHibernateTemplate().find("from UserVO vo where vo.onJob = ?", UserVO.ONJOB_YES);
+		return (List<UserVO>) getHibernateTemplate().find("from UserVO vo where vo.onJob = ?", UserVO.ONJOB_YES);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -102,13 +103,13 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 		List<Object> paramList = new ArrayList<Object>();
 		paramList.addAll(userIdList);
 		paramList.add(UserVO.ONJOB_YES);
-		return getHibernateTemplate().find(hqlBuffer.toString(), paramList.toArray());
+		return (List<UserVO>) getHibernateTemplate().find(hqlBuffer.toString(), paramList.toArray());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserVO> findAll() {
-		return getHibernateTemplate().find("from UserVO vo");
+		return (List<UserVO>) getHibernateTemplate().find("from UserVO vo");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -130,7 +131,7 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 		buffer.append("and i.helpType = ?" );
 		objs.add(bean.getHelpType());
 		buffer.append("group by u.loginName, u.userId, u.userName");
-		return getHibernateTemplate().find(buffer.toString(), objs.toArray());
+		return (List<UserTrafficBean>) getHibernateTemplate().find(buffer.toString(), objs.toArray());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -150,7 +151,7 @@ public class UserDAOImpl extends DefaultDAOSupport implements IUserDAO {
 		objs.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
 		objs.add(DateUtil.parse(bean.getEndDt(), "yyyy-MM-dd"));
 		buffer.append("group by u.loginName, u.userId, u.userName");
-		return getHibernateTemplate().find(buffer.toString(), objs.toArray());
+		return (List<UserTrafficBean>) getHibernateTemplate().find(buffer.toString(), objs.toArray());
 	}
 	
 }

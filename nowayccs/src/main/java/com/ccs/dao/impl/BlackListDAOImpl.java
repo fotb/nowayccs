@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -37,7 +37,7 @@ public class BlackListDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public BlackListVO findByPhoneNum(String phoneNum) {
-		List<BlackListVO> list = getHibernateTemplate().find("from BlackListVO t where t.phoneNum = ?", phoneNum);
+		List<BlackListVO> list = (List<BlackListVO>) getHibernateTemplate().find("from BlackListVO t where t.phoneNum = ?", phoneNum);
 		if(!list.isEmpty()) {
 			return list.get(0);
 		} else {
@@ -45,13 +45,13 @@ public class BlackListDAOImpl extends DefaultDAOSupport implements
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<BlackListVO> findByParams(final String phoneNum, final String levels, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<BlackListVO>) getHibernateTemplate().execute(new HibernateCallback<List<BlackListVO>>() {
 			@Override
-			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+			public List<BlackListVO> doInHibernate(Session session)
+					throws HibernateException {
 				StringBuffer buffer = new StringBuffer(1000);
 				buffer.append("from BlackListVO t where ");
 				buffer.append("(t.phoneNum like ? or ? is null) ");

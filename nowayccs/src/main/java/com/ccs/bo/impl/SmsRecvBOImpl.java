@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.ISmsRecvBO;
 import com.ccs.dao.ISmsRecvDAO;
-import com.ccs.icd.util.DateUtil;
 import com.ccs.services.client.MessageManagerProxy;
+import com.ccs.util.DateUtil;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.SmsRecvVO;
 @Service("smsRecvBO")

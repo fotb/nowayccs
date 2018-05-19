@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -29,26 +29,26 @@ public class AreaDAOImpl extends DefaultDAOSupport implements IAreaDAO {
 
 	@Override
 	public AreaVO findById(String areaId) {
-		return (AreaVO)getHibernateTemplate().get(AreaVO.class, areaId);
+		return (AreaVO) getHibernateTemplate().get(AreaVO.class, areaId);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AreaVO> findAll() {
-		return getHibernateTemplate().find("from AreaVO vo");
+		return (List<AreaVO>) getHibernateTemplate().find("from AreaVO vo");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AreaVO> findAll(final PageInfo pageInfo) {
-		   return getHibernateTemplate().executeFind( new  HibernateCallback<Object>() { 
-			     public  Object doInHibernate(Session s)  throws  HibernateException, SQLException { 
-			           Query query  =  s.createQuery("from AreaVO vo"); 
-			           query.setFirstResult((pageInfo.getCurrentPage()-1)*pageInfo.getPAGE_COUNT()); 
-			           query.setMaxResults(pageInfo.getPAGE_COUNT()); 
-			           return query.list(); 
-			           } 
-			     });
+		return (List<AreaVO>) getHibernateTemplate().execute(new HibernateCallback<Object>() {
+			public Object doInHibernate(Session s) throws HibernateException {
+				Query query = s.createQuery("from AreaVO vo");
+				query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
+				query.setMaxResults(pageInfo.getPAGE_COUNT());
+				return query.list();
+			}
+		});
 	}
 
 	@Override

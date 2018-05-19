@@ -9,7 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.StringType;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -53,7 +53,7 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 		return getCountByParams(status, serviceType, areaId, areaSubId, volunteerNo, null);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<VolunteerVO> findByParams(String status, String serviceType,
 			String areaId, String areaSubId, String volunteerNo,
@@ -77,10 +77,9 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 			types[i] = StandardBasicTypes.STRING;
 		}
 		
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<VolunteerVO>>() {
+		return (List<VolunteerVO>) getHibernateTemplate().execute(new HibernateCallback<List<VolunteerVO>>() {
 			@Override
-			public List<VolunteerVO> doInHibernate(Session session) throws HibernateException,
-					SQLException {
+			public List<VolunteerVO> doInHibernate(Session session) throws HibernateException {
 				Query query = session.createQuery(hql + "order by cast(t.volunteerNo as int)");
 				query.setParameters(valList.toArray(), types);
 				query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
@@ -103,7 +102,7 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<VolunteerVO> findAll() {
-		return getHibernateTemplate().find("from VolunteerVO");
+		return (List<VolunteerVO>) getHibernateTemplate().find("from VolunteerVO");
 	}
 
 }

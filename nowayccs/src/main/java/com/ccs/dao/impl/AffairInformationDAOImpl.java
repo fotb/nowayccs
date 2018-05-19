@@ -29,10 +29,11 @@ public class AffairInformationDAOImpl extends DefaultDAOSupport implements
 				affairInfoId);
 	}
 
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public AffairInformationVO findByInfoId(String infoId) {
-		final List<AffairInformationVO> list = getHibernateTemplate().find(
+		final List<AffairInformationVO> list = (List<AffairInformationVO>) getHibernateTemplate().find(
 				"from AffairInformationVO t where t.infoId = ?", infoId);
 		return list.isEmpty() ? null : list.get(0);
 	}
@@ -53,7 +54,7 @@ public class AffairInformationDAOImpl extends DefaultDAOSupport implements
 					hqlBuffer.append("?, ");
 				}
 			}
-			return getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
+			return (List<AffairInformationVO>) getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
 		}
 	}
 

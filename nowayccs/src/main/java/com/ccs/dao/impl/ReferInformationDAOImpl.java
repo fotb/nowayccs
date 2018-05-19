@@ -32,7 +32,7 @@ public class ReferInformationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public ReferInformationVO findByInfoId(String infoId) {
-		final List<ReferInformationVO> list = getHibernateTemplate().find(
+		final List<ReferInformationVO> list = (List<ReferInformationVO>) getHibernateTemplate().find(
 				"from ReferInformationVO t where t.infoId = ?", infoId);
 		return list.isEmpty() ? null : list.get(0);
 	}
@@ -53,7 +53,7 @@ public class ReferInformationDAOImpl extends DefaultDAOSupport implements
 					hqlBuffer.append("?, ");
 				}
 			}
-			return getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
+			return (List<ReferInformationVO>) getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
 		}
 	}
 

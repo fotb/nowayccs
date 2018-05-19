@@ -32,13 +32,13 @@ public class RoleOperationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RoleOperationVO> findAll() {
-		return getHibernateTemplate().find("from RoleOperationVO");
+		return (List<RoleOperationVO>) getHibernateTemplate().find("from RoleOperationVO");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RoleOperationVO> findByRoleId(String roleId) {
-		return getHibernateTemplate().find(
+		return (List<RoleOperationVO>) getHibernateTemplate().find(
 				"from RoleOperationVO vo where vo.id.roleId = ?", roleId);
 	}
 
@@ -59,7 +59,7 @@ public class RoleOperationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RoleOperationVO> findByOperationId(String operationId) {
-		return getHibernateTemplate().find("from RoleOperationVO t where t.id.operationId = ?", operationId);
+		return (List<RoleOperationVO>) getHibernateTemplate().find("from RoleOperationVO t where t.id.operationId = ?", operationId);
 	}
 
 }

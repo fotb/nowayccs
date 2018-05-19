@@ -32,7 +32,7 @@ public class LifeInformationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public LifeInformationVO findByInfoId(String infoId) {
-		final List<LifeInformationVO> list = getHibernateTemplate().find(
+		final List<LifeInformationVO> list = (List<LifeInformationVO>) getHibernateTemplate().find(
 				"from LifeInformationVO t where t.infoId = ?", infoId);
 		return list.isEmpty() ? null : list.get(0);
 	}
@@ -53,7 +53,7 @@ public class LifeInformationDAOImpl extends DefaultDAOSupport implements
 					hqlBuffer.append("?, ");
 				}
 			}
-			return getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
+			return (List<LifeInformationVO>) getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
 		}
 	}
 

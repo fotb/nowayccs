@@ -29,12 +29,12 @@ public class SmsRecvDAOImpl extends DefaultDAOSupport implements ISmsRecvDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SmsRecvVO> findByStatus(String status) {
-		return getHibernateTemplate().find("from SmsRecvVO t where t.status = ? order by t.recvDt", status);
+		return (List<SmsRecvVO>) getHibernateTemplate().find("from SmsRecvVO t where t.status = ? order by t.recvDt", status);
 	}
 
 	@Override
 	public void saveOrUpdateAll(List<SmsRecvVO> list) {
-		getHibernateTemplate().saveOrUpdateAll(list);
+		getHibernateTemplate().saveOrUpdate(list);
 	}
 
 }

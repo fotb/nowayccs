@@ -13,7 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.bean.AffairInfoSearchBean;
@@ -47,13 +47,13 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return getHibernateTemplate().get(InformationVO.class, infoId);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<InformationVO> findByHelpTel(final String helpTel, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				final String hql = "from InformationVO t where t.helpTel like ? order by t.createTime desc";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, "%" + helpTel + "%");
@@ -71,14 +71,14 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<InformationVO> findByCreatorAndStatus(final String userId,
 			final String status, final String helpType, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				final String hql = "from InformationVO t where t.creator = ? and t.status = ? and t.helpType = ? order by t.createTime desc";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, userId);
@@ -98,14 +98,14 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<InformationVO> findByDeliverer(final String deliverer, final String helpType,
 			final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				final String hql = "from InformationVO t where t.deliverer = ? and t.helpType = ? and t.status = ? order by t.deliverTime desc";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, deliverer);
@@ -125,13 +125,13 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<InformationVO> findByParams(final InfoSearchBean bean, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
 						Type[] types = new Type[20];
@@ -245,14 +245,14 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<InformationVO> findLifeInfoByParams(final LifeInfoSearchBean bean,
 			final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
 						List<Type> typeList = new ArrayList<Type>();
@@ -395,14 +395,14 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<InformationVO> findAffairInfoByParams(
 			final AffairInfoSearchBean bean, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
 						Type[] types = new Type[5];
@@ -461,10 +461,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<InformationVO> findByAffairAcceptorAndStatus(final String userId,
 		final String status, final String helpType, final PageInfo pageInfo) {
-			return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+			return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 				@Override
 				public List<InformationVO> doInHibernate(Session session)
-						throws HibernateException, SQLException {
+						throws HibernateException {
 					final String hql = "from InformationVO t where t.affairAcceptor = ? and t.status = ? and t.helpType = ? order by t.createTime desc";
 					Query query = session.createQuery(hql);
 					query.setParameter(0, userId);
@@ -485,7 +485,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<HelpCountByPhoneBean> getHelpCountByPhone(final Date startDt,
 			final Date endDt, final PageInfo pageInfo) {
@@ -499,10 +499,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("group by LTRIM(t.helptel, '573')) a ");
 		buffer.append("order by a.telCount desc");
 		
-		List<Object[]> resultList = getHibernateTemplate().executeFind(new HibernateCallback<List<Object[]>>() {
+		List<Object[]> resultList = (List<Object[]>) getHibernateTemplate().execute(new HibernateCallback<List<Object[]>>() {
 			@Override
 			public List<Object[]> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				SQLQuery query = session.createSQLQuery(buffer.toString());
 //				query.setResultTransformer(Transformers.aliasToBean(HelpCountByPhoneBean.class));
 				query.setDate(0, startDt);
@@ -537,10 +537,11 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("group by LTRIM(t.helptel, '573')) a ");
 		buffer.append("order by a.telCount desc");
 		
-		List<Object> resultList = getHibernateTemplate().executeFind(new HibernateCallback<List<Object>>() {
+		@SuppressWarnings("deprecation")
+		List<Object> resultList = (List<Object>) getHibernateTemplate().execute(new HibernateCallback<List<Object>>() {
 			@Override
 			public List<Object> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				SQLQuery query = session.createSQLQuery(buffer.toString());
 				query.setDate(0, startDt);
 				query.setDate(1, startDt);

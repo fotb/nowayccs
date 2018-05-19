@@ -30,7 +30,7 @@ public class OperationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OperationVO> findAll() {
-		return getHibernateTemplate().find("from OperationVO");
+		return (List<OperationVO>) getHibernateTemplate().find("from OperationVO");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,7 +41,7 @@ public class OperationDAOImpl extends DefaultDAOSupport implements
 		buffer.append(" where u.id.userId = ? ");
 		buffer.append("and u.id.roleId = r.id.roleId ");
 		buffer.append("and r.id.operationId = o.operationId ");
-		return getHibernateTemplate().find(buffer.toString(), userId);
+		return (List<OperationVO>) getHibernateTemplate().find(buffer.toString(), userId);
 	}
 
 }
