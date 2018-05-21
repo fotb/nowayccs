@@ -65,8 +65,55 @@ public class BizAcceptController {
 	@Autowired
 	private IPowerInformationBO powerInfoBO;
 	
+	
+	//http://$IP/?ANI=18958126977&logName=Administrator&password=&agentId =001&groupId=GD-SA& recordFile =&bpoHisId=&orgNumber=
+	
 	@RequestMapping
-	public String accept(@RequestParam(value = "callNo", required = false) String callNo, 
+	public String accept(@RequestParam(value = "ANI", required = false) String callNo, 
+			@RequestParam(value = "logName", required = false) String logName, 
+			@RequestParam(value="password", required = false) String password,
+			@RequestParam(value="agentId", required = false) String agentId,
+			@RequestParam(value="groupId", required = false) String groupId,
+			@RequestParam(value="recordFile", required = false) String recordFile,
+			@RequestParam(value="bpoHisId", required = false) String bpoHisId,
+			@RequestParam(value="orgNumber", required = false) String orgNumber,
+			HttpSession session, 
+			ModelMap model) {
+		
+		System.out.println(
+				"ANI:" + callNo + "---logName:" + logName + "---password:" + password + "---agentId: " + agentId + "---groupId:"
+						+ groupId + "---recordFile: " + recordFile + "---bpoHisId: " + bpoHisId + "---orgNumber: " + orgNumber);
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		BizAccept bizAccept = new BizAccept();
+		bizAccept.setHelpTel(callNo);
+		bizAccept.setCreator(userVO.getUserId());
+		bizAccept.setPopupFlag(Constants.SYS_YESNO_YES);
+		bizAccept.setCreateTime(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+//		bizAccept.setHelpMode(qzfs);
+//		session.setAttribute("bizAccept", bizAccept);
+		
+		model.addAttribute("bizAccept", bizAccept);
+		model.addAttribute("user", userVO);
+		
+		List<DictVO> qzfsList = dictBO.findByType(Constants.DICT_DICTTYPE_QZFS);
+		model.addAttribute("qzfsList", qzfsList);
+				
+		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+		
+		List<DictVO> qzqyList = dictBO.findByType(Constants.DICT_DICTTYPE_QZQY);
+		model.addAttribute("qzqyList", qzqyList);
+		
+		List<DictVO> slrqList = dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ);
+		model.addAttribute("slrqList", slrqList);
+		
+		return "bizaccept/accept2";
+	}
+	
+	
+	
+		
+	@RequestMapping(params = "action=old")
+	public String acceptOld(@RequestParam(value = "callNo", required = false) String callNo, 
 			@RequestParam(value = "flag", required = false) String flag, 
 			@RequestParam(value="qzfs", required = false) String qzfs, HttpSession session, 
 			ModelMap model) {

@@ -393,7 +393,7 @@ $(document).ready(function(){
 		phone_status = "";
 		phone_no = "";
 		try {
-			alert(Phone.IsSignIn());
+			//alert(Phone.IsSignIn());
 			if(Phone.IsInitial()) {
 				if(Phone.isTalking()) {  //通话中
 					phone_status = "3";
@@ -418,7 +418,7 @@ $(document).ready(function(){
 		});
 	}
 	//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
-	setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
+	//setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
 
 });
 
