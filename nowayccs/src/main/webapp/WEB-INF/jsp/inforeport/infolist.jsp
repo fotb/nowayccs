@@ -149,7 +149,7 @@ $("#jdjtcount").html(data.jdjtcount);
       <c:forEach items="${dtoList}"  var="dto" varStatus="index">
       <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
         <td>${index.index + 1 + pageInfo.PAGE_COUNT*(pageInfo.currentPage-1)}</td>
-        <td><a href="infosearch.do?action=showinfo&infoId=${dto.infoId}" target="_blank">${dto.helpName}</a></td>
+        <td><a href="infosearch.do?action=showinfo&infoId=${dto.infoId}" >${dto.helpName}</a></td>
         <td><fmt:formatDate value="${dto.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td>${dto.helpContent}</td>
         <td>${dto.helpTel}</td>

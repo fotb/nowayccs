@@ -119,9 +119,11 @@ $(document).ready(function(){
         <td>结案时间</td>
         <td>满意度</td>
         <td>状态</td>
+        <!-- 
         <c:if test="${adminRight == 'Y'}">
         <td>播放<br>录音</td>
         </c:if>
+         -->
       </tr>
 
 <c:forEach items="${dtoList}" var="dto">
@@ -169,6 +171,7 @@ $(document).ready(function(){
         <td><fmt:formatDate value="${dto.finishTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td><c:if test="${dto.callResult == ''}">&nbsp;</c:if><c:if test="${dto.callResult != ''}">${dto.callResult}</c:if></td>
         <td>${dto.status}</td>
+       <!-- 
         <c:if test="${adminRight == 'Y'}">
         <td>
        	<a href="javascript:playRecord('${dto.infoId}')">
@@ -176,6 +179,7 @@ $(document).ready(function(){
         </a>
        	</td>
        	</c:if>
+       	 -->
       </tr>
       <tr class="line">
         <td height="1" colspan="11"></td>

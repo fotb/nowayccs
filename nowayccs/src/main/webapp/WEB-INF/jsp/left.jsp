@@ -19,7 +19,7 @@
       <tr>
         <td height="6"></td>
       </tr>
-      <tr onclick="radioTable(1,'bizaccept.do')" style="cursor: hand;">
+      <tr onclick="radioTable(1,'bizaccept.do?action=old')" style="cursor: hand;">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务受理</td>
       </tr>
       <!-- 
@@ -109,6 +109,10 @@
              <tr>
               <td class="leftmenu_02"><a href="entprise.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
                 <font color="#FFFFFF">企业查询</font></a></td>
+            </tr>
+                         <tr>
+              <td class="leftmenu_02"><a href="xzsp.do" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
+                <font color="#FFFFFF">行政审批事项查询</font></a></td>
             </tr>
                          <tr>
               <td class="leftmenu_02"><a href="msg.do?msgType=001" target="main"><img src="images/leftpic_03.gif" width="70" height="30" border="0"><br>
