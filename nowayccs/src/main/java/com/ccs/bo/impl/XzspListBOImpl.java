@@ -3,6 +3,7 @@ package com.ccs.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -124,5 +125,18 @@ public class XzspListBOImpl implements IXzspListBO {
 		List<XzspListVO> list = xzspListDAO.queryForObject("from XzspListVO t where t.listCode = ? order by pid", new String[]{code});
 		return list;
 	}
+
+	@Override
+	public List<XzspListVO> findAll(int page, int rows) throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria condition = DetachedCriteria.forClass(XzspListVO.class);
+		return xzspListDAO.findByDetachedCriteria(condition, page, rows);
+	}	
 	
+	@Override
+	public int getAllCount() throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria condition = DetachedCriteria.forClass(XzspListVO.class);
+		return xzspListDAO.getRowCountByDetachedCriteria(condition);
+	}	
 }
