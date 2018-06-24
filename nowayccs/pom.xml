@@ -1,11 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ccs</groupId>
 	<artifactId>ccs</artifactId>
 	<packaging>war</packaging>
 	<name>ccs Maven Webapp</name>
+	<version>0.0.1</version>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
@@ -19,6 +19,7 @@
 	<!-- <scm> <connection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</connection> 
 		<developerConnection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</developerConnection> 
 		<url>http://somerepository.com/view.cvs</url> </scm> -->
+
 	<build>
 		<plugins>
 			<plugin>
@@ -53,8 +54,7 @@
 					<stopKey>foo</stopKey>
 					<stopPort>9999</stopPort>
 					<connectors>
-						<connector
-							implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
 							<port>9090</port>
 						</connector>
 					</connectors>
@@ -126,20 +126,20 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
 			<type>jar</type>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
+            <exclusions>  
+                <exclusion>  
+                    <groupId>javax.jms</groupId>  
+                    <artifactId>jms</artifactId>  
+                </exclusion>  
+                <exclusion>  
+                    <groupId>com.sun.jdmk</groupId>  
+                    <artifactId>jmxtools</artifactId>  
+                </exclusion>  
+                <exclusion>  
+                    <groupId>com.sun.jmx</groupId>  
+                    <artifactId>jmxri</artifactId>  
+                </exclusion>  
+            </exclusions>  
 		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -293,8 +293,12 @@
 			<version>${hibernate.version}</version>
 
 		</dependency>
-		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-commons-annotations</artifactId> 
-			<version>3.2.0.Final</version> </dependency> -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>3.2.0.Final</version>
+
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
@@ -322,7 +326,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.22</version>
+			<version>1.6.1</version>
 
 		</dependency>
 		<dependency>
@@ -348,22 +352,12 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
 			<type>jar</type>
-		</dependency>
 
-<!--  		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>3.0.0</version>
-		</dependency>  -->
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.el</artifactId>
-			<version>3.0.1-b09</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.10.Final</version>
+			<version>4.2.0.Final</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
@@ -449,21 +443,5 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.9</version>
 		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.9.5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.9.5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.9.5</version>
-		</dependency>
 	</dependencies>
-	<version>1</version>
 </project>

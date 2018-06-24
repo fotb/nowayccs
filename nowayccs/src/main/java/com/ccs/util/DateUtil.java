@@ -86,8 +86,8 @@ public class DateUtil {
 	 * @return String
 	 */
 	public static String format(final Date date, final String pattern) {
-		LOG.info("-------------date is----------------:");
-		LOG.info(date);
+		//LOG.info("-------------date is----------------:");
+		//LOG.info(date);
 		return date == null ? "" : getSimpleDateFormat(pattern).format(date);
 	}
 

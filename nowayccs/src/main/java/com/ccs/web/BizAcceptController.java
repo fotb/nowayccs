@@ -205,7 +205,7 @@ public class BizAcceptController {
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
 			return "common/selfclose";
 		} else {
-			return "redirect:bizaccept.do";
+			return "redirect:bizaccept.do?action=old";
 		}
 	}
 
@@ -274,7 +274,7 @@ public class BizAcceptController {
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
 			return "common/selfclose";
 		} else {
-			return "redirect:bizaccept.do";
+			return "redirect:bizaccept.do?action=old";
 		}
 	}
 	
@@ -332,7 +332,7 @@ public class BizAcceptController {
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
 			return "common/selfclose";
 		} else {
-			return "redirect:bizaccept.do";
+			return "redirect:bizaccept.do?action=old";
 		}
 	}
 	
@@ -482,7 +482,7 @@ public class BizAcceptController {
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
 			return "common/selfclose";
 		} else {
-			return "redirect:bizaccept.do";
+			return "redirect:bizaccept.do?action=old";
 		}
 	}
 }
