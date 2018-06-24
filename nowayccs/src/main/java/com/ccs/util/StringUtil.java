@@ -276,6 +276,14 @@ public class StringUtil {
 	public static boolean isNull(final String value) {
 		return (value == null || value.trim().equals(""));
 	}
+	
+	public static boolean isNotBlank(final String value) {
+		return (value != null && value.length() > 0 && value.trim().length() > 0);
+	}
+	
+	public static boolean isNotEmpty(final String value) {
+		return (value != null && value.length() > 0 && value.trim().length() > 0);
+	}
 
 	public static String emptyToNull(final String value) {
 		return isNull(value) ? null : value.trim();

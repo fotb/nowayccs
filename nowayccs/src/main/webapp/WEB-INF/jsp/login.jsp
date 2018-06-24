@@ -38,18 +38,18 @@ $(document).keypress(function(e) {
           <table width="70%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr>
               <td width="20%" height="30" class="leftmenu_01">用户帐号：</td>
-              <td width="30%"><form:input path="loginName" cssClass="form" size="25" onkeydown="handlekeydown()"/></td>
+              <td width="30%"><form:input path="logName" cssClass="form" size="25" onkeydown="handlekeydown()"/></td>
               <td>&nbsp;</td>
             </tr>
             <tr>
               <td height="30" class="leftmenu_01">登录密码：</td>
-              <td><form:password path="loginPassword" cssClass="form" size="25" onkeydown="handlekeydown()"/></td>
+              <td><form:password path="password" cssClass="form" size="25" onkeydown="handlekeydown()"/></td>
               <td>&nbsp;</td>
             </tr>
 			<tr>
               <td height="15" colspan="3"><font color="red">
-              <form:errors path="loginName"/>
-              <form:errors path="loginPassword"/>
+              <form:errors path="logName"/>
+              <form:errors path="password"/>
               </font>
               </td>
               </tr>

@@ -45,12 +45,17 @@ public class IndexController {
 		AgentVO agentVO = agentBO.findById(userVO.getUserId());
 		model.addAttribute("agentVO", agentVO);
 		
-		return "head";
+		return "headnew";
 	}
 	
 	@RequestMapping(params = "action=left")
 	public String left(ModelMap model) {
 		return "left";
+	}
+	
+	@RequestMapping(params = "action=leftold")
+	public String leftOld(ModelMap model) {
+		return "left_old";
 	}
 	
 	@RequestMapping(params = "action=noright")

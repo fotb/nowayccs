@@ -28,20 +28,20 @@ public class LoginValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		LoginBean loginBean = (LoginBean) target;
-		if(StringUtil.isNull(loginBean.getLoginName())) {
-			errors.rejectValue("loginName", "notExistUser", null, "请输入用户名！");
+		if(StringUtil.isNull(loginBean.getLogName())) {
+			errors.rejectValue("logName", "notExistUser", null, "请输入用户名！");
 			return;
 		}
-		if(StringUtil.isNull(loginBean.getLoginPassword())) {
-			errors.rejectValue("loginPassword", "errorPassword", null, "请输入密码！");
+		if(StringUtil.isNull(loginBean.getPassword())) {
+			errors.rejectValue("password", "errorPassword", null, "请输入密码！");
 			return;
 		}
-		final UserVO userVO = userBO.login(loginBean.getLoginName(), loginBean.getLoginPassword());
+		final UserVO userVO = userBO.login(loginBean.getLogName(), loginBean.getPassword());
 		if(null == userVO) {
-			if(!isUserExist(loginBean.getLoginName())) {
-				errors.rejectValue("loginName", "notExistUser", null, "用户不存在！");
+			if(!isUserExist(loginBean.getLogName())) {
+				errors.rejectValue("logName", "notExistUser", null, "用户不存在！");
 			} else {
-				errors.rejectValue("loginPassword", "errorPassword", null, "密码错误！");
+				errors.rejectValue("password", "errorPassword", null, "密码错误！");
 			}
 		}
 	}

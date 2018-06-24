@@ -117,7 +117,6 @@ $(document).ready(function(){
 		} else if($("#helpContent3").css("display") != "block"){
 			$("#helpContent3").css("display", "block");
 		} else {
-		alert("dafa");
 			$("#helpContent4").css("display", "block");
 		}
 	});

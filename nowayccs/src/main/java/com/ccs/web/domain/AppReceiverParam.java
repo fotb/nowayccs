@@ -1,50 +1,38 @@
-package com.ccs.vo;
+package com.ccs.web.domain;
 
-import java.io.Serializable;
+import com.ccs.web.validator.NotEmpty;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+public class AppReceiverParam implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 2912728370708818997L;
 
-@Entity
-@Table(name = "APP_RECEIVER")
-public class AppReceiverVO extends BaseEntity implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -287207187566833221L;
-
-	@Column(name = "HELPNAME")
+	@NotEmpty 
 	private String helpName;
 	
-	@Column(name = "HELPMODE")
+	@NotEmpty
 	private String helpMode;
 	
-	@Column(name = "HELPTEL")
+	@NotEmpty 
 	private String helpTel;
 	
-	@Column(name = "HELPADDR")
+	@NotEmpty 
 	private String helpAddr;
 	
-	@Column(name = "HELPCONTENT")
+	@NotEmpty 
 	private String helpContent;
 	
-	@Column(name = "HELPTYPE")
+	@NotEmpty
 	private String helpType;
 	
-	@Column(name = "HELPAREA")
 	private String helpArea;
 	
-	@Column(name = "HELPGROUP")
 	private String helpGroup;
 	
-	@Column(name = "HELPCATEGORY")
 	private String helpCategory;
 	
-	@Column(name = "STATUS")
 	private String status;
 
+	
 	public String getHelpName() {
 		return helpName;
 	}
@@ -124,5 +112,5 @@ public class AppReceiverVO extends BaseEntity implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	
 }
