@@ -64,6 +64,7 @@ public class BizLifeBOImpl implements IBizLifeBO {
 	}
 
 	@Override
+	@Transactional
 	public void del(String infoId, String userId) {
 		InformationVO vo = informationDAO.findById(infoId);
 		vo.setStatus(Constants.SYS_INFOMATION_STATES_YQX);

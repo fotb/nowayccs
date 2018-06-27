@@ -34,6 +34,7 @@ public class BizLifeBackVstBOImpl implements IBizLifeBackVstBO {
 		return lifeInformationDAO.findByInfoId(infoId);
 	}
 	@Override
+	@Transactional
 	public void saveLifeInfo(LifeInformationVO lifeInfoVO) {
 		lifeInformationDAO.saveOrUpdate(lifeInfoVO);
 	}

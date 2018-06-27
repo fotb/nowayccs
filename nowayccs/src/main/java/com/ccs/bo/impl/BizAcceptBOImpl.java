@@ -74,6 +74,7 @@ public class BizAcceptBOImpl implements IBizAcceptBO {
 		referInformationDAO.saveOrUpdate(referInfoVO);		
 	}
 	@Override
+	@Transactional
 	public List<InformationVO> findByInfoByTel(String helpTel, PageInfo pageInfo) {
 		pageInfo.setTotalRecords(informatinDAO.getTotalCount(helpTel));
 		return informatinDAO.findByHelpTel(helpTel, pageInfo);

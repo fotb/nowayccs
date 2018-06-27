@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IPowerInformationBO;
 import com.ccs.dao.IBaseDAO;
@@ -25,6 +26,7 @@ public class PowerInformationBOImpl implements IPowerInformationBO {
 	private IBaseDAO<PowerInformationVO> piDAO;
 	
 	@Override
+	@Transactional
 	public void saveOrUpdate(PowerInformationVO piVO) throws Exception {
 		piDAO.save(piVO);
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IEntCategoryBO;
 import com.ccs.dao.IEntCategoryDAO;
@@ -16,11 +17,13 @@ public class EntCategoryBOImpl implements IEntCategoryBO {
 	private IEntCategoryDAO entCategoryDAO;
 	
 	@Override
+	@Transactional
 	public void saveOrUpdate(EntCategoryVO vo) {
 		entCategoryDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(EntCategoryVO vo) {
 		entCategoryDAO.delete(vo);
 	}

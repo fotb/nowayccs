@@ -25,6 +25,7 @@ import com.ccs.web.domain.ShsForm;
 import com.ccs.web.domain.ShsResultDTO;
 
 @Service("lonelyFamilyBO")
+@Transactional
 public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 	
 	@Autowired
@@ -52,6 +53,7 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 	}
 
 	@Override
+	@Transactional
 	public void helpSave(LonelyHelpVO vo) {
 		lonelyHelpDAO.saveOrUpdate(vo);
 	}
@@ -132,16 +134,19 @@ public class LonelyFamilyBOImpl implements ILonelyFamilyBO {
 	}
 
 	@Override
+	@Transactional
 	public void saveOrUpdate(LonelyManInfoVO lmiVO) {
 		lonelyManInfoDAO.saveOrUpdate(lmiVO);
 	}
 
 	@Override
+	@Transactional
 	public void saveOrUpdate(PartyMemberForLonelyVO pmVO) {
 		partyMemberForLonelyDAO.saveOrUpdate(pmVO);
 	}
 
 	@Override
+	@Transactional
 	public void pmDel(String memberId) {
 		PartyMemberForLonelyVO pmVO = partyMemberForLonelyDAO.findById(memberId);
 		partyMemberForLonelyDAO.delete(pmVO);
