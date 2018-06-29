@@ -36,7 +36,8 @@ public class LoginValidator implements Validator {
 			errors.rejectValue("password", "errorPassword", null, "请输入密码！");
 			return;
 		}
-		final UserVO userVO = userBO.login(loginBean.getLogName(), loginBean.getPassword());
+		String userName = loginBean.getLogName().replaceFirst("2006", "");
+		final UserVO userVO = userBO.login(userName, loginBean.getPassword());
 		if(null == userVO) {
 			if(!isUserExist(loginBean.getLogName())) {
 				errors.rejectValue("logName", "notExistUser", null, "用户不存在！");

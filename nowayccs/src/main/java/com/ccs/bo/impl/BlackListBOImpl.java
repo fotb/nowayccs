@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IBlackListBO;
 import com.ccs.dao.IBlackListDAO;
@@ -17,11 +18,13 @@ public class BlackListBOImpl implements IBlackListBO {
 	private IBlackListDAO blackListDAO;
 	
 	@Override
+	@Transactional
 	public void saveOrUpdate(BlackListVO vo) {
 		blackListDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(BlackListVO vo) {
 		blackListDAO.delete(vo);
 	}

@@ -25,7 +25,12 @@ function btnselect_click(receiverType,receiverID,linkName,linkTel){
   lifeHandInfo.receiverID=receiverID;
   lifeHandInfo.linkName=linkName;
   lifeHandInfo.linkTel=linkTel;
-  window.returnValue=lifeHandInfo;
+
+window.opener.document.getElementById("receiverType").value=receiverType;
+window.opener.document.getElementById("receiverId").value=receiverID;
+window.opener.document.getElementById("linkName").value=linkName;
+window.opener.document.getElementById("linkTel").value=linkTel;
+  //window.returnValue=lifeHandInfo;
   window.close();
 }
 

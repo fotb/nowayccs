@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IDictBO;
 import com.ccs.dao.IDictDAO;
@@ -20,11 +21,13 @@ public class DictBOImpl implements IDictBO {
 	private IDictDAO dictDAO;
 
 	@Override
+	@Transactional
 	public void saveOrUpdate(DictVO vo) {
 		dictDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(DictVO vo) {
 		dictDAO.delete(vo);
 	}

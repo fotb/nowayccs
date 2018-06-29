@@ -1,27 +1,25 @@
 package com.ccs.web.domain;
 
-import com.ccs.web.validator.NotEmpty;
-
 public class AppReceiverParam implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 2912728370708818997L;
 
-	@NotEmpty 
+//	@NotEmpty 
 	private String helpName;
 	
-	@NotEmpty
+//	@NotEmpty
 	private String helpMode;
 	
-	@NotEmpty 
+//	@NotEmpty 
 	private String helpTel;
 	
-	@NotEmpty 
+//	@NotEmpty 
 	private String helpAddr;
 	
-	@NotEmpty 
+//	@NotEmpty 
 	private String helpContent;
 	
-	@NotEmpty
+//	@NotEmpty
 	private String helpType;
 	
 	private String helpArea;

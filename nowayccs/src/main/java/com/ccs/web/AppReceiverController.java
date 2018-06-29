@@ -1,8 +1,6 @@
 package com.ccs.web;
 
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,7 @@ public class AppReceiverController {
 	private IAppReceiverBO appReceiverBO;
 	
     @RequestMapping(value = "/receiver/AppReceiverVOadd", method = RequestMethod.POST, produces="application/json;charset=UTF-8")  
-   public Response add(@RequestBody @Valid AppReceiverParam appReceiverParam) {  
+   public Response add(@RequestBody AppReceiverParam appReceiverParam) {  
 //    public ResponseBody add(@PathVariable("id") String advertiserId	) {  
     	System.out.println(appReceiverParam.getHelpAddr());
     	try {

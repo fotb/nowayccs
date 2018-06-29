@@ -22,11 +22,13 @@ public class SmsRecvBOImpl implements ISmsRecvBO {
 	private ISmsRecvDAO smsRecvDAO;
 	
 	@Override
+	@Transactional
 	public void saveOrUpdate(SmsRecvVO vo) {
 		smsRecvDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(SmsRecvVO vo) {
 		smsRecvDAO.delete(vo);
 	}

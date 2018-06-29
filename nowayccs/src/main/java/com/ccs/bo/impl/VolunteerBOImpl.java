@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IAreaBO;
 import com.ccs.bo.IVolunteerBO;
@@ -26,6 +27,7 @@ public class VolunteerBOImpl implements IVolunteerBO {
 	private IAreaBO areaBO;
 
 	@Override
+	@Transactional
 	public void saveOrUpdate(VolunteerVO vo) {
 		volunteerDAO.saveOrUpate(vo);
 	}

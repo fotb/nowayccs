@@ -40,12 +40,14 @@ public class EntpriseBOImpl implements IEntpriseBO {
 	}
 
 	@Override
+	@Transactional
 	public void addEntprise(EntpriseVO vo) {
 		vo.setStatus(Constants.SYS_YESNO_YES);
 		entpriseDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void updateEntprise(EntpriseVO vo) {
 		entpriseDAO.saveOrUpdate(vo);
 	}

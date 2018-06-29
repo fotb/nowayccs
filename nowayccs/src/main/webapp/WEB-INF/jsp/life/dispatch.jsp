@@ -24,13 +24,17 @@ function btnsave_click(){
 }
 
 function btnchoose_click(){
-  var lifeHandInfo = window.showModalDialog("bizlife.do?action=receiver&"+getTimeStr(),window,"dialogWidth=900px;dialogHeight=700px;status=0");
-  if(lifeHandInfo!=null){
+  //var lifeHandInfo = window.showModalDialog("bizlife.do?action=receiver&"+getTimeStr(),window,"dialogWidth=900px;dialogHeight=700px;status=0");
+
+  var lifeHandInfo = window.open("bizlife.do?action=receiver&"+getTimeStr(),null,'modal=yes,width=900px,height=700px,status=no,location=no');
+/*  
+if(lifeHandInfo!=null){
 	$("#receiverType").val(lifeHandInfo.receiverType);
 	$("#receiverId").val(lifeHandInfo.receiverID);
 	$("#linkName").val(lifeHandInfo.linkName);
 	$("#linkTel").val(lifeHandInfo.linkTel);
   }
+*/
 }
 
 function btnback_click(){

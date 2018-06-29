@@ -33,6 +33,7 @@ public class BizAffairBackVstBOImpl implements IBizAffairBackVstBO {
 		return affairInformationDAO.findByInfoId(infoId);
 	}
 	@Override
+	@Transactional
 	public void saveAffairInfo(AffairInformationVO affairInfoVO) {
 		affairInformationDAO.saveOrUpdate(affairInfoVO);
 	}

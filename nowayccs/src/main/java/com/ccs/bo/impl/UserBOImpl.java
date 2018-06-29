@@ -41,11 +41,13 @@ public class UserBOImpl implements IUserBO {
 	private IOperationDAO operationDAO;
 	
 	@Override
+	@Transactional
 	public void saveOrUpdate(UserVO vo) {
 		userDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(UserVO vo) {
 		userDAO.delete(vo);
 	}

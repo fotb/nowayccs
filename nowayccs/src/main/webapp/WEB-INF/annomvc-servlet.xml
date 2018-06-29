@@ -61,7 +61,7 @@
 		</property>
 	</bean>
 	
-	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+	 <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
 
 	<!-- <bean id="rightInterceptor" class="com.ccs.web.interceptor.RightInterceptor"> 
 		<property name="userBO" ref="userBO"/> </bean> -->

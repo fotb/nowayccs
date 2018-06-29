@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IMessageBO;
 import com.ccs.dao.IMessageDAO;
@@ -17,11 +18,13 @@ public class IMessageBOImpl implements IMessageBO {
 	private IMessageDAO messageDAO;
 	
 	@Override
+	@Transactional
 	public void saveOrUpdate(MessageVO vo) {
 		messageDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(MessageVO vo) {
 		messageDAO.delete(vo);
 	}

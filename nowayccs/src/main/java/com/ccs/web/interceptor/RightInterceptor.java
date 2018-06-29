@@ -14,7 +14,6 @@ import com.ccs.vo.OperationVO;
 import com.ccs.vo.UserVO;
 
 public class RightInterceptor extends HandlerInterceptorAdapter {
-
 	@Autowired
 	private IUserBO userBO;
 
@@ -28,9 +27,9 @@ public class RightInterceptor extends HandlerInterceptorAdapter {
 		String action = request.getParameter("action");
 //		System.out.println("action : " + action);
 
-//		System.out.println("action : " + className + action);
-
-		if ("com.ccs.web.LoginController".equals(className) || "com.ccs.web.IndexController".equals(className)) {
+		System.out.println("action : " + className + action);
+		
+		if ("com.ccs.web.LoginController".equals(className) || "com.ccs.web.IndexController".equals(className) || "com.ccs.web.AppReceiverController".equals(className)) {
 			return true;
 		} else {
 			UserVO loginUser = (UserVO) request.getSession().getAttribute(	Constants.SESSION_USER_KEY);

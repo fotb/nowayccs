@@ -174,6 +174,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	}
 
 	@Override
+	@Transactional
 	public void deleteLPS(String id, UserVO userVO) throws Exception {
 		PowerStaffVO psVO = lpsDAO.get(id);
 		psVO.setDeleteFlag(PowerStaffVO.DELETE_FLAG_YES);
@@ -194,6 +195,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	}
 
 	@Override
+	@Transactional
 	public void updatePowerStaff(PowerStaffVO psVO) throws Exception {
 		lpsDAO.update(psVO);
 	}

@@ -63,7 +63,7 @@
 	</listener>
 
 
-	<filter>
+	<!-- <filter>
 		<filter-name>corsFilter</filter-name>
 		<filter-class>com.ccs.web.filter.CorsFilter</filter-class>
 		<init-param>
@@ -86,7 +86,7 @@
 	<filter-mapping>
 		<filter-name>corsFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 
 	<!-- Reads request input using UTF-8 encoding -->
 	<filter>
