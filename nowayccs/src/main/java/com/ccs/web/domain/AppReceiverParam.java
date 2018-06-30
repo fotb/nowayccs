@@ -18,7 +18,7 @@ public class AppReceiverParam implements java.io.Serializable{
 	private String helpMode;
 	
 	@NotBlank(message = "联系电话不能为空")
-	@Length(min = 1, max = 50, message="联系电话长度不能超过50")
+	@Length(min = 1, max = 1024, message="联系电话长度不能超过1024")
 	private String helpTel;
 	
 	@NotBlank(message = "地址不能为空")
@@ -29,7 +29,7 @@ public class AppReceiverParam implements java.io.Serializable{
 	@Length(min = 1, max = 50, message="求助内容长度不能超过1024")
 	private String helpContent;
 	
-	@NotBlank(message = "求助类型不能为空，默认为2")
+	@NotBlank(message = "求助类型不能为空")
 	@Pattern(regexp = "2", message="求助类型默认值为2")
 	private String helpType;
 	
@@ -39,8 +39,6 @@ public class AppReceiverParam implements java.io.Serializable{
 	
 	//@NotBlank(message = "受理人群不能为空")
 	private String helpGroup;
-	
-	private String helpCategory;
 	
 	@NotBlank(message = "状态不能为空，默认为0")
 	@Pattern(regexp = "0", message="状态默认值为0")
@@ -109,14 +107,6 @@ public class AppReceiverParam implements java.io.Serializable{
 
 	public void setHelpGroup(String helpGroup) {
 		this.helpGroup = helpGroup;
-	}
-
-	public String getHelpCategory() {
-		return helpCategory;
-	}
-
-	public void setHelpCategory(String helpCategory) {
-		this.helpCategory = helpCategory;
 	}
 
 	public String getStatus() {

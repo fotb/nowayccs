@@ -52,7 +52,6 @@ public class AppReceiverController {
     	vo.setHelpType(appReceiverParam.getHelpType());
     	vo.setHelpArea(appReceiverParam.getHelpArea());
     	vo.setHelpGroup(appReceiverParam.getHelpGroup());
-    	vo.setHelpCategory(appReceiverParam.getHelpCategory());
 		return vo;
 	} 
 	
