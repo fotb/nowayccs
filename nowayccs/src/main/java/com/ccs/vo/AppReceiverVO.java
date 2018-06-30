@@ -39,9 +39,6 @@ public class AppReceiverVO extends BaseEntity implements Serializable {
 	@Column(name = "HELPGROUP")
 	private String helpGroup;
 	
-	@Column(name = "HELPCATEGORY")
-	private String helpCategory;
-	
 	@Column(name = "STATUS")
 	private String status;
 	
@@ -118,14 +115,6 @@ public class AppReceiverVO extends BaseEntity implements Serializable {
 
 	public void setHelpGroup(String helpGroup) {
 		this.helpGroup = helpGroup;
-	}
-
-	public String getHelpCategory() {
-		return helpCategory;
-	}
-
-	public void setHelpCategory(String helpCategory) {
-		this.helpCategory = helpCategory;
 	}
 
 	public String getStatus() {
