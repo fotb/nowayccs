@@ -1,5 +1,7 @@
 package com.ccs.bo.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ public class AppReceiverBOImpl implements IAppReceiverBO {
 	
 	@Override
 	public void create(AppReceiverVO vo) throws Exception {
+		vo.setCreateTime(new Date());
 		appReceiverDAO.save(vo);
 	}
 

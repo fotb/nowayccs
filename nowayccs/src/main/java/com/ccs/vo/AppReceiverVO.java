@@ -44,6 +44,17 @@ public class AppReceiverVO extends BaseEntity implements Serializable {
 	
 	@Column(name = "STATUS")
 	private String status;
+	
+	@Column(name = "IP")
+	private String ip;
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
 	public String getHelpName() {
 		return helpName;

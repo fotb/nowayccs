@@ -1,33 +1,49 @@
 package com.ccs.web.domain;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 public class AppReceiverParam implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 2912728370708818997L;
 
-//	@NotEmpty 
+	@NotBlank(message = "求助者姓名不能为空")
+	@Length(min = 1, max = 20, message="求助者姓名长度不能超过20")
 	private String helpName;
 	
-//	@NotEmpty
+	@NotBlank(message = "求助方式不能为空，默认为6")
+	@Pattern(regexp = "6", message="求助方式默认值为6")
 	private String helpMode;
 	
-//	@NotEmpty 
+	@NotBlank(message = "联系电话不能为空")
+	@Length(min = 1, max = 50, message="联系电话长度不能超过50")
 	private String helpTel;
 	
-//	@NotEmpty 
+	@NotBlank(message = "地址不能为空")
+	@Length(min = 1, max = 50, message="地址长度不能超过50")
 	private String helpAddr;
 	
-//	@NotEmpty 
+	@NotBlank(message = "求组内容不能为空")
+	@Length(min = 1, max = 50, message="求助内容长度不能超过1024")
 	private String helpContent;
 	
-//	@NotEmpty
+	@NotBlank(message = "求助类型不能为空，默认为2")
+	@Pattern(regexp = "2", message="求助类型默认值为2")
 	private String helpType;
 	
+	@NotBlank(message = "求助区域不能为空")
+	@Length(min = 1, max = 10, message="求助区域长度不能超过10")
 	private String helpArea;
 	
+	//@NotBlank(message = "受理人群不能为空")
 	private String helpGroup;
 	
 	private String helpCategory;
 	
+	@NotBlank(message = "状态不能为空，默认为0")
+	@Pattern(regexp = "0", message="状态默认值为0")
 	private String status;
 
 	

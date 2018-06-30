@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +40,13 @@ public class ExceptionAdvice {
         logger.error("参数解析失败", e);  
         return new Response().failure("could_not_read_json");  
     }  
-  
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)  
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Response handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    	logger.error("参数校验失败", e);  
+        return new Response().failure("validate_fail:请检查提交的数据是否为空、超长:" + e.getMessage());  
+    }
     /** 
      * 405 - Method Not Allowed 
      */  

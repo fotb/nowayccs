@@ -41,7 +41,9 @@ public class CorsFilter implements Filter {
 			List<String> allowOriginList = Arrays.asList(allowOrigin.split(","));
 			if (!allowOriginList.isEmpty()) {
 				String currentOrigin = request.getHeader("Origin");
-				if ("*".equals(allowOrigin) || allowOriginList.contains(currentOrigin)) {
+				if ("*".equals(allowOrigin) ) {
+					response.setHeader("Access-Control-Allow-Origin", "*");
+				} else if(allowOriginList.contains(currentOrigin)) {
 					response.setHeader("Access-Control-Allow-Origin", currentOrigin);
 				}
 			}
