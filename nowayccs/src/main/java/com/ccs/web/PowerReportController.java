@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ccs.bo.IAreaBO;
 import com.ccs.bo.ILightPowerStaffBO;
 import com.ccs.util.DateUtil;
@@ -96,6 +99,7 @@ public class PowerReportController {
 		//
 		// jsonObj.put("rows", jsonArray.toString());
 		HSSFWorkbook workbook = null;
+		final String userAgent = request.getHeader("USER-AGENT");
 		try {
 
 			if ("\\".equals(File.separator)) { // windows
@@ -105,8 +109,17 @@ public class PowerReportController {
 			}
 			// 进行转码，使其支持中文文件名
 			codedFileName = "电工派单量统计报表";
-			response.setHeader("content-disposition",
-					"attachment;filename=" + new String(codedFileName.getBytes("UTF-8"), "ISO8859-1") + ".xls");
+			String finalFileName = null;
+			if (StringUtils.contains(userAgent, "MSIE")) {// IE浏览器
+				finalFileName = URLEncoder.encode(codedFileName, "UTF8");
+			} else if (StringUtils.contains(StringUtils.lowerCase(userAgent), "firefox")) {// google,火狐浏览器
+				finalFileName = new String(codedFileName.getBytes(), "ISO8859-1");
+			} else {
+				finalFileName = URLEncoder.encode(codedFileName, "UTF8");// 其他浏览器
+			}
+			response.setCharacterEncoding("utf-8");
+			response.setHeader("content-disposition", "attachment;filename=" + finalFileName + ".xls");
+			response.setContentType("application/vnd.ms-excel");
 			// response.addHeader("Content-Disposition", "attachment; filename="
 			// + codedFileName + ".xls");
 			// 产生工作簿对象
@@ -169,9 +182,9 @@ public class PowerReportController {
 			@RequestParam(value = "infoEndDt", required = false) String endDt,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "rows", required = false) String rows) throws Exception {
-		
-		
-		List<PowerInfoListBean> list = lpsBO.queryPowerInfo(startDt, endDt, Integer.valueOf(page), Integer.valueOf(rows));
+
+		List<PowerInfoListBean> list = lpsBO.queryPowerInfo(startDt, endDt, Integer.valueOf(page),
+				Integer.valueOf(rows));
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("total", lpsBO.queryPowerInfoCount(startDt, endDt));
 		JSONArray jsonArray = JSONArray.fromObject(list);
@@ -180,9 +193,6 @@ public class PowerReportController {
 		return jsonObj.toString();
 	}
 
-	
-	
-	
 	@RequestMapping(params = "action=exportpowerinfo")
 	public void exportPowerInfo(@RequestParam(value = "infoStartDt", required = false) String infoStartDt,
 			@RequestParam(value = "infoEndDt", required = false) String infoEndDt, HttpServletRequest request,
@@ -209,6 +219,7 @@ public class PowerReportController {
 		//
 		// jsonObj.put("rows", jsonArray.toString());
 		HSSFWorkbook workbook = null;
+		final String userAgent = request.getHeader("USER-AGENT");
 		try {
 
 			if ("\\".equals(File.separator)) { // windows
@@ -218,8 +229,17 @@ public class PowerReportController {
 			}
 			// 进行转码，使其支持中文文件名
 			codedFileName = "电力服务派单详细表";
-			response.setHeader("content-disposition",
-					"attachment;filename=" + new String(codedFileName.getBytes("UTF-8"), "ISO8859-1") + ".xls");
+
+			String finalFileName = null;
+			if (StringUtils.contains(userAgent, "MSIE")) {// IE浏览器
+				finalFileName = URLEncoder.encode(codedFileName, "UTF8");
+			} else if (StringUtils.contains(StringUtils.lowerCase(userAgent), "firefox")) {// google,火狐浏览器
+				finalFileName = new String(codedFileName.getBytes(), "ISO8859-1");
+			} else {
+				finalFileName = URLEncoder.encode(codedFileName, "UTF8");// 其他浏览器
+			}
+			response.setHeader("content-disposition", "attachment;filename=" + finalFileName + ".xls");
+			response.setContentType("application/vnd.ms-excel");
 			// response.addHeader("Content-Disposition", "attachment; filename="
 			// + codedFileName + ".xls");
 			// 产生工作簿对象
@@ -229,10 +249,10 @@ public class PowerReportController {
 			HSSFRow titleRow = sheet.getRow(0);
 			titleRow.getCell(0).setCellValue(
 					titleRow.getCell(0).getStringCellValue() + "(" + DateUtil.format(new Date(), "yyyy-MM-dd") + ")");
-			
+
 			titleRow = sheet.getRow(1);
 			titleRow.getCell(0).setCellValue(infoStartDt + " ---- " + infoEndDt);
-			
+
 			List<PowerInfoListBean> beanList = lpsBO.queryPowerInfo(infoStartDt, infoEndDt);
 			for (int i = 0; i < beanList.size(); i++) {
 				PowerInfoListBean bean = beanList.get(i);
@@ -266,8 +286,7 @@ public class PowerReportController {
 		}
 		System.out.println("文件生成...");
 	}
-	
-	
+
 	@RequestMapping(params = "action=fix")
 	public String associate(ModelMap model) throws Exception {
 		lpsBO.fix();
