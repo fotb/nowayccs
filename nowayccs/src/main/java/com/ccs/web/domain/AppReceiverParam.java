@@ -30,7 +30,6 @@ public class AppReceiverParam implements java.io.Serializable{
 	private String helpContent;
 	
 	@NotBlank(message = "求助类型不能为空")
-	@Pattern(regexp = "2", message="求助类型默认值为2")
 	private String helpType;
 	
 	@NotBlank(message = "求助区域不能为空")
