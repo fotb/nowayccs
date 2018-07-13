@@ -25,7 +25,9 @@ public class ClassOfEntpriseDAOImpl extends DefaultDAOSupport implements
 
 	@Override
 	public void saveOrUpdate(List<ClassOfEntpriseVO> list) {
-		getHibernateTemplate().saveOrUpdate(list);
+		for (ClassOfEntpriseVO classOfEntpriseVO : list) {
+			getHibernateTemplate().saveOrUpdate(classOfEntpriseVO);
+		}
 	}
 
 	@Override

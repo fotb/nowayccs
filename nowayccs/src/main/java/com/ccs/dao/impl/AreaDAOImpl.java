@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
