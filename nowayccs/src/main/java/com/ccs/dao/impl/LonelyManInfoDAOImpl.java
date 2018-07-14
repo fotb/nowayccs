@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.ILonelyManInfoDAO;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
-import com.ccs.vo.InformationVO;
 import com.ccs.vo.LonelyManInfoVO;
 import com.ccs.web.domain.LfMgrForm;
 
@@ -57,7 +55,7 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 		return (List<String>) getHibernateTemplate().find("select manId from LonelyManInfoVO vo where (vo.manName like ? or ? is null) and (vo.telphone like ? or ? is null)", list.toArray());
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<LonelyManInfoVO> queryManInfo(LfMgrForm lfMgrForm,
 			final PageInfo pageInfo) {
@@ -98,7 +96,7 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 		});
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public int countManInfo(LfMgrForm lfMgrForm) {
 		final List<String> valList = new ArrayList<String>();

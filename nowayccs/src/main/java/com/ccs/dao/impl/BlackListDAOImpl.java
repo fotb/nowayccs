@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -13,7 +12,6 @@ import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.IBlackListDAO;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.BlackListVO;
-import com.ccs.vo.InformationVO;
 
 @Repository("blackListDAO")
 public class BlackListDAOImpl extends DefaultDAOSupport implements
@@ -45,10 +43,10 @@ public class BlackListDAOImpl extends DefaultDAOSupport implements
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<BlackListVO> findByParams(final String phoneNum, final String levels, final PageInfo pageInfo) {
 		return (List<BlackListVO>) getHibernateTemplate().execute(new HibernateCallback<List<BlackListVO>>() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public List<BlackListVO> doInHibernate(Session session)
 					throws HibernateException {

@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -40,7 +39,7 @@ public class DictDAOImpl extends DefaultDAOSupport implements IDictDAO {
 				dictType);
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DictVO> findByType(final String dictType, final PageInfo pageInfo) {
 		   return  (List<DictVO>) getHibernateTemplate().execute( new  HibernateCallback<Object>() { 

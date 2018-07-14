@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class VolunteerDAOImpl extends DefaultDAOSupport implements
 		return getCountByParams(status, serviceType, areaId, areaSubId, volunteerNo, null);
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<VolunteerVO> findByParams(String status, String serviceType,
 			String areaId, String areaSubId, String volunteerNo,

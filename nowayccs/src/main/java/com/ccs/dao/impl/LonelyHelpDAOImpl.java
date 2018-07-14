@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.ILonelyHelpDAO;
 import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
-import com.ccs.vo.InformationVO;
 import com.ccs.vo.LonelyHelpVO;
 
 @Repository("lonelyHelpDAO")
@@ -36,7 +34,7 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 		return getHibernateTemplate().get(LonelyHelpVO.class, helpId);
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<LonelyHelpVO> query(final List<String> lonelyManIds,
 			final List<String> memberIds, final Date startDt, final Date endDt, final PageInfo pageInfo) {
@@ -87,7 +85,7 @@ public class LonelyHelpDAOImpl extends DefaultDAOSupport implements
 		});
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public int queryCount(final List<String> lonelyManIds, final List<String> memberIds,
 			final Date startDt, final Date endDt) {

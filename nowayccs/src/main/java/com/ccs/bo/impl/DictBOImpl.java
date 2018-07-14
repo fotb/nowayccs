@@ -15,19 +15,18 @@ import com.ccs.util.PageInfo;
 import com.ccs.vo.DictVO;
 
 @Service("dictBO")
+@Transactional
 public class DictBOImpl implements IDictBO {
 	
 	@Autowired
 	private IDictDAO dictDAO;
 
 	@Override
-	@Transactional
 	public void saveOrUpdate(DictVO vo) {
 		dictDAO.saveOrUpdate(vo);
 	}
 
 	@Override
-	@Transactional
 	public void delete(DictVO vo) {
 		dictDAO.delete(vo);
 	}

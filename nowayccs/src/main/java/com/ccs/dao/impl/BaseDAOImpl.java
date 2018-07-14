@@ -78,7 +78,6 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		return (List<E>) query.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public E get(String pid) {
 		return (E) this.getSessionFactory().getCurrentSession().get(this.clazz, pid);

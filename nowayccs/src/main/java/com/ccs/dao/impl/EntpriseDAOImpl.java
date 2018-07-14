@@ -1,7 +1,6 @@
 package com.ccs.dao.impl;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +44,11 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 		return count.intValue();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<EntpriseVO> findAll(final PageInfo pageInfo) {
 		return (List<EntpriseVO>) getHibernateTemplate().execute(
 				new HibernateCallback<List<EntpriseVO>>() {
+					@SuppressWarnings("unchecked")
 					@Override
 					public List<EntpriseVO> doInHibernate(Session session)
 							throws HibernateException {
@@ -93,13 +92,13 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 	/**
 	 * bigEntClassID,smallEntClassID,entClassID,: ���Ϊ�գ�����Բ�ѯ����
 	 */
-	@SuppressWarnings({ "unchecked", "deprecation" })
 	public List<EntpriseVO> findByParams(final String entpriseName,
 			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
 			final String status, final String address, final PageInfo pageInfo) {
 		return (List<EntpriseVO>) getHibernateTemplate().execute(
 				new HibernateCallback<List<EntpriseVO>>() {
+					@SuppressWarnings("unchecked")
 					@Override
 					public List<EntpriseVO> doInHibernate(Session session)
 							throws HibernateException {

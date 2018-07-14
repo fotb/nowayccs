@@ -28,8 +28,15 @@ function postLog(action, logId) {
 	});
 }
 $(document).ready(function(){
+	function sessionHeartBeat(){
+		phone_status = "1";
+		phone_no = "";
 
-
+   		$.post("index.do?action=sessionHeartBeat", {status: phone_status, phoneNo: phone_no}, function(data) {
+		});
+	}
+	//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
+	setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
 });
 
 </script>

@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class MessageDAOImpl extends DefaultDAOSupport implements IMessageDAO {
 		return getHibernateTemplate().get(MessageVO.class, msgId);
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<MessageVO> findByParams(final String msgType, final String creator,
 			final String title, final String startDt, final String endDt, final PageInfo pageInfo) {

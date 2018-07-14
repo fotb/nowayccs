@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -38,7 +37,7 @@ public class RoleDAOImpl extends DefaultDAOSupport implements IRoleDAO {
 		return (List<RoleVO>) getHibernateTemplate().find("from RoleVO");
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<RoleVO> findAll(final PageInfo pageInfo) {
 		return (List<RoleVO>) getHibernateTemplate().execute(

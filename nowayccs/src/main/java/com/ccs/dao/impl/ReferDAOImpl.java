@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -32,7 +31,7 @@ public class ReferDAOImpl extends DefaultDAOSupport implements IReferDAO {
 		return getHibernateTemplate().get(ReferVO.class, referId);
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ReferVO> findByParams(final String title, final String referType,
 			final PageInfo pageInfo) {

@@ -27,6 +27,7 @@ public class UserTrafficDTO implements Serializable {
 	
 	private int powerTraffic;
 
+	@SuppressWarnings("unused")
 	private int totalTraffic;
 	
 	public int getTotalTraffic() {

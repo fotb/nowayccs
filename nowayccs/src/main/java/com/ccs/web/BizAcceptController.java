@@ -340,12 +340,13 @@ public class BizAcceptController {
 	
 	@RequestMapping(params = "action=helphist", method = RequestMethod.GET)
 	public @ResponseBody String getHelpHist(@RequestParam(value = "callNo", required = false) String callNo, 
-			@RequestParam("_search") String _search,
-			@RequestParam("nd") String nd,
+//			@RequestParam("_search") String _search,
+//			@RequestParam("nd") String nd,
 			@RequestParam("rows") int rows,
-			@RequestParam("page") int page,
-			@RequestParam("sidx") String sidx,
-			@RequestParam("sord") String sord) throws UnsupportedEncodingException {
+			@RequestParam("page") int page
+//			@RequestParam("sidx") String sidx,
+//			@RequestParam("sord") String sord
+			) throws UnsupportedEncodingException {
 		List<InformationVO> list = new ArrayList<InformationVO>();
 		List<InfoBean> infoList = new ArrayList<InfoBean>();
 		PageInfo pageInfo = new PageInfo();
@@ -391,7 +392,16 @@ public class BizAcceptController {
 		propList.add("status");
 		propList.add("infoId");
 		
-		return JQGridFormatterUtil.getJSON(page, pageInfo.getTotalRecords(), rows, infoList, propList, "infoId");
+		JSONObject jsonObj = new JSONObject();
+
+		jsonObj.put("total", pageInfo.getTotalRecords());
+
+		JSONArray jsonArray = JSONArray.fromObject(infoList);
+
+		jsonObj.put("rows", jsonArray.toString());
+//		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
+		return jsonObj.toString();
+//		return JQGridFormatterUtil.getJSON(page, pageInfo.getTotalRecords(), rows, infoList, propList, "infoId");
 	}
 	
 	@RequestMapping(params = "action=recordfile", method = RequestMethod.POST)

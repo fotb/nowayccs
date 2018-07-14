@@ -26,6 +26,7 @@ import com.ccs.vo.UserRoleVO;
 import com.ccs.vo.UserVO;
 
 @Service("userBO")
+@Transactional
 public class UserBOImpl implements IUserBO {
 
 	@Autowired

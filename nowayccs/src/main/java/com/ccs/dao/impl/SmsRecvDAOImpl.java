@@ -34,7 +34,9 @@ public class SmsRecvDAOImpl extends DefaultDAOSupport implements ISmsRecvDAO {
 
 	@Override
 	public void saveOrUpdateAll(List<SmsRecvVO> list) {
-		getHibernateTemplate().saveOrUpdate(list);
+		for (SmsRecvVO smsRecvVO : list) {
+			getHibernateTemplate().saveOrUpdate(smsRecvVO);
+		}
 	}
 
 }

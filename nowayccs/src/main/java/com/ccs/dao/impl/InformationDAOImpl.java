@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -10,7 +9,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.springframework.orm.hibernate5.HibernateCallback;
@@ -47,7 +45,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return getHibernateTemplate().get(InformationVO.class, infoId);
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findByHelpTel(final String helpTel, final PageInfo pageInfo) {
 		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
@@ -71,7 +69,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findByCreatorAndStatus(final String userId,
 			final String status, final String helpType, final PageInfo pageInfo) {
@@ -98,7 +96,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findByDeliverer(final String deliverer, final String helpType,
 			final PageInfo pageInfo) {
@@ -125,7 +123,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findByParams(final InfoSearchBean bean, final PageInfo pageInfo) {
 		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
@@ -245,7 +243,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findLifeInfoByParams(final LifeInfoSearchBean bean,
 			final PageInfo pageInfo) {
@@ -395,7 +393,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findAffairInfoByParams(
 			final AffairInfoSearchBean bean, final PageInfo pageInfo) {
@@ -485,7 +483,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		return count.intValue();
 	}
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<HelpCountByPhoneBean> getHelpCountByPhone(final Date startDt,
 			final Date endDt, final PageInfo pageInfo) {
@@ -537,7 +535,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("group by LTRIM(t.helptel, '573')) a ");
 		buffer.append("order by a.telCount desc");
 		
-		@SuppressWarnings("deprecation")
+		
 		List<Object> resultList = (List<Object>) getHibernateTemplate().execute(new HibernateCallback<List<Object>>() {
 			@Override
 			public List<Object> doInHibernate(Session session)
