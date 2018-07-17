@@ -7,11 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "APP_RECEIVER")
-public class AppReceiverVO extends BaseEntity implements Serializable {
-	
-	public static final String STATUS_PROCESSING = "P";
-	public static final String STATUS_FINISH = "F";
+@Table(name = "APP_RECEIVER_HIST")
+public class AppReceiverHistVO extends BaseEntity implements Serializable {
 
 	/**
 	 * 
@@ -47,6 +44,9 @@ public class AppReceiverVO extends BaseEntity implements Serializable {
 	
 	@Column(name = "IP")
 	private String ip;
+	
+	@Column(name = "AGENTID")
+	private String agentId;
 
 	public String getIp() {
 		return ip;
@@ -128,4 +128,11 @@ public class AppReceiverVO extends BaseEntity implements Serializable {
 		this.status = status;
 	}
 
+	public String getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(String agentId) {
+		this.agentId = agentId;
+	}
 }
