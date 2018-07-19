@@ -56,6 +56,7 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.map</url-pattern>
 	</servlet-mapping>
+	
 
 	<!-- Spring 容器启动监听器 -->
 	<listener>
@@ -115,6 +116,10 @@
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 
+<!-- 	<servlet-mapping>
+		<servlet-name>annomvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping> -->
 	<servlet-mapping>
 		<servlet-name>annomvc</servlet-name>
 		<url-pattern>/</url-pattern>

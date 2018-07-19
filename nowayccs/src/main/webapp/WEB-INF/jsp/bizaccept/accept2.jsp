@@ -137,7 +137,7 @@ $(document).ready(function(){
 			
     $('#createTime').datetimebox({
         required: true,
-        showSeconds: false
+        showSeconds: true
     });
 });
 
@@ -145,20 +145,21 @@ function getPhoneLevels(phone) {
 	if(phone == "") {
 		phone = "${bizAccept.helpTel}";
 	}
-	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(data) {
-		if(data != "") {
+	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(res) {
+		data = res.data
+		if(null != data) {
 			$("#phonelevels").html("");
-			if(data[0].levels < 0) {
+			if(data.levels < 0) {
 				$("#phonelevels").css("color", "black");
 			} else {
 				$("#phonelevels").css("color", "red");
 			}
 			
-			for(i = 0; i < Math.abs(data[0].levels); i++) {
+			for(i = 0; i < Math.abs(data.levels); i++) {
 				$("#phonelevels").append("★");
 			}
 			
-			$("#phonelevels").append("(" + data[0].remark + ")");
+			$("#phonelevels").append("(" + data.remark + ")");
 		}
 	});
 }
@@ -204,7 +205,8 @@ function getLonelyFamily(phone) {
 		phone = "${bizAccept.helpTel}";
 	}
 	if(phone != "") {
-		$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(data) {
+		$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(res) {
+		data = res.data;	
 		if(null != data) {
 			$("#manName").text(data.manName);
 			$("#manSex").text(data.manSex);
@@ -442,7 +444,8 @@ function getLonelyFamily(phone) {
     </tr>
   </table>
   <form:hidden path="creator"/>
-  <form:hidden path="createTime"/>
+<%--   <form:hidden path="createTime"/> --%>
+<form:hidden path="appInfoId"/>
 		<form:hidden path="popupFlag"/>
 	</form:form>
 </body>

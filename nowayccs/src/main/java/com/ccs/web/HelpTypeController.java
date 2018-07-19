@@ -21,9 +21,9 @@ public class HelpTypeController {
 	private IHelpTypeBO helpTypeBO;
 
 	@RequestMapping(params = "action=list", method = RequestMethod.GET)
-	public @ResponseBody String getList(@RequestParam String parentId) throws UnsupportedEncodingException {
-		List<HelpTypeVO> list = helpTypeBO.getList(parentId);
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<HelpTypeVO> getList(@RequestParam String parentId) throws UnsupportedEncodingException {
+//		List<HelpTypeVO> list = helpTypeBO.getList(parentId);
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return helpTypeBO.getList(parentId);
 	}
 }

@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONObject;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.ILonelyFamilyBO;
 import com.ccs.util.Constants;
+import com.ccs.util.Response;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.DictVO;
 import com.ccs.vo.LonelyHelpVO;
@@ -41,7 +40,8 @@ public class LonelyFamilyController {
 	private IDictBO dictBO;
 	
 	@RequestMapping(params = "action=lonelyManInfo", method = RequestMethod.GET)
-	public @ResponseBody String loadFamilyInfo(@RequestParam(value = "callNo", required = false) String callNo) throws UnsupportedEncodingException {
+	public @ResponseBody Response loadFamilyInfo(@RequestParam(value = "callNo", required = false) String callNo) throws UnsupportedEncodingException {
+		Response res = new Response();
 		if(null != callNo && !callNo.equals("")) {
 			if(callNo.startsWith("573")) {
 				callNo = callNo.substring(3);
@@ -53,11 +53,11 @@ public class LonelyFamilyController {
 				callNo = callNo.substring(2);
 			}
 			LonelyManInfoVO vo = lonelyFamilyBO.findLonelyManInfo(callNo);
-			return JSONObject.fromObject(vo).toString();
+			res.success(vo);
 		} else {
-			return null;
+			res.failure();
 		}
-		
+		return res;
 	}
 	
 	@RequestMapping(params = "action=accept")

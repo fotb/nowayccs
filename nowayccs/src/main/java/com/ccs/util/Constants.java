@@ -10,6 +10,7 @@ public class Constants {
 
 	/* 系统权限定义 */
 	public static String SYS_PERMISSION_YWSL = "10"; // 业务受理
+	public static String SYS_PERMISSION_APP_ACCEPT = "11"; // app受理
 	public static String SYS_PERMISSION_SHYWCL = "20"; // 生活业务处理
 	public static String SYS_PERMISSION_SHYWCX = "21"; // 查看生活服务详细信息
 	public static String SYS_PERMISSION_SWYWCL = "30"; // 事务业务处理
@@ -141,6 +142,7 @@ public class Constants {
 	}
 
 	public static final String HELP_MODE_SMS = "4";
+	public static final String HELP_MODE_APP = "6";
 
 	/* 求助类型 */
 	/*

@@ -72,17 +72,17 @@ public class VolunteerController {
 	}
 	
 	@RequestMapping(params = "action=area", method = RequestMethod.GET)
-	public @ResponseBody String getArea() throws UnsupportedEncodingException {
-		List<AreaVO> list = volunteerBO.getAllArea();
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<AreaVO> getArea() throws UnsupportedEncodingException {
+//		List<AreaVO> list = volunteerBO.getAllArea();
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return volunteerBO.getAllArea();
 	}
 	
 	@RequestMapping(params = "action=subarea", method = RequestMethod.GET)
-	public @ResponseBody String getSubArea(@RequestParam String areaId) throws UnsupportedEncodingException {
-		List<AreaSubVO> list = volunteerBO.getSubAreaByAreaId(areaId);
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<AreaSubVO> getSubArea(@RequestParam String areaId) throws UnsupportedEncodingException {
+//		List<AreaSubVO> list = volunteerBO.getSubAreaByAreaId(areaId);
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return volunteerBO.getSubAreaByAreaId(areaId);
 	}
 	
 	@RequestMapping(params = "action=add")

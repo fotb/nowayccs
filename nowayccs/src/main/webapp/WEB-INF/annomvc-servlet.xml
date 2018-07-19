@@ -20,31 +20,16 @@
 	<context:component-scan	base-package="com.ccs.web" />
 		
 	
-		    <!-- 扫描注解的驱动 -->
-        <mvc:annotation-driven validator="validator"/>
-        
-        <!-- 设置扫描包 -->
-        <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-                <property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
-                <!-- 不配置则默认为classPath下的ValidationMessages -->
-                <property name="validationMessageSource" ref="validationMessageSource"></property>
-        </bean>
-        <bean id="validationMessageSource"
-                  class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-                  <property name="basename" value="classpath:validatorMessages"/> <!-- 资源路径 -->
-                  <property name="fileEncodings" value="utf-8" />
-                  <property name="cacheSeconds" value="1200" /> <!-- 缓存时间 -->
-        </bean>
 
  	<bean id="objectMapper" class="com.ccs.util.json.CustomObjectMapper" init-method="init">
 		<property name="camelCaseToLowerCaseWithUnderscores" value="false" />
 		<property name="dateFormatPattern" value="yyyy-MM-dd HH:mm:ss" />
-	</bean>
+	</bean> 
 	
 	
 	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>
 				<bean
@@ -71,7 +56,7 @@
 
 
 	<bean
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
 		<property name="interceptors">
 			<list>
 				<bean class="com.ccs.web.interceptor.UserInterceptor" />

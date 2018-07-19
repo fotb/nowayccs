@@ -18,7 +18,6 @@ import com.ccs.vo.AppReceiverVO;
 import com.ccs.web.domain.AppReceiverParam;
 
 @RestController
-
 public class AppReceiverController {
 
 	@Autowired

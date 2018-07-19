@@ -374,6 +374,10 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			bean.setAreaSubName(areaSubMap.get(psaVO.getAreaSubId()));
 			bean.setDeleteFlag(psVO.getDeleteFlag());
 			bean.setPid(psVO.getPid());
+			bean.setCreateTime(psVO.getCreateTime());
+			bean.setDeleteFlag(psVO.getDeleteFlag());
+			bean.setUpdateDT(psVO.getUpdateDT());
+			bean.setLastHandler(psVO.getLastHandler());
 			pslBeanList.add(bean);
 		}
 		

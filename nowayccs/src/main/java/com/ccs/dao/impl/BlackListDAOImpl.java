@@ -35,7 +35,7 @@ public class BlackListDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public BlackListVO findByPhoneNum(String phoneNum) {
-		List<BlackListVO> list = (List<BlackListVO>) getHibernateTemplate().find("from BlackListVO t where t.phoneNum = ?", phoneNum);
+		List<BlackListVO> list = (List<BlackListVO>) getHibernateTemplate().find("from BlackListVO t where trim(t.phoneNum) = ?", phoneNum);
 		if(!list.isEmpty()) {
 			return list.get(0);
 		} else {

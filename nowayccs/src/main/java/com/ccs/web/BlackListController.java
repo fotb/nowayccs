@@ -2,8 +2,6 @@ package com.ccs.web;
 
 import java.util.List;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IBlackListBO;
 import com.ccs.util.PageInfo;
+import com.ccs.util.Response;
 import com.ccs.vo.BlackListVO;
 
 @Controller
@@ -88,9 +87,10 @@ public class BlackListController {
 	}
 	
 	@RequestMapping(params = "action=phonelevels", method = RequestMethod.GET)
-	public @ResponseBody String getPhoneLevles(@RequestParam String phoneNum) {
+	public @ResponseBody Response getPhoneLevles(@RequestParam String phoneNum) {
 		BlackListVO vo = blackListBO.findByPhoneNum(phoneNum);
-		JSONArray jsonObj = JSONArray.fromObject(vo);
-		return jsonObj.toString();
+		Response res = new Response();
+		res.success(vo);
+		return res;
 	}
 }

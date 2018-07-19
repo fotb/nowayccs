@@ -36,35 +36,35 @@ public class CommonJsonController {
 	private IUserBO userBO;
 	
 	@RequestMapping(params = "action=entcategory", method = RequestMethod.GET)
-	public @ResponseBody String getCategory(@RequestParam String parentId) throws UnsupportedEncodingException {
-		List<EntCategoryVO> list = entpriseBO.findEntCategoryByParentId(parentId);
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<EntCategoryVO> getCategory(@RequestParam String parentId) throws UnsupportedEncodingException {
+//		List<EntCategoryVO> list = entpriseBO.findEntCategoryByParentId(parentId);
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return entpriseBO.findEntCategoryByParentId(parentId);
 	}
 	
 	@RequestMapping(params = "action=area", method = RequestMethod.GET)
-	public @ResponseBody String getArea() throws UnsupportedEncodingException {
-		List<AreaVO> list = areaBO.findAllArea();
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<AreaVO> getArea() throws UnsupportedEncodingException {
+//		List<AreaVO> list = areaBO.findAllArea();
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return areaBO.findAllArea();
 	}
 	
 	@RequestMapping(params = "action=subarea")
-	public @ResponseBody String getSubArea(@RequestParam String areaId) throws UnsupportedEncodingException {
-		List<AreaSubVO> list = areaBO.findAreaSubByAreaId(areaId);
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<AreaSubVO> getSubArea(@RequestParam String areaId) throws UnsupportedEncodingException {
+//		List<AreaSubVO> list = areaBO.findAreaSubByAreaId(areaId);
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return areaBO.findAreaSubByAreaId(areaId);
 	}
 	
 	@RequestMapping(params = "action=userbyoprid", method = RequestMethod.GET)
-	public @ResponseBody String getUserByOperationId(@RequestParam String oprId) {
-		List<UserVO> list = userBO.findUserByOpertaionId(oprId);
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<UserVO> getUserByOperationId(@RequestParam String oprId) {
+//		List<UserVO> list = userBO.findUserByOpertaionId(oprId);
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return userBO.findUserByOpertaionId(oprId);
 	}
 	
 	@RequestMapping(params = "action=arealist", method = RequestMethod.GET)
-	public @ResponseBody String getAreaForChomboBox() throws UnsupportedEncodingException {
+	public @ResponseBody List<ChomboBoxContainer> getAreaForChomboBox() throws UnsupportedEncodingException {
 		List<AreaVO> list = areaBO.findAllArea();
 		List<ChomboBoxContainer> cbList = new ArrayList<ChomboBoxContainer>();
 		for (AreaVO areaVO : list) {
@@ -73,12 +73,12 @@ public class CommonJsonController {
 			cb.setValue(areaVO.getAreaId());
 			cbList.add(cb);
 		}
-		JSONArray jsonObj = JSONArray.fromObject(cbList);
-		return jsonObj.toString();
+//		JSONArray jsonObj = JSONArray.fromObject(cbList);
+		return cbList;
 	}
 	
 	@RequestMapping(params = "action=subarealist")
-	public @ResponseBody String getSubAreaForChomboBox(@RequestParam String areaId) throws UnsupportedEncodingException {
+	public @ResponseBody List<ChomboBoxContainer> getSubAreaForChomboBox(@RequestParam String areaId) throws UnsupportedEncodingException {
 		List<AreaSubVO> list = areaBO.findAreaSubByAreaId(areaId);
 		List<ChomboBoxContainer> cbList = new ArrayList<ChomboBoxContainer>();
 		for (AreaSubVO areaSubVO : list) {
@@ -87,7 +87,7 @@ public class CommonJsonController {
 			cb.setValue(areaSubVO.getAreaSubId());
 			cbList.add(cb);
 		}
-		JSONArray jsonObj = JSONArray.fromObject(cbList);
-		return jsonObj.toString();
+//		JSONArray jsonObj = JSONArray.fromObject(cbList);
+		return cbList;
 	}
 }

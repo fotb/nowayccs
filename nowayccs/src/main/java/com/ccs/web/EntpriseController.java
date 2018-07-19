@@ -91,10 +91,10 @@ public class EntpriseController {
 	}
 	
 	@RequestMapping(params = "action=getCategory", method = RequestMethod.GET)
-	public @ResponseBody String getCategory(@RequestParam String parentId) throws UnsupportedEncodingException {
-		List<EntCategoryVO> list = entpriseBO.findEntCategoryByParentId(parentId);
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<EntCategoryVO>  getCategory(@RequestParam String parentId) throws UnsupportedEncodingException {
+//		List<EntCategoryVO> list = entpriseBO.findEntCategoryByParentId(parentId);
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return  entpriseBO.findEntCategoryByParentId(parentId);
 	}
 	
 	

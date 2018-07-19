@@ -37,7 +37,7 @@ public class XzspListController {
 	}
 
 	@RequestMapping(params = "action=listAll", method = RequestMethod.GET)
-	public @ResponseBody String listAll(@RequestParam(value = "page", required = false) String page,
+	public @ResponseBody JSONObject listAll(@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "rows", required = false) String rows, ModelMap model) throws Exception {
 
 		List<XzspListVO> list = xzspListBO.findAll(Integer.valueOf(page), Integer.valueOf(rows));
@@ -46,11 +46,11 @@ public class XzspListController {
 		JSONArray jsonArray = JSONArray.fromObject(list);
 
 		jsonObj.put("rows", jsonArray.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=search")
-	public @ResponseBody String search(@RequestParam(value = "key", required = false) String key, ModelMap model)
+	public @ResponseBody JSONObject search(@RequestParam(value = "key", required = false) String key, ModelMap model)
 			throws Exception {
 
 		List<XzspListVO> list = xzspListBO.search(key);
@@ -59,11 +59,11 @@ public class XzspListController {
 		JSONArray jsonArray = JSONArray.fromObject(list);
 
 		jsonObj.put("rows", jsonArray.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=load")
-	public @ResponseBody String load(@RequestParam(value = "key", required = false) String key, ModelMap model)
+	public @ResponseBody JSONObject load(@RequestParam(value = "key", required = false) String key, ModelMap model)
 			throws Exception {
 
 		List<XzspListVO> list = xzspListBO.findByListCode(key);
@@ -72,7 +72,7 @@ public class XzspListController {
 		JSONArray jsonArray = JSONArray.fromObject(list);
 
 		jsonObj.put("rows", jsonArray.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=add")
@@ -136,10 +136,10 @@ public class XzspListController {
 	}
 
 	@RequestMapping(params = "action=codetree", method = RequestMethod.GET)
-	public @ResponseBody String buildListCodeTree() throws Exception {
+	public @ResponseBody JSONArray buildListCodeTree() throws Exception {
 		EasyUiTree tree = xzspListBO.buildListCodeTree();
-		JSONArray jsonArray = JSONArray.fromObject(tree);
-		return jsonArray.toString();
+//		JSONArray jsonArray = JSONArray.fromObject(tree);
+		return JSONArray.fromObject(tree);
 	}
 
 	@RequestMapping(params = "action=view")

@@ -48,6 +48,21 @@ public class AppReceiverHistVO extends BaseEntity implements Serializable {
 	@Column(name = "AGENTID")
 	private String agentId;
 
+	
+	public AppReceiverHistVO(AppReceiverVO vo) {
+		super();
+		this.helpName = vo.getHelpName();
+		this.helpMode = vo.getHelpMode();
+		this.helpTel = vo.getHelpTel();
+		this.helpAddr = vo.getHelpAddr();
+		this.helpContent = vo.getHelpContent();
+		this.helpType = vo.getHelpType();
+		this.helpArea = vo.getHelpArea();
+		this.helpGroup = vo.getHelpGroup();
+		this.status = AppReceiverVO.STATUS_FINISH;
+		this.ip = vo.getIp();
+	}
+
 	public String getIp() {
 		return ip;
 	}

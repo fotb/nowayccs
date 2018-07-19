@@ -22,6 +22,21 @@
       <tr onclick="radioTable(1,'bizaccept.do?action=old')" style="cursor: hand;">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务受理</td>
       </tr>
+      <tr id="aaTR" style="display: none" class="green" align="center">
+        <td><table width="100%"  border="0" cellpadding="1" cellspacing="0">
+          <tr>
+            <td height="5"></td>
+          </tr>
+          <tr>
+            <td class="leftmenu_02"><a href="userAppInfo.do" target="main"><img src="images/leftpic_10.gif" width="70" height="30" border="0"><br>
+                <font color="#FFFFFF">微求助</font></a></td>
+          </tr>
+          <tr>
+            <td height="5"></td>
+          </tr>
+        </table></td>
+      </tr>
+      
       <!-- 
       <tr onclick="radioTable(1,'sms.do')" style="cursor: hand;">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">短信求助</td>
@@ -30,7 +45,7 @@
       <tr onclick="radioTable(2)" style="cursor: hand">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">业务处理</td>
       </tr>
-      <tr id="bbTR" style="display: none" class="green">
+      <tr id="bbTR" style="display: none" class="green" align="center">
         <td><table width="100%"  border="0" cellpadding="1" cellspacing="0">
           <tr>
             <td height="5"></td>
@@ -51,7 +66,7 @@
       <tr onclick="radioTable(3)" style="cursor: hand">
         <td height="24" background="images/bg_leftmenu.gif" class="leftmenu_01">客户回访</td>
       </tr>
-	  <tr id="ccTR" style="display: none" class="green">
+	  <tr id="ccTR" style="display: none" class="green" align="center">
         <td><table width="100%"  border="0" cellpadding="1" cellspacing="0">
           <tr>
             <td height="5"></td>

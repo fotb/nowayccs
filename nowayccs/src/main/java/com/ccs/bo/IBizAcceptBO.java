@@ -10,6 +10,8 @@ import com.ccs.vo.ReferInformationVO;
 public interface IBizAcceptBO {
 	void acceptLife(List<InformationVO> list);
 	
+	void acceptAppLife(List<InformationVO> list, String appInfoId) throws Exception;
+	
 	void acceptAffair(InformationVO vo);
 	
 	void acceptRefer(InformationVO vo, ReferInformationVO referInfoVO);

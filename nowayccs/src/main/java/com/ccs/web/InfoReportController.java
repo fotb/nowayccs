@@ -122,7 +122,7 @@ public class InfoReportController {
 	
 	@RequestMapping(params = "action=infocount", method = RequestMethod.GET)
 	public @ResponseBody
-	String getInfoCount(@RequestParam String creator, String helpType,
+	Map<String, String> getInfoCount(@RequestParam String creator, String helpType,
 			String helpArea, String helpGroup, String startDt, String endDt, String helpContent)
 			throws UnsupportedEncodingException {
 		InfoSearchBean infoSearchBean = new InfoSearchBean();
@@ -218,8 +218,8 @@ public class InfoReportController {
 		map.put("total", String.valueOf(life + affair + refer + fertility + power + jdjt));
 		
 		
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		return jsonObject.toString();
+//		JSONObject jsonObject = JSONObject.fromObject(map);
+		return map;
 	}
 	
 	@RequestMapping(params = "action=lifeinforeport")
@@ -291,7 +291,7 @@ public class InfoReportController {
 	
 	@RequestMapping(params = "action=lifeinfocount", method = RequestMethod.GET)
 	public @ResponseBody
-	String getLifeInfoCount(@RequestParam String receiverType, String keyWords, 
+	Map<String, String>  getLifeInfoCount(@RequestParam String receiverType, String keyWords, 
 			String startDt, String endDt, String helpArea, String creator)
 			throws UnsupportedEncodingException {
 		LifeInfoSearchBean bean = new LifeInfoSearchBean();
@@ -328,8 +328,8 @@ public class InfoReportController {
 		} else {
 			map.put("percent", calculatePercent(satis + basesatis + self, finishtotal));
 		}
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		return jsonObject.toString();
+//		JSONObject jsonObject = JSONObject.fromObject(map);
+		return map;
 	}
 	
 	private String calculatePercent(int y, int z) {
@@ -398,7 +398,7 @@ public class InfoReportController {
 	
 	@RequestMapping(params = "action=affairinfocount", method = RequestMethod.GET)
 	public @ResponseBody
-	String getAffairInfoCount(@RequestParam String startDt, String endDt, String helpArea)
+	Map<String, String> getAffairInfoCount(@RequestParam String startDt, String endDt, String helpArea)
 			throws UnsupportedEncodingException {
 		AffairInfoSearchBean bean = new AffairInfoSearchBean();
 		bean.setStartDt(startDt);
@@ -425,8 +425,8 @@ public class InfoReportController {
 		} else {
 			map.put("percent", calculatePercent(satis + basesatis + self, finishtotal));
 		}
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		return jsonObject.toString();
+//		JSONObject jsonObject = JSONObject.fromObject(map);
+		return map;
 	}
 	
 	@RequestMapping(params = "action=usertrafficreport")

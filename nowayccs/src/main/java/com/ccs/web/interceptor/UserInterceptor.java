@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ccs.bo.IUserBO;
@@ -26,7 +27,9 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		String className = handler.getClass().getName();
+//		String className = handler.getClass().getName();
+		HandlerMethod method = (HandlerMethod) handler;
+		String className = method.getBean().getClass().getName();
 		if("com.ccs.web.LoginController".equals(className) || "com.ccs.web.AppReceiverController".equals(className)) {
 			return true;
 		} else {

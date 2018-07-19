@@ -45,13 +45,13 @@ public class UserAppInfoBOImpl implements IUserAppInfoBO {
 
 	@Override
 	public List<UserAppInfoVO> findByUserId(String userId) throws Exception {
-		String hql = "from UserAPpInfoVO where userid = ?";
+		String hql = "from UserAppInfoVO where userid = ?";
 		return userAppInfoDAO.queryForObject(hql, new Object[] { userId });
 	}
 
 	@Override
 	public List<UserAppInfoVO> findByAppInfoId(String appInfoId) throws Exception {
-		final String hql = "from UserAPpInfoVO where appInfoId = ?";
+		final String hql = "from UserAppInfoVO where appInfoId = ?";
 		return userAppInfoDAO.queryForObject(hql, new Object[] { appInfoId });
 	}
 
