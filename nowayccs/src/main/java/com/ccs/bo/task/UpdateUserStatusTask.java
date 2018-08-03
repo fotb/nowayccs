@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.ccs.bo.IUserStatusBO;
@@ -16,7 +17,7 @@ public class UpdateUserStatusTask {
 	@Autowired
 	private IUserStatusBO userStatusBO;
 	
-	//@Scheduled(cron="0 0/1 * * * ?")
+	@Scheduled(cron="0 0/1 * * * ?")
 	public void doJob() {
 		try {
 			//System.out.println("update user status-------------");

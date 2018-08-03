@@ -7,7 +7,11 @@ import java.io.PrintWriter;
  */
 public class BaseException extends Exception {
 
-        protected Throwable nested;
+        /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1036894612082855750L;
+		protected Throwable nested;
 
         /**
          * @param :

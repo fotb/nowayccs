@@ -18,8 +18,6 @@ import com.ccs.vo.AppReceiverVO;
 import com.ccs.vo.UserAppInfoVO;
 import com.ccs.vo.UserVO;
 
-import net.sf.json.JSONArray;
-
 @Controller
 @RequestMapping("/userAppInfo.do")
 public class UserAppInfoController {

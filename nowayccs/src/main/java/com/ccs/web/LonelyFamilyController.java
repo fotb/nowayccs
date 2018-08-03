@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +30,7 @@ import com.ccs.web.domain.BizAccept;
 @Controller
 @RequestMapping("/lonelyFamily.do")
 public class LonelyFamilyController {
-	private static final Logger logger = Logger.getLogger(LonelyFamilyController.class);
+	//private static final Logger logger = Logger.getLogger(LonelyFamilyController.class);
 	
 	@Autowired
 	private ILonelyFamilyBO lonelyFamilyBO;

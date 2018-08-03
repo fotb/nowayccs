@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ccs.bo.IHelpTypeBO;
 import com.ccs.vo.HelpTypeVO;
 
-import net.sf.json.JSONArray;
-
 @Controller
 public class HelpTypeController {
 	@Autowired

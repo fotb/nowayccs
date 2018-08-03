@@ -6,6 +6,11 @@ package com.ccs.util;
 public class AppException extends BaseException {
 
         /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5265206379118297463L;
+
+		/**
          * @Functionality: ���캯��
          * @param :
          * @return :
