@@ -1,5 +1,6 @@
 package com.ccs.web.interceptor;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ccs.bo.IUserBO;
+import com.ccs.bo.IUserStatusBO;
 import com.ccs.util.Constants;
 import com.ccs.vo.OperationVO;
 import com.ccs.vo.UserVO;
@@ -17,6 +19,9 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	private IUserBO userBO;
+	
+	@Autowired
+	private IUserStatusBO userStatusBO;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -27,6 +32,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 		} else {
 			UserVO loginUser = (UserVO)request.getSession().getAttribute(Constants.SESSION_USER_KEY); 
 			if(null == loginUser) {
+				userStatusBO.updateTimeoutUserStatus(new Date());
 				request.getRequestDispatcher("/login.do?action=relogin").forward(request, response); 
 				return false;
 			} else if(!"com.ccs.web.IndexController".equals(className) && !"com.ccs.web.CommonJsonController".equals(className)){

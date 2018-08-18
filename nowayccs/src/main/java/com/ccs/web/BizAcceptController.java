@@ -80,9 +80,9 @@ public class BizAcceptController {
 			HttpSession session, 
 			ModelMap model) {
 		
-		System.out.println(
-				"ANI:" + callNo + "---logName:" + logName + "---password:" + password + "---agentId: " + agentId + "---groupId:"
-						+ groupId + "---recordFile: " + recordFile + "---bpoHisId: " + bpoHisId + "---orgNumber: " + orgNumber);
+//		System.out.println(
+//				"ANI:" + callNo + "---logName:" + logName + "---password:" + password + "---agentId: " + agentId + "---groupId:"
+//						+ groupId + "---recordFile: " + recordFile + "---bpoHisId: " + bpoHisId + "---orgNumber: " + orgNumber);
 		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = new BizAccept();
 		bizAccept.setHelpTel(callNo);

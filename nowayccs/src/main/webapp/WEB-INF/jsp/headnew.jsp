@@ -20,6 +20,9 @@ function logout(){
 }
 
 
+function openit() {
+	window.open("bizaccept.do?ANI=13958186722", "", 'height=700, width=750, top=0, left=0, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+}
 
 
 function postLog(action, logId) {
@@ -28,8 +31,15 @@ function postLog(action, logId) {
 	});
 }
 $(document).ready(function(){
+	function sessionHeartBeat(){
+		phone_status = "1";
+		phone_no = "";
 
-
+   		$.post("index.do?action=sessionHeartBeat", {status: phone_status, phoneNo: phone_no}, function(data) {
+		});
+	}
+	//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
+	setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
 });
 
 </script>
@@ -47,6 +57,7 @@ $(document).ready(function(){
         <td width="13%" style="vertical-align: middle;">${user.userName}，您好！</td>
         <td width="70%">
         <!-- <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div> -->
+		<!-- <input type="button" name="test" onclick="openit()"/> -->
         </td>
         <td align="center" nowrap="nowrap">
           <script language=JavaScript>
