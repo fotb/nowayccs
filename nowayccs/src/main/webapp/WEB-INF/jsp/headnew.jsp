@@ -8,7 +8,12 @@
 <title>Untitled Document</title>
 	<link rel="stylesheet" type="text/css" href="easyui/themes/gray/easyui.css">
 	<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
-<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+	<link rel="stylesheet" type="text/ccs" href="bootstrap/css/bootstrap.min.css">
+	
+
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap-notify.min.js"></script>
 		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
@@ -33,11 +38,28 @@ $(document).ready(function(){
 		phone_no = "";
 
    		$.post("index.do?action=sessionHeartBeat", {status: phone_status, phoneNo: phone_no}, function(data) {
+			            $('audio').attr("autoplay", "autoplay");
 		});
 	}
-	//setInterval(sessionHeartBeat,300000);// 注意函数名没有引号和括弧！ 
+	//setInterval(sessionHeartBeat,30000);// 注意函数名没有引号和括弧！ 
 	setInterval(sessionHeartBeat,5000);// 注意函数名没有引号和括弧！
+
+
+	function queryAppInfo() {
+		$('audio').remove();
+		$.get("userAppInfo.do?action=newInfo",function(data){
+			if(typeof(data.meta) != 'undefined')  {
+				if(data.meta.success) {
+ 					var theform = document.forms[0];
+					$("<audio src='audio/notify.mp3' autoplay='autoplay'></audio>").appendTo(theform);
+				}
+			}
+		});
+	}
+
+	setInterval(queryAppInfo,10000);
 });
+
 
 </script>
 <body>
@@ -53,7 +75,7 @@ $(document).ready(function(){
       <tr>
         <td width="13%" style="vertical-align: middle;">${user.userName}，您好！</td>
         <td width="70%">
-        <!-- <div style="position:absolute;top:120;left:595; VISIBILITY:hidden;" id="TextResult"></div> -->
+        	<div id="notify"></div>
         </td>
         <td align="center" nowrap="nowrap">
           <script language=JavaScript>

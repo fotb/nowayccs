@@ -14,6 +14,8 @@ public interface IInformationDAO {
 
 	void saveOrUpate(final InformationVO vo);
 	
+	void save(final InformationVO vo);
+	
 	void delete(final InformationVO vo);
 	
 	InformationVO findById(final String infoId);
@@ -50,4 +52,6 @@ public interface IInformationDAO {
 	
 	List<HelpCountByPhoneBean> getHelpCountByPhone(final Date startDt, final Date endDt, final PageInfo pageInfo);
 	public int getHelpCountByPhoneCount(final Date startDt, final Date endDt);
+	
+	List<InformationVO> findByCallId(final String callId);
 }

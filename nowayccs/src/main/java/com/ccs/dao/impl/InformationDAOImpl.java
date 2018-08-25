@@ -34,6 +34,11 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	public void saveOrUpate(InformationVO vo) {
 		getHibernateTemplate().saveOrUpdate(vo);
 	}
+	
+	@Override
+	public void save(InformationVO vo) {
+		getHibernateTemplate().save(vo);
+	}
 
 	@Override
 	public void delete(InformationVO vo) {
@@ -551,6 +556,14 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		});
 
 		return Integer.valueOf(resultList.get(0).toString());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<InformationVO> findByCallId(String callId) {
+		final String hql = "from InformationVO where callId = ? ";
+		List<InformationVO> list = (List<InformationVO>)getHibernateTemplate().find(hql, new Object[] {callId});
+		return list;
 	}
 }
 

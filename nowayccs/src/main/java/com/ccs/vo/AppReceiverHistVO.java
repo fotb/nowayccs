@@ -42,8 +42,8 @@ public class AppReceiverHistVO extends BaseEntity implements Serializable {
 	@Column(name = "STATUS")
 	private String status;
 	
-	@Column(name = "IP")
-	private String ip;
+	@Column(name = "ORDERNUMBER")
+	private String orderNumber;
 	
 	@Column(name = "AGENTID")
 	private String agentId;
@@ -60,16 +60,18 @@ public class AppReceiverHistVO extends BaseEntity implements Serializable {
 		this.helpArea = vo.getHelpArea();
 		this.helpGroup = vo.getHelpGroup();
 		this.status = AppReceiverVO.STATUS_FINISH;
-		this.ip = vo.getIp();
+		this.orderNumber = vo.getOrderNumber();
 	}
 
-	public String getIp() {
-		return ip;
+
+	public String getOrderNumber() {
+		return orderNumber;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
 	}
+
 
 	public String getHelpName() {
 		return helpName;

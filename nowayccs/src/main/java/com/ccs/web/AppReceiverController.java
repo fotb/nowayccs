@@ -27,9 +27,7 @@ public class AppReceiverController {
     @ResponseBody
    public Response add(@RequestBody @Valid AppReceiverParam appReceiverParam, HttpServletRequest request) {  
     	try {
-    		String ip = getIpAdrress(request);
 	    	AppReceiverVO vo = createAppReceVO(appReceiverParam);
-	    	vo.setIp(ip);
 	    	appReceiverBO.create(vo);
 	    	Response res = new Response();
 	    	res.success();

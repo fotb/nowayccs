@@ -6,6 +6,7 @@ import java.util.Map;
 import com.ccs.bean.InfoSearchBean;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
+import com.ccs.vo.AppInfoVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.ReferInformationVO;
@@ -24,4 +25,5 @@ public interface IInfoSearchBO {
 	
 	ReferInformationVO findReferInfoByInfoId(String infoId);
 	
+	AppInfoVO findAppInfoByInfoId(String infoId);
 }

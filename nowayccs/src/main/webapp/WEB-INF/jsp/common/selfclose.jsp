@@ -15,16 +15,15 @@
 <script language="JavaScript" type="">
 function closeit() {
     //window.setTimeout("self.close()",3000) //毫秒
-	//window.setTimeout("closeSelf();",3000) //毫秒
+window.setTimeout("closeSelf();",3000) //毫秒
 }
 
 function closeSelf() {
-  //window.open('','_parent',''); 
- // window.close(); 
-	//$(window.parent.document).find("#ib_call").css("display", "none");
+  window.open('','_parent',''); 
+  window.close(); 
 }
 </script>
- <body onload="closeit()"> 
+<body onload="closeit()">
 <table width="865" border="0" align="center" cellpadding="0" cellspacing="0" class="table_gray">
   <tr>
     <td>
@@ -34,19 +33,17 @@ function closeSelf() {
         </tr>
         <tr class="table_t1">
           <td class="table_t1" >
-            	操作成功，请关闭页面！
+            	操作成功，请关闭页面！(页面3秒后自动关闭!)
           </td>
         </tr>
         <tr class="line">
           <td height="1">          </td>
         </tr>
-        <!-- 
         <tr align="center" class="table_t1">
           <td>
           <button name="关闭" onclick="closeSelf();" value="关闭">关闭</button>
           </td>
         </tr>
-         -->
       </table>
     </td>
   </tr>

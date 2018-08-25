@@ -1,12 +1,15 @@
 package com.ccs.bo.task;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
@@ -21,6 +24,7 @@ import com.ccs.util.app.AppInfoResponse;
 import com.ccs.util.app.Meta;
 import com.ccs.web.domain.AppInfoBean;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Component("getAppInfoTask")
@@ -34,18 +38,8 @@ public class GetAppInfoTask {
 	private void doJob() {
 		try {
 			CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-			HttpPost post = new HttpPost("http://test-jx-back.yuanduidui.cn/cms/orderConnect/search");
+			HttpPost post = new HttpPost("http://jxback.jx96345.cn/cms/orderConnect/search");
 
-			/*
-			 * JSONObject json = new JSONObject(); json.put("ordersState", 2);
-			 * json.put("startTime", "2018-01-01 00:00:00"); json.put("endTime",
-			 * "2018-07-27 23:59:59");
-			 * 
-			 * StringEntity s = new StringEntity(json.toString(), "UTF-8");
-			 * s.setContentEncoding("UTF-8"); s.setContentType("application/json");
-			 * 
-			 * post.setEntity(s);
-			 */
 			HttpResponse res = httpclient.execute(post);
 			String result = EntityUtils.toString(res.getEntity());// 返回json格式：
 
@@ -87,9 +81,48 @@ public class GetAppInfoTask {
 				appReceiverBO.addInfo(appInfoList);
 				logger.info("成功从App系统导入" + appInfoList.size() +"条记录！");
 			}
+			
+			updateStatus(list);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("GetAppInfoTask error: " + e.getMessage());
 		}
 	}
+	
+	private void updateStatus(List<AppInfoBean> list) {
+		try {
+	        CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+	        HttpPost post = new HttpPost("http://jxback.jx96345.cn/cms/orderConnect/verifyOrder");
+			
+	        JSONObject response = null;
+	        
+	        JSONArray array = new JSONArray();
+	        for (AppInfoBean bean : list) {
+	        	JSONObject json = new JSONObject();
+				json.put("orderNumber", bean.getOrderNumber());
+				json.put("ordersType", bean.getOrdersType());
+				array.add(json);
+			}
+			
+			StringEntity s = new StringEntity(array.toString(), Charset.forName("UTF-8"));
+	        s.setContentEncoding("UTF-8");
+	        s.setContentType("application/json");//发送json数据需要设置contentType
+			
+	        post.setEntity(s);
+	        HttpResponse res = httpclient.execute(post);
+	        String result = EntityUtils.toString(res.getEntity());// 返回json格式：
+//            System.out.println(result);
+	        if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+	            response = JSONObject.fromObject(result);
+	        } else {
+	            response = JSONObject.fromObject(result);
+	            logger.error("GetAppInfoTask error: " + result);
+	        }
+         
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

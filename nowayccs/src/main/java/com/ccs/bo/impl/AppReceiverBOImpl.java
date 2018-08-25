@@ -59,19 +59,40 @@ public class AppReceiverBOImpl implements IAppReceiverBO {
 
 	@Override
 	public void addManual(List<AppInfoBean> list) throws Exception {
+		final String hql = "from AppReceiverVO where orderNumber = ?";
 		for (AppInfoBean appInfoBean : list) {
-			AppReceiverVO vo = createAppReceVO(appInfoBean);
-			appReceiverDAO.save(vo);
+			List<AppReceiverVO> appReceiverVOList = appReceiverDAO.queryForObject(hql, new Object[] {appInfoBean.getOrderNumber()});
+			if(appReceiverVOList.isEmpty()) {
+				AppReceiverVO vo = createAppReceVO(appInfoBean);
+				appReceiverDAO.save(vo);
+			} else {
+				AppReceiverVO vo = createFromAppReceVO(appReceiverVOList.get(0), appInfoBean);
+				appReceiverDAO.update(vo);
+			}
+			
 		}
 	}
 
 
 	@Override
 	public void addInfo(List<AppInfoBean> list) throws Exception {
+		final String hql = "from AppInfoVO t where t.informationId = ?";
 		for (AppInfoBean appInfoBean : list) {
-			informationDAO.saveOrUpate(createInformationVO(appInfoBean));
-			appInfoDAO.saveOrUpdate(createAppInfoVO(appInfoBean));
+			List<InformationVO> inforVOList = informationDAO.findByCallId(appInfoBean.getOrderNumber());
+			if(inforVOList.isEmpty()) {
+				informationDAO.save(createInformationVO(appInfoBean));
+			} else {
+				informationDAO.saveOrUpate(createFromInformationVO(inforVOList.get(0), appInfoBean));
+			}
 			
+			
+			List<AppInfoVO> appInfoVOList = appInfoDAO.queryForObject(hql, new Object[] {appInfoBean.getOrderNumber()});
+			if(appInfoVOList.isEmpty()) {
+				appInfoDAO.saveOrUpdate(createAppInfoVO(appInfoBean));
+			} else {
+				
+				appInfoDAO.saveOrUpdate(createFromAppInfoVO(appInfoVOList.get(0), appInfoBean));
+			}
 		}
 	}
 
@@ -87,12 +108,50 @@ public class AppReceiverBOImpl implements IAppReceiverBO {
     	vo.setHelpArea(bean.getHelpArea());
     	vo.setHelpGroup(bean.getHelpGroup());
     	vo.setCreateTime(DateUtil.parse(bean.getOrderCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+    	vo.setOrderNumber(bean.getOrderNumber());
+		return vo;
+	}
+	
+	
+	private AppReceiverVO createFromAppReceVO(AppReceiverVO vo, AppInfoBean bean) {
+    	vo.setHelpName(bean.getHelpName());
+    	vo.setHelpMode(bean.getHelpMode());
+    	vo.setHelpTel(bean.getHelpTel());
+    	vo.setHelpAddr(bean.getHelpAddr());
+    	vo.setHelpContent(bean.getHelpContent());
+    	vo.setHelpType(bean.getHelpType());
+    	vo.setHelpArea(bean.getHelpArea());
+    	vo.setHelpGroup(bean.getHelpGroup());
+    	vo.setCreateTime(DateUtil.parse(bean.getOrderCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+    	vo.setOrderNumber(bean.getOrderNumber());
 		return vo;
 	}
 	
 	private InformationVO createInformationVO(AppInfoBean bean) {
 		InformationVO vo = new InformationVO();
-		vo.setInfoId(bean.getOrderNumber());
+		vo.setCallId(bean.getOrderNumber());
+		vo.setHelpName(bean.getHelpName());
+		vo.setHelpMode(bean.getHelpMode());
+		vo.setHelpTel(bean.getHelpTel());
+		vo.setHelpAddr(bean.getHelpAddr());
+		vo.setHelpContent(bean.getHelpContent());
+		vo.setHelpType(bean.getHelpType());
+		vo.setHelpArea(bean.getHelpArea());
+		vo.setHelpGroup(bean.getHelpGroup());
+		vo.setCreator("1");
+		vo.setCreateTime(DateUtil.parse(bean.getOrderCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+		vo.setFinishTime(DateUtil.parse(bean.getOrderOverTime(), "yyyy-MM-dd HH:mm:ss"));
+		vo.setStatus(bean.getOrderStatus());
+		vo.setCanceler("1");
+		vo.setCancelTime(DateUtil.parse(bean.getOrderOverTime(), "yyyy-MM-dd HH:mm:ss"));
+		vo.setDeliverer("1");
+		vo.setDeliverMode("2"); //App 方式
+		vo.setDeliverTime(DateUtil.parse(bean.getOrderDoTime(), "yyyy-MM-dd HH:mm:ss"));
+		return vo;
+	}
+	
+	private InformationVO createFromInformationVO(InformationVO vo, AppInfoBean bean) {
+		vo.setCallId(bean.getOrderNumber());
 		vo.setHelpName(bean.getHelpName());
 		vo.setHelpMode(bean.getHelpMode());
 		vo.setHelpTel(bean.getHelpTel());
@@ -116,6 +175,18 @@ public class AppReceiverBOImpl implements IAppReceiverBO {
 	private AppInfoVO createAppInfoVO(AppInfoBean bean) {
 		AppInfoVO vo = new AppInfoVO();
 		vo.setInformationId(bean.getOrderNumber());
+		vo.setOrdersCommentContent(bean.getOrdersCommentContent());
+		vo.setOrdersCommentNum(bean.getOrdersCommentNum());
+		vo.setOrderServersCheck(bean.getOrdersServersCheck());
+		vo.setOrdersMoney(bean.getOrdersMoney());
+		vo.setOrdersServersPhone(bean.getOrdersServersPhone());
+		vo.setOrdersServersServiceType(bean.getOrdersServersServiceType());
+		vo.setOrdersServiesName(bean.getOrdersServersName());
+		vo.setOrdersType(bean.getOrdersType());
+		return vo;
+	}
+	
+	private AppInfoVO createFromAppInfoVO(AppInfoVO vo, AppInfoBean bean) {
 		vo.setOrdersCommentContent(bean.getOrdersCommentContent());
 		vo.setOrdersCommentNum(bean.getOrdersCommentNum());
 		vo.setOrderServersCheck(bean.getOrdersServersCheck());
