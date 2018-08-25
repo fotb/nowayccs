@@ -17,7 +17,7 @@ public class UpdateUserStatusTask {
 	@Autowired
 	private IUserStatusBO userStatusBO;
 	
-	@Scheduled(cron="0 0/1 * * * ?")
+	//@Scheduled(cron="0 0/1 * * * ?")
 	public void doJob() {
 		try {
 			//System.out.println("update user status-------------");

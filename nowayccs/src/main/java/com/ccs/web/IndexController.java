@@ -78,6 +78,7 @@ public class IndexController {
 	@RequestMapping(params = "action=sessionHeartBeat", method = RequestMethod.POST)
 	public @ResponseBody String sessionHeartBeat(@RequestParam String status, @RequestParam String phoneNo, HttpSession session, ModelMap model) throws UnsupportedEncodingException {
 		UserVO vo = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		logger.info("Info: check user online-----------------");
 		if(null == vo) {
 			logger.info("Info:------session time Out!");
 		} else {

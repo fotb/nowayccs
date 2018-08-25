@@ -81,7 +81,7 @@ public class UserAppInfoBOImpl implements IUserAppInfoBO {
 					userAppInfoDAO.delete(userAppInfoVO);
 					AppReceiverVO appReceiverVO = appReceiverDAO.get(userAppInfoVO.getAppInfoId());
 					appReceiverVO.setStatus(null);
-					appReceiverDAO.saveOrUpdate(appReceiverVO);
+					appReceiverDAO.update(appReceiverVO);
 				}
 			}
 

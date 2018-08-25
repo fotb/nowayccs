@@ -34,7 +34,7 @@ public class GetAppInfoTask {
 	@Autowired
 	private IAppReceiverBO appReceiverBO;
 
-	@Scheduled(cron = "0 0/1 * * * ?")
+	//@Scheduled(cron = "0 0/1 * * * ?")
 	private void doJob() {
 		try {
 			CloseableHttpClient httpclient = HttpClientBuilder.create().build();

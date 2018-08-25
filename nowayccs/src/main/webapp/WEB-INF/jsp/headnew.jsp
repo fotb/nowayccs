@@ -35,7 +35,7 @@ function postLog(action, logId) {
 $(document).ready(function(){
 	function sessionHeartBeat(){
 		phone_status = "1";
-		phone_no = "";
+		phone_no = "no";
 
    		$.post("index.do?action=sessionHeartBeat", {status: phone_status, phoneNo: phone_no}, function(data) {
 			            $('audio').attr("autoplay", "autoplay");

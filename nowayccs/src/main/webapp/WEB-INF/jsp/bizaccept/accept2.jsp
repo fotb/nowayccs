@@ -181,6 +181,7 @@ function loadHist() {
             {field:'infoId',title:'',width:200,align:'right', hidden:true}
         ]],
 		method:'get',
+		cache: false, 
 		//fit: true,   //自适应大小
 		border:false,
 		nowrap: true,//数据长度超出列宽时将会自动截取。0
@@ -189,7 +190,7 @@ function loadHist() {
 		pagination:true,
 		pageSize:10,
 		singleSelect: true,
-		onClickRow:function(index, row) {
+		onDblClickRow:function(index, row) {
 			window.open("infosearch.do?action=showinfo&infoId=" + row.infoId, "", 'height=700, width=750, top=0, left=100, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
 		}
     });
@@ -345,7 +346,8 @@ function getLonelyFamily(phone) {
           <tr class="table_t1">
             <td>求助区域：</td>
             <td>
-              <form:select path="helpArea" cssClass="form_accept" items="${qzqyList}" itemLabel="value" itemValue="sortIndex" />              
+              <form:select path="helpArea" cssClass="form_accept" items="${qzqyList}" itemLabel="value" itemValue="sortIndex">
+              </form:select>              
             </td>
           </tr>
           <tr class="line">

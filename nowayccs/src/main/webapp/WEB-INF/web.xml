@@ -56,18 +56,20 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.map</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.mp3</url-pattern>
 	</servlet-mapping>
-	
+
 
 	<!-- Spring 容器启动监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	<listener>
+		<listener-class>com.ccs.web.interceptor.QuartzJobListener</listener-class>
+	</listener>
 
 	<filter>
 		<filter-name>corsFilter</filter-name>
@@ -121,10 +123,8 @@
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 
-<!-- 	<servlet-mapping>
-		<servlet-name>annomvc</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping> -->
+	<!-- <servlet-mapping> <servlet-name>annomvc</servlet-name> <url-pattern>/</url-pattern> 
+		</servlet-mapping> -->
 	<servlet-mapping>
 		<servlet-name>annomvc</servlet-name>
 		<url-pattern>/</url-pattern>

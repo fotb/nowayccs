@@ -14,7 +14,7 @@ public class ZhServicesLoginTask {
 	private static final Logger LOG = Logger.getLogger(ZhServicesLoginTask.class);
 	
 
-	@Scheduled(cron="0 0/20 * * * ?")
+	//@Scheduled(cron="0 0/20 * * * ?")
 	public void doJob() {
 		
 		try {

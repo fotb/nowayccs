@@ -15,11 +15,14 @@ public class UpdateUserAppInfoTask {
 	@Autowired
 	private IUserAppInfoBO	userAppInfoBO;
 	
-	@Scheduled(cron="0 0/1 * * * ?")
+	//@Scheduled(cron="0 0/1 * * * ?")
 	public void doJob() {
 		try {
+			logger.info("start update user app info---------");
 			userAppInfoBO.updateUserAppInfo();
+			logger.info("end update user app info---------");
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("UpdateUserAppInfoTask: " + e.getMessage());
 		}
 		
