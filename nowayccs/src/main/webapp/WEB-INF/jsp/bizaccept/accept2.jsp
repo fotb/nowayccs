@@ -145,7 +145,7 @@ function getPhoneLevels(phone) {
 	if(phone == "") {
 		phone = "${bizAccept.helpTel}";
 	}
-	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(res) {
+	$.getJSON("blacklist.do?t="+new Date().getTime()+ "&action=phonelevels&phoneNum=" + phone, function(res) {
 		data = res.data
 		if(null != data) {
 			$("#phonelevels").html("");

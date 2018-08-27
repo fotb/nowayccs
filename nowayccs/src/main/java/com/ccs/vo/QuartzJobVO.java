@@ -32,7 +32,7 @@ public class QuartzJobVO extends BaseEntity implements Serializable {
 	
 	@Column(name = "STATUS")
 	private String status;
-
+	
 	public String getJobName() {
 		return jobName;
 	}

@@ -3,7 +3,7 @@ function radioTable(eventFlag, url) {
 	switch(eventFlag){
 		case 1:
 		    reloadMain(url);
-			if($("#aaTR").css("display") == "none"){
+/*			if($("#aaTR").css("display") == "none"){
 				$("#aaTR").css("display", "block");
 			} else {
 				$("#aaTR").css("display", "none");
@@ -11,7 +11,9 @@ function radioTable(eventFlag, url) {
 		    $("#bbTR").css("display", "none");
 		    $("#ccTR").css("display", "none");
 		    $("#ddTR").css("display", "none");
-		    $("#ffTR").css("display", "none");
+		    $("#ffTR").css("display", "none");*/
+		case 2:
+			reloadMain(url);
 		case 5:  //ҵ����ѯ
 		    reloadMain(url);
 		    $("#bbTR").css("display", "none");

@@ -47,7 +47,11 @@ function loadAll() {
 }
 
 function formatOper(val,row,index) {
-	  return '<a href="quartz.do?action=start&pid='+row["pid"]+'" target="_blank">开启</a>';  
+	if(row['status'] == "0") {
+		return '<a href="JavaScript:startJob('+row["pid"]+')">开启</a>';
+	} else {
+	 	return '<a href="JavaScript:stopJob('+row["pid"]+')">关闭</a>';  
+	}
 }
 
 function myformatter(value){
@@ -65,6 +69,24 @@ function myformatter(value){
      seconds=(seconds>9)?(""+seconds):("0"+seconds);
 
      return year + "-" + month + "-" + day + " " + hour+":"+minute + ":" + seconds;
+}
+
+function startJob(pid) {
+	$.get("quartz.do?action=start&pid=" + pid,function(data){
+		if(data.meta.success) {
+			$("#datagrid").datagrid('reload'); 
+			alert("成功开启任务！");
+		}
+	});
+}
+
+function stopJob(pid) {
+	$.get("quartz.do?action=stop&pid=" + pid,function(data){
+		if(data.meta.success) {
+			$("#datagrid").datagrid('reload'); 
+			alert("成功关闭任务！");
+		}
+	});
 }
 
 </script>

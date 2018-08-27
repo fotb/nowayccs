@@ -24,9 +24,6 @@ function logout(){
   window.open("login.do?action=logout","_parent");
 }
 
-
-
-
 function postLog(action, logId) {
 	$.getJSON("index.do?action=icdLog&actionType=" + action + "&logId=" + logId, function(data) {
 		//do nothing

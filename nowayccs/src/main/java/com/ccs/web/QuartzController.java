@@ -1,7 +1,8 @@
 package com.ccs.web;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IQuartzBO;
 import com.ccs.bo.quartz.QuartzManager;
+import com.ccs.util.Response;
 import com.ccs.vo.QuartzJobVO;
 
 @Controller
@@ -38,21 +40,51 @@ public class QuartzController {
 	@RequestMapping(params = "action=all", method = RequestMethod.POST)
 	@ResponseBody
 	public List<QuartzJobVO> getAll(HttpSession session) throws Exception {
-		QuartzJobVO vo = quartzBO.findById("11");
+		List<Map<String, Object>> runJobList = quartzManager.queryAllJob();
+		Map<String, String> map = new HashMap<String, String>();
+		for (Map<String, Object> jobMap : runJobList) {
+			map.put(jobMap.get("jobName").toString(), jobMap.get("jobTime").toString());
+		}
 
-		return quartzBO.findAll();
+		List<QuartzJobVO> volist = quartzBO.findAll();
+		for (QuartzJobVO quartzJobVO : volist) {
+			if (map.containsKey(quartzJobVO.getJobName())) {
+				quartzJobVO.setStatus("1");
+			} else {
+				quartzJobVO.setStatus("0");
+			}
+		}
+		return volist;
 	}
 
 	@RequestMapping(params = "action=start")
 	@ResponseBody
-	public String start(@RequestParam("pid") String pid, HttpSession session) throws Exception {
-		// Date quartzTime = new Date();
-		// logger.info("===========开始执行调度=========时间为 " + quartzTime);
-		// String cronStr = quartzManager.transCron(quartzTime);
-		QuartzJobVO vo = quartzBO.findById(pid);
-		logger.info("======cron表达式========" + vo.getCron());
-		quartzManager.addJob(vo.getJobName(), vo.getJobGroupName(), vo.getTriggerName(), vo.getTriggerGroupName(),
-				Class.forName(vo.getJobClass()), vo.getCron());
-		return "";
+	public Response start(@RequestParam("pid") String pid, HttpSession session) throws Exception {
+		Response res = new Response();
+		try {
+			QuartzJobVO vo = quartzBO.findById(pid);
+			logger.info("======cron表达式========" + vo.getCron());
+			quartzManager.addJob(vo.getJobName(), vo.getJobGroupName(), vo.getTriggerName(), vo.getTriggerGroupName(),
+					Class.forName(vo.getJobClass()), vo.getCron());
+			res.success();
+		} catch (Exception e) {
+			res.failure("error!");
+		}
+		return res;
+	}
+	
+	@RequestMapping(params = "action=stop")
+	@ResponseBody
+	public Response stop(@RequestParam("pid") String pid, HttpSession session) throws Exception {
+		Response res = new Response();
+		try {
+			QuartzJobVO vo = quartzBO.findById(pid);
+			logger.info("======cron表达式========" + vo.getCron());
+			quartzManager.removeJob(vo.getJobName(), vo.getJobGroupName(), vo.getTriggerName(), vo.getTriggerGroupName());
+			res.success();
+		} catch (Exception e) {
+			res.failure("error!");
+		}
+		return res;
 	}
 }
