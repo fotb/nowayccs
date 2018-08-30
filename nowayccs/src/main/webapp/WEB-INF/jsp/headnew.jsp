@@ -35,7 +35,7 @@ $(document).ready(function(){
 		phone_no = "no";
 
    		$.post("index.do?action=sessionHeartBeat", {status: phone_status, phoneNo: phone_no}, function(data) {
-			            $('audio').attr("autoplay", "autoplay");
+			        //    $('audio').attr("autoplay", "autoplay");
 		});
 	}
 	//setInterval(sessionHeartBeat,30000);// 注意函数名没有引号和括弧！ 
@@ -44,17 +44,29 @@ $(document).ready(function(){
 
 	function queryAppInfo() {
 		$('audio').remove();
-		$.get("userAppInfo.do?action=newInfo",function(data){
-			if(typeof(data.meta) != 'undefined')  {
-				if(data.meta.success) {
- 					var theform = document.forms[0];
-					$("<audio src='audio/notify.mp3' autoplay='autoplay'></audio>").appendTo(theform);
+		$.ajax({
+			type : "GET",
+			cache : "false",
+			datatype : "json",
+			url : "userAppInfo.do?action=newInfo",
+			success : function(result){
+				if(typeof(result.meta) != 'undefined')  {
+					if(result.meta.success) {
+ 						var theform = document.forms[0];
+						$("<audio src='audio/notify.mp3' autoplay='autoplay'></audio>").appendTo(theform);
+var value = $("#notify").html();
+						if(value.length == 0) {
+							$("#notify").html('<marquee direction="right" scrollamount="1" id=""><a href="userAppInfo.do" target="main"><font color="red">您有微求助需要受理！</font></a></marquee>');					
+						}
+					} else {
+						$("#notify").html("");
+					}
 				}
-			}
-		});
+				}
+			});
 	}
 
-	setInterval(queryAppInfo,10000);
+setInterval(queryAppInfo,10000);
 });
 
 
@@ -71,9 +83,10 @@ $(document).ready(function(){
     <table width="95%" height="20"  border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <td width="13%" style="vertical-align: middle;">${user.userName}，您好！</td>
-        <td width="70%">
+        <td width="20%">
         	<div id="notify"></div>
         </td>
+        <td width="50%"> </td>
         <td align="center" nowrap="nowrap">
           <script language=JavaScript>
 <!--

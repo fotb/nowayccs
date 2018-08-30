@@ -12,7 +12,7 @@ function radioTable(eventFlag, url) {
 		    $("#ccTR").css("display", "none");
 		    $("#ddTR").css("display", "none");
 		    $("#ffTR").css("display", "none");*/
-		case 2:
+		case 12:
 			reloadMain(url);
 		case 5:  //ҵ����ѯ
 		    reloadMain(url);

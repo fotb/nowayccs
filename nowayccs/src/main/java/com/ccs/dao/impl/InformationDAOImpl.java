@@ -497,7 +497,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("from (select LTRIM(t.helptel, '573') as helptel, ");
 		buffer.append("count(t.informationid) as telCount ");
 		buffer.append("from hj_information t ");
-		buffer.append("where (t.createtime >= ? or ? is null) ");
+		buffer.append("where t.helptel is not null and (t.createtime >= ? or ? is null) ");
 		buffer.append("and (t.createtime <= ? or ? is null) ");
 		buffer.append("group by LTRIM(t.helptel, '573')) a ");
 		buffer.append("order by a.telCount desc");
@@ -535,7 +535,7 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("from (select LTRIM(t.helptel, '573') as helptel, ");
 		buffer.append("count(t.informationid) as telCount ");
 		buffer.append("from hj_information t ");
-		buffer.append("where (t.createtime >= ? or ? is null) ");
+		buffer.append("where t.helptel is not null and (t.createtime >= ? or ? is null) ");
 		buffer.append("and (t.createtime <= ? or ? is null) ");
 		buffer.append("group by LTRIM(t.helptel, '573')) a ");
 		buffer.append("order by a.telCount desc");

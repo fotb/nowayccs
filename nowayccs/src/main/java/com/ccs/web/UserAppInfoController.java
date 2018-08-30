@@ -3,14 +3,11 @@ package com.ccs.web;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +18,6 @@ import com.ccs.util.Response;
 import com.ccs.vo.AppReceiverVO;
 import com.ccs.vo.UserAppInfoVO;
 import com.ccs.vo.UserVO;
-import com.ccs.web.domain.AppReceiverParam;
 
 @Controller
 @RequestMapping("/userAppInfo.do")
