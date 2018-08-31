@@ -38,8 +38,7 @@ function btnnext_click(){
   if(!isValidStringObj( form.helpContent,"求助内容",true)){
     return;
   }
-  
-  if($("#lonelyFamilyDeal").attr("checked") == "checked") {
+  if($("#lonelyFamilyDeal").prop('checked')) {
 	  //结对家庭求助处理
 	  $("#bizAccept").attr("action", "lonelyFamily.do");
 	  $("#action").val("accept");
@@ -168,7 +167,7 @@ function loadHist() {
 	var lastsel;
 	
     $('#histList').datagrid({
-        url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+"",
+        url:"bizaccept.do?t="+new Date().getTime()+ "&action=helphist&callNo="+$("#helpTel").val()+"",
         columns:[[
             {field:'helpName',title:'求助者姓名',formatter:bizShowLinkFormatter, width:90},
             {field:'createTime',title:'求助时间',width:120},

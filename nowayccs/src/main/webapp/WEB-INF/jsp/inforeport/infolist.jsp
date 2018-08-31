@@ -16,7 +16,7 @@
 <script language="javascript" type="">
 
 function option_exp(form){
-  form.action="QryReport_exp.do";
+  form.action="inforeport.do?action=infoexport";
   form.target="_blank";
   form.submit();
   form.target="_self";
@@ -166,7 +166,7 @@ $("#jdjtcount").html(data.jdjtcount);
     </table>
       <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-        <!-- <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td> -->
+        <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td>
           <td height="30" align="right">
             <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>

@@ -45,14 +45,18 @@ public class LifeInformationDAOImpl extends DefaultDAOSupport implements
 		} else {
 			StringBuffer hqlBuffer = new StringBuffer(1000);
 			hqlBuffer.append("from LifeInformationVO t where t.infoId in (");
-			
+					
 			for (int i = 0; i < infoIds.size(); i++) {
-				if(i == infoIds.size() - 1) {
-					hqlBuffer.append("? )");
+				if((i % 1000 ) == 0 && i > 0) {
+					hqlBuffer.deleteCharAt(hqlBuffer.length() - 1);
+					hqlBuffer.append(") OR t.infoId IN ( ?,");
 				} else {
-					hqlBuffer.append("?, ");
+					hqlBuffer.append("?,");
 				}
+				
 			}
+			hqlBuffer.deleteCharAt(hqlBuffer.length() - 1);
+			hqlBuffer.append(")");
 			return (List<LifeInformationVO>) getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
 		}
 	}

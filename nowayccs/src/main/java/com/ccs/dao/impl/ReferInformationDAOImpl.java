@@ -47,12 +47,16 @@ public class ReferInformationDAOImpl extends DefaultDAOSupport implements
 			hqlBuffer.append("from ReferInformationVO t where t.infoId in (");
 			
 			for (int i = 0; i < infoIds.size(); i++) {
-				if(i == infoIds.size() - 1) {
-					hqlBuffer.append("? )");
+				if((i % 1000 ) == 0 && i > 0) {
+					hqlBuffer.deleteCharAt(hqlBuffer.length() - 1);
+					hqlBuffer.append(") OR t.infoId IN ( ?,");
 				} else {
-					hqlBuffer.append("?, ");
+					hqlBuffer.append("?,");
 				}
+				
 			}
+			hqlBuffer.deleteCharAt(hqlBuffer.length() - 1);
+			hqlBuffer.append(")");
 			return (List<ReferInformationVO>) getHibernateTemplate().find(hqlBuffer.toString(), infoIds.toArray());
 		}
 	}
