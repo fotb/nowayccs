@@ -54,7 +54,9 @@ public class UserRoleDAOImpl extends DefaultDAOSupport implements IUserRoleDAO {
 
 	@Override
 	public void saveOrUpdate(List<UserRoleVO> list) {
-		getHibernateTemplate().saveOrUpdate(list);
+		for (UserRoleVO userRoleVO : list) {
+			getHibernateTemplate().saveOrUpdate(userRoleVO);
+		}
 	}
 
 	@Override
