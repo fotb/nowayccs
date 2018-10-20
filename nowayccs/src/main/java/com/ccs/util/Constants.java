@@ -100,6 +100,8 @@ public class Constants {
 	public static final String INFOMATION_HELPTYPE_AFFAIR = "3"; // 3事务服务类
 	public static final String INFOMATION_HELPTYPE_FERTILITY = "4"; // 4生产力服务
 	public static final String INFOMATION_HELPTYPE_POWER = "5"; // 5电力服务类
+	public static final String INFOMATION_HELPTYPE_ELEVATOR = "6"; // 6电梯紧急救援
+	public static final String INFOMATION_HELPTYPE_SGPT = "7"; // 7四个平台
 	public static final Map<String, String> INFOMATION_HELPTYPE_HASHMAP = new TreeMap<String, String>();
 
 	static {
@@ -108,6 +110,8 @@ public class Constants {
 		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_AFFAIR), "事务服务类");
 		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_FERTILITY), "生产力服务");
 		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_POWER), "电力服务类");
+		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_ELEVATOR), "电梯紧急救援");
+		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_SGPT), "四个平台");
 	}
 
 	/* 生活类接受类型： */

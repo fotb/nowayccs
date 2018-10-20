@@ -16,10 +16,14 @@
 <script language="javascript" type="">
 
 function option_exp(form){
+if(${pageInfo.totalRecords} > 65535) {
+	alert("由于Excel限制，一次导出记录数不能大于65535条！ 请缩小时间范围，分批导出！");
+} else {
   form.action="inforeport.do?action=infoexport";
   form.target="_blank";
   form.submit();
   form.target="_self";
+}
 }
 
 function option_search(form){

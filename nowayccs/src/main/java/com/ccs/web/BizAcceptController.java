@@ -543,4 +543,37 @@ public class BizAcceptController {
 			return "redirect:bizaccept.do?action=old";
 		}
 	}
+	
+	
+	@RequestMapping(params = "action=elevator")
+	public String acceptElevator(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
+		bizAccept.setCreator(user.getUserName());
+		session.setAttribute("bizAccept", bizAccept);
+		
+		model.addAttribute("bizAccept", bizAccept);
+//		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
+//		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+//		model.addAttribute("qzqyMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+//		model.addAttribute("slrqMap", dictBO.getDict(Constants.DICT_DICTTYPE_SLRQ));
+//		model.addAttribute("userList", userBO.findUserByOpertaionId(Constants.SYS_PERMISSION_SWYWCL));
+		return "bizaccept/acceptelevator";
+	}
+	
+	@RequestMapping(params = "action=sgpt")
+	public String acceptSgpt(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
+		bizAccept.setCreator(user.getUserName());
+		session.setAttribute("bizAccept", bizAccept);
+		
+		model.addAttribute("bizAccept", bizAccept);
+//		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
+//		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+//		model.addAttribute("qzqyMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+//		model.addAttribute("slrqMap", dictBO.getDict(Constants.DICT_DICTTYPE_SLRQ));
+//		model.addAttribute("userList", userBO.findUserByOpertaionId(Constants.SYS_PERMISSION_SWYWCL));
+		return "bizaccept/acceptsgpt";
+	}
 }

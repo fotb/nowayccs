@@ -51,8 +51,8 @@ function btnnext_click(){
     	return;
   	}
     if("2" == $("#helpType").val()) {
-  	$("#action").val("life");
-  	$("form").submit();
+  		$("#action").val("life");
+  		$("form").submit();
     } else if("3" == $("#helpType").val()) {
   		$("#action").val("affair");
   		$("form").submit();
@@ -61,6 +61,12 @@ function btnnext_click(){
   		$("form").submit();
     } else if("5" == $("#helpType").val()) {
     	$("#action").val("power");
+  		$("form").submit();
+    } else if("6" == $("#helpType").val()) {
+    	$("#action").val("elevator");
+  		$("form").submit();
+    } else if("7" == $("#helpType").val()) {
+    	$("#action").val("sgpt");
   		$("form").submit();
     }
   }
@@ -102,7 +108,7 @@ $(document).ready(function(){
 	loadHist();
 	getPhoneLevels($("#helpTel").val());
 	$("#helpTel").change(function(){
-		$('#histList').datagrid('options').url = "bizaccept.do?action=helphist&callNo="+$("#helpTel").val();
+		$('#histList').datagrid('options').url = "bizaccept.do?t="+new Date().getTime()+ "&action=helphist&callNo="+$("#helpTel").val();
 		$('#histList').datagrid('reload');
 		getPhoneLevels($("#helpTel").val());
 		getLonelyFamily($("#helpTel").val());
