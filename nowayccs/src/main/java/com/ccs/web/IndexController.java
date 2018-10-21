@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IAgentBO;
 import com.ccs.bo.IUserStatusBO;
-import com.ccs.icd.util.DateUtil;
 import com.ccs.util.Constants;
+import com.ccs.util.DateUtil;
 import com.ccs.vo.AgentVO;
 import com.ccs.vo.UserStatusVO;
 import com.ccs.vo.UserVO;
@@ -45,12 +45,17 @@ public class IndexController {
 		AgentVO agentVO = agentBO.findById(userVO.getUserId());
 		model.addAttribute("agentVO", agentVO);
 		
-		return "head";
+		return "headnew";
 	}
 	
 	@RequestMapping(params = "action=left")
 	public String left(ModelMap model) {
 		return "left";
+	}
+	
+	@RequestMapping(params = "action=leftold")
+	public String leftOld(ModelMap model) {
+		return "left_old";
 	}
 	
 	@RequestMapping(params = "action=noright")
@@ -73,6 +78,7 @@ public class IndexController {
 	@RequestMapping(params = "action=sessionHeartBeat", method = RequestMethod.POST)
 	public @ResponseBody String sessionHeartBeat(@RequestParam String status, @RequestParam String phoneNo, HttpSession session, ModelMap model) throws UnsupportedEncodingException {
 		UserVO vo = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		logger.info("Info: check user online-----------------");
 		if(null == vo) {
 			logger.info("Info:------session time Out!");
 		} else {

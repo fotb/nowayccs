@@ -32,19 +32,19 @@ public class UserRoleDAOImpl extends DefaultDAOSupport implements IUserRoleDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRoleVO> findAll() {
-		return getHibernateTemplate().find("from UserRoleVO");
+		return (List<UserRoleVO>) getHibernateTemplate().find("from UserRoleVO");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRoleVO> findByUserId(String userId) {
-		return getHibernateTemplate().find("from UserRoleVO vo where vo.id.userId = ?", userId);
+		return (List<UserRoleVO>) getHibernateTemplate().find("from UserRoleVO vo where vo.id.userId = ?", userId);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserRoleVO> findByRoleId(String roleId) {
-		return getHibernateTemplate().find("from UserRoleVO vo where vo.id.roleId = ?", roleId);
+		return (List<UserRoleVO>) getHibernateTemplate().find("from UserRoleVO vo where vo.id.roleId = ?", roleId);
 	}
 
 	@Override
@@ -54,7 +54,9 @@ public class UserRoleDAOImpl extends DefaultDAOSupport implements IUserRoleDAO {
 
 	@Override
 	public void saveOrUpdate(List<UserRoleVO> list) {
-		getHibernateTemplate().saveOrUpdateAll(list);
+		for (UserRoleVO userRoleVO : list) {
+			getHibernateTemplate().saveOrUpdate(userRoleVO);
+		}
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class UserRoleDAOImpl extends DefaultDAOSupport implements IUserRoleDAO {
 				hqlBuffer.append("?, ");
 			}
 		}
-		List<UserRoleVO> list = getHibernateTemplate().find(hqlBuffer.toString(), roleIdList.toArray());
+		List<UserRoleVO> list = (List<UserRoleVO>) getHibernateTemplate().find(hqlBuffer.toString(), roleIdList.toArray());
 		List<String> userIdList = new ArrayList<String>();
 		for (Iterator<UserRoleVO> iter = list.iterator(); iter.hasNext();) {
 			UserRoleVO userRoleVO = iter.next();

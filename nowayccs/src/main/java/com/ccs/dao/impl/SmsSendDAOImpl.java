@@ -29,7 +29,7 @@ public class SmsSendDAOImpl extends DefaultDAOSupport implements ISmsSendDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SmsRecvVO> findByStatus(String status) {
-		return getHibernateTemplate().find("from SmsSendVO t where t.status = ?", status);
+		return (List<SmsRecvVO>) getHibernateTemplate().find("from SmsSendVO t where t.status = ?", status);
 	}
 
 	@Override

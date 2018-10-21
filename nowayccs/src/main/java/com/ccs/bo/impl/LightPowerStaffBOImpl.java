@@ -174,6 +174,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	}
 
 	@Override
+	@Transactional
 	public void deleteLPS(String id, UserVO userVO) throws Exception {
 		PowerStaffVO psVO = lpsDAO.get(id);
 		psVO.setDeleteFlag(PowerStaffVO.DELETE_FLAG_YES);
@@ -194,6 +195,7 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 	}
 
 	@Override
+	@Transactional
 	public void updatePowerStaff(PowerStaffVO psVO) throws Exception {
 		lpsDAO.update(psVO);
 	}
@@ -372,6 +374,10 @@ public class LightPowerStaffBOImpl implements ILightPowerStaffBO {
 			bean.setAreaSubName(areaSubMap.get(psaVO.getAreaSubId()));
 			bean.setDeleteFlag(psVO.getDeleteFlag());
 			bean.setPid(psVO.getPid());
+			bean.setCreateTime(psVO.getCreateTime());
+			bean.setDeleteFlag(psVO.getDeleteFlag());
+			bean.setUpdateDT(psVO.getUpdateDT());
+			bean.setLastHandler(psVO.getLastHandler());
 			pslBeanList.add(bean);
 		}
 		

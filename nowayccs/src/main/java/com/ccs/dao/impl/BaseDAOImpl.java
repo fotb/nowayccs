@@ -14,7 +14,7 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.type.Type;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.dao.IBaseDAO;
@@ -78,7 +78,6 @@ public class BaseDAOImpl<E extends BaseEntity> extends HibernateDaoSupport imple
 		return (List<E>) query.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public E get(String pid) {
 		return (E) this.getSessionFactory().getCurrentSession().get(this.clazz, pid);

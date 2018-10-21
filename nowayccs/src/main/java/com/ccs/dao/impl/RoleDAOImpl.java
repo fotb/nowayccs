@@ -1,12 +1,11 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -35,16 +34,16 @@ public class RoleDAOImpl extends DefaultDAOSupport implements IRoleDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RoleVO> findAll() {
-		return getHibernateTemplate().find("from RoleVO");
+		return (List<RoleVO>) getHibernateTemplate().find("from RoleVO");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<RoleVO> findAll(final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(
+		return (List<RoleVO>) getHibernateTemplate().execute(
 				new HibernateCallback<Object>() {
 					public Object doInHibernate(Session s)
-							throws HibernateException, SQLException {
+							throws HibernateException {
 						Query query = s.createQuery("from RoleVO");
 						query.setFirstResult((pageInfo.getCurrentPage() - 1) * pageInfo.getPAGE_COUNT());
 						query.setMaxResults(pageInfo.getPAGE_COUNT());

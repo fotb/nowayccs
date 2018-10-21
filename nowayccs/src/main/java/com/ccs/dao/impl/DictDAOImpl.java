@@ -1,12 +1,11 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -35,7 +34,7 @@ public class DictDAOImpl extends DefaultDAOSupport implements IDictDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DictVO> findByType(String dictType) {
-		return getHibernateTemplate().find(
+		return (List<DictVO>) getHibernateTemplate().find(
 				"from DictVO vo where vo.dictType = ? order by vo.sortIndex",
 				dictType);
 	}
@@ -43,8 +42,8 @@ public class DictDAOImpl extends DefaultDAOSupport implements IDictDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DictVO> findByType(final String dictType, final PageInfo pageInfo) {
-		   return  getHibernateTemplate().executeFind( new  HibernateCallback<Object>() { 
-			     public  Object doInHibernate(Session s)  throws  HibernateException, SQLException { 
+		   return  (List<DictVO>) getHibernateTemplate().execute( new  HibernateCallback<Object>() { 
+			     public  Object doInHibernate(Session s)  throws  HibernateException { 
 			           Query query  =  s.createQuery("from DictVO vo where vo.dictType =? order by vo.sortIndex"); 
 			           query.setString(0, dictType);
 			           query.setFirstResult((pageInfo.getCurrentPage()-1)*pageInfo.getPAGE_COUNT()); 

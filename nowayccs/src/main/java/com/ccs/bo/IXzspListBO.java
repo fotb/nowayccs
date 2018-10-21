@@ -25,5 +25,9 @@ public interface IXzspListBO {
 	public List<XzspListVO> search(String key) throws Exception;
 	
 	public List<XzspListVO> findByListCode(String code) throws Exception;
+	
+	public List<XzspListVO> findAll(int page, int rows) throws Exception;
+	
+	public int getAllCount() throws Exception;
 
 }

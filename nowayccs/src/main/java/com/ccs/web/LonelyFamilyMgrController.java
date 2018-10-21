@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ccs.bo.IDictBO;
 import com.ccs.bo.ILonelyFamilyBO;
-import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
@@ -25,16 +22,16 @@ import com.ccs.web.domain.LfMgrForm;
 @Controller
 @RequestMapping("/lfmgr.do")
 public class LonelyFamilyMgrController {
-	private static final Logger logger = Logger.getLogger(LonelyFamilyMgrController.class);
+//	private static final Logger logger = Logger.getLogger(LonelyFamilyMgrController.class);
 	
 	@Autowired
 	private ILonelyFamilyBO lonelyFamilyBO;
 	
-	@Autowired
+/*	@Autowired
 	private IDictBO dictBO;
 	
 	@Autowired
-	private IUserBO userBO;
+	private IUserBO userBO;*/
 	
 	@RequestMapping
 	public String list(

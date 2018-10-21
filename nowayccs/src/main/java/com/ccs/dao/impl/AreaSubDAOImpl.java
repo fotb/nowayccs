@@ -29,13 +29,13 @@ public class AreaSubDAOImpl extends DefaultDAOSupport implements IAreaSubDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AreaSubVO> findAll() {
-		return getHibernateTemplate().find("from AreaSubVO vo");
+		return (List<AreaSubVO>) getHibernateTemplate().find("from AreaSubVO vo");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AreaSubVO> findByAreaId(String areaId) {
-		return getHibernateTemplate().find("from AreaSubVO vo where vo.areaId = ?", areaId);
+		return (List<AreaSubVO>) getHibernateTemplate().find("from AreaSubVO vo where vo.areaId = ?", areaId);
 	}
 
 	

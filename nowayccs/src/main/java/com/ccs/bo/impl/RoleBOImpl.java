@@ -74,6 +74,7 @@ public class RoleBOImpl implements IRoleBO {
 	}
 
 	@Override
+	@Transactional
 	public void deleteRole(RoleVO vo) {
 		List<RoleOperationVO> list = roleOperationDAO.findByRoleId(vo.getRoleId());
 		roleOperationDAO.delete(list);

@@ -25,9 +25,9 @@ function option_search(form){
   form.submit();
 }
 
-function showLifeInfo(id) {
+function showInfo(id) {
   var form=document.forms[0];
-  form.action="infosearch.do?action=lifeinfo&infoId=" + id;
+  form.action="infosearch.do?action=showinfo&infoId=" + id;
   form.submit();
 }
 function showReferInfo(id) {
@@ -51,6 +51,12 @@ form.action="infosearch.do?action=affairinfo&infoId=" + id;
 function showPowerInfo(id) {
   var form=document.forms[0];
 	form.action="infosearch.do?action=powerinfo&infoId=" + id;
+  form.submit();
+}
+
+function showAppInfo(id) {
+  var form=document.forms[0];
+	form.action="infosearch.do?action=appinfo&infoId=" + id;
   form.submit();
 }
 
@@ -119,46 +125,21 @@ $(document).ready(function(){
         <td>结案时间</td>
         <td>满意度</td>
         <td>状态</td>
+        <!-- 
         <c:if test="${adminRight == 'Y'}">
         <td>播放<br>录音</td>
         </c:if>
+         -->
       </tr>
 
 <c:forEach items="${dtoList}" var="dto">
       <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
         <td>
-        <c:if test="${dto.helpType == '2'}">
-        <a href="javascript:showLifeInfo('${dto.infoId}')">
+        
+        <a href="javascript:showInfo('${dto.infoId}')">
         ${dto.helpName}
         </a>
-
-        </c:if>
-        <!--咨询类-->
-        <c:if test="${dto.helpType=='1'}">
-        <a href="javascript:showReferInfo('${dto.infoId}')">
-        ${dto.helpName}
-        </a>
-        </c:if>
-
-        <!--事务服务类-->
-                <c:if test="${dto.helpType=='3'}">
-        <a href="javascript:showAffairInfo('${dto.infoId}')">
-        ${dto.helpName}
-        </a>
-        </c:if>
-        <!--生产力服务-->
-        <c:if test="${dto.helpType=='4'}">
-        <a href="javascript:showProductivityInfo('${dto.infoId}')">
-        ${dto.helpName}
-        </a>
-        </c:if> 
-        <!--电力服务类-->
-        <c:if test="${dto.helpType=='5'}">
-        <a href="javascript:showPowerInfo('${dto.infoId}')">
-        ${dto.helpName}
-        </a>
-        </c:if>
-
+        
         </td>
         <td><fmt:formatDate value="${dto.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td>${dto.helpTel}</td>
@@ -169,6 +150,7 @@ $(document).ready(function(){
         <td><fmt:formatDate value="${dto.finishTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td><c:if test="${dto.callResult == ''}">&nbsp;</c:if><c:if test="${dto.callResult != ''}">${dto.callResult}</c:if></td>
         <td>${dto.status}</td>
+       <!-- 
         <c:if test="${adminRight == 'Y'}">
         <td>
        	<a href="javascript:playRecord('${dto.infoId}')">
@@ -176,6 +158,7 @@ $(document).ready(function(){
         </a>
        	</td>
        	</c:if>
+       	 -->
       </tr>
       <tr class="line">
         <td height="1" colspan="11"></td>

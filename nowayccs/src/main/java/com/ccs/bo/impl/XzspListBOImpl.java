@@ -3,8 +3,10 @@ package com.ccs.bo.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IXzspListBO;
 import com.ccs.dao.IBaseDAO;
@@ -25,6 +27,7 @@ public class XzspListBOImpl implements IXzspListBO {
 	private IBaseDAO<XzspIndexVO> xzspIndexDAO;
 
 	@Override
+	@Transactional
 	public void save(XzspListDomain domain, UserVO user) throws Exception {
 			
 		XzspListVO vo = new XzspListVO();
@@ -65,6 +68,7 @@ public class XzspListBOImpl implements IXzspListBO {
 	}
 
 	@Override
+	@Transactional
 	public void editSave(XzspListDomain domain, UserVO userVO) throws Exception {
 		XzspListVO vo = xzspListDAO.get(domain.getPid());
 		
@@ -95,6 +99,7 @@ public class XzspListBOImpl implements IXzspListBO {
 	}
 
 	@Override
+	@Transactional
 	public void del(String pid) throws Exception {
 		XzspListVO vo = xzspListDAO.get(pid);
 		xzspListDAO.delete(vo);
@@ -115,6 +120,7 @@ public class XzspListBOImpl implements IXzspListBO {
 	}
 
 	@Override
+	@Transactional
 	public void save(XzspListVO vo) throws Exception {
 		xzspListDAO.save(vo);
 	}
@@ -124,5 +130,18 @@ public class XzspListBOImpl implements IXzspListBO {
 		List<XzspListVO> list = xzspListDAO.queryForObject("from XzspListVO t where t.listCode = ? order by pid", new String[]{code});
 		return list;
 	}
+
+	@Override
+	public List<XzspListVO> findAll(int page, int rows) throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria condition = DetachedCriteria.forClass(XzspListVO.class);
+		return xzspListDAO.findByDetachedCriteria(condition, page, rows);
+	}	
 	
+	@Override
+	public int getAllCount() throws Exception {
+		// TODO Auto-generated method stub
+		DetachedCriteria condition = DetachedCriteria.forClass(XzspListVO.class);
+		return xzspListDAO.getRowCountByDetachedCriteria(condition);
+	}	
 }

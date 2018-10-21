@@ -45,7 +45,7 @@ public class EntSrvCountDAOImpl extends DefaultDAOSupport implements
 		objs.add("Y");
 		objs.add("Y");
 		
-		List<EntSrvCountVO> list = getHibernateTemplate().find(buffer.toString(), objs.toArray());
+		List<EntSrvCountVO> list = (List<EntSrvCountVO>) getHibernateTemplate().find(buffer.toString(), objs.toArray());
 		Map<String, String> map = new HashMap<String, String>();
 		for (Iterator<EntSrvCountVO> iter = list.iterator(); iter.hasNext();) {
 			EntSrvCountVO vo = iter.next();

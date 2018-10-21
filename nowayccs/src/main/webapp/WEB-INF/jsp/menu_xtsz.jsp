@@ -55,6 +55,11 @@
     <td class="leftmenu_02"><a href="blacklist.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>
     <font color="#FFFFFF">红黑名单维护</font></a></td>
   </tr>
+  
+   <tr>
+    <td class="leftmenu_02"><a href="quartz.do" target="main"><img src="images/leftpic_09.gif" width="70" height="30" border="0"><br>
+    <font color="#FFFFFF">后台任务管理</font></a></td>
+  </tr>
 </table>
 </body>
 </html>

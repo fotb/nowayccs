@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -41,10 +40,9 @@ public class MessageDAOImpl extends DefaultDAOSupport implements IMessageDAO {
 	@Override
 	public List<MessageVO> findByParams(final String msgType, final String creator,
 			final String title, final String startDt, final String endDt, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<MessageVO>>() {
+		return (List<MessageVO>) getHibernateTemplate().execute(new HibernateCallback<List<MessageVO>>() {
 			@Override
-			public List<MessageVO> doInHibernate(Session session) throws HibernateException,
-					SQLException {
+			public List<MessageVO> doInHibernate(Session session) throws HibernateException {
 				List<Object> objs = new ArrayList<Object>();
 				List<Type> types = new ArrayList<Type>();
 				StringBuffer buffer = new StringBuffer(1000);

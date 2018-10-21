@@ -34,13 +34,13 @@ public class EntCategoryDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<EntCategoryVO> findByParentId(String parentId) {
-		return getHibernateTemplate().find("from EntCategoryVO vo where vo.parentId = ? order by vo.categoryId", parentId);
+		return (List<EntCategoryVO>) getHibernateTemplate().find("from EntCategoryVO vo where vo.parentId = ? order by vo.categoryId", parentId);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, List<EntCategoryVO>> findAll() {
-		List<EntCategoryVO> list = getHibernateTemplate().find("from EntCategoryVO vo");
+		List<EntCategoryVO> list = (List<EntCategoryVO>) getHibernateTemplate().find("from EntCategoryVO vo");
 		Map<String, List<EntCategoryVO>> map = new HashMap<String, List<EntCategoryVO>>();
 		for (Iterator<EntCategoryVO> iter = list.iterator(); iter.hasNext();) {
 			EntCategoryVO ecVO = (EntCategoryVO) iter.next();

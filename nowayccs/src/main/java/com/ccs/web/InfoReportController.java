@@ -1,7 +1,12 @@
 package com.ccs.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,8 +15,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,8 +48,8 @@ import com.ccs.bo.IInfoReportBO;
 import com.ccs.bo.ILonelyFamilyBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.bo.IVolunteerBO;
-import com.ccs.icd.util.DateUtil;
 import com.ccs.util.Constants;
+import com.ccs.util.DateUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.AffairInformationVO;
@@ -48,6 +60,7 @@ import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.UserVO;
 import com.ccs.vo.VolunteerVO;
 import com.ccs.web.domain.HelpCountByPhoneSearchBean;
+import com.ccs.web.domain.PowerInfoListBean;
 import com.ccs.web.domain.ShsForm;
 
 @Controller
@@ -122,7 +135,7 @@ public class InfoReportController {
 	
 	@RequestMapping(params = "action=infocount", method = RequestMethod.GET)
 	public @ResponseBody
-	String getInfoCount(@RequestParam String creator, String helpType,
+	Map<String, String> getInfoCount(@RequestParam String creator, String helpType,
 			String helpArea, String helpGroup, String startDt, String endDt, String helpContent)
 			throws UnsupportedEncodingException {
 		InfoSearchBean infoSearchBean = new InfoSearchBean();
@@ -218,8 +231,8 @@ public class InfoReportController {
 		map.put("total", String.valueOf(life + affair + refer + fertility + power + jdjt));
 		
 		
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		return jsonObject.toString();
+//		JSONObject jsonObject = JSONObject.fromObject(map);
+		return map;
 	}
 	
 	@RequestMapping(params = "action=lifeinforeport")
@@ -291,7 +304,7 @@ public class InfoReportController {
 	
 	@RequestMapping(params = "action=lifeinfocount", method = RequestMethod.GET)
 	public @ResponseBody
-	String getLifeInfoCount(@RequestParam String receiverType, String keyWords, 
+	Map<String, String>  getLifeInfoCount(@RequestParam String receiverType, String keyWords, 
 			String startDt, String endDt, String helpArea, String creator)
 			throws UnsupportedEncodingException {
 		LifeInfoSearchBean bean = new LifeInfoSearchBean();
@@ -328,8 +341,8 @@ public class InfoReportController {
 		} else {
 			map.put("percent", calculatePercent(satis + basesatis + self, finishtotal));
 		}
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		return jsonObject.toString();
+//		JSONObject jsonObject = JSONObject.fromObject(map);
+		return map;
 	}
 	
 	private String calculatePercent(int y, int z) {
@@ -398,7 +411,7 @@ public class InfoReportController {
 	
 	@RequestMapping(params = "action=affairinfocount", method = RequestMethod.GET)
 	public @ResponseBody
-	String getAffairInfoCount(@RequestParam String startDt, String endDt, String helpArea)
+	Map<String, String> getAffairInfoCount(@RequestParam String startDt, String endDt, String helpArea)
 			throws UnsupportedEncodingException {
 		AffairInfoSearchBean bean = new AffairInfoSearchBean();
 		bean.setStartDt(startDt);
@@ -425,8 +438,8 @@ public class InfoReportController {
 		} else {
 			map.put("percent", calculatePercent(satis + basesatis + self, finishtotal));
 		}
-		JSONObject jsonObject = JSONObject.fromObject(map);
-		return jsonObject.toString();
+//		JSONObject jsonObject = JSONObject.fromObject(map);
+		return map;
 	}
 	
 	@RequestMapping(params = "action=usertrafficreport")
@@ -577,5 +590,147 @@ public class InfoReportController {
 		model.addAttribute("countList", list);
 		model.addAttribute("pageInfo", pageInfo);
 		return "inforeport/helpcountbyphone_excel";
+	}
+	
+	
+	
+	@RequestMapping(params = "action=infoexport")
+	public void infoExport(
+			@ModelAttribute("infoSearchBean") InfoSearchBean infoSearchBean,
+			@RequestParam(value = "pageNo", required = false) String pageNo,
+			HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+
+		HttpSession session = request.getSession();
+		session.setAttribute("state", null);
+
+		String path = request.getSession().getServletContext().getRealPath("template");
+
+		// 生成提示信息，
+		response.setContentType("application/vnd.ms-excel");
+		String codedFileName = null;
+		POIFSFileSystem fs = null;
+		OutputStream fOut = null;
+
+		// List<PowerStaffReportBean> beanList = lpsBO.powerStaffReport(areaId,
+		// areaSubId, startDt, endDt);
+		//
+		// JSONObject jsonObj = new JSONObject();
+		// jsonObj.put("total", beanList.size());
+		//
+		// JSONArray jsonArray = JSONArray.fromObject(beanList);
+		//
+		// jsonObj.put("rows", jsonArray.toString());
+		HSSFWorkbook workbook = null;
+		final String userAgent = request.getHeader("USER-AGENT");
+		try {
+
+			if ("\\".equals(File.separator)) { // windows
+				fs = new POIFSFileSystem(new FileInputStream(path + "\\info_exp_list.xls"));
+			} else { // linux
+				fs = new POIFSFileSystem(new FileInputStream(path + "/info_exp_list.xls"));
+			}
+			// 进行转码，使其支持中文文件名
+			codedFileName = "求助受理记录表";
+
+			String finalFileName = null;
+			if (StringUtils.contains(userAgent, "MSIE")) {// IE浏览器
+				finalFileName = URLEncoder.encode(codedFileName, "UTF8");
+			} else if (StringUtils.contains(StringUtils.lowerCase(userAgent), "firefox")) {// google,火狐浏览器
+				finalFileName = new String(codedFileName.getBytes(), "ISO8859-1");
+			} else {
+				finalFileName = URLEncoder.encode(codedFileName, "UTF8");// 其他浏览器
+			}
+			response.setHeader("content-disposition", "attachment;filename=" + finalFileName + ".xls");
+			response.setContentType("application/vnd.ms-excel");
+			// response.addHeader("Content-Disposition", "attachment; filename="
+			// + codedFileName + ".xls");
+			// 产生工作簿对象
+			workbook = new HSSFWorkbook(fs);
+			// 产生工作表对象
+			HSSFSheet sheet = workbook.getSheetAt(0);
+			HSSFRow titleRow = sheet.getRow(0);
+			titleRow.getCell(0).setCellValue(
+					titleRow.getCell(0).getStringCellValue() + "(" + DateUtil.format(new Date(), "yyyy-MM-dd") + ")");
+			
+			titleRow = sheet.getRow(1);
+			titleRow.getCell(0).setCellValue(infoSearchBean.getStartDt() + " ---- " + infoSearchBean.getEndDt());
+			
+			
+			PageInfo pageInfo = new PageInfo();
+			pageInfo.setCurrentPage(1);
+			pageInfo.setRows(999999999);
+			
+			List<InformationVO> list = infoReportBO.findByParams(infoSearchBean,
+					pageInfo);
+			
+//			System.out.println("Tims spend: " + String.valueOf(System.currentTimeMillis() - startTime));
+			
+			Map<String, UserVO> userMap = userBO.findAll();
+			Map<String, String> dictMap = dictBO.getDict(Constants.DICT_DICTTYPE_MYD);
+//			Map<String, String> resultMap = infoReportBO.getResult(list);
+			
+			List<InfoReportDTO> dtoList = new ArrayList<InfoReportDTO>();
+			for (Iterator<InformationVO> iter = list.iterator(); iter.hasNext();) {
+				InformationVO infoVO = iter.next();
+				InfoReportDTO dto = new InfoReportDTO();
+				dto.setInfoId(infoVO.getInfoId());
+				String result = "";
+				/*if (Constants.INFOMATION_HELPTYPE_LIFE.equals(infoVO.getHelpType())) {
+					LifeInformationVO lifeInfoVO = infoReportBO.findLifeInfoByInfoId(infoVO.getInfoId());
+					if(null != lifeInfoVO) {
+						result = lifeInfoVO.getHelpApprove();
+					}
+				} else if (Constants.INFOMATION_HELPTYPE_AFFAIR.equals(infoVO.getHelpType())) {
+					AffairInformationVO affairInfoVO = infoReportBO.findAffairInfoByInfoId(infoVO.getInfoId());
+					if(null != affairInfoVO) {
+						result = affairInfoVO.getHelpApprove();
+					}
+				}*/
+				
+				dto.setCallResult(StringUtils.isEmpty(result) ? "" : dictMap.get(result));
+				dto.setCreateTime(infoVO.getCreateTime());
+				dto.setCreator(userMap.get(infoVO.getCreator()).getUserName());
+				dto.setHelpContent(infoVO.getHelpContent());
+				dto.setHelpName(infoVO.getHelpName());
+				dto.setHelpTel(infoVO.getHelpTel());
+				dto.setHelpType(infoVO.getHelpType());
+				dto.setHelpTypeValue(Constants.INFOMATION_HELPTYPE_HASHMAP.get(infoVO.getHelpType()));
+				dto.setStatus(Constants.SYS_INFOMATION_STATES_HASHMAP.get(infoVO.getStatus()));
+				dtoList.add(dto);
+			}
+			for (int i = 0; i < dtoList.size(); i++) {
+				InfoReportDTO dto = dtoList.get(i);
+				HSSFRow row = sheet.createRow(i + 3);
+				row.createCell(0).setCellValue(String.valueOf(i + 1));
+				row.createCell(1).setCellValue(dto.getHelpName());
+				row.createCell(2).setCellValue(dto.getCreateTime());
+				row.createCell(3).setCellValue(dto.getHelpContent());
+				row.createCell(4).setCellValue(dto.getHelpTel());
+				row.createCell(5).setCellValue(dto.getHelpTypeValue());
+				row.createCell(6).setCellValue(dto.getCreator());
+				if(StringUtil.isNotEmpty(dto.getCallResult())) {
+					row.createCell(7).setCellValue(dto.getCallResult());
+				} else {
+					row.createCell(7).setCellValue("-");
+				}
+				row.createCell(8).setCellValue(dto.getStatus());
+			}
+
+			fOut = response.getOutputStream();
+			workbook.write(fOut);
+		} catch (UnsupportedEncodingException e1) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				workbook.close();
+				fOut.flush();
+				fOut.close();
+				fs.close();
+			} catch (IOException e) {
+			}
+			session.setAttribute("state", "open");
+		}
+		System.out.println("文件生成...");
 	}
 }

@@ -1,7 +1,6 @@
 package com.ccs.dao.impl;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.StringType;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -45,14 +44,14 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 		return count.intValue();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<EntpriseVO> findAll(final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(
+		return (List<EntpriseVO>) getHibernateTemplate().execute(
 				new HibernateCallback<List<EntpriseVO>>() {
+					@SuppressWarnings("unchecked")
 					@Override
 					public List<EntpriseVO> doInHibernate(Session session)
-							throws HibernateException, SQLException {
+							throws HibernateException {
 						Query query = session
 								.createQuery("from EntpriseVO vo order by vo.servicsType, vo.entpriseNo");
 						query.setFirstResult((pageInfo.getCurrentPage() - 1)
@@ -93,16 +92,16 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 	/**
 	 * bigEntClassID,smallEntClassID,entClassID,: ���Ϊ�գ�����Բ�ѯ����
 	 */
-	@SuppressWarnings("unchecked")
 	public List<EntpriseVO> findByParams(final String entpriseName,
 			final String entpriseNo, final String servicesType, final String bigEntclassId,
 			final String smallEntclassId, final String entclassId,
 			final String status, final String address, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(
+		return (List<EntpriseVO>) getHibernateTemplate().execute(
 				new HibernateCallback<List<EntpriseVO>>() {
+					@SuppressWarnings("unchecked")
 					@Override
 					public List<EntpriseVO> doInHibernate(Session session)
-							throws HibernateException, SQLException {
+							throws HibernateException {
 
 						final List<Object> objList = new ArrayList<Object>();
 						String targetSql = "";
@@ -159,7 +158,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 				new HibernateCallback<BigDecimal>() {
 					@Override
 					public BigDecimal doInHibernate(Session session)
-							throws HibernateException, SQLException {
+							throws HibernateException {
 						final List<Object> objList = new ArrayList<Object>();
 						String targetSql = "";
 						if (!StringUtil.isNull(entclassId)) {
@@ -209,7 +208,7 @@ public class EntpriseDAOImpl extends DefaultDAOSupport implements IEntpriseDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<EntpriseVO> findAll() {
-		return getHibernateTemplate().find("from EntpriseVO ");
+		return (List<EntpriseVO>) getHibernateTemplate().find("from EntpriseVO ");
 	}
 
 }

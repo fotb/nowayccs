@@ -24,13 +24,17 @@ function btnsave_click(){
 }
 
 function btnchoose_click(){
-  var lifeHandInfo = window.showModalDialog("bizlife.do?action=receiver&"+getTimeStr(),window,"dialogWidth=900px;dialogHeight=700px;status=0");
-  if(lifeHandInfo!=null){
+  //var lifeHandInfo = window.showModalDialog("bizlife.do?action=receiver&"+getTimeStr(),window,"dialogWidth=900px;dialogHeight=700px;status=0");
+
+  var lifeHandInfo = window.open("bizlife.do?action=receiver&"+getTimeStr(),null,'modal=yes,width=900px,height=700px,status=no,location=no,scrollbars=yes,resizable=yes');
+/*  
+if(lifeHandInfo!=null){
 	$("#receiverType").val(lifeHandInfo.receiverType);
 	$("#receiverId").val(lifeHandInfo.receiverID);
 	$("#linkName").val(lifeHandInfo.linkName);
 	$("#linkTel").val(lifeHandInfo.linkTel);
   }
+*/
 }
 
 function btnback_click(){
@@ -68,7 +72,7 @@ function btnback_click(){
             <td height="1" colspan="2">            </td>
           </tr>
           <tr class="table_t1">
-            <td width="10%">求助名姓名：</td>
+            <td width="10%">求助者姓名：</td>
             <td>
             ${infoVO.helpName}
             </td>

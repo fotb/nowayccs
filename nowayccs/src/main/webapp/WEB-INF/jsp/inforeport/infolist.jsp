@@ -16,10 +16,14 @@
 <script language="javascript" type="">
 
 function option_exp(form){
-  form.action="QryReport_exp.do";
+if(${pageInfo.totalRecords} > 65535) {
+	alert("由于Excel限制，一次导出记录数不能大于65535条！ 请缩小时间范围，分批导出！");
+} else {
+  form.action="inforeport.do?action=infoexport";
   form.target="_blank";
   form.submit();
   form.target="_self";
+}
 }
 
 function option_search(form){
@@ -149,7 +153,7 @@ $("#jdjtcount").html(data.jdjtcount);
       <c:forEach items="${dtoList}"  var="dto" varStatus="index">
       <tr class='table_white' onmouseover="this.style.backgroundColor='#F0F0F0'" onmouseout="this.style.backgroundColor='#ffffff'">
         <td>${index.index + 1 + pageInfo.PAGE_COUNT*(pageInfo.currentPage-1)}</td>
-        <td><a href="infosearch.do?action=showinfo&infoId=${dto.infoId}" target="_blank">${dto.helpName}</a></td>
+        <td><a href="infosearch.do?action=showinfo&infoId=${dto.infoId}" >${dto.helpName}</a></td>
         <td><fmt:formatDate value="${dto.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td>${dto.helpContent}</td>
         <td>${dto.helpTel}</td>
@@ -166,7 +170,7 @@ $("#jdjtcount").html(data.jdjtcount);
     </table>
       <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-       <!--  <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td> -->
+        <td><img width="80" height="18" src="images/button_dateexp.gif" onclick="option_exp(document.forms[0]);" style="cursor:pointer;"/></td>
           <td height="30" align="right">
             <jsp:include page="../common/pageinfo.jsp" flush="true">
               <jsp:param name="formname" value="forms[0]"/>

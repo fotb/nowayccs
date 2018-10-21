@@ -82,12 +82,12 @@ function option_modiOnJob(id, onJob) {
 
 
                 <c:if test="${'1' == user.onJob}">
-                  <A href="javascript:option_modiOnJob(${user.userId}, ${user.onJob});">
+                  <A href="javascript:option_modiOnJob('${user.userId}', '${user.onJob}');">
                     <img src="images/stop.gif" alt="停职" width="14" height="14" border="0" style="cursor:hand">
                   </A>
                   </c:if>
                 <c:if test="${'0' == user.onJob}">
-                  <A href="javascript:option_modiOnJob(${user.userId}, ${user.onJob});">
+                  <A href="javascript:option_modiOnJob('${user.userId}', '${user.onJob}');">
                     <img src="images/ok.gif" alt="在职" width="11" height="14" border="0" style="cursor:hand">
                   </A>
                   </c:if>

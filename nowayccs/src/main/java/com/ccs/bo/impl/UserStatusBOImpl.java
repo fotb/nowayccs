@@ -103,6 +103,7 @@ public class UserStatusBOImpl implements IUserStatusBO {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 	}

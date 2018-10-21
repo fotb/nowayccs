@@ -1,12 +1,11 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
@@ -36,10 +35,10 @@ public class ReferDAOImpl extends DefaultDAOSupport implements IReferDAO {
 	@Override
 	public List<ReferVO> findByParams(final String title, final String referType,
 			final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<ReferVO>>() {
+		return (List<ReferVO>) getHibernateTemplate().execute(new HibernateCallback<List<ReferVO>>() {
 			@Override
 			public List<ReferVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				final String hql = "from ReferVO t where (t.title like ? or ? is null) and (t.referType = ? or ? is null) order by title";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, "%" + title + "%");

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IReferBO;
 import com.ccs.dao.IReferDAO;
@@ -17,11 +18,13 @@ public class IReferBOImpl implements IReferBO {
 	private IReferDAO referDAO;
 	
 	@Override
+	@Transactional
 	public void saveoOrUpdate(ReferVO vo) {
 		referDAO.saveoOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(ReferVO vo) {
 		referDAO.delete(vo);
 	}

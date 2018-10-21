@@ -26,6 +26,7 @@ import com.ccs.vo.UserRoleVO;
 import com.ccs.vo.UserVO;
 
 @Service("userBO")
+@Transactional
 public class UserBOImpl implements IUserBO {
 
 	@Autowired
@@ -41,11 +42,13 @@ public class UserBOImpl implements IUserBO {
 	private IOperationDAO operationDAO;
 	
 	@Override
+	@Transactional
 	public void saveOrUpdate(UserVO vo) {
 		userDAO.saveOrUpdate(vo);
 	}
 
 	@Override
+	@Transactional
 	public void delete(UserVO vo) {
 		userDAO.delete(vo);
 	}
@@ -71,16 +74,14 @@ public class UserBOImpl implements IUserBO {
 	public void addUser(UserVO vo, String[] roleIds) {
 		userDAO.saveOrUpdate(vo);
 		
-		List<UserRoleVO> list = new ArrayList<UserRoleVO>();
 		for (int i = 0; i < roleIds.length; i++) {
 			UserRoleVO userRoleVO = new UserRoleVO();
 			UserRoleIdVO idVO = new UserRoleIdVO();
 			idVO.setRoleId(roleIds[i]);
 			idVO.setUserId(vo.getUserId());
 			userRoleVO.setId(idVO);
-			list.add(userRoleVO);
+			userRoleDAO.saveOrUpdate(userRoleVO);
 		}
-		userRoleDAO.saveOrUpdate(list);
 	}
 
     @Override

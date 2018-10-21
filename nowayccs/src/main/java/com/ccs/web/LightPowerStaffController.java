@@ -38,7 +38,7 @@ public class LightPowerStaffController {
 	}
 
 	@RequestMapping(params = "action=buildtree", method = RequestMethod.GET)
-	public @ResponseBody String buildLPSTree(@RequestParam(value = "page", required = false) String page,
+	public @ResponseBody JSONObject buildLPSTree(@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "rows", required = false) String rows) throws Exception {
 		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
 		// JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
@@ -51,22 +51,22 @@ public class LightPowerStaffController {
 		jsonObj.put("rows", jsonArray.toString());
 		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
 		// System.out.println("json: " + jsonObj.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=areatree", method = RequestMethod.GET)
-	public @ResponseBody String buildAreaTree() throws Exception {
-		List<EasyUiTree> treeList = lpsBO.buildAreaTree();
-		// JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
-		//
-		JSONObject jsonObj = new JSONObject();
-		JSONArray jsonArray = JSONArray.fromObject(treeList);
+	public @ResponseBody List<EasyUiTree>  buildAreaTree() throws Exception {
+//		List<EasyUiTree> treeList = lpsBO.buildAreaTree();
+//		// JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
+//		//
+//		JSONObject jsonObj = new JSONObject();
+//		JSONArray jsonArray = JSONArray.fromObject(treeList);
 
-		return jsonArray.toString();
+		return lpsBO.buildAreaTree();
 	}
 
 	@RequestMapping(params = "action=buildlist", method = RequestMethod.GET)
-	public @ResponseBody String buildLPSList(@RequestParam(value = "areaId", required = false) String areaId,
+	public @ResponseBody JSONObject buildLPSList(@RequestParam(value = "areaId", required = false) String areaId,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "rows", required = false) String rows) throws Exception {
 		List<PowerStaffListBean> beanList = lpsBO.buildList(areaId, Integer.valueOf(page), Integer.valueOf(rows));
@@ -77,11 +77,11 @@ public class LightPowerStaffController {
 
 		JSONArray jsonArray = JSONArray.fromObject(beanList);
 		jsonObj.put("rows", jsonArray.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=load", method = RequestMethod.GET)
-	public @ResponseBody String load(@RequestParam(value = "areaId", required = false) String areaId,
+	public @ResponseBody JSONObject load(@RequestParam(value = "areaId", required = false) String areaId,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "rows", required = false) String rows) throws Exception {
 		LightPowerStaffTreeBean lpsTreeBean = lpsBO.buildLPSTree();
@@ -95,7 +95,7 @@ public class LightPowerStaffController {
 		jsonObj.put("rows", jsonArray.toString());
 		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
 		// System.out.println("json: " + jsonObj.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=add")
@@ -138,18 +138,18 @@ public class LightPowerStaffController {
 	}
 
 	@RequestMapping(params = "action=pslist")
-	public @ResponseBody String psList(ModelMap model) throws Exception {
+	public @ResponseBody JSONObject psList(ModelMap model) throws Exception {
 		List<PowerStaffVO> list = lpsBO.findAll();
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("total", list.size());
 		JSONArray jsonArray = JSONArray.fromObject(list);
 
 		jsonObj.put("rows", jsonArray.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=subareapslist")
-	public @ResponseBody String psList(@RequestParam String areaSubId,
+	public @ResponseBody JSONObject psList(@RequestParam String areaSubId,
 			@RequestParam(value = "psname", required = false) String psname,
 			@RequestParam(value = "psphone", required = false) String psphone, ModelMap model) throws Exception {
 		List<PowerStaffVO> list = lpsBO.queryAllOrderByAreaSubId(areaSubId, psname, psphone);
@@ -160,7 +160,7 @@ public class LightPowerStaffController {
 		jsonObj.put("rows", jsonArray.toString());
 
 		jsonObj.put("selectedRows", lpsBO.countPSByAreaSubId(areaSubId));
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=associateSave")

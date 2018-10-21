@@ -10,6 +10,7 @@ public class Constants {
 
 	/* 系统权限定义 */
 	public static String SYS_PERMISSION_YWSL = "10"; // 业务受理
+	public static String SYS_PERMISSION_APP_ACCEPT = "11"; // app受理
 	public static String SYS_PERMISSION_SHYWCL = "20"; // 生活业务处理
 	public static String SYS_PERMISSION_SHYWCX = "21"; // 查看生活服务详细信息
 	public static String SYS_PERMISSION_SWYWCL = "30"; // 事务业务处理
@@ -99,6 +100,8 @@ public class Constants {
 	public static final String INFOMATION_HELPTYPE_AFFAIR = "3"; // 3事务服务类
 	public static final String INFOMATION_HELPTYPE_FERTILITY = "4"; // 4生产力服务
 	public static final String INFOMATION_HELPTYPE_POWER = "5"; // 5电力服务类
+	public static final String INFOMATION_HELPTYPE_ELEVATOR = "6"; // 6电梯紧急救援
+	public static final String INFOMATION_HELPTYPE_SGPT = "7"; // 7四个平台
 	public static final Map<String, String> INFOMATION_HELPTYPE_HASHMAP = new TreeMap<String, String>();
 
 	static {
@@ -107,6 +110,8 @@ public class Constants {
 		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_AFFAIR), "事务服务类");
 		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_FERTILITY), "生产力服务");
 		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_POWER), "电力服务类");
+		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_ELEVATOR), "电梯紧急救援");
+		INFOMATION_HELPTYPE_HASHMAP.put(String.valueOf(INFOMATION_HELPTYPE_SGPT), "四个平台");
 	}
 
 	/* 生活类接受类型： */
@@ -141,6 +146,7 @@ public class Constants {
 	}
 
 	public static final String HELP_MODE_SMS = "4";
+	public static final String HELP_MODE_APP = "6";
 
 	/* 求助类型 */
 	/*

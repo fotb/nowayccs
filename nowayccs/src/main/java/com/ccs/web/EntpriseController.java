@@ -10,8 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -91,10 +89,10 @@ public class EntpriseController {
 	}
 	
 	@RequestMapping(params = "action=getCategory", method = RequestMethod.GET)
-	public @ResponseBody String getCategory(@RequestParam String parentId) throws UnsupportedEncodingException {
-		List<EntCategoryVO> list = entpriseBO.findEntCategoryByParentId(parentId);
-		JSONArray jsonObj = JSONArray.fromObject(list);
-		return jsonObj.toString();
+	public @ResponseBody List<EntCategoryVO>  getCategory(@RequestParam String parentId) throws UnsupportedEncodingException {
+//		List<EntCategoryVO> list = entpriseBO.findEntCategoryByParentId(parentId);
+//		JSONArray jsonObj = JSONArray.fromObject(list);
+		return  entpriseBO.findEntCategoryByParentId(parentId);
 	}
 	
 	

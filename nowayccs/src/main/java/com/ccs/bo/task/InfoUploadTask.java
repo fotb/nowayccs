@@ -12,6 +12,7 @@ import com.ccs.dao.IAgentDAO;
 import com.ccs.dao.IBaseDAO;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.dao.ILifeInformationDAO;
+import com.ccs.dao.IUserDAO;
 import com.ccs.services.client.ZhServiceConstants;
 import com.ccs.services.client.ZhServiceSoapProxy;
 import com.ccs.services.vo.AjUploadVO;
@@ -21,12 +22,12 @@ import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.StringUtil;
 import com.ccs.util.XmlUtil;
-import com.ccs.vo.AgentVO;
 import com.ccs.vo.BaseEntity;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.UpInfoStatusHistVO;
 import com.ccs.vo.UpInfoStatusVO;
+import com.ccs.vo.UserVO;
 
 @Component("infoUploadTask")
 public class InfoUploadTask {
@@ -47,8 +48,11 @@ public class InfoUploadTask {
 
 	@Autowired
 	private IAgentDAO agentDAO;
+	
+	@Autowired
+	private IUserDAO userDAO;
 
-	@Scheduled(cron = "0 0/1 * * * ?")
+	//@Scheduled(cron = "0 0/2 * * * ?")
 	public void doJob() {
 
 		try {
@@ -98,9 +102,9 @@ public class InfoUploadTask {
 				ajuVO.setHostdepart("");
 				ajuVO.setHelpbuild("1");
 
-				AgentVO agentVO = agentDAO.findById(infoVO.getCreator());
-				ajuVO.setSeatname(agentVO.getWorkNo());
-				ajuVO.setSeatip(agentVO.getTargetDevice());
+				UserVO userVO = userDAO.findById(infoVO.getCreator());
+				ajuVO.setSeatname(userVO.getLoginName());
+				ajuVO.setSeatip(userVO.getLoginName());
 
 				ZhServiceSoapProxy proxy = new ZhServiceSoapProxy();
 				// String login = proxy.login(ZhServiceConstants.USER,
@@ -108,10 +112,9 @@ public class InfoUploadTask {
 				// if(ZhServiceConstants.LOGIN_STATUS_0.equals(login)) {
 
 				if (Constants.SYS_INFOMATION_STATES_DB.equals(infoVO.getStatus())) {
-					agentVO = agentDAO.findById(infoVO.getCreator());
 					CallTelUploadVO ctuVO = new CallTelUploadVO();
-					ctuVO.setSeatname(agentVO.getWorkNo());
-					ctuVO.setSeatip(agentVO.getTargetDevice());
+					ctuVO.setSeatname(userVO.getLoginName());
+					ctuVO.setSeatip(userVO.getLoginName());
 					ctuVO.setCalltel(infoVO.getHelpTel());
 					ctuVO.setDealtime(DateUtil.format(infoVO.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
 					ctuVO.setDealstatus("1");
@@ -140,6 +143,7 @@ public class InfoUploadTask {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOG.error("Upload Aj Fail: " + e.getMessage());
 		}
 	}

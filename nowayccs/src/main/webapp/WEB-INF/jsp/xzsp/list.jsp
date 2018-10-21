@@ -18,7 +18,7 @@
             	if(null == row) {
             		$.messager.alert("提示", '请选择需要删除的记录！');
             	}  else {
-            		$.messager.confirm("提示", '确认删除员工？',function(r){
+            		$.messager.confirm("提示", '确认删除？',function(r){
             		    if (r){
             		    	//$("#dg").datagrid("remove", row.pid);
                     		$.post("lps.do?action=del", {id:row.pid},

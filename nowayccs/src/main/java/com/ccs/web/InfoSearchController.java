@@ -27,6 +27,7 @@ import com.ccs.bo.IVolunteerBO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
+import com.ccs.vo.AppInfoVO;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
 import com.ccs.vo.EntpriseVO;
@@ -237,21 +238,44 @@ public class InfoSearchController {
 		return "infosearch/powerinfo";
 	}
 	
+	
+	
+	@RequestMapping(params = "action=appinfo")
+	public String appInfo(String infoId, String pageNo, ModelMap model) {
+		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		model.addAttribute("infoVO", infoVO);
+		model.addAttribute("statusMap", Constants.SYS_INFOMATION_STATES_HASHMAP);
+		
+		model.addAttribute("areaMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+		model.addAttribute("pdfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_LLFS));
+		
+		model.addAttribute("mydMap", dictBO.getDict(Constants.DICT_DICTTYPE_MYD));
+		
+		AppInfoVO appInfoVO = infoSearchBO.findAppInfoByInfoId(infoVO.getCallId());
+		model.addAttribute("appInfoVO", appInfoVO);
+		return "infosearch/appinfo";
+	}
+	
 	@RequestMapping(params = "action=showinfo")
 	public String showInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
-		if(Constants.INFOMATION_HELPTYPE_LIFE.equals(infoVO.getHelpType())) {
-			return "redirect:infosearch.do?action=lifeinfo&infoId=" + infoId;
-		} else if(Constants.INFOMATION_HELPTYPE_AFFAIR.equals(infoVO.getHelpType())) {
-			return "redirect:infosearch.do?action=affairinfo&infoId=" + infoId;
-		} else if(Constants.INFOMATION_HELPTYPE_REFER.equals(infoVO.getHelpType())) {
-			return "redirect:infosearch.do?action=referinfo&infoId=" + infoId;
-		} else if(Constants.INFOMATION_HELPTYPE_FERTILITY.equals(infoVO.getHelpType())) {
-			return "redirect:infosearch.do?action=productivityinfo&infoId=" + infoId;
-		} else if(Constants.INFOMATION_HELPTYPE_POWER.equals(infoVO.getHelpType())) {
-			return "redirect:infosearch.do?action=powerinfo&infoId=" + infoId;
+		if("6".equals(infoVO.getHelpMode())) {
+			return "redirect:infosearch.do?action=appinfo&infoId=" + infoId;
 		} else {
-			return "";
+			if(Constants.INFOMATION_HELPTYPE_LIFE.equals(infoVO.getHelpType())) {
+				return "redirect:infosearch.do?action=lifeinfo&infoId=" + infoId;
+			} else if(Constants.INFOMATION_HELPTYPE_AFFAIR.equals(infoVO.getHelpType())) {
+				return "redirect:infosearch.do?action=affairinfo&infoId=" + infoId;
+			} else if(Constants.INFOMATION_HELPTYPE_REFER.equals(infoVO.getHelpType())) {
+				return "redirect:infosearch.do?action=referinfo&infoId=" + infoId;
+			} else if(Constants.INFOMATION_HELPTYPE_FERTILITY.equals(infoVO.getHelpType())) {
+				return "redirect:infosearch.do?action=productivityinfo&infoId=" + infoId;
+			} else if(Constants.INFOMATION_HELPTYPE_POWER.equals(infoVO.getHelpType())) {
+				return "redirect:infosearch.do?action=powerinfo&infoId=" + infoId;
+			} else {
+				return "";
+			}
 		}
 	}
 }

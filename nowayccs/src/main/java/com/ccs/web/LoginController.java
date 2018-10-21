@@ -41,7 +41,8 @@ public class LoginController {
 		if (result.hasErrors()) {
 			return "login";
 		} else {
-			UserVO vo = userBO.login(loginBean.getLoginName(), loginBean.getLoginPassword());
+			String userName = loginBean.getLogName().replaceFirst("2006", "");
+			UserVO vo = userBO.login(userName, loginBean.getPassword());
 			session.setAttribute(Constants.SESSION_USER_KEY, vo);
 			
 			userStatusBO.updateUserStatus(vo.getUserId(), UserStatusVO.STATUS_1, "6", "", session.getId());

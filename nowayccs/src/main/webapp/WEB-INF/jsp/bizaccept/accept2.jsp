@@ -6,14 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>业务受理</title>
-<link rel="stylesheet" type="text/css" media="screen" href="css/smoothness/jquery-ui-1.8.16.custom.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="css/ui.jqgrid.css" />
-<link rel="stylesheet" type="text/css" media="all" href="css/calendar-win2k-cold-1.css"/> 
-<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="easyui/themes/gray/easyui.css">
+	<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+	<script type="text/javascript" src="easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/jquery.dynDateTime.js"></script>
 <script type="text/javascript" src="js/lang/calendar-zh.js"></script>
-<script src="js/i18n/grid.locale-cn.js" type="text/javascript"></script>
-<script type="text/javascript" src="js/jquery.jqGrid.src.js"></script>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <script src="js/function.js" type="text/javascript"></script>
@@ -39,8 +38,7 @@ function btnnext_click(){
   if(!isValidStringObj( form.helpContent,"求助内容",true)){
     return;
   }
-  
-  if($("#lonelyFamilyDeal").attr("checked") == "checked") {
+  if($("#lonelyFamilyDeal").prop('checked')) {
 	  //结对家庭求助处理
 	  $("#bizAccept").attr("action", "lonelyFamily.do");
 	  $("#action").val("accept");
@@ -53,8 +51,8 @@ function btnnext_click(){
     	return;
   	}
     if("2" == $("#helpType").val()) {
-  	$("#action").val("life");
-  	$("form").submit();
+  		$("#action").val("life");
+  		$("form").submit();
     } else if("3" == $("#helpType").val()) {
   		$("#action").val("affair");
   		$("form").submit();
@@ -63,6 +61,12 @@ function btnnext_click(){
   		$("form").submit();
     } else if("5" == $("#helpType").val()) {
     	$("#action").val("power");
+  		$("form").submit();
+    } else if("6" == $("#helpType").val()) {
+    	$("#action").val("elevator");
+  		$("form").submit();
+    } else if("7" == $("#helpType").val()) {
+    	$("#action").val("sgpt");
   		$("form").submit();
     }
   }
@@ -104,9 +108,8 @@ $(document).ready(function(){
 	loadHist();
 	getPhoneLevels($("#helpTel").val());
 	$("#helpTel").change(function(){
-		jQuery("#histList").setGridParam({url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+""});
-		jQuery("#histList").trigger("reloadGrid");
-		
+		$('#histList').datagrid('options').url = "bizaccept.do?t="+new Date().getTime()+ "&action=helphist&callNo="+$("#helpTel").val();
+		$('#histList').datagrid('reload');
 		getPhoneLevels($("#helpTel").val());
 		getLonelyFamily($("#helpTel").val());
 	});
@@ -117,7 +120,6 @@ $(document).ready(function(){
 		} else if($("#helpContent3").css("display") != "block"){
 			$("#helpContent3").css("display", "block");
 		} else {
-		alert("dafa");
 			$("#helpContent4").css("display", "block");
 		}
 	});
@@ -132,74 +134,76 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#createTime" ).dynDateTime({
+/* 	$("#createTime" ).dynDateTime({
 		  showsTime: true,
 		  ifFormat: "%Y-%m-%d %H:%M:%S",
 		  button: ".next()" //next sibling to input field
-			});
+			}); */
+			
+    $('#createTime').datetimebox({
+        required: true,
+        showSeconds: true
+    });
 });
 
 function getPhoneLevels(phone) {
 	if(phone == "") {
 		phone = "${bizAccept.helpTel}";
 	}
-	$.getJSON("blacklist.do?action=phonelevels&phoneNum=" + phone, function(data) {
-		if(data != "") {
+	$.getJSON("blacklist.do?t="+new Date().getTime()+ "&action=phonelevels&phoneNum=" + phone, function(res) {
+		data = res.data
+		if(null != data) {
 			$("#phonelevels").html("");
-			if(data[0].levels < 0) {
+			if(data.levels < 0) {
 				$("#phonelevels").css("color", "black");
 			} else {
 				$("#phonelevels").css("color", "red");
 			}
 			
-			for(i = 0; i < Math.abs(data[0].levels); i++) {
+			for(i = 0; i < Math.abs(data.levels); i++) {
 				$("#phonelevels").append("★");
 			}
 			
-			$("#phonelevels").append("(" + data[0].remark + ")");
+			$("#phonelevels").append("(" + data.remark + ")");
 		}
 	});
 }
 
 function loadHist() {
 	var lastsel;
-	jQuery("#histList").jqGrid({ 
-		url:"bizaccept.do?action=helphist&callNo="+$("#helpTel").val()+"", 
-		datatype: "json", 
-		colNames:['求助者姓名','求助时间','详细地址','求助内容','求助类别','输入人','结案时间','壮态 ', ''], 
-		colModel:[ 
-		           {name:'helpName',index:'helpName', formatter:bizShowLinkFormatter, width:'90'}, 
-		           {name:'createTime',index:'createTime',width:'120'}, 
-		           {name:'helpAddr',index:'helpAddr',width:'200'}, 
-		           {name:'helpContent',index:'helpContent', align:"left",width:'200'}, 
-		           {name:'helpType',index:'helpType', align:"right",width:'80'}, 
-		           {name:'creator',index:'creator', align:"right",width:'60'},
-		           {name:'finishTime',index:'finishTime',width:'120'}, 
-		           {name:'status',index:'status', sortable:false,width:'50'} ,
-		           {name:'infoId', index:'infoId', hidden:true}
-		], 
-		rowNum:10, 
-		rowList:[10,20,30], 
-		pager: '#histPagerNav', 
-		sortname: 'createTime', 
-		viewrecords: true, 
-		sortorder: "desc", 
-		caption:"近期求助记录"
-		/*
-		onSelectRow: function(id){ 
-			//alert(id);
-			//if(id && id!==lastsel){ 
-					window.open("infosearch.do?action=showinfo&infoId=" + id, "", 'height=700, width=750, top=0, left=100, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no'); 
-			//		lastsel=id; 
-			//	} 
-			}
-		*/
-	}); 
-	jQuery("#histList").jqGrid('navGrid','#histPagerNav',{edit:false,add:false,del:false});	
+	
+    $('#histList').datagrid({
+        url:"bizaccept.do?t="+new Date().getTime()+ "&action=helphist&callNo="+$("#helpTel").val()+"",
+        columns:[[
+            {field:'helpName',title:'求助者姓名',formatter:bizShowLinkFormatter, width:90},
+            {field:'createTime',title:'求助时间',width:120},
+            {field:'helpAddr',title:'详细地址',width:200,align:'right'},
+            {field:'helpContent',title:'求助内容',width:200,align:'left'},
+            {field:'helpType',title:'求助类别',width:80,align:'right'},
+            {field:'creator',title:'输入人',width:60,align:'right'},
+            {field:'finishTime',title:'结案时间',width:120,align:'right'},
+            {field:'status',title:'壮态',width:50,align:'right'},
+            {field:'infoId',title:'',width:200,align:'right', hidden:true}
+        ]],
+		method:'get',
+		cache: false, 
+		//fit: true,   //自适应大小
+		border:false,
+		nowrap: true,//数据长度超出列宽时将会自动截取。0
+		rownumbers:true,//行号
+		fitColumns:true,//自动使列适应表格宽度以防止出现水平滚动。
+		pagination:true,
+		pageSize:10,
+		singleSelect: true,
+		onDblClickRow:function(index, row) {
+			window.open("infosearch.do?action=showinfo&infoId=" + row.infoId, "", 'height=700, width=750, top=0, left=100, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=no');
+		}
+    });
 }
 
-function bizShowLinkFormatter(cellValue, options, rowObj) {
-	return "<a href=\"infosearch.do?action=showinfo&infoId=" + options.rowId + "\" target=\"_blank\">"+cellValue+"</a>";
+function bizShowLinkFormatter(value, row, index) {
+	//return "<a href=\"infosearch.do?action=showinfo&infoId=" + row.infoId + "\" target=\"_blank\">"+value+"</a>";
+	return value;
 }
 
 function getLonelyFamily(phone) {
@@ -207,7 +211,8 @@ function getLonelyFamily(phone) {
 		phone = "${bizAccept.helpTel}";
 	}
 	if(phone != "") {
-		$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(data) {
+		$.getJSON("lonelyFamily.do?action=lonelyManInfo&callNo=" + phone, function(res) {
+		data = res.data;	
 		if(null != data) {
 			$("#manName").text(data.manName);
 			$("#manSex").text(data.manSex);
@@ -346,7 +351,8 @@ function getLonelyFamily(phone) {
           <tr class="table_t1">
             <td>求助区域：</td>
             <td>
-              <form:select path="helpArea" cssClass="form_accept" items="${qzqyList}" itemLabel="value" itemValue="sortIndex" />              
+              <form:select path="helpArea" cssClass="form_accept" items="${qzqyList}" itemLabel="value" itemValue="sortIndex">
+              </form:select>              
             </td>
           </tr>
           <tr class="line">
@@ -373,7 +379,8 @@ function getLonelyFamily(phone) {
           </tr>
           <tr class="table_t1">
             <td>求助时间：</td>
-            <td><form:input path="createTime" size="20" readonly="true"/></td>
+            <td><form:input path="createTime" size="20" />
+            </td>
           </tr>
           <tr class="line">
             <td height="1" colspan="2">            </td>
@@ -439,20 +446,13 @@ function getLonelyFamily(phone) {
 							<td colspan="5" id="familyInfo"></td>
 						</tr>
 					</table>
-					<table width="100%" border="0" align="center" cellpadding="0"
-						cellspacing="0" class="table_gray">
-						<tr>
-							<td colspan="1">
-								<table id="histList"></table>
-								<div id="histPagerNav"></div>
-							</td>
-						</tr>
-					</table>
+					<table id="histList" style="height:306px"></table>
 				</td>
     </tr>
   </table>
   <form:hidden path="creator"/>
-  <form:hidden path="createTime"/>
+<%--   <form:hidden path="createTime"/> --%>
+<form:hidden path="appInfoId"/>
 		<form:hidden path="popupFlag"/>
 	</form:form>
 </body>

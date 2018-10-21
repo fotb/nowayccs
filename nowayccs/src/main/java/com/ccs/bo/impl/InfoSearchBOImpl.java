@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import com.ccs.bean.InfoSearchBean;
 import com.ccs.bo.IInfoSearchBO;
 import com.ccs.dao.IAffairInformationDAO;
+import com.ccs.dao.IBaseDAO;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.dao.ILifeInformationDAO;
 import com.ccs.dao.IReferInformationDAO;
 import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
+import com.ccs.vo.AppInfoVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.ReferInformationVO;
@@ -37,6 +39,9 @@ public class InfoSearchBOImpl implements IInfoSearchBO {
 	
 	@Autowired
 	private IReferInformationDAO referInformationDAO;
+	
+	@Autowired
+	private IBaseDAO<AppInfoVO> appInfoDAO;
 	
 	@Override
 	public List<InformationVO> findByParams(InfoSearchBean bean, PageInfo pageInfo) {
@@ -101,6 +106,17 @@ public class InfoSearchBOImpl implements IInfoSearchBO {
 	@Override
 	public ReferInformationVO findReferInfoByInfoId(String infoId) {
 		return referInformationDAO.findByInfoId(infoId);
+	}
+
+	@Override
+	public AppInfoVO findAppInfoByInfoId(String infoId) {
+		final String hql = "from AppInfoVO where informationId = ?";
+		List<AppInfoVO> list = appInfoDAO.queryForObject(hql, new Object[] {infoId});
+		if(list.isEmpty()) {
+			return null;
+		} else {
+			return list.get(0);
+		}
 	}
 
 }

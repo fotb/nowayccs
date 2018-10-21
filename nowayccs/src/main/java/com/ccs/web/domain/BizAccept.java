@@ -31,6 +31,16 @@ public class BizAccept implements Serializable {
 	
 	private String popupFlag;
 	
+	private String appInfoId;
+	
+	public String getAppInfoId() {
+		return appInfoId;
+	}
+
+	public void setAppInfoId(String appInfoId) {
+		this.appInfoId = appInfoId;
+	}
+
 	public String getOtherTel() {
 		return otherTel;
 	}

@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +8,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.StringType;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.dao.DefaultDAOSupport;
 import com.ccs.dao.ILonelyManInfoDAO;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
-import com.ccs.vo.InformationVO;
 import com.ccs.vo.LonelyManInfoVO;
 import com.ccs.web.domain.LfMgrForm;
 
@@ -42,7 +40,7 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<LonelyManInfoVO> findByTelphone(String telphone) {
-		return getHibernateTemplate().find("from LonelyManInfoVO vo where vo.telphone like ?", "%" + telphone + "%");
+		return (List<LonelyManInfoVO>) getHibernateTemplate().find("from LonelyManInfoVO vo where vo.telphone like ?", "%" + telphone + "%");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -54,7 +52,7 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 		list.add("%" + telphone + "%");
 		list.add(StringUtil.emptyToNull(telphone));
 		
-		return getHibernateTemplate().find("select manId from LonelyManInfoVO vo where (vo.manName like ? or ? is null) and (vo.telphone like ? or ? is null)", list.toArray());
+		return (List<String>) getHibernateTemplate().find("select manId from LonelyManInfoVO vo where (vo.manName like ? or ? is null) and (vo.telphone like ? or ? is null)", list.toArray());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -79,10 +77,10 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 			types[i] = StandardBasicTypes.STRING;
 		}
 		
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<LonelyManInfoVO>) getHibernateTemplate().execute(new HibernateCallback<List<LonelyManInfoVO>>() {
 			@Override
-			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+			public List<LonelyManInfoVO> doInHibernate(Session session)
+					throws HibernateException {
 				String hql = "from LonelyManInfoVO vo where 1 = 1 ";
 				hql += " and (vo.manName like ? or ? is null)";
 				hql += " and (vo.telphone like ? or ? is null)";
@@ -117,10 +115,10 @@ public class LonelyManInfoDAOImpl extends DefaultDAOSupport implements
 			types[i] = StandardBasicTypes.STRING;
 		}
 		
-		List<Long> list = getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		List<Long> list = (List<Long>) getHibernateTemplate().execute(new HibernateCallback<List<Long>>() {
 			@Override
-			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+			public List<Long> doInHibernate(Session session)
+					throws HibernateException {
 				String hql = "select count(vo.manId) from LonelyManInfoVO vo where 1 = 1 ";
 				hql += " and (vo.manName like ? or ? is null)";
 				hql += " and (vo.telphone like ? or ? is null)";

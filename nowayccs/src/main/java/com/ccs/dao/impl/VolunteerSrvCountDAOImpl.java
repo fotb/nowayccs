@@ -44,7 +44,7 @@ public class VolunteerSrvCountDAOImpl extends DefaultDAOSupport implements
 		
 		objs.add("Y");
 		objs.add("1");
-		List<VolunteerSrvCountVO> list = getHibernateTemplate().find(buffer.toString(), objs.toArray());
+		List<VolunteerSrvCountVO> list = (List<VolunteerSrvCountVO>) getHibernateTemplate().find(buffer.toString(), objs.toArray());
 		Map<String, String> map = new HashMap<String, String>();
 		for (Iterator<VolunteerSrvCountVO> iter = list.iterator(); iter.hasNext();) {
 			VolunteerSrvCountVO vo = iter.next();

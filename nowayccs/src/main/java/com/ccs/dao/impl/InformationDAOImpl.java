@@ -1,6 +1,5 @@
 package com.ccs.dao.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -10,10 +9,9 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
-import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
 import com.ccs.bean.AffairInfoSearchBean;
@@ -36,6 +34,11 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	public void saveOrUpate(InformationVO vo) {
 		getHibernateTemplate().saveOrUpdate(vo);
 	}
+	
+	@Override
+	public void save(InformationVO vo) {
+		getHibernateTemplate().save(vo);
+	}
 
 	@Override
 	public void delete(InformationVO vo) {
@@ -50,10 +53,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findByHelpTel(final String helpTel, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				final String hql = "from InformationVO t where t.helpTel like ? order by t.createTime desc";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, "%" + helpTel + "%");
@@ -75,10 +78,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<InformationVO> findByCreatorAndStatus(final String userId,
 			final String status, final String helpType, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				final String hql = "from InformationVO t where t.creator = ? and t.status = ? and t.helpType = ? order by t.createTime desc";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, userId);
@@ -102,10 +105,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<InformationVO> findByDeliverer(final String deliverer, final String helpType,
 			final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				final String hql = "from InformationVO t where t.deliverer = ? and t.helpType = ? and t.status = ? order by t.deliverTime desc";
 				Query query = session.createQuery(hql);
 				query.setParameter(0, deliverer);
@@ -128,10 +131,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<InformationVO> findByParams(final InfoSearchBean bean, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
 						Type[] types = new Type[20];
@@ -249,10 +252,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<InformationVO> findLifeInfoByParams(final LifeInfoSearchBean bean,
 			final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
 						List<Type> typeList = new ArrayList<Type>();
@@ -399,10 +402,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<InformationVO> findAffairInfoByParams(
 			final AffairInfoSearchBean bean, final PageInfo pageInfo) {
-		return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 			@Override
 			public List<InformationVO> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 						final StringBuffer buffer = new StringBuffer(1000);
 						List<Object> values = new ArrayList<Object>();
 						Type[] types = new Type[5];
@@ -461,10 +464,10 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 	@Override
 	public List<InformationVO> findByAffairAcceptorAndStatus(final String userId,
 		final String status, final String helpType, final PageInfo pageInfo) {
-			return getHibernateTemplate().executeFind(new HibernateCallback<List<InformationVO>>() {
+			return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
 				@Override
 				public List<InformationVO> doInHibernate(Session session)
-						throws HibernateException, SQLException {
+						throws HibernateException {
 					final String hql = "from InformationVO t where t.affairAcceptor = ? and t.status = ? and t.helpType = ? order by t.createTime desc";
 					Query query = session.createQuery(hql);
 					query.setParameter(0, userId);
@@ -494,15 +497,15 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("from (select LTRIM(t.helptel, '573') as helptel, ");
 		buffer.append("count(t.informationid) as telCount ");
 		buffer.append("from hj_information t ");
-		buffer.append("where (t.createtime >= ? or ? is null) ");
+		buffer.append("where t.helptel is not null and (t.createtime >= ? or ? is null) ");
 		buffer.append("and (t.createtime <= ? or ? is null) ");
 		buffer.append("group by LTRIM(t.helptel, '573')) a ");
 		buffer.append("order by a.telCount desc");
 		
-		List<Object[]> resultList = getHibernateTemplate().executeFind(new HibernateCallback<List<Object[]>>() {
+		List<Object[]> resultList = (List<Object[]>) getHibernateTemplate().execute(new HibernateCallback<List<Object[]>>() {
 			@Override
 			public List<Object[]> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				SQLQuery query = session.createSQLQuery(buffer.toString());
 //				query.setResultTransformer(Transformers.aliasToBean(HelpCountByPhoneBean.class));
 				query.setDate(0, startDt);
@@ -532,15 +535,16 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		buffer.append("from (select LTRIM(t.helptel, '573') as helptel, ");
 		buffer.append("count(t.informationid) as telCount ");
 		buffer.append("from hj_information t ");
-		buffer.append("where (t.createtime >= ? or ? is null) ");
+		buffer.append("where t.helptel is not null and (t.createtime >= ? or ? is null) ");
 		buffer.append("and (t.createtime <= ? or ? is null) ");
 		buffer.append("group by LTRIM(t.helptel, '573')) a ");
 		buffer.append("order by a.telCount desc");
 		
-		List<Object> resultList = getHibernateTemplate().executeFind(new HibernateCallback<List<Object>>() {
+		
+		List<Object> resultList = (List<Object>) getHibernateTemplate().execute(new HibernateCallback<List<Object>>() {
 			@Override
 			public List<Object> doInHibernate(Session session)
-					throws HibernateException, SQLException {
+					throws HibernateException {
 				SQLQuery query = session.createSQLQuery(buffer.toString());
 				query.setDate(0, startDt);
 				query.setDate(1, startDt);
@@ -552,6 +556,14 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		});
 
 		return Integer.valueOf(resultList.get(0).toString());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<InformationVO> findByCallId(String callId) {
+		final String hql = "from InformationVO where callId = ? ";
+		List<InformationVO> list = (List<InformationVO>)getHibernateTemplate().find(hql, new Object[] {callId});
+		return list;
 	}
 }
 

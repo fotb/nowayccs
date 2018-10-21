@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccs.bo.IDictBO;
 import com.ccs.dao.IDictDAO;
@@ -14,6 +15,7 @@ import com.ccs.util.PageInfo;
 import com.ccs.vo.DictVO;
 
 @Service("dictBO")
+@Transactional
 public class DictBOImpl implements IDictBO {
 	
 	@Autowired
