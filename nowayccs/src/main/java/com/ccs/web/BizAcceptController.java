@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,11 +34,13 @@ import com.ccs.util.Utils;
 import com.ccs.vo.AppReceiverVO;
 import com.ccs.vo.BaseEntity;
 import com.ccs.vo.DictVO;
+import com.ccs.vo.EventVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.PowerInformationVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.ReferInformationVO;
 import com.ccs.vo.UserVO;
+import com.ccs.web.domain.AppReceiverParam;
 import com.ccs.web.domain.BizAccept;
 import com.ccs.web.domain.InfoBean;
 
@@ -576,4 +580,53 @@ public class BizAcceptController {
 //		model.addAttribute("userList", userBO.findUserByOpertaionId(Constants.SYS_PERMISSION_SWYWCL));
 		return "bizaccept/acceptsgpt";
 	}
+	
+	
+	//@RequestMapping(params = "action=sgptsave")
+	public String acceptSgptSave(@RequestBody EventVO eventVO, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
+		//?? Use the same name of "bizAccept" with ModelAttribute???
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		
+		Date date = new Date();
+		
+		InformationVO vo = new InformationVO();
+		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
+		vo.setCreator(user.getUserId());
+		vo.setHelpAddr(bizAccept.getHelpAddr());
+		vo.setHelpArea(bizAccept.getHelpArea());
+		vo.setHelpContent(bizAccept.getHelpContent());
+		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
+		vo.setHelpMode(bizAccept.getHelpMode());
+		vo.setHelpName(bizAccept.getHelpName());
+		final String helpTel = bizAccept.getHelpTel() + (StringUtil.isNull(bizAccept.getOtherTel()) ? "" : "," + bizAccept.getOtherTel());
+		vo.setHelpTel(helpTel);
+		vo.setHelpType(bizAccept.getHelpType());
+		String callId = (String) session.getAttribute(CALL_ID);
+		if(!StringUtil.isNull(callId)) {
+			vo.setCallId(callId);
+			vo.setRecordFlag(Constants.SYS_YESNO_YES);
+		} else {
+			vo.setRecordFlag(Constants.SYS_YESNO_NO);
+		}
+		
+		vo.setFinishTime(date);
+		
+		PowerInformationVO piVO = new PowerInformationVO();
+		piVO.setCreateTime(date);
+		
+		
+		session.setAttribute("bizAccept", null);
+		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+			return "common/selfclose";
+		} else {
+			return "redirect:bizaccept.do?action=old";
+		}
+	}
+	
+	@RequestMapping(params = "action=selfcolse")
+	 public String finish() {
+		 return "common/selfclose";
+	 }
 }

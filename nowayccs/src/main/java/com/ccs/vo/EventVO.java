@@ -9,6 +9,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name="SGPT_EVENT")
 public class EventVO extends BaseEntity implements Serializable {
+	
+	public final static String EVENT_SOURCE_HOTCALL = "6";
+	
+	public final static String EVENT_STATUS_10 = "10";
+	
+	public final static String EVENT_ORG_CODE = "330402ZF260000";
+	
+	public final static String EVENT_ORG_ID = "330402ZF260000";
 
 	/**
 	 * 
@@ -18,6 +26,10 @@ public class EventVO extends BaseEntity implements Serializable {
 	
 	@Column(name = "EVENTSUBJECT")
 	private String eventSubject;
+	
+	@Column(name = "SERIALNUMBER")
+	private String serialNumber;
+	
 	@Column(name = "EVENTDATE")
 	private String eventDate;
 	
@@ -89,6 +101,37 @@ public class EventVO extends BaseEntity implements Serializable {
 	
 	@Column(name = "MPHONE")
 	private String mPhone;
+	
+	@Column(name="INFORMATIONID")
+	private String informationId;
+	
+	@Column(name="UPSTATUS")
+	private String upStatus;
+	
+
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+	public String getInformationId() {
+		return informationId;
+	}
+
+	public void setInformationId(String informationId) {
+		this.informationId = informationId;
+	}
+
+	public String getUpStatus() {
+		return upStatus;
+	}
+
+	public void setUpStatus(String upStatus) {
+		this.upStatus = upStatus;
+	}
 
 	public String getEventSubject() {
 		return eventSubject;
