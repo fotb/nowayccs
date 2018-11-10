@@ -13,7 +13,7 @@ public class EventBean implements Serializable {
 	private String eventContent; //事件内容",
 	private String eventDate ;// 1504176289293,
 	private String eventLevel;//1,
-	private String ventLocation; //事件地点",
+	private String eventLocation; //事件地点",
 	private String eventSource; //3",
 	private String eventSubject; //事件标题",
 	private String firstCategoryId; //01",
@@ -54,11 +54,11 @@ public class EventBean implements Serializable {
 	public void setEventLevel(String eventLevel) {
 		this.eventLevel = eventLevel;
 	}
-	public String getVentLocation() {
-		return ventLocation;
+	public String getEventLocation() {
+		return eventLocation;
 	}
-	public void setVentLocation(String ventLocation) {
-		this.ventLocation = ventLocation;
+	public void setEventLocation(String eventLocation) {
+		this.eventLocation = eventLocation;
 	}
 	public String getEventSource() {
 		return eventSource;

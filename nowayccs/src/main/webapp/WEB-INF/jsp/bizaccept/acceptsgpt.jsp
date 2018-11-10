@@ -50,6 +50,9 @@ $('#firstCategoryId').combotree({
  });
 
 
+$("#bt_prov").on("click", function(){
+	history.back();
+});
 
     $('#bt_save').on('click',function(){
 	console.log($("#fm_sgpt").serializeObject());
@@ -192,8 +195,9 @@ $('#firstCategoryId').combotree({
                     <tr align="center" class="table_t1">
             <td colspan="4">
               <a href="#" class="easyui-linkbutton" id="bt_save" data-options="iconCls:'icon-save'">保存</a>
-              <img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click();"/>
-              <img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click();"/>
+              <a href="#" class="easyui-linkbutton" id="bt_prov" data-options="iconCls:'icon-back'">上一步</a>
+<!--               <img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click();"/>
+              <img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click();"/> -->
             </td>
           </tr>         
           </table>

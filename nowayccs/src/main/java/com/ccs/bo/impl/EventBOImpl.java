@@ -2,6 +2,7 @@ package com.ccs.bo.impl;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -17,16 +18,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ccs.bean.EventBean;
+import com.ccs.bean.EventReportBean;
+import com.ccs.bean.RelavancyBean;
 import com.ccs.bo.IEventBO;
 import com.ccs.dao.IBaseDAO;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.vo.EventCategoryVO;
 import com.ccs.vo.EventVO;
 import com.ccs.vo.InformationVO;
-import com.ccs.web.domain.AppInfoBean;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 @Service("eventBO")
 @Transactional
@@ -72,38 +74,81 @@ public class EventBOImpl implements IEventBO {
 	public void acceptSGPT(InformationVO vo, EventVO eventVO) throws Exception {
 		informatinDAO.saveOrUpate(vo);	
 		eventVO.setInformationId(vo.getInfoId());
+		eventVO.setCreateTime(new Date());
 		eventDAO.save(eventVO);
+		pushEvent(eventVO);
 	}
+	
 	@Override
 	public void pushEvent(EventVO vo) throws Exception {
 			try {
-		        CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-		        HttpPost post = new HttpPost("http://jxback.jx96345.cn/cms/orderConnect/verifyOrder");
-				
-		        String url = "http://59.202.61.198:11100/api/cooperation/event/eventReport.json?bizContent=abc&appKey=abc";
-		       
+
 		        
-		        JSONArray array = new JSONArray();
+		        final String appKey = "KUAFWFVUSJOSCXUVWUBH";
+				
+		        //String url = "http://59.202.61.198:11100/api/cooperation/event/eventReport.json?bizContent=abc&appKey=abc";
+		       
+		        String url = "http://59.202.61.198:11100/api/cooperation/event/eventReport.json";
+		        
+		        EventBean bean = new EventBean();
+		        bean.setEventContent(vo.getEventContent());
+		        bean.setEventDate(vo.getEventDate());
+		        bean.setEventLevel(vo.getEventLevel());
+		        bean.setEventLocation(vo.getEventLocation());
+		        bean.setEventSource(vo.getEventSource());
+		        bean.setEventSubject(vo.getEventSubject());
+		        bean.setFirstCategoryId(vo.getFirstCategoryId());
+		        bean.setIsImpplace(vo.getIsImpPlase());
+		        bean.setLatiTude(vo.getLatitude());
+		        bean.setLongiTude(vo.getLongitude());
+		        bean.setMobile(vo.getMobile());
+		        bean.setRelatePeopleCount(vo.getRelatePeopleCount());
+		        bean.setStatus(vo.getStatus());
+		        //bean.setUserId(vo.get);
+		        bean.setCreateDate(String.valueOf(vo.getCreateTime().getTime()));
+		        //bean.setWhereTo("");
+		        
+		        List<RelavancyBean> relavancyList = new ArrayList<RelavancyBean>();
+		        RelavancyBean rBean = new RelavancyBean();
+		        rBean.setObjName(vo.getObjName());
+		        rBean.setmPhone(vo.getMobile());
+		        
+		        
+		        relavancyList.add(rBean);
+		        bean.setRelavancyList(relavancyList);
+		        
+		        EventReportBean erBean = new EventReportBean();
+		        erBean.setEvent(bean);
+		        String json = JSONObject.toJSONString(erBean);
+		        System.out.println(json);
+//		        jsonObj.
+		        
+//		        JSONArray array = new JSONArray();
 //		        for (AppInfoBean bean : list) {
 //		        	JSONObject json = new JSONObject();
 //					json.put("orderNumber", bean.getOrderNumber());
 //					json.put("ordersType", bean.getOrdersType());
 //					array.add(json);
 //				}
+		        
+		        String param = "bizContent="+json+ "&appKey=" + appKey;
+		        
+		        CloseableHttpClient httpclient = HttpClientBuilder.create().build();
+		        HttpPost post = new HttpPost(url);
 				
-				StringEntity s = new StringEntity(array.toString(), Charset.forName("UTF-8"));
-		        s.setContentEncoding("UTF-8");
-		        s.setContentType("application/json");//发送json数据需要设置contentType
-				
-		        post.setEntity(s);
+		        StringEntity reqEntity = new StringEntity(param,Charset.forName("UTF-8"));
+		        HttpPost httppost = new HttpPost(url);  
+		        httppost.addHeader("Content-Type","application/x-www-form-urlencoded; charset=\"UTF-8\"");
+		        
+		        post.setEntity(reqEntity);
 		        HttpResponse res = httpclient.execute(post);
 		        String result = EntityUtils.toString(res.getEntity());// 返回json格式：
-//	            System.out.println(result);
-		        if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-//		        	logger.info("success to update status： " + list.toString());
-		        } else {
-		            logger.info("fail to update status: " + result);
-		        }
+	            System.out.println(result);
+//		        if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+////		        	logger.info("success to update status： " + list.toString());
+//		        } else {
+//		            logger.info("fail to update status: " + result);
+//		        }
 	         
 			}catch(Exception e) {
 				e.printStackTrace();
