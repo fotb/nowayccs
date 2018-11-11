@@ -3,8 +3,6 @@ package com.ccs.web.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class EventDomain implements Serializable {
 
 	private static final long serialVersionUID = 7018594047925221778L;

@@ -7,10 +7,13 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.type.Type;
@@ -121,29 +124,25 @@ public class EventBOImpl implements IEventBO {
 		        erBean.setEvent(bean);
 		        String json = JSONObject.toJSONString(erBean);
 		        System.out.println(json);
-//		        jsonObj.
-		        
-//		        JSONArray array = new JSONArray();
-//		        for (AppInfoBean bean : list) {
-//		        	JSONObject json = new JSONObject();
-//					json.put("orderNumber", bean.getOrderNumber());
-//					json.put("ordersType", bean.getOrdersType());
-//					array.add(json);
-//				}
-		        
-		        String param = "bizContent="+json+ "&appKey=" + appKey;
-		        
+
 		        CloseableHttpClient httpclient = HttpClientBuilder.create().build();
 		        HttpPost post = new HttpPost(url);
 				
-		        StringEntity reqEntity = new StringEntity(param,Charset.forName("UTF-8"));
-		        HttpPost httppost = new HttpPost(url);  
-		        httppost.addHeader("Content-Type","application/x-www-form-urlencoded; charset=\"UTF-8\"");
+		        List<NameValuePair> nvps = new ArrayList<NameValuePair>();  
+		        nvps.add(new BasicNameValuePair("bizContent", json));  
+		        nvps.add(new BasicNameValuePair("appKey", appKey));
+		        post.setEntity(new UrlEncodedFormEntity(nvps,"utf-8")); 
 		        
-		        post.setEntity(reqEntity);
+//		        StringEntity reqEntity = new StringEntity(param,Charset.forName("UTF-8"));
+//		        reqEntity.
+//		        HttpPost httppost = new HttpPost(url);  
+		        post.addHeader("Content-Type","application/x-www-form-urlencoded; charset=\"UTF-8\"");
+		        
+//		        post.setEntity(reqEntity);
 		        HttpResponse res = httpclient.execute(post);
 		        String result = EntityUtils.toString(res.getEntity());// 返回json格式：
 	            System.out.println(result);
+	            
 //		        if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 ////		        	logger.info("success to update status： " + list.toString());
 //		        } else {
