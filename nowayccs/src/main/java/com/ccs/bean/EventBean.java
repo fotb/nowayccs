@@ -27,6 +27,7 @@ public class EventBean implements Serializable {
 	private String userId; //8afac2ed47d91bb60147f15d01800b2a",
 	private String createDate; //":1504176289293,
 	private String whereTo; //赴县",
+	private String serialNumber;
 	
 	private List<RelavancyBean> relavancyList;
 	
@@ -138,5 +139,10 @@ public class EventBean implements Serializable {
 	public void setWhereTo(String whereTo) {
 		this.whereTo = whereTo;
 	}
-
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
 }

@@ -107,9 +107,10 @@ public class EventBOImpl implements IEventBO {
 		        bean.setMobile(vo.getMobile());
 		        bean.setRelatePeopleCount(vo.getRelatePeopleCount());
 		        bean.setStatus(vo.getStatus());
-		        //bean.setUserId(vo.get);
+		        //bean.setUserId(vo.get);   --必要
 		        bean.setCreateDate(String.valueOf(vo.getCreateTime().getTime()));
 		        //bean.setWhereTo("");
+		        bean.setSerialNumber(vo.getSerialNumber());
 		        
 		        List<RelavancyBean> relavancyList = new ArrayList<RelavancyBean>();
 		        RelavancyBean rBean = new RelavancyBean();
