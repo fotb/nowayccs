@@ -1,0 +1,44 @@
+A {
+	TEXT-DECORATION: underline
+}
+
+A:link {
+	COLOR: #006633;
+	CURSOR: hand;
+	TEXT-DECORATION: none
+}
+
+A:visited {
+	COLOR: #006633;
+	TEXT-DECORATION: none
+}
+
+A:hover {
+	COLOR: #0066CC
+}
+
+body {
+	margin: 0px;
+	background-color: #FFFFFF;
+	background-image: url(../images/bg_login.gif)
+}
+
+table {
+	font-size: 12px;
+	font-family: "Arial"
+}
+
+.font_no {
+	font-family: Arial;
+	font-size: 13px;
+	color: #3F9A91;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+
+.error {
+	border: 1px solid #cd0a0a;
+	background: #b81900
+		url(ui-lightness/images/ui-bg_diagonals-thick_18_b81900_40x40.png) 50% 50% repeat;
+	color: #ffffff;
+}

@@ -1,0 +1,115 @@
+/* CSS Document */
+.leftmenu_01 {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+	text-align: -moz-center; /*FF*/ 
+	# text-align : center; /*IE */
+	letter-spacing: 4px;
+	line-height: 22px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.leftmenu_02 {
+	font-family: Arial;
+	font-size: 12px;
+	color: #FFFFFF;
+	text-align: -moz-center; /*FF*/ 
+	# text-align : center; /*IE */
+	line-height: 20px;
+	text-align: center;
+}
+
+.green {
+	background-color: #3F9A91;
+}
+
+.table_gray {
+	border: 2px solid #E5E5E5;
+	background-color: #FDFDFD;
+	padding: 5px;
+}
+
+.table_green {
+	background-color: #3F9A91;
+	text-align: center;
+	padding: 5px;
+	font-family: "Arial";
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.table_white {
+	background-color: #FFFFFF;
+	padding: 3px;
+	color: #333333;
+	text-align: center;
+	font-family: Arial;
+}
+
+.table_blue {
+	background-color: #fbfcff;
+	padding: 3px;
+	color: #333333;
+	text-align: center;
+	font-family: Arial;
+}
+
+.table_t1 {
+	background-color: #F7FBFF;
+	padding: 4px 0px 0px 5px;
+	color: #333333;
+	font-family: Arial;
+}
+
+.table_t3 {
+	background-color: #F7FBFF;
+	padding: 4px 2px 2px 5px;
+	color: #333333;
+	font-family: Arial;
+}
+
+.table_t2 {
+	background-color: #FFFAF7;
+	color: #333333;
+	font-family: Arial;
+	padding: 4px 4px 0px 5px;
+}
+
+.line {
+	background-color: #E6E6E6;
+}
+
+.form {
+	font-family: Arial;
+	font-size: 12px;
+	color: #333333;
+	background-color: #FFFFFF;
+	border-top: 1px solid #666666;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #666666;
+}
+
+.form_accept {
+	font-family: sans-serif;
+	font-size: 14px;
+	font-weight:bold;
+	color: #333333;
+	background-color: #FFFFFF;
+	border-top: 1px solid #666666;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #666666;
+	height: 25px;
+}
+
+.font_inscribed {
+	font-family: Arial;
+	font-size: 11px;
+	color: #333333;
+	text-align: center;
+	line-height: 18px;
+}
