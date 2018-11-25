@@ -30,6 +30,7 @@ import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.AppInfoVO;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
+import com.ccs.vo.ElevHelpInfoVO;
 import com.ccs.vo.ElevatorVO;
 import com.ccs.vo.EntpriseVO;
 import com.ccs.vo.EventVO;
@@ -272,12 +273,15 @@ public class InfoSearchController {
 		
 		model.addAttribute("mydMap", dictBO.getDict(Constants.DICT_DICTTYPE_MYD));
 		
-		ElevatorVO eVO = infoSearchBO.findElevatorInfoByInfoId(infoId);
+		ElevHelpInfoVO elevHelpInfoVO = infoSearchBO.findElevHelpInfoByInfoId(infoId);
+		ElevatorVO eVO = infoSearchBO.getElevator(elevHelpInfoVO.getElevatorId());
 		model.addAttribute("elevatorVO", eVO);
+		model.addAttribute("elevHelpInfoVO", elevHelpInfoVO);
+		
 		return "infosearch/elevatorinfo";
 	}
 	
-	@RequestMapping(params = "action=elevinfo")
+	@RequestMapping(params = "action=sgptinfo")
 	public String sgptInfo(String infoId, String pageNo, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
 		

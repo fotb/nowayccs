@@ -12,7 +12,50 @@
 		<param-value>classpath*:spring/annomvc-servlet.xml, classpath*:spring/applicationContext-bo.xml</param-value>
 	</context-param>
 
-	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.swf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.gif</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.html</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.map</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
@@ -28,8 +71,6 @@
 		<listener-class>com.ccs.web.interceptor.QuartzJobListener</listener-class>
 	</listener>
 
-<<<<<<< HEAD
-=======
 	<filter>
 		<filter-name>corsFilter</filter-name>
 		<filter-class>com.ccs.web.filter.CorsFilter</filter-class>
@@ -54,7 +95,6 @@
 		<filter-name>corsFilter</filter-name>
 		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
->>>>>>> refs/remotes/origin/NewDev
 
 	<!-- Reads request input using UTF-8 encoding -->
 	<filter>
@@ -85,7 +125,7 @@
 
 	<servlet-mapping>
 		<servlet-name>annomvc</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 	<session-config>

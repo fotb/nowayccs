@@ -52,11 +52,7 @@ public class InfoUploadTask {
 	@Autowired
 	private IUserDAO userDAO;
 
-<<<<<<< HEAD
-	@Scheduled(cron = "0 0/1 * * * ?")
-=======
 	//@Scheduled(cron = "0 0/2 * * * ?")
->>>>>>> refs/remotes/origin/NewDev
 	public void doJob() {
 
 		try {

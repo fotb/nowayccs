@@ -7,6 +7,7 @@ import com.ccs.bean.InfoSearchBean;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.AppInfoVO;
+import com.ccs.vo.ElevHelpInfoVO;
 import com.ccs.vo.ElevatorVO;
 import com.ccs.vo.EventVO;
 import com.ccs.vo.InformationVO;
@@ -31,5 +32,9 @@ public interface IInfoSearchBO {
 	
 	EventVO findSgptInfoByInfoId(String infoId);
 	
-	ElevatorVO findElevatorInfoByInfoId(String infoId);
+	ElevHelpInfoVO findElevHelpInfoByInfoId(String infoId);
+	
+	ElevatorVO getElevator(String pid);
+	
+	
 }

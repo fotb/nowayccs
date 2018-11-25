@@ -193,6 +193,9 @@ public class PowerReportController {
 		return jsonObj;
 	}
 
+	
+	
+	
 	@RequestMapping(params = "action=exportpowerinfo")
 	public void exportPowerInfo(@RequestParam(value = "infoStartDt", required = false) String infoStartDt,
 			@RequestParam(value = "infoEndDt", required = false) String infoEndDt, HttpServletRequest request,
@@ -249,10 +252,10 @@ public class PowerReportController {
 			HSSFRow titleRow = sheet.getRow(0);
 			titleRow.getCell(0).setCellValue(
 					titleRow.getCell(0).getStringCellValue() + "(" + DateUtil.format(new Date(), "yyyy-MM-dd") + ")");
-
+			
 			titleRow = sheet.getRow(1);
 			titleRow.getCell(0).setCellValue(infoStartDt + " ---- " + infoEndDt);
-
+			
 			List<PowerInfoListBean> beanList = lpsBO.queryPowerInfo(infoStartDt, infoEndDt);
 			for (int i = 0; i < beanList.size(); i++) {
 				PowerInfoListBean bean = beanList.get(i);
@@ -286,7 +289,8 @@ public class PowerReportController {
 		}
 		System.out.println("文件生成...");
 	}
-
+	
+	
 	@RequestMapping(params = "action=fix")
 	public String associate(ModelMap model) throws Exception {
 		lpsBO.fix();

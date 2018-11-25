@@ -22,13 +22,11 @@ public class DictBOImpl implements IDictBO {
 	private IDictDAO dictDAO;
 
 	@Override
-	@Transactional
 	public void saveOrUpdate(DictVO vo) {
 		dictDAO.saveOrUpdate(vo);
 	}
 
 	@Override
-	@Transactional
 	public void delete(DictVO vo) {
 		dictDAO.delete(vo);
 	}

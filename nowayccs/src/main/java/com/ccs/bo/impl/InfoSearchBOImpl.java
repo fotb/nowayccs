@@ -20,6 +20,7 @@ import com.ccs.util.Constants;
 import com.ccs.util.PageInfo;
 import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.AppInfoVO;
+import com.ccs.vo.ElevHelpInfoVO;
 import com.ccs.vo.ElevatorVO;
 import com.ccs.vo.EventVO;
 import com.ccs.vo.InformationVO;
@@ -51,6 +52,9 @@ public class InfoSearchBOImpl implements IInfoSearchBO {
 	@Autowired
 	private IBaseDAO<ElevatorVO> elevDAO;
 	
+	
+	@Autowired
+	private IBaseDAO<ElevHelpInfoVO> elevHelpInfoDAO;
 	
 	@Override
 	public List<InformationVO> findByParams(InfoSearchBean bean, PageInfo pageInfo) {
@@ -140,13 +144,18 @@ public class InfoSearchBOImpl implements IInfoSearchBO {
 	}
 
 	@Override
-	public ElevatorVO findElevatorInfoByInfoId(String infoId) {
-		final String hql = "from ElevatorVO where informationId = ?";
-		List<ElevatorVO> list = elevDAO.queryForObject(hql, new Object[] {infoId});
+	public ElevHelpInfoVO findElevHelpInfoByInfoId(String infoId) {
+		final String hql = "from ElevHelpInfoVO where informationId = ?";
+		List<ElevHelpInfoVO> list = elevHelpInfoDAO.queryForObject(hql, new Object[] {infoId});
 		if(list.isEmpty()) {
 			return null;
 		} else {
 			return list.get(0);
 		}
+	}
+
+	@Override
+	public ElevatorVO getElevator(String pid) {
+		return elevDAO.get(pid);
 	}
 }

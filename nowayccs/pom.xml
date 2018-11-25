@@ -6,11 +6,7 @@
 	<artifactId>ccs</artifactId>
 	<packaging>war</packaging>
 	<name>ccs Maven Webapp</name>
-<<<<<<< HEAD
-	<version>0.0.1</version>
-=======
 	<version>1</version>
->>>>>>> refs/remotes/origin/NewDev
 	<url>http://maven.apache.org</url>
 	<properties>
 		<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
@@ -24,7 +20,6 @@
 	<!-- <scm> <connection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</connection> 
 		<developerConnection>scm:svn:https://nowayccs.googlecode.com/svn/trunk/nowayccs/</developerConnection> 
 		<url>http://somerepository.com/view.cvs</url> </scm> -->
-
 	<build>
 		<plugins>
 			<plugin>
@@ -300,15 +295,12 @@
 
 		</dependency>
 		<dependency>
-<<<<<<< HEAD
-=======
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>
->>>>>>> refs/remotes/origin/NewDev
 			<groupId>org.hibernate.common</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
 			<version>5.0.1.Final</version>
@@ -365,33 +357,20 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
 			<type>jar</type>
-<<<<<<< HEAD
-=======
 
 		</dependency>
->>>>>>> refs/remotes/origin/NewDev
 
-<<<<<<< HEAD
-		</dependency>
-=======
 		<!-- <dependency> <groupId>org.glassfish</groupId> <artifactId>javax.el</artifactId> 
 			<version>3.0.0</version> </dependency> -->
->>>>>>> refs/remotes/origin/NewDev
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-<<<<<<< HEAD
-			<version>4.2.0.Final</version>
-			<type>jar</type>
-=======
 			<version>5.4.1.Final</version>
->>>>>>> refs/remotes/origin/NewDev
 		</dependency>
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.4</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -479,8 +458,6 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.9</version>
 		</dependency>
-<<<<<<< HEAD
-=======
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -514,6 +491,5 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.51</version>
 		</dependency>
->>>>>>> refs/remotes/origin/NewDev
 	</dependencies>
 </project>

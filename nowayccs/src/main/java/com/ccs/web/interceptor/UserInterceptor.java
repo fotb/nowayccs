@@ -27,13 +27,9 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-<<<<<<< HEAD
-		String className = handler.getClass().getName();
-=======
 //		String className = handler.getClass().getName();
 		HandlerMethod method = (HandlerMethod) handler;
 		String className = method.getBean().getClass().getName();
->>>>>>> refs/remotes/origin/NewDev
 		if("com.ccs.web.LoginController".equals(className)) {
 			return true;
 		} else {
