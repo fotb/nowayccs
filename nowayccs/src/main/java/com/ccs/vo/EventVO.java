@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +18,10 @@ public class EventVO extends BaseEntity implements Serializable {
 	public final static String EVENT_ORG_CODE = "330402ZF260000";
 	
 	public final static String EVENT_ORG_ID = "330402ZF260000";
+	
+	public final static String UP_STATUS_0 = "0"; //未上报
+	
+	public final static String UP_STATUS_1 = "1"; //已上报
 
 	/**
 	 * 
@@ -107,6 +112,10 @@ public class EventVO extends BaseEntity implements Serializable {
 	
 	@Column(name="UPSTATUS")
 	private String upStatus;
+	
+	@Lob
+	@Column(name="SUGGESTION", length=10000)
+	private String suggestion;
 	
 
 	public String getSerialNumber() {
@@ -331,5 +340,13 @@ public class EventVO extends BaseEntity implements Serializable {
 
 	public void setmPhone(String mPhone) {
 		this.mPhone = mPhone;
+	}
+
+	public String getSuggestion() {
+		return suggestion;
+	}
+
+	public void setSuggestion(String suggestion) {
+		this.suggestion = suggestion;
 	}
 }

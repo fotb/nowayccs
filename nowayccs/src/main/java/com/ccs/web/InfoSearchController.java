@@ -30,7 +30,9 @@ import com.ccs.vo.AffairInformationVO;
 import com.ccs.vo.AppInfoVO;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
+import com.ccs.vo.ElevatorVO;
 import com.ccs.vo.EntpriseVO;
+import com.ccs.vo.EventVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.LifeInformationVO;
 import com.ccs.vo.PowerInformationVO;
@@ -257,6 +259,41 @@ public class InfoSearchController {
 		return "infosearch/appinfo";
 	}
 	
+	
+	@RequestMapping(params = "action=elevatorinfo")
+	public String elevatorInfo(String infoId, String pageNo, ModelMap model) {
+		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		model.addAttribute("infoVO", infoVO);
+		model.addAttribute("statusMap", Constants.SYS_INFOMATION_STATES_HASHMAP);
+		
+		model.addAttribute("areaMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+		model.addAttribute("pdfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_LLFS));
+		
+		model.addAttribute("mydMap", dictBO.getDict(Constants.DICT_DICTTYPE_MYD));
+		
+		ElevatorVO eVO = infoSearchBO.findElevatorInfoByInfoId(infoId);
+		model.addAttribute("elevatorVO", eVO);
+		return "infosearch/elevatorinfo";
+	}
+	
+	@RequestMapping(params = "action=elevinfo")
+	public String sgptInfo(String infoId, String pageNo, ModelMap model) {
+		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
+		
+		model.addAttribute("infoVO", infoVO);
+		model.addAttribute("statusMap", Constants.SYS_INFOMATION_STATES_HASHMAP);
+		
+		model.addAttribute("areaMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+		model.addAttribute("pdfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_LLFS));
+		
+		model.addAttribute("mydMap", dictBO.getDict(Constants.DICT_DICTTYPE_MYD));
+		
+		EventVO eventVO = infoSearchBO.findSgptInfoByInfoId(infoId);
+		model.addAttribute("eventVO", eventVO);
+		return "infosearch/sgptinfo";
+	}
+	
 	@RequestMapping(params = "action=showinfo")
 	public String showInfo(String infoId, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
@@ -273,6 +310,10 @@ public class InfoSearchController {
 				return "redirect:infosearch.do?action=productivityinfo&infoId=" + infoId;
 			} else if(Constants.INFOMATION_HELPTYPE_POWER.equals(infoVO.getHelpType())) {
 				return "redirect:infosearch.do?action=powerinfo&infoId=" + infoId;
+			} else if(Constants.INFOMATION_HELPTYPE_ELEVATOR.equals(infoVO.getHelpType())) {
+				return "redirect:infosearch.do?action=elevatorinfo&infoId=" + infoId;
+			} else if(Constants.INFOMATION_HELPTYPE_SGPT.equals(infoVO.getHelpType())) {
+				return "redirect:infosearch.do?action=sgptinfo&infoId=" + infoId;
 			} else {
 				return "";
 			}

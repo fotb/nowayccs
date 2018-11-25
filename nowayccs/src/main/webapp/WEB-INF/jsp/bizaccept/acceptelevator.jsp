@@ -288,7 +288,7 @@ $('#deviceId').combobox({
           <tr class="table_t1">
             <td>救援人员到<br>达现场时间</td>
             <td style="" colspan="3"><input class="easyui-datetimebox" id="arriveTime" name="arriveTime" data-options="prompt:'请选择救援人员到达现场时间',showSeconds: false" style="height:100%;width: 90%;"></td>
-           <td style="text-align: center;">救援人员<br>出动时间</td>
+           <td style="text-align: center;">救援结束<br>时间</td>
             <td style="" colspan="1"><input class="easyui-datetimebox" id="finishTime" name="finishTime" data-options="prompt:'请选择救援人员出动时间',showSeconds: false" style="height:100%;width: 90%;"></td>
           </tr> 
           <tr class="line">

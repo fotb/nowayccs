@@ -82,9 +82,16 @@
 		<property name="password" value="${db.password}" />
 	</bean>
 
-	<bean id="lobHandler"
+<!-- 	<bean id="lobHandler"
 		class="org.springframework.jdbc.support.lob.DefaultLobHandler"
-		lazy-init="true"></bean>
+		lazy-init="true"></bean> -->
+		
+		
+<!-- <bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" lazy-init="true" autowire="default"/>
+
+<bean id="lobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler" lazy-init="true" autowire="default" >
+    <property name="nativeJdbcExtractor" ref="nativeJdbcExtractor"/>
+  </bean> -->
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">

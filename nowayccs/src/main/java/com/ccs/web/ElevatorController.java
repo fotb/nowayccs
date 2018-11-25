@@ -73,6 +73,7 @@ public class ElevatorController {
 			
 			vo.setFinishTime(date);
 			
+			
 			ElevatorVO elevVO = new ElevatorVO();
 			elevVO.setUseDept(domain.getUseDept());
 			elevVO.setPosition(domain.getPosition());
@@ -106,31 +107,7 @@ public class ElevatorController {
 			ehiVO.setDealResult(domain.getDealResult());
 			ehiVO.setDutyResult(domain.getDutyResult());
 			
-//			
-//			EventVO eventVO = new EventVO();
-//			eventVO.setEventSubject(domain.getEventSubject());
-//			eventVO.setEventDate(DateUtil.format(domain.getEventDate(), FORMATE_CREATETIME));
-//			eventVO.setEventLocation(domain.getEventLocation());
-//			eventVO.setEventContent(domain.getEventContent());
-//			eventVO.setEventLevel(domain.getEventLevel());
-//			eventVO.setEventSource(EventVO.EVENT_SOURCE_HOTCALL); //热线电话
-//			eventVO.setIsImpPlase(domain.getIsImpPlase());
-//			eventVO.setRelatePeopleCount(domain.getRelatePeopleCount());
-//			
-//			eventVO.setFirstCategoryId(domain.getFirstCategoryId().substring(0, 2));
-//			eventVO.setSecondCategoryId(domain.getFirstCategoryId());  //事件编码
-//			
-//			eventVO.setStatus(EventVO.EVENT_STATUS_10);
-//			eventVO.setMobile(domain.getMobile());
-//			eventVO.setOrganizationId(EventVO.EVENT_ORG_ID);
-//	//		eventVO.setOrginternalCode(EventVO.EVENT_ORG_CODE);
-//			eventVO.setObjName(domain.getObjName());
-//			
-//			//事件编号：
-//			String serialNum = EventVO.EVENT_ORG_ID + DateUtil.format(date, "yyMMdd") + domain.getFirstCategoryId() + genCode();
-//			eventVO.setSerialNumber(serialNum);
-//			
-//			eventBO.acceptSGPT(vo, eventVO); 
+			elevBO.addElevHelp(vo, elevVO, ehiVO);
 			
 			session.setAttribute("bizAccept", null);
 			Response res = new Response();

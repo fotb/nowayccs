@@ -60,6 +60,12 @@ public class ElevHelpInfoVO extends BaseEntity implements Serializable {
 	@Column(name = "DUTYRESULT")
 	private String dutyResult;
 	
+	@Column(name = "INFORMATIONID")
+	private String informationId;
+	
+	@Column(name = "ELEVATORID")
+	private String elevatorId;
+	
 	public String getReportingTime() {
 		return reportingTime;
 	}
@@ -149,5 +155,17 @@ public class ElevHelpInfoVO extends BaseEntity implements Serializable {
 	}
 	public void setDutyResult(String dutyResult) {
 		this.dutyResult = dutyResult;
+	}
+	public String getInformationId() {
+		return informationId;
+	}
+	public void setInformationId(String informationId) {
+		this.informationId = informationId;
+	}
+	public String getElevatorId() {
+		return elevatorId;
+	}
+	public void setElevatorId(String elevatorId) {
+		this.elevatorId = elevatorId;
 	}
 }
