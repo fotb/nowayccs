@@ -8,34 +8,39 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ccs.bo.IAppReceiverBO;
 import com.ccs.bo.IBizAcceptBO;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.IPowerInformationBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
-import com.ccs.util.JQGridFormatterUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.util.Utils;
+import com.ccs.vo.AppReceiverVO;
 import com.ccs.vo.BaseEntity;
 import com.ccs.vo.DictVO;
+import com.ccs.vo.EventVO;
 import com.ccs.vo.InformationVO;
 import com.ccs.vo.PowerInformationVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.ReferInformationVO;
 import com.ccs.vo.UserVO;
+import com.ccs.web.domain.AppReceiverParam;
 import com.ccs.web.domain.BizAccept;
 import com.ccs.web.domain.InfoBean;
 
@@ -65,6 +70,9 @@ public class BizAcceptController {
 	@Autowired
 	private IPowerInformationBO powerInfoBO;
 	
+	@Autowired
+	private IAppReceiverBO appReceiverBO;
+	
 	
 	//http://$IP/?ANI=18958126977&logName=Administrator&password=&agentId =001&groupId=GD-SA& recordFile =&bpoHisId=&orgNumber=
 	
@@ -80,9 +88,15 @@ public class BizAcceptController {
 			HttpSession session, 
 			ModelMap model) {
 		
+<<<<<<< HEAD
 //		System.out.println(
 //				"ANI:" + callNo + "---logName:" + logName + "---password:" + password + "---agentId: " + agentId + "---groupId:"
 //						+ groupId + "---recordFile: " + recordFile + "---bpoHisId: " + bpoHisId + "---orgNumber: " + orgNumber);
+=======
+		/*System.out.println(
+				"ANI:" + callNo + "---logName:" + logName + "---password:" + password + "---agentId: " + agentId + "---groupId:"
+						+ groupId + "---recordFile: " + recordFile + "---bpoHisId: " + bpoHisId + "---orgNumber: " + orgNumber);*/
+>>>>>>> refs/remotes/origin/NewDev
 		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = new BizAccept();
 		bizAccept.setHelpTel(callNo);
@@ -144,6 +158,46 @@ public class BizAcceptController {
 	}
 
 	
+	@RequestMapping(params = "action=app")
+	public String acceptApp(@RequestParam(value = "appInfoId", required = false) String appInfoId, 
+			@RequestParam(value = "flag", required = false) String flag, HttpSession session, 
+			ModelMap model) throws Exception {
+		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		AppReceiverVO appReceiverVO = appReceiverBO.findById(appInfoId);
+		BizAccept bizAccept = new BizAccept();
+		bizAccept.setAppInfoId(appInfoId);
+		bizAccept.setHelpTel(appReceiverVO.getHelpTel());
+		bizAccept.setHelpAddr(appReceiverVO.getHelpAddr());
+		bizAccept.setHelpContent(appReceiverVO.getHelpContent());
+		bizAccept.setHelpMode(appReceiverVO.getHelpMode());
+		bizAccept.setCreator(userVO.getUserId());
+		bizAccept.setHelpGroup(appReceiverVO.getHelpGroup());
+		bizAccept.setPopupFlag(flag);
+		bizAccept.setCreateTime(Utils.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss"));
+		bizAccept.setHelpName(appReceiverVO.getHelpName());
+		bizAccept.setHelpGroup(appReceiverVO.getHelpGroup());
+		bizAccept.setHelpType(Constants.INFOMATION_HELPTYPE_LIFE);
+		
+		
+//		session.setAttribute("bizAccept", bizAccept);
+		
+		model.addAttribute("bizAccept", bizAccept);
+		model.addAttribute("user", userVO);
+		
+		List<DictVO> qzfsList = dictBO.findByType(Constants.DICT_DICTTYPE_QZFS);
+		model.addAttribute("qzfsList", qzfsList);
+				
+		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+		
+		List<DictVO> qzqyList = dictBO.findByType(Constants.DICT_DICTTYPE_QZQY);
+		model.addAttribute("qzqyList", qzqyList);
+		
+		List<DictVO> slrqList = dictBO.findByType(Constants.DICT_DICTTYPE_SLRQ);
+		model.addAttribute("slrqList", slrqList);
+		
+		return "bizaccept/accept2";
+	}
+	
 	@RequestMapping(params = "action=back")
 	public String backAccept(HttpSession session, ModelMap model) {
 		UserVO userVO = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
@@ -184,7 +238,7 @@ public class BizAcceptController {
 	}
 	
 	@RequestMapping(params = "action=lifesave")
-	public String acceptLifeSave(HttpSession session, ModelMap model) {
+	public String acceptLifeSave(HttpSession session, ModelMap model) throws Exception{
 		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
 		
@@ -199,7 +253,11 @@ public class BizAcceptController {
 		if(!StringUtil.isNull(bizAccept.getHelpContent4())) {
 			list.add(getInformationVO(bizAccept, user, "4", session));
 		}
-		bizAcceptBO.acceptLife(list);
+		if(StringUtil.isNotEmpty(bizAccept.getAppInfoId())) {
+			bizAcceptBO.acceptAppLife(list, bizAccept.getAppInfoId());
+		} else {
+			bizAcceptBO.acceptLife(list);
+		}
 		
 		session.setAttribute("bizAccept", null);
 		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
@@ -339,13 +397,14 @@ public class BizAcceptController {
 	
 	
 	@RequestMapping(params = "action=helphist", method = RequestMethod.GET)
-	public @ResponseBody String getHelpHist(@RequestParam(value = "callNo", required = false) String callNo, 
-			@RequestParam("_search") String _search,
-			@RequestParam("nd") String nd,
+	public @ResponseBody JSONObject getHelpHist(@RequestParam(value = "callNo", required = false) String callNo, 
+//			@RequestParam("_search") String _search,
+//			@RequestParam("nd") String nd,
 			@RequestParam("rows") int rows,
-			@RequestParam("page") int page,
-			@RequestParam("sidx") String sidx,
-			@RequestParam("sord") String sord) throws UnsupportedEncodingException {
+			@RequestParam("page") int page
+//			@RequestParam("sidx") String sidx,
+//			@RequestParam("sord") String sord
+			) throws UnsupportedEncodingException {
 		List<InformationVO> list = new ArrayList<InformationVO>();
 		List<InfoBean> infoList = new ArrayList<InfoBean>();
 		PageInfo pageInfo = new PageInfo();
@@ -391,7 +450,16 @@ public class BizAcceptController {
 		propList.add("status");
 		propList.add("infoId");
 		
-		return JQGridFormatterUtil.getJSON(page, pageInfo.getTotalRecords(), rows, infoList, propList, "infoId");
+		JSONObject jsonObj = new JSONObject();
+
+		jsonObj.put("total", pageInfo.getTotalRecords());
+
+		JSONArray jsonArray = JSONArray.fromObject(infoList);
+
+		jsonObj.put("rows", jsonArray.toString());
+//		jsonObj.put("footer", JSONArray.fromObject(lpsTreeBean.getFooter()).toString());
+		return jsonObj;
+//		return JQGridFormatterUtil.getJSON(page, pageInfo.getTotalRecords(), rows, infoList, propList, "infoId");
 	}
 	
 	@RequestMapping(params = "action=recordfile", method = RequestMethod.POST)
@@ -419,7 +487,7 @@ public class BizAcceptController {
 	
 	
 	@RequestMapping(params = "action=pslist", method = RequestMethod.GET)
-	public @ResponseBody String buildLPSTree(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="areaSubId", required=false) String areaSubId) throws Exception {
+	public @ResponseBody JSONObject buildLPSTree(@RequestParam(value="areaId", required=false) String areaId, @RequestParam(value="areaSubId", required=false) String areaSubId) throws Exception {
 		List<PowerStaffVO> psVOList = powerInfoBO.findByAreaSubId(areaSubId);
 		//		JSONArray jsonObj = JSONArray.fromObject(lpsTreeBean);
 //		
@@ -431,7 +499,7 @@ public class BizAcceptController {
 		
 		jsonObj.put("rows", jsonArray.toString());
 //		System.out.println("json: " + jsonObj.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 	
 	
@@ -485,4 +553,86 @@ public class BizAcceptController {
 			return "redirect:bizaccept.do?action=old";
 		}
 	}
+	
+	
+	@RequestMapping(params = "action=elevator")
+	public String acceptElevator(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
+		bizAccept.setCreator(user.getUserName());
+		session.setAttribute("bizAccept", bizAccept);
+		
+		model.addAttribute("bizAccept", bizAccept);
+//		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
+//		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+//		model.addAttribute("qzqyMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+//		model.addAttribute("slrqMap", dictBO.getDict(Constants.DICT_DICTTYPE_SLRQ));
+//		model.addAttribute("userList", userBO.findUserByOpertaionId(Constants.SYS_PERMISSION_SWYWCL));
+		return "bizaccept/acceptelevator";
+	}
+	
+	@RequestMapping(params = "action=sgpt")
+	public String acceptSgpt(@ModelAttribute("bizAccept") BizAccept bizAccept, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
+		bizAccept.setCreator(user.getUserName());
+		session.setAttribute("bizAccept", bizAccept);
+		
+		model.addAttribute("bizAccept", bizAccept);
+//		model.addAttribute("qzfsMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZFS));
+//		model.addAttribute("helpTypeMap", Constants.INFOMATION_HELPTYPE_HASHMAP);
+//		model.addAttribute("qzqyMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));
+//		model.addAttribute("slrqMap", dictBO.getDict(Constants.DICT_DICTTYPE_SLRQ));
+//		model.addAttribute("userList", userBO.findUserByOpertaionId(Constants.SYS_PERMISSION_SWYWCL));
+		return "bizaccept/acceptsgpt";
+	}
+	
+	
+	//@RequestMapping(params = "action=sgptsave")
+	public String acceptSgptSave(@RequestBody EventVO eventVO, HttpSession session, ModelMap model) {
+		UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+		
+		//?? Use the same name of "bizAccept" with ModelAttribute???
+		BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+		
+		Date date = new Date();
+		
+		InformationVO vo = new InformationVO();
+		vo.setCreateTime(Utils.stringToDate(bizAccept.getCreateTime(), FORMATE_CREATETIME));
+		vo.setCreator(user.getUserId());
+		vo.setHelpAddr(bizAccept.getHelpAddr());
+		vo.setHelpArea(bizAccept.getHelpArea());
+		vo.setHelpContent(bizAccept.getHelpContent());
+		vo.setHelpGroup(StringUtil.emptyToNull(bizAccept.getHelpGroup()));
+		vo.setHelpMode(bizAccept.getHelpMode());
+		vo.setHelpName(bizAccept.getHelpName());
+		final String helpTel = bizAccept.getHelpTel() + (StringUtil.isNull(bizAccept.getOtherTel()) ? "" : "," + bizAccept.getOtherTel());
+		vo.setHelpTel(helpTel);
+		vo.setHelpType(bizAccept.getHelpType());
+		String callId = (String) session.getAttribute(CALL_ID);
+		if(!StringUtil.isNull(callId)) {
+			vo.setCallId(callId);
+			vo.setRecordFlag(Constants.SYS_YESNO_YES);
+		} else {
+			vo.setRecordFlag(Constants.SYS_YESNO_NO);
+		}
+		
+		vo.setFinishTime(date);
+		
+		PowerInformationVO piVO = new PowerInformationVO();
+		piVO.setCreateTime(date);
+		
+		
+		session.setAttribute("bizAccept", null);
+		if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+			return "common/selfclose";
+		} else {
+			return "redirect:bizaccept.do?action=old";
+		}
+	}
+	
+	@RequestMapping(params = "action=selfcolse")
+	 public String finish() {
+		 return "common/selfclose";
+	 }
 }

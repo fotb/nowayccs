@@ -54,7 +54,7 @@ public class PowerReportController {
 	}
 
 	@RequestMapping(params = "action=list", method = RequestMethod.GET)
-	public @ResponseBody String list(@RequestParam(value = "areaId", required = false) String areaId,
+	public @ResponseBody JSONObject list(@RequestParam(value = "areaId", required = false) String areaId,
 			@RequestParam(value = "areaSubId", required = false) String areaSubId,
 			@RequestParam(value = "startdt", required = false) String startDt,
 			@RequestParam(value = "enddt", required = false) String endDt, ModelMap model) throws Exception {
@@ -67,7 +67,7 @@ public class PowerReportController {
 		JSONArray jsonArray = JSONArray.fromObject(beanList);
 
 		jsonObj.put("rows", jsonArray.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=export")
@@ -178,7 +178,7 @@ public class PowerReportController {
 	}
 
 	@RequestMapping(params = "action=infolist")
-	public @ResponseBody String infolist(@RequestParam(value = "infoStartDt", required = false) String startDt,
+	public @ResponseBody JSONObject infolist(@RequestParam(value = "infoStartDt", required = false) String startDt,
 			@RequestParam(value = "infoEndDt", required = false) String endDt,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "rows", required = false) String rows) throws Exception {
@@ -190,7 +190,7 @@ public class PowerReportController {
 		JSONArray jsonArray = JSONArray.fromObject(list);
 
 		jsonObj.put("rows", jsonArray.toString());
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping(params = "action=exportpowerinfo")

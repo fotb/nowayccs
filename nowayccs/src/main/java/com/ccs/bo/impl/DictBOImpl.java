@@ -15,6 +15,7 @@ import com.ccs.util.PageInfo;
 import com.ccs.vo.DictVO;
 
 @Service("dictBO")
+@Transactional
 public class DictBOImpl implements IDictBO {
 	
 	@Autowired

@@ -14,12 +14,47 @@
 
 	
 
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.mp3</url-pattern>
+	</servlet-mapping>
+
+
 	<!-- Spring 容器启动监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>com.ccs.web.interceptor.QuartzJobListener</listener-class>
+	</listener>
 
-
+<<<<<<< HEAD
+=======
+	<filter>
+		<filter-name>corsFilter</filter-name>
+		<filter-class>com.ccs.web.filter.CorsFilter</filter-class>
+		<init-param>
+			<param-name>allowOrigin</param-name>
+			<param-value>*</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowMethods</param-name>
+			<param-value>GET,POST,PUT,DELETE,OPTIONS</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowCredentials</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowHeaders</param-name>
+			<param-value>x-requested-with,Authorization</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>corsFilter</filter-name>
+		<url-pattern>/api/*</url-pattern>
+	</filter-mapping>
+>>>>>>> refs/remotes/origin/NewDev
 
 	<!-- Reads request input using UTF-8 encoding -->
 	<filter>
@@ -45,7 +80,7 @@
 	<servlet>
 		<servlet-name>annomvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>2</load-on-startup>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
@@ -55,7 +90,6 @@
 
 	<session-config>
 		<session-timeout>480</session-timeout>
-		<!-- <session-timeout>480</session-timeout> -->
 	</session-config>
 
 	<welcome-file-list>
