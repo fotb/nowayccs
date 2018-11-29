@@ -18,4 +18,6 @@ public interface IElevBO {
 	
 	public ElevatorVO getElevatorByPid(final String pid);
 	
+	public ElevHelpInfoVO getElevHelpInfoByPid(final String pid);
+	
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ccs.bo.IAreaBO;
 import com.ccs.bo.IEntpriseBO;
 import com.ccs.bo.IUserBO;
-import com.ccs.util.ChomboBoxContainer;
+import com.ccs.util.ComboBoxContainer;
 import com.ccs.vo.AreaSubVO;
 import com.ccs.vo.AreaVO;
 import com.ccs.vo.EntCategoryVO;
@@ -64,11 +64,11 @@ public class CommonJsonController {
 	}
 	
 	@RequestMapping(params = "action=arealist", method = RequestMethod.GET)
-	public @ResponseBody List<ChomboBoxContainer> getAreaForChomboBox() throws UnsupportedEncodingException {
+	public @ResponseBody List<ComboBoxContainer> getAreaForChomboBox() throws UnsupportedEncodingException {
 		List<AreaVO> list = areaBO.findAllArea();
-		List<ChomboBoxContainer> cbList = new ArrayList<ChomboBoxContainer>();
+		List<ComboBoxContainer> cbList = new ArrayList<ComboBoxContainer>();
 		for (AreaVO areaVO : list) {
-			ChomboBoxContainer cb = new ChomboBoxContainer();
+			ComboBoxContainer cb = new ComboBoxContainer();
 			cb.setText(areaVO.getName());
 			cb.setValue(areaVO.getAreaId());
 			cbList.add(cb);
@@ -78,11 +78,11 @@ public class CommonJsonController {
 	}
 	
 	@RequestMapping(params = "action=subarealist")
-	public @ResponseBody List<ChomboBoxContainer> getSubAreaForChomboBox(@RequestParam String areaId) throws UnsupportedEncodingException {
+	public @ResponseBody List<ComboBoxContainer> getSubAreaForChomboBox(@RequestParam String areaId) throws UnsupportedEncodingException {
 		List<AreaSubVO> list = areaBO.findAreaSubByAreaId(areaId);
-		List<ChomboBoxContainer> cbList = new ArrayList<ChomboBoxContainer>();
+		List<ComboBoxContainer> cbList = new ArrayList<ComboBoxContainer>();
 		for (AreaSubVO areaSubVO : list) {
-			ChomboBoxContainer cb = new ChomboBoxContainer();
+			ComboBoxContainer cb = new ComboBoxContainer();
 			cb.setText(areaSubVO.getName());
 			cb.setValue(areaSubVO.getAreaSubId());
 			cbList.add(cb);

@@ -33,6 +33,16 @@ public class ElevatorHelpInfoDomain extends ElevatorDomain implements Serializab
 	private String finishTime;
 
 	private String status;
+	
+	private String pid;
+
+	public String getPid() {
+		return pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
 
 	public String getInfoId() {
 		return infoId;

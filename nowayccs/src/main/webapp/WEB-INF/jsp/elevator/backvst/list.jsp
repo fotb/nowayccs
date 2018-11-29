@@ -17,10 +17,18 @@
 
 
 $(document).ready(function(){
-	loadUserAppInfo();
+	loadElevHelpInfo();
+	$('#creator').combobox({
+		onChange: function(param){
+			var queryParams = $('#elevHelpInfo').datagrid('options').queryParams;
+			queryParams.creator = $('#creator').combobox('getValue');
+			 $("#elevHelpInfo").datagrid("reload");
+             $("#elevHelpInfo").datagrid("clearSelections");
+		}
+	});
 });
 
-function loadUserAppInfo() {
+function loadElevHelpInfo() {
     $('#elevHelpInfo').datagrid({
         url:"elevbackvst.do?action=get",
         columns:[[
@@ -30,12 +38,9 @@ function loadUserAppInfo() {
             {field:'helpAddr',title:'详细地址',width:200,align:'center'},
             {field:'helpContent',title:'求助内容',width:300,align:'left'},
             {field:'helpType',title:'求助类别',width:80,align:'center'},
-            {field:'helpType',title:'求助类别',width:80,align:'center'},
-            {field:'helpType',title:'求助类别',width:80,align:'center'},
-            {field:'helpType',title:'求助类别',width:80,align:'center'},
-            
             {field:'pid',title:'操作',width:80,align:'right', formatter:formatOper}
         ]],
+        queryParams:{creator: '1'},
 		method:'get',
 		fit: true,   //自适应大小
 		border:false,
@@ -49,7 +54,7 @@ function loadUserAppInfo() {
 }
 
 function formatOper(val,row,index) {
-	  return '<a href="bizaccept.do?action=app&appInfoId='+row["pid"]+'" target="_blank">回访</a>';  
+	  return '<a href="elevbackvst.do?action=back&pid='+row["pid"]+'" target="_blank">回访</a>';  
 }
 
 function myformatter(value){
@@ -70,7 +75,14 @@ function myformatter(value){
 }
 
 </script>
-<body>
+<body class="easyui-layout">
+	<div data-options="region:'north',border:false" style="height:60px;padding:10px">
+		<div data-options="region:'center'" style="padding:10px">
+		受理人：    <input id="creator" class="easyui-combobox" name="creator" data-options="valueField:'value',textField:'text',url:'elevbackvst.do?action=allOnJobUser'">
+		</div>
+	</div>
+	<div data-options="region:'center',title:'电梯救援信息'">
 	<table id="elevHelpInfo"></table>
+	</div>
 </body>
 </html>

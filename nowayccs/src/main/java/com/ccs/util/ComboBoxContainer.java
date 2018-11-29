@@ -2,13 +2,15 @@ package com.ccs.util;
 
 import java.io.Serializable;
 
-public class ChomboBoxContainer implements Serializable {
+public class ComboBoxContainer implements Serializable {
 
 	private static final long serialVersionUID = 8842992606636682766L;
 	
 	private String value;
 	
 	private String text;
+	
+	private boolean selected;
 	
 
 	public String getValue() {
@@ -25,6 +27,14 @@ public class ChomboBoxContainer implements Serializable {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+	
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 
 	@Override
@@ -43,7 +53,7 @@ public class ChomboBoxContainer implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ChomboBoxContainer other = (ChomboBoxContainer) obj;
+		ComboBoxContainer other = (ComboBoxContainer) obj;
 		if (value == null) {
 			if (other.value != null)
 				return false;

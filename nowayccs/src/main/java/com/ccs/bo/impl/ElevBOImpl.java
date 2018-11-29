@@ -95,4 +95,9 @@ public class ElevBOImpl implements IElevBO {
 	public ElevatorVO getElevatorByPid(String pid) {
 		return elevDAO.get(pid);
 	}
+
+	@Override
+	public ElevHelpInfoVO getElevHelpInfoByPid(String pid) {
+		return elevHelpInfoDAO.get(pid);
+	}
 }
