@@ -14,4 +14,8 @@ public interface IElevBO {
 	
 	public ElevatorVO getElevatorByDeviceId(final String deviceId);
 	
+	public List<ElevHelpInfoVO> findElevHelpInfoByCreator(final String userId);
+	
+	public ElevatorVO getElevatorByPid(final String pid);
+	
 }

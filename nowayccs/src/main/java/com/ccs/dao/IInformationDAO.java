@@ -54,4 +54,6 @@ public interface IInformationDAO {
 	public int getHelpCountByPhoneCount(final Date startDt, final Date endDt);
 	
 	List<InformationVO> findByCallId(final String callId);
+	
+	List<InformationVO> findInfo(final String creator, final String helpType, final String status);
 }

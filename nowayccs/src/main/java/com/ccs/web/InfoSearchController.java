@@ -265,7 +265,13 @@ public class InfoSearchController {
 	public String elevatorInfo(String infoId, String pageNo, ModelMap model) {
 		InformationVO infoVO = infoSearchBO.findInfoByInfoId(infoId);
 		
+		
+		
 		model.addAttribute("infoVO", infoVO);
+		
+		UserVO userVO = userBO.findById(infoVO.getCreator());
+		model.addAttribute("userVO", userVO);
+		
 		model.addAttribute("statusMap", Constants.SYS_INFOMATION_STATES_HASHMAP);
 		
 		model.addAttribute("areaMap", dictBO.getDict(Constants.DICT_DICTTYPE_QZQY));

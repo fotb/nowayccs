@@ -72,6 +72,7 @@ public class ElevatorController {
 			}
 			
 			vo.setFinishTime(date);
+			vo.setStatus(Constants.SYS_INFOMATION_STATES_CLZ);
 			
 			
 			ElevatorVO elevVO = new ElevatorVO();
@@ -85,6 +86,8 @@ public class ElevatorController {
 			elevVO.setType(domain.getType());
 			elevVO.setSurveyDate(domain.getSurveyDate());
 			elevVO.setNextSurveyDate(domain.getNextSurveyDate());
+			elevVO.setLastHandler(user.getUserId());
+			elevVO.setUpdateDT(date);
 			
 			ElevHelpInfoVO ehiVO = new ElevHelpInfoVO();
 			ehiVO.setReportingTime(domain.getReportingTime());
@@ -106,6 +109,7 @@ public class ElevatorController {
 			ehiVO.setReason(domain.getReason());
 			ehiVO.setDealResult(domain.getDealResult());
 			ehiVO.setDutyResult(domain.getDutyResult());
+			ehiVO.setLastHandler(user.getUserId());
 			
 			elevBO.addElevHelp(vo, elevVO, ehiVO);
 			

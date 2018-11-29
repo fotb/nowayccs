@@ -565,5 +565,22 @@ public class InformationDAOImpl extends DefaultDAOSupport implements
 		List<InformationVO> list = (List<InformationVO>)getHibernateTemplate().find(hql, new Object[] {callId});
 		return list;
 	}
+
+	@Override
+	public List<InformationVO> findInfo(String creator, String helpType, String status) {
+		return (List<InformationVO>) getHibernateTemplate().execute(new HibernateCallback<List<InformationVO>>() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public List<InformationVO> doInHibernate(Session session)
+					throws HibernateException {
+				final String hql = "from InformationVO t where t.creator = ? and t.helpType = ? and t.status = ? order by t.createTime desc";
+				Query query = session.createQuery(hql);
+				query.setParameter(0, creator);
+				query.setParameter(1, helpType);
+				query.setParameter(2, status);
+				return query.list();
+			}
+		});
+	}
 }
 

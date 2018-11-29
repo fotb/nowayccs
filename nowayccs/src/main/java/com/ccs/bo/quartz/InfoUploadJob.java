@@ -77,6 +77,9 @@ public class InfoUploadJob implements Job {
 			for (UpInfoStatusVO upInfoStatusVO : uisVOList) {
 				String infoId = upInfoStatusVO.getInfomationId();
 				InformationVO infoVO = informationDAO.findById(infoId);
+				if(null == infoVO) {
+					continue;
+				}
 
 				AjUploadVO ajuVO = new AjUploadVO();
 				ajuVO.setOriginalid(infoId);
