@@ -8,115 +8,114 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="SGPT_EVENT")
+@Table(name = "SGPT_EVENT")
 public class EventVO extends BaseEntity implements Serializable {
-	
+	public final static String APPKEY = "KUAFWFVUSJOSCXUVWUBH";
+
 	public final static String EVENT_SOURCE_HOTCALL = "6";
-	
+
 	public final static String EVENT_STATUS_10 = "10";
-	
+
 	public final static String EVENT_ORG_CODE = "330402ZF260000";
-	
+
 	public final static String EVENT_ORG_ID = "330402ZF260000";
-	
-	public final static String UP_STATUS_0 = "0"; //未上报
-	
-	public final static String UP_STATUS_1 = "1"; //已上报
+
+	public final static String UP_STATUS_0 = "0"; // 未上报
+
+	public final static String UP_STATUS_1 = "1"; // 已上报
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 544998300844290004L;
 
-	
 	@Column(name = "EVENTSUBJECT")
 	private String eventSubject;
-	
+
 	@Column(name = "SERIALNUMBER")
 	private String serialNumber;
-	
+
 	@Column(name = "EVENTDATE")
 	private String eventDate;
-	
+
 	@Column(name = "EVENTLOCATION")
 	private String eventLocation;
-	
+
 	@Column(name = "EVENTCONTENT")
 	private String eventContent;
-	
+
 	@Column(name = "EVENTLEVEL")
 	private String eventLevel;
-	
+
 	@Column(name = "EVENTSOURCE")
 	private String eventSource;
-	
+
 	@Column(name = "ISIMPPLACE")
 	private String isImpPlase;
-	
+
 	@Column(name = "RELATEPEOPLECOUNT")
 	private String relatePeopleCount;
-	
+
 	@Column(name = "LONGITUDE")
 	private String longitude;
-	
+
 	@Column(name = "LATITUDE")
 	private String latitude;
-	
+
 	@Column(name = "FIRSTCATEGORYID")
 	private String firstCategoryId;
-	
+
 	@Column(name = "SECONDCATEGORYID")
 	private String secondCategoryId;
-	
+
 	@Column(name = "STATUS")
 	private String status;
-	
+
 	@Column(name = "MOBILE")
 	private String mobile;
-	
+
 	@Column(name = "ORGANIZATIONID")
 	private String organizationId;
-	
+
 	@Column(name = "ORGINTERNALCODE")
 	private String orginternalCode;
-	
+
 	@Column(name = "CURRENTORGID")
 	private String currentOrgId;
-	
+
 	@Column(name = "CURRENTORGCODE")
 	private String currentOrgCode;
-	
+
 	@Column(name = "PLATFORMTYPE")
 	private String platFromType;
-	
+
 	@Column(name = "SHUNTPLATFORMTYPE")
 	private String shuntPlatFromType;
-	
+
 	@Column(name = "SHUNTDATE")
 	private String shuntDate;
-	
+
 	@Column(name = "RCLASSIFICATION")
 	private String rclassification;
-	
+
 	@Column(name = "RCLASSIFICATIONID")
 	private String rclassificationId;
-	
+
 	@Column(name = "OBJNAME")
 	private String objName;
-	
+
 	@Column(name = "MPHONE")
 	private String mPhone;
-	
-	@Column(name="INFORMATIONID")
+
+	@Column(name = "INFORMATIONID")
 	private String informationId;
-	
-	@Column(name="UPSTATUS")
+
+	@Column(name = "UPSTATUS")
 	private String upStatus;
-	
+
 	@Lob
-	@Column(name="SUGGESTION", length=10000)
+	@Column(name = "SUGGESTION", length = 10000)
 	private String suggestion;
-	
 
 	public String getSerialNumber() {
 		return serialNumber;

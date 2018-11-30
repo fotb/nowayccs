@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,7 @@ import com.ccs.bo.IUserBO;
 import com.ccs.util.ComboBoxContainer;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
+import com.ccs.util.Response;
 import com.ccs.util.StringUtil;
 import com.ccs.vo.ElevHelpInfoVO;
 import com.ccs.vo.ElevatorVO;
@@ -132,12 +134,15 @@ public class ElevatorBackVstController {
 		ElevHelpInfoVO elevHelpInfoVO = elevBO.getElevHelpInfoByPid(pid);
 		ElevatorVO elevatorVO = elevBO.getElevatorByPid(elevHelpInfoVO.getElevatorId());
 		InformationVO infoVO = informationBO.findById(elevHelpInfoVO.getInformationId());
+		UserVO userVO = userBO.findById(infoVO.getCreator());
+		
 		
 		ElevatorHelpInfoDomain domain = new ElevatorHelpInfoDomain();
 		domain.setArriveTime(elevHelpInfoVO.getArriveTime());
 		domain.setCasualty(elevHelpInfoVO.getCasualty());
 		domain.setCreateTime(DateUtil.format(infoVO.getCreateTime(), "yyyyMMdd hh:mm:ss"));
 		domain.setCreator(infoVO.getCreator());
+		domain.setCreatorName(userVO.getUserName());
 		domain.setDealResult(elevHelpInfoVO.getDealResult());
 		domain.setDeathToll(elevHelpInfoVO.getDeathToll());
 		domain.setDeviceId(elevatorVO.getDeviceId());
@@ -176,5 +181,44 @@ public class ElevatorBackVstController {
 		
 		model.addAttribute("domain", domain);
 		return "elevator/backvst/backelevator";
+	}
+	
+	
+	@RequestMapping(params = "action=backsave")
+	@ResponseBody
+	public Response acceptElevatorSave(@RequestParam(value = "end", required = false) String end, @RequestBody ElevatorHelpInfoDomain domain, HttpSession session) throws Exception {
+		 try {
+			 UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
+			
+			ElevHelpInfoVO ehiVO = elevBO.getElevHelpInfoByPid(domain.getPid());
+			ehiVO.setHelpDept(domain.getHelpDept());
+			ehiVO.setDispatchTime(domain.getDispatchTime());
+			ehiVO.setStartTime(domain.getStartTime());
+			ehiVO.setArriveTime(domain.getArriveTime());
+			ehiVO.setFinishTime(domain.getFinishTime());
+			ehiVO.setTrapppedPerson(domain.getTrapppedPerson());
+			ehiVO.setCasualty(domain.getCasualty());
+			ehiVO.setInjuries(domain.getInjuries());
+			ehiVO.setDeathToll(domain.getDeathToll());
+			ehiVO.setReason(domain.getReason());
+			ehiVO.setDealResult(domain.getDealResult());
+			ehiVO.setDutyResult(domain.getDutyResult());
+			ehiVO.setLastHandler(user.getUserId());
+			
+			InformationVO infoVO = informationBO.findById(ehiVO.getInformationId());
+			if("1".equals(end)) {
+				infoVO.setStatus(Constants.SYS_INFOMATION_STATES_YJA);
+			}
+			
+			elevBO.updateElevHelpInfo(ehiVO, infoVO);
+			
+			Response res = new Response();
+	    	res.success();
+	    	return res;
+		 }catch(Exception e) {
+	    		Response res = new Response();
+		    	res.failure("error!");
+	    		return res;
+		 }
 	}
 }

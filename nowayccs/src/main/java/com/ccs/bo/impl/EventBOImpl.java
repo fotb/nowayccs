@@ -26,6 +26,7 @@ import com.ccs.bean.RelavancyBean;
 import com.ccs.bo.IEventBO;
 import com.ccs.dao.IBaseDAO;
 import com.ccs.dao.IInformationDAO;
+import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.vo.EventCategoryVO;
 import com.ccs.vo.EventVO;
@@ -76,19 +77,20 @@ public class EventBOImpl implements IEventBO {
 	
 	@Override
 	public void acceptSGPT(InformationVO vo, EventVO eventVO) throws Exception {
+		vo.setStatus(Constants.SYS_INFOMATION_STATES_YJA);
 		informatinDAO.saveOrUpate(vo);	
 		eventVO.setInformationId(vo.getInfoId());
 		eventVO.setCreateTime(new Date());
 		eventVO.setRclassification("1");
 		eventVO.setRclassificationId("-1");
 		eventDAO.save(eventVO);
-//		pushEvent(eventVO);
+		pushEvent(eventVO);
 	}
 	
 	@Override
-	public void pushEvent(EventVO vo) throws Exception {
+	public void pushEvent(EventVO vo) {
 			try {
-		        final String appKey = "KUAFWFVUSJOSCXUVWUBH";
+//		        final String appKey = "KUAFWFVUSJOSCXUVWUBH";
 				
 		        String url = "http://59.202.61.198:11100/api/cooperation/event/eventReport.json";
 		        
@@ -139,7 +141,7 @@ public class EventBOImpl implements IEventBO {
 				
 		        List<NameValuePair> nvps = new ArrayList<NameValuePair>();  
 		        nvps.add(new BasicNameValuePair("bizContent", json));  
-		        nvps.add(new BasicNameValuePair("appKey", appKey));
+		        nvps.add(new BasicNameValuePair("appKey", EventVO.APPKEY));
 		        post.setEntity(new UrlEncodedFormEntity(nvps,"utf-8")); 
 		        
 		        post.addHeader("Content-Type","application/x-www-form-urlencoded; charset=\"UTF-8\"");
@@ -158,7 +160,15 @@ public class EventBOImpl implements IEventBO {
 		        eventDAO.update(vo);
 			}catch(Exception e) {
 				logger.error(e);
-				throw e;
 			}
+	}
+	@Override
+	public void updateEventStatus(String serialNum, String status) throws Exception {
+		final String hql = "from EventVO where serialNumber = ?";
+		List<EventVO> voList = eventDAO.queryForObject(hql, new Object[] {serialNum});
+		for (EventVO eventVO : voList) {
+			eventVO.setStatus(status);
+			eventDAO.update(eventVO);
+		}
 	}
 }

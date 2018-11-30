@@ -100,4 +100,10 @@ public class ElevBOImpl implements IElevBO {
 	public ElevHelpInfoVO getElevHelpInfoByPid(String pid) {
 		return elevHelpInfoDAO.get(pid);
 	}
+
+	@Override
+	public void updateElevHelpInfo(ElevHelpInfoVO elevHelpInfoVO, InformationVO iVO) throws Exception {
+		elevHelpInfoDAO.update(elevHelpInfoVO);
+		informatinDAO.saveOrUpate(iVO);
+	}
 }

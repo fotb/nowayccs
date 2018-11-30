@@ -15,5 +15,7 @@ public interface IEventBO {
 	void acceptSGPT(InformationVO vo, EventVO eventVO) throws Exception;
 	
 	void pushEvent(EventVO vo) throws Exception;
+	
+	void updateEventStatus(String serialNum, String status) throws Exception;
 
 }

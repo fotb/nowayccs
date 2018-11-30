@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Untitled Document</title>
+<title>电梯紧急救援回访</title>
 <link href="css/table.css" rel="stylesheet" type="text/css">
 <link href="css/main.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="easyui/themes/gray/easyui.css">
@@ -15,40 +15,24 @@
 <base target="_self">
 
 <script language="javascript" type="">
-function btnnext_click(){
-
-}
-
-function btnback_click(){
-  history.back();
-}
-
-function btnprovs_click() {
-	$("form").attr("action", "bizaccept.do?action=back");
-	//$("#action").val("back");
-	$("form").submit();
-}
-
 $(document).ready(function(){
 
-
-$("#bt_prov").on("click", function(){
-	history.back();
-});
+	$("#bt_prov").on("click", function(){
+		history.back();
+	});
 
     $('#bt_save').on('click',function(){
-	console.log($("#fm_elev").serializeObject());
-		if($("#fm_elev").form('validate')){
+		if($("#fm_elev_back").form('validate')){
        		$.ajax({
-            	url:"elev/bizaccept/save",
+            	url:"elevbackvst.do?action=backsave",
             	type:"POST",
-            	data:JSON.stringify($('#fm_elev').serializeObject()),
+            	data:JSON.stringify($('#fm_elev_back').serializeObject()),
             	contentType:"application/json;charset=utf-8",  //缺失会出现URL编码，无法转成json对象
             	success:function(data){
 					if(data.meta.success){
 							$.messager.confirm('提示', '保存成功！', function(r){
 								if (r){
-									parent.main.location = "bizaccept.do?action=selfclose";
+									//parent.main.location = "bizaccept.do?action=selfclose";
 								}
 							});
 					}
@@ -59,9 +43,27 @@ $("#bt_prov").on("click", function(){
 		}
     });
 
-
-$("#reportingTime").textbox('textbox').css("font-size", "12pt");
-
+$('#bt_ok').on('click',function(){
+		if($("#fm_elev_back").form('validate')){
+       		$.ajax({
+            	url:"elevbackvst.do?action=backsave&end=1",
+            	type:"POST",
+            	data:JSON.stringify($('#fm_elev_back').serializeObject()),
+            	contentType:"application/json;charset=utf-8",  //缺失会出现URL编码，无法转成json对象
+            	success:function(data){
+					if(data.meta.success){
+							$.messager.confirm('提示', '保存成功！', function(r){
+								if (r){
+									//parent.main.location = "bizaccept.do?action=selfclose";
+								}
+							});
+					}
+            	}
+        	});
+		}else{
+			$.messager.alert('操作提示','存在校验项未通过！',"warning");
+		}
+    });
 
 //$('#otherPhone').next().hide();
 $('#reportPhone').combobox({
@@ -86,32 +88,6 @@ $('#casualty').combobox({
 		}
 	}
 });
-
-$('#deviceId').combobox({
-      mode: 'remote',  //模式： 远程获取数据
-      url: 'elev/getelev/',  //远程数据请求地址
-      valueField: 'pid', 　　//value对应的属性字段
-      textField: 'deviceId',　　　 //text对应的属性字段
-	  onBeforeLoad:function(param){
-		param.q = $(this).combobox('getValue')
-	  },
-	  onSelect:function(rec){
-		console.log(rec);
-		$("#useDept").textbox("setValue", rec.useDept);
-		$("#position").textbox("setValue", rec.position);
-		$("#serviceName").textbox("setValue", rec.serviceName);
-		$("#manufacturer").textbox("setValue", rec.manufacturer);
-		$("#referNo").textbox("setValue", rec.referNo);
-		$("#serialNumber").textbox("setValue", rec.serialNumber);
-		$("#type").combobox("setValue", rec.type);
-		$("#surveyDate").datebox("setValue", rec.surveyDate);
-		$("#nextSurveyDate").datebox("setValue", rec.nextSurveyDate);
-	 }
- });
-
-
-
-
 
 	$('#helpDept').combobox("setValue", "${domain.helpDept}");
 	$('#dispatchTime').datetimebox('setValue', "${domain.dispatchTime}");
@@ -154,13 +130,14 @@ $('#deviceId').combobox({
     };
 </script>
 <body>
-<form method="post" id="fm_elev" name="fm_elev">
+<form method="post" id="fm_elev_back" name="fm_elev_back">
+	<input type="hidden" name="pid" id="pid" value="${domain.pid}"/>
 	<div id="p" class="easyui-panel"  style="width:100%;height:100%;padding:10px;">
-		<p style="font-size:14px; font-weight:bold; text-align:center;">嘉兴市电梯应急公共救援平台电话记录</p>
+		<p class="font_no" style="font-size:16px; font-weight:bold; text-align:center;">嘉兴市电梯应急公共救援平台电话记录</p>
 		<div style="margin-bottom:3px">
 		<table width="100%" border="0" cellpadding="0" cellspacing="1" style="font-size: 10pt">
           <tr class="table_t1">
-          <td>值班人员:${domain.creator}</td>
+          <td>值班人员:${domain.creatorName}</td>
           <td>值班日期:${domain.createTime}</td>
           </tr>
 			</table>
@@ -173,20 +150,21 @@ $('#deviceId').combobox({
           <tr class="table_t1">
             <td style="width: 80px;">接报时间</td>
             <td style="width:180px;" colspan="1">
-              <input class="easyui-datetimebox" id="reportingTime" name="reportingTime" data-options="prompt:'请输入接报时间', showSeconds: false" style="height:100%" value="${domain.createTime}">
+              ${domain.createTime}
             </td>
              <td style="width: 80px;text-align: right;">报告人</td>
             <td  style="width:200px;">
-              <input class="easyui-textbox" id="reporter" name="reporter" data-options="prompt:'请输入报告人'" style="height:100%" value="${domain.helpName}">
+              ${domain.helpName}
             </td>
              <td style="width: 100px;text-align: center;">报告人电话</td>
             <td>
-              <select class="easyui-combobox" id="reportPhone" name="reportPhone" data-options="panelHeight:'auto'" style="width:100px;font-size: 12px;">
-              	<option value="110">110</option>
-              	<option value="119">119</option>
-              	<option value="other" selected="selected">其他</option>
-              </select>
-              <input class="easyui-textbox" id="otherPhone" name="otherPhone" data-options="prompt:'请输入报告人电话'" style="height:100%;display: none;width: 120px;" value="${domain.helpTel}">
+             <c:choose>
+            	<c:when test="${domain.reportPhone == '110'}">110</c:when>
+            	<c:when test="${domain.reportPhone == '119'}">119</c:when>
+            	<c:when test="${domain.reportPhone == 'other'}">其他</c:when>
+            	<c:otherwise>其他</c:otherwise>
+            </c:choose>
+              ${domain.helpTel}
             </td>
           </tr>
           <tr class="line">
@@ -341,7 +319,7 @@ $('#deviceId').combobox({
           
           <tr class="table_t1">
             <td>后续处理<br>情况</td>
-            <td style="" colspan="5"><input class="easyui-textbox" id="dealResult" name="dealResult" data-options="prompt:'请输入电梯困人故障原因'" style="height:100px;width: 90%;"></td>
+            <td style="" colspan="5"><input class="easyui-textbox" id="dealResult" name="dealResult" data-options="multiline:true,prompt:'请输入电梯困人故障原因'" style="height:100px;width: 90%;"></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="6">            </td>
@@ -349,13 +327,13 @@ $('#deviceId').combobox({
           
           <tr class="table_t1">
             <td>值班状况</td>
-            <td style="" colspan="5"><input class="easyui-textbox" id="dutyResult" name="dutyResult" data-options="prompt:'请输入电梯困人故障原因'" style="height:100%;width: 90%;"></td>
+            <td style="" colspan="5"><input class="easyui-textbox" id="dutyResult" name="dutyResult" data-options="prompt:'请输入值班状况'" style="height:100%;width: 90%;"></td>
           </tr> 
           
 			<tr align="center" class="table_t1">
             <td colspan="6">
               <a href="#" class="easyui-linkbutton" id="bt_save" data-options="iconCls:'icon-save'">保存</a>
-              <a href="#" class="easyui-linkbutton" id="bt_prov" data-options="iconCls:'icon-back'">上一步</a>
+              <a href="#" class="easyui-linkbutton" id="bt_ok" data-options="iconCls:'icon-ok'">结案</a>
 <!--               <img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click();"/>
               <img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click();"/> -->
             </td>

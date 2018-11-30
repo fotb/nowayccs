@@ -20,4 +20,6 @@ public interface IElevBO {
 	
 	public ElevHelpInfoVO getElevHelpInfoByPid(final String pid);
 	
+	public void updateElevHelpInfo(ElevHelpInfoVO elevHelpInfoVO, InformationVO iVO) throws Exception ;
+	
 }

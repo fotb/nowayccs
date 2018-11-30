@@ -172,7 +172,24 @@ function btnback_click(){
                       <tr class="line">
             <td height="1" colspan="4">            </td>
           </tr>
-          
+           <tr class="table_t1">
+            <td>处理状态</td>
+            <td style="" colspan="3">
+              <c:choose>
+            	<c:when test="${eventVO.status == '10'}">上报</c:when>
+            	<c:when test="${eventVO.status == '20'}">受理</c:when>
+            	<c:when test="${eventVO.status == '30'}">办理</c:when>
+            	<c:when test="${eventVO.status == '32'}">分流</c:when>
+            	<c:when test="${eventVO.status == '36'}">回退</c:when>
+            	<c:when test="${eventVO.status == '37'}">协同审核</c:when>
+            	<c:when test="${eventVO.status == '38'}">协同反馈</c:when>
+            	<c:when test="${eventVO.status == '39'}">督办</c:when>
+            	<c:when test="${eventVO.status == '40'}">办结</c:when>
+            	<c:when test="${eventVO.status == '50'}">反馈</c:when>
+            	<c:otherwise>受理</c:otherwise>
+            </c:choose>
+            </td>
+          </tr>   
           <tr class="table_t1">
             <td>处理结果</td>
             <td style="" colspan="3">

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,8 @@ import com.ccs.web.domain.EventDomain;
 
 @RestController
 public class SgptController {
+	
+	private static Logger log = Logger.getLogger(SgptController.class);
 	
 	private static final String FORMATE_CREATETIME = "yyyy-MM-dd HH:mm:ss";
 	

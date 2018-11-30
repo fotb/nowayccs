@@ -29,7 +29,9 @@ public class RightInterceptor extends HandlerInterceptorAdapter {
 
 		System.out.println("action : " + className + action);
 		
-		if ("com.ccs.web.LoginController".equals(className) || "com.ccs.web.IndexController".equals(className) || "com.ccs.web.AppReceiverController".equals(className)) {
+		if ("com.ccs.web.LoginController".equals(className) || "com.ccs.web.IndexController".equals(className)
+				|| "com.ccs.web.AppReceiverController".equals(className)
+				|| "com.ccs.web.SgptReceiveController".equals(className)) {
 			return true;
 		} else {
 			UserVO loginUser = (UserVO) request.getSession().getAttribute(	Constants.SESSION_USER_KEY);

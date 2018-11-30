@@ -35,6 +35,16 @@ public class ElevatorHelpInfoDomain extends ElevatorDomain implements Serializab
 	private String status;
 	
 	private String pid;
+	
+	private String creatorName;
+	
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
 
 	public String getPid() {
 		return pid;

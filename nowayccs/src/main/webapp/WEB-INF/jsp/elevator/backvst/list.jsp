@@ -54,7 +54,7 @@ function loadElevHelpInfo() {
 }
 
 function formatOper(val,row,index) {
-	  return '<a href="elevbackvst.do?action=back&pid='+row["pid"]+'" target="_blank">回访</a>';  
+	  return '<a href="elevbackvst.do?action=back&pid='+row["pid"]+'" target="_blank">进行回访</a>';  
 }
 
 function myformatter(value){
