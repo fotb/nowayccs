@@ -45,6 +45,8 @@ public class EventBOImpl implements IEventBO {
 	
 	private static final String USER_ID = "bb4a9da366ed8dae0167068170db545b";
 	
+	private static final String FORMATE_CREATETIME = "yyyy-MM-dd HH:mm:ss";
+	
 	@Autowired
 	private IInformationDAO informatinDAO;
 
@@ -102,7 +104,7 @@ public class EventBOImpl implements IEventBO {
 		        EventBean bean = new EventBean();
 		        bean.setEventContent(vo.getEventContent());
 		        String eventDate = vo.getEventDate();
-		        Date eDate = DateUtil.parse(eventDate, "yyyyMMdd HH:mm:ss");
+		        Date eDate = DateUtil.parse(eventDate, FORMATE_CREATETIME);
 		        bean.setEventDate(String.valueOf(eDate));
 		        bean.setEventLevel(vo.getEventLevel());
 		        bean.setEventLocation(vo.getEventLocation());
@@ -217,7 +219,7 @@ public class EventBOImpl implements IEventBO {
             	String processDate = eventFlowDTO.getProcessDate();
             	if(StringUtil.isNotEmpty(processDate)) {
             		Date dt = new Date(Long.parseLong(processDate));
-            		buffer.append("处理时间：" + DateUtil.format(dt, "yyyy-MM-dd HH:mm:ss"));
+            		buffer.append("处理时间：" + DateUtil.format(dt, FORMATE_CREATETIME));
             	} else {
             		buffer.append("处理时间：--");
             	}
