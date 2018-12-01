@@ -155,8 +155,11 @@ public class EventBOImpl implements IEventBO {
 		        
 		        HttpResponse res = httpclient.execute(post);
 		        String result = EntityUtils.toString(res.getEntity());// 返回json格式：
-	            
-		        if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+		        
+		        JSONObject jsonObj = JSON.parseObject(result);
+		        boolean isSuccess = jsonObj.getBoolean("success");
+		        		
+		        if(isSuccess){
 		        	logger.info("success to upload with serialNumber " + vo.getSerialNumber());
 		        	 logger.error("upload info fail with result: " + result);
 		        	vo.setUpStatus(EventVO.UP_STATUS_1);
@@ -234,7 +237,7 @@ public class EventBOImpl implements IEventBO {
             
             vo.setSuggestion(buffer.toString());
 	        
-	        if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+	        if(bean.isSuccess()){
 	        	logger.info("success to query with serialNumber " + vo.getSerialNumber());
 	        	 logger.error("query info fail with result: " + result);
 	        	 eventDAO.update(vo);
