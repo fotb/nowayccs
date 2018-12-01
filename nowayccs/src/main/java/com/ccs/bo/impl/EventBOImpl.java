@@ -105,7 +105,7 @@ public class EventBOImpl implements IEventBO {
 		        bean.setEventContent(vo.getEventContent());
 		        String eventDate = vo.getEventDate();
 		        Date eDate = DateUtil.parse(eventDate, FORMATE_CREATETIME);
-		        bean.setEventDate(String.valueOf(eDate));
+		        bean.setEventDate(String.valueOf(eDate.getTime()));
 		        bean.setEventLevel(vo.getEventLevel());
 		        bean.setEventLocation(vo.getEventLocation());
 		        bean.setEventSource(vo.getEventSource());
