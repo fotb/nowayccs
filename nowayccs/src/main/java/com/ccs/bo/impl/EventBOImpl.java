@@ -111,6 +111,7 @@ public class EventBOImpl implements IEventBO {
 		        bean.setEventSource(vo.getEventSource());
 		        bean.setEventSubject(vo.getEventSubject());
 		        bean.setFirstCategoryId(vo.getFirstCategoryId());
+		        bean.setSecondCategoryId(vo.getSecondCategoryId());
 		        bean.setIsImpplace(vo.getIsImpPlase());
 		        bean.setLatiTude(vo.getLatitude());
 		        bean.setLongiTude(vo.getLongitude());
