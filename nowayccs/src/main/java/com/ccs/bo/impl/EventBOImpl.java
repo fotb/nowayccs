@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -240,7 +239,7 @@ public class EventBOImpl implements IEventBO {
 	        
 	        if(bean.isSuccess()){
 	        	logger.info("success to query with serialNumber " + vo.getSerialNumber());
-	        	 logger.error("query info fail with result: " + result);
+	        	 logger.error("query info success with result: " + result);
 	        	 eventDAO.update(vo);
 	        } else {
 	            logger.info("fail to query with serialNumber: " + vo.getSerialNumber());
