@@ -162,7 +162,7 @@ public class EventBOImpl implements IEventBO {
 		        		
 		        if(isSuccess){
 		        	logger.info("success to upload with serialNumber " + vo.getSerialNumber());
-		        	 logger.error("upload info fail with result: " + result);
+		        	 logger.error("upload info success with result: " + result);
 		        	vo.setUpStatus(EventVO.UP_STATUS_1);
 		        } else {
 		            logger.info("fail to upload with serialNumber: " + vo.getSerialNumber());
