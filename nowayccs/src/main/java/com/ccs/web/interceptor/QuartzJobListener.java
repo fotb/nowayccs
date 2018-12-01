@@ -25,8 +25,10 @@ public class QuartzJobListener implements ServletContextListener {
 	        List<QuartzJobVO> list = quartzBO.findAll();
 	        
 	        for (QuartzJobVO vo : list) {
-	        	quartzManager.addJob(vo.getJobName(), vo.getJobGroupName(), vo.getTriggerName(), vo.getTriggerGroupName(),
+	        	if("1".equals(vo.getStatus())) {
+	        		quartzManager.addJob(vo.getJobName(), vo.getJobGroupName(), vo.getTriggerName(), vo.getTriggerGroupName(),
 	        				Class.forName(vo.getJobClass()), vo.getCron());
+	        	}
 	        }
 	        System.out.println("QuartzJobListener 启动了");
         } catch (Exception e) {

@@ -17,5 +17,11 @@ public interface IEventBO {
 	void pushEvent(EventVO vo) throws Exception;
 	
 	void updateEventStatus(String serialNum, String status) throws Exception;
+	
+	public List<EventVO> getUnUploadEvent();
+	
+	void queryEvent(EventVO vo);
+	
+	void processEvent() throws Exception;
 
 }

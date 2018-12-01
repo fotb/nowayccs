@@ -342,6 +342,7 @@ public class EventVO extends BaseEntity implements Serializable {
 	}
 
 	public String getSuggestion() {
+//		suggestion = suggestion.replaceAll("\n", "<br/>");
 		return suggestion;
 	}
 

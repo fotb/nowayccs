@@ -30,7 +30,7 @@ function loadAll() {
             {field:'triggerGroupName',title:'触发器组名',width:200,align:'center'},
             {field:'jobClass',title:'任务',width:300,align:'left'},
             {field:'cron',title:'时间设置',width:80,align:'center'},
-            {field:'status',title:'状态',width:80,align:'center'},
+            {field:'status',title:'状态',width:80,align:'center', formatter:formatStatus},
             {field:'pid',title:'操作',width:80,align:'right', formatter:formatOper}
         ]],
 		method:'post',
@@ -51,6 +51,14 @@ function formatOper(val,row,index) {
 		return '<a href="JavaScript:startJob('+row["pid"]+')">开启</a>';
 	} else {
 	 	return '<a href="JavaScript:stopJob('+row["pid"]+')">关闭</a>';  
+	}
+}
+
+function formatStatus(val,row,index) {
+	if(row['status'] == "0") {
+		return '停止';
+	} else {
+	 	return '运行中';  
 	}
 }
 

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 
@@ -30,6 +31,7 @@ public class DateUtil {
 	public static Date parse(final String date, final String pattern) {
 		try {
 			final SimpleDateFormat sdf = getSimpleDateFormat(pattern);
+			sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai")); // 设置北京时区
 			synchronized (sdf) {
 				return sdf.parse(date);
 			}
@@ -42,6 +44,7 @@ public class DateUtil {
 	
     public static Date parseDt(String strDate, final String pattern) throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai")); // 设置北京时区
        return sdf.parse(strDate);
    }
 	/**
@@ -125,6 +128,7 @@ public class DateUtil {
 		SimpleDateFormat sdf = (SimpleDateFormat) sdfCache.get(pattern);
 		if (sdf == null) {
 			sdf = new SimpleDateFormat();
+			sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai")); // 设置北京时区
 			sdf.applyPattern(pattern);
 			sdf.setLenient(false);
 			sdfCache.put(pattern, sdf);
