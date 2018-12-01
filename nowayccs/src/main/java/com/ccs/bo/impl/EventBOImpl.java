@@ -247,7 +247,7 @@ public class EventBOImpl implements IEventBO {
 	}
 	@Override
 	public void processEvent() throws Exception {
-		final String hql = "from EventVO where t.status != ?";
+		final String hql = "from EventVO where status != ?";
 		List<EventVO> eVOList = eventDAO.queryForObject(hql, new Object[] {"50"});
 		for (EventVO eventVO : eVOList) {
 			queryEvent(eventVO);
