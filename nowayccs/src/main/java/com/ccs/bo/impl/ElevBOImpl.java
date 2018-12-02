@@ -40,6 +40,7 @@ public class ElevBOImpl implements IElevBO {
 		ElevatorVO existElevVO = getElevatorByDeviceId(eVO.getDeviceId());
 		if(null == existElevVO) {
 			elevDAO.save(eVO);
+			ehiVO.setElevatorId(eVO.getPid());
 		} else {
 			existElevVO.setLastHandler(eVO.getLastHandler());
 			existElevVO.setManufacturer(eVO.getManufacturer());
@@ -53,9 +54,9 @@ public class ElevBOImpl implements IElevBO {
 			existElevVO.setUpdateDT(eVO.getUpdateDT());
 			existElevVO.setUseDept(eVO.getUseDept());
 			elevDAO.update(existElevVO);
+			ehiVO.setElevatorId(existElevVO.getPid());
 		}
 		ehiVO.setInformationId(iVO.getInfoId());
-		ehiVO.setElevatorId(eVO.getPid());
 		elevHelpInfoDAO.saveOrUpdate(ehiVO);
 	}
 
