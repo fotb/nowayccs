@@ -52,9 +52,11 @@ $('#bt_ok').on('click',function(){
             	contentType:"application/json;charset=utf-8",  //缺失会出现URL编码，无法转成json对象
             	success:function(data){
 					if(data.meta.success){
-							$.messager.confirm('提示', '保存成功！', function(r){
+							$.messager.confirm('提示', '结案成功，窗口将自动关闭！', function(r){
 								if (r){
-									//parent.main.location = "bizaccept.do?action=selfclose";
+									window.opener = null; 
+　　　　　							window.open(' ', '_self', ' '); 
+　　　　　							window.close(); 
 								}
 							});
 					}
