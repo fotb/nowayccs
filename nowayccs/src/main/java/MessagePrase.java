@@ -36,7 +36,7 @@ public class MessagePrase {
         String url = "http://localhost:9090/ccs/platform/event/sendMessage";
         
         
-        String param = "desParam="+encryptStr;
+//        String param = "desParam="+encryptStr;
 	        
         CloseableHttpClient httpclient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(url);

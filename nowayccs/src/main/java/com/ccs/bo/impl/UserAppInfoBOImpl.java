@@ -86,7 +86,7 @@ public class UserAppInfoBOImpl implements IUserAppInfoBO {
 			}
 
 			// 找出所有app转移求助信息
-			List<AppReceiverVO> appReceiveVOList = appReceiverDAO.queryForObject("from AppReceiverVO where status != ? or status is null", new String[] {AppReceiverVO.STATUS_PROCESSING});
+			List<AppReceiverVO> appReceiveVOList = appReceiverDAO.queryForObject("from AppReceiverVO where status != ? or status is null", new String[] {AppReceiverVO.STATUS_FINISH});
 
 			// 找出在线用户24小时app求助信息分配数量
 			String hql = "select t.agentId, count(t.pid) as userCount from AppReceiverHistVO t, UserStatusVO s where t.agentId = s.userId and s.status = ? and t.createTime between ? and ? group by t.agentId order by userCount";

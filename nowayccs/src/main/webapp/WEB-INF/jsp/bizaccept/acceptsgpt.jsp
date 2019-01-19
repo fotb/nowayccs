@@ -13,23 +13,10 @@
 <base target="_self">
 
 <script language="javascript" type="">
-function btnnext_click(){
-	$("form").submit();
-}
-
-function btnback_click(){
-  history.back();
-}
-
-function btnprovs_click() {
-	$("form").attr("action", "bizaccept.do?action=back");
-	$("form").submit();
-}
 
 $(document).ready(function(){
-$("#detal").html("");
-$('#firstCategoryId').combotree({
-
+	$("#detal").html("");
+	$('#firstCategoryId').combotree({
 		onBeforeSelect: function(node) { 
 			if (!$(this).tree('isLeaf', node.target)) { 
 				return false; 
@@ -41,22 +28,25 @@ $('#firstCategoryId').combotree({
 			} 
 		},
 	  onSelect:function(rec){
-		$.getJSON("sgpt/getcategory/", {p:rec.id}, function(data) {
+		$.getJSON("sgpt.do?action=getcategory", {p:rec.id}, function(data) {
 			if(!$.isEmptyObject(data)) {
 				$("#detal").html(data.detail);
 			}
 		});
 	 }
- });
+	 });
 
 
-$("#bt_prov").on("click", function(){
-	history.back();
-});
+	$("#bt_prov").on("click", function(){
+		history.back();
+	});
 
     $('#bt_save').on('click',function(){
+$("form").submit();
+	/*
 	console.log($("#fm_sgpt").serializeObject());
 		if($("#fm_sgpt").form('validate')){
+			jQuery.support.cors = true;
        		$.ajax({
             	url:"sgpt/bizaccept/save",
             	type:"POST",
@@ -75,6 +65,7 @@ $("#bt_prov").on("click", function(){
 		}else{
 			$.messager.alert('操作提示','存在校验项未通过！',"warning");
 		}
+	*/
     });
 });
 
@@ -100,7 +91,7 @@ $("#bt_prov").on("click", function(){
     };
 </script>
 <body>
-<form method="post" action="bizaccept.do?action=sgptsave" id="fm_sgpt" name="fm_sgpt">
+<form method="post" action="sgpt.do?action=save" id="fm_sgpt" name="fm_sgpt">
 	<div id="p" class="easyui-panel"  style="width:100%;height:100%;padding:10px;">
 		<p class="font_no" style="font-size:14px; font-weight:bold; text-align:center;">“四个平台”事件信息记录单</p>
 		<div id="p_info" class="easyui-panel"  style="width:98%;height:100%;padding:0px; border-width: 0px; display:inline;float:left;">
@@ -133,7 +124,7 @@ $("#bt_prov").on("click", function(){
           <tr class="table_t1">
             <td>事件类别</td>
             <td style="" colspan="3">
-            <select class="easyui-combotree" id="firstCategoryId" name="firstCategoryId" data-options="url: 'sgpt/category/tree/', prompt:'请选择事件类别', required:true" style="height:100%;width: 180px;">
+            <select class="easyui-combotree" id="firstCategoryId" name="firstCategoryId" data-options="url: 'sgpt.do?action=categorytree', prompt:'请选择事件类别', required:true" style="height:100%;width: 180px;">
             </select>
             <span id="detal"></span>
             </td>
@@ -194,8 +185,8 @@ $("#bt_prov").on("click", function(){
           
                     <tr align="center" class="table_t1">
             <td colspan="4">
-              <a href="#" class="easyui-linkbutton" id="bt_save" data-options="iconCls:'icon-save'">保存</a>
-              <a href="#" class="easyui-linkbutton" id="bt_prov" data-options="iconCls:'icon-back'">上一步</a>
+              <a href="#" class="easyui-linkbutton" id="bt_save" name="bt_save" data-options="iconCls:'icon-save'">保存</a>
+              <a href="#" class="easyui-linkbutton" id="bt_prov" name="bt_prov"  data-options="iconCls:'icon-back'">上一步</a>
 <!--               <img src="images/button_pre.gif" width="60" height="18" onclick="btnprovs_click();"/>
               <img src="images/button_save.gif" width="60" height="18" onclick="btnnext_click();"/> -->
             </td>

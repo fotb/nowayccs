@@ -80,7 +80,7 @@ public class ElevBOImpl implements IElevBO {
 			String[] parameters = new String[infoVOList.size()];
 			String hql = "from ElevHelpInfoVO where informationId in (";
 			for (int i = 0; i < infoVOList.size(); i++) {
-				parameters[i] = infoVOList.get(0).getInfoId();
+				parameters[i] = infoVOList.get(i).getInfoId();
 				if(i + 1 == infoVOList.size()) {
 					hql += "?)";
 				} else {

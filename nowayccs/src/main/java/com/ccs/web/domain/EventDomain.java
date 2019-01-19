@@ -1,13 +1,12 @@
 package com.ccs.web.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class EventDomain implements Serializable {
 
 	private static final long serialVersionUID = 7018594047925221778L;
 	private String eventSubject;
-	private Date eventDate;
+	private String eventDate;
 	private String eventLocation;
 	private String eventContent;
 	private String eventLevel;
@@ -22,7 +21,7 @@ public class EventDomain implements Serializable {
 		super();
 	}
 
-	public EventDomain(String eventSubject, Date eventDate, String eventLocation, String eventContent,
+	public EventDomain(String eventSubject, String eventDate, String eventLocation, String eventContent,
 			String eventLevel, String isImpPlase, String relatePeopleCount, String firstCategoryId, String mobile,
 			String objName) {
 		super();
@@ -46,11 +45,11 @@ public class EventDomain implements Serializable {
 		this.eventSubject = eventSubject;
 	}
 
-	public Date getEventDate() {
+	public String getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Date eventDate) {
+	public void setEventDate(String eventDate) {
 		this.eventDate = eventDate;
 	}
 

@@ -46,8 +46,12 @@ $("#bt_prov").on("click", function(){
 });
 
     $('#bt_save').on('click',function(){
+	
+$("form").submit();
+/*
 	console.log($("#fm_elev").serializeObject());
 		if($("#fm_elev").form('validate')){
+			jQuery.support.cors = true;
        		$.ajax({
             	url:"elev/bizaccept/save",
             	type:"POST",
@@ -66,6 +70,7 @@ $("#bt_prov").on("click", function(){
 		}else{
 			$.messager.alert('操作提示','存在校验项未通过！',"warning");
 		}
+*/
     });
 
 
@@ -98,8 +103,8 @@ $('#casualty').combobox({
 
 $('#deviceId').combobox({
       mode: 'remote',  //模式： 远程获取数据
-      url: 'elev/getelev/',  //远程数据请求地址
-      valueField: 'pid', 　　//value对应的属性字段
+      url: 'elev.do?action=getelev',  //远程数据请求地址
+      valueField: 'deviceId', 　　//value对应的属性字段  --都用DeviceID
       textField: 'deviceId',　　　 //text对应的属性字段
 	  onBeforeLoad:function(param){
 		param.q = $(this).combobox('getValue')
@@ -140,7 +145,7 @@ $('#deviceId').combobox({
     };
 </script>
 <body>
-<form method="post" id="fm_elev" name="fm_elev">
+<form method="post" id="fm_elev" name="fm_elev" action="elev.do?action=save">
 	<div id="p" class="easyui-panel"  style="width:100%;height:100%;padding:10px;">
 		<p style="font-size:14px; font-weight:bold; text-align:center;">嘉兴市电梯应急公共救援平台电话记录</p>
 		<div style="margin-bottom:3px">

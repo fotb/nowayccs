@@ -6,16 +6,14 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.ccs.bo.IElevBO;
 import com.ccs.util.Constants;
-import com.ccs.util.Response;
 import com.ccs.util.StringUtil;
 import com.ccs.util.Utils;
 import com.ccs.vo.ElevHelpInfoVO;
@@ -25,7 +23,8 @@ import com.ccs.vo.UserVO;
 import com.ccs.web.domain.BizAccept;
 import com.ccs.web.domain.ElevatorDomain;
 
-@RestController
+@Controller
+@RequestMapping("/elev.do")
 public class ElevatorController {
 	
 	private static final String CALL_ID = "CALL_ID";
@@ -33,21 +32,26 @@ public class ElevatorController {
 	@Autowired
 	private IElevBO elevBO;
 
-    @RequestMapping(value = "/elev/getelev/", method = RequestMethod.POST, produces="application/json;charset=UTF-8")  
+    //@RequestMapping(value = "/elev/getelev/", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(params = "action=getelev")
 	public @ResponseBody List<ElevatorVO> getElevator(@RequestParam String q) {
 		return elevBO.getElevator(q);
 	}
     
     
     
-	 @RequestMapping(value = "/elev/bizaccept/save", method = RequestMethod.POST, produces="application/json;charset=UTF-8")  
-	 @ResponseBody
-	public Response acceptElevatorSave(@RequestBody ElevatorDomain domain, HttpSession session) throws Exception {
+	 //@RequestMapping(value = "/elev/bizaccept/save", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(params = "action=save")
+//	@ResponseBody
+	//public Response acceptElevatorSave(ElevatorDomain domain, HttpSession session) throws Exception {
+    public String acceptElevatorSave(ElevatorDomain domain, ModelMap model, HttpSession session) throws Exception {
 		 try {
 			 UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 			
 			//?? Use the same name of "bizAccept" with ModelAttribute???
 			BizAccept bizAccept = (BizAccept) session.getAttribute("bizAccept");
+			
+//			ElevatorDomain domain = new ElevatorDomain();
 			
 			Date date = new Date();
 			
@@ -114,13 +118,21 @@ public class ElevatorController {
 			elevBO.addElevHelp(vo, elevVO, ehiVO);
 			
 			session.setAttribute("bizAccept", null);
-			Response res = new Response();
-	    	res.success();
-	    	return res;
+//			Response res = new Response();
+//	    	res.success();
+//	    	return res;
+			
+//			session.setAttribute("bizAccept", null);
+			if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+				return "common/selfclose";
+			} else {
+				return "redirect:bizaccept.do?action=old";
+			}
 		 }catch(Exception e) {
-	    		Response res = new Response();
+/*	    		Response res = new Response();
 		    	res.failure("error!");
-	    		return res;
+	    		return res;*/
+			 return "redirect:bizaccept.do?action=old";
 		 }
 	}
 }

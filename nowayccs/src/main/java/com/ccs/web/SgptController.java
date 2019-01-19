@@ -8,18 +8,16 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.ccs.bo.IEventBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
 import com.ccs.util.EasyUiTree;
-import com.ccs.util.Response;
 import com.ccs.util.SgptCategoryTreeUtil;
 import com.ccs.util.StringUtil;
 import com.ccs.util.Utils;
@@ -31,7 +29,9 @@ import com.ccs.web.domain.BizAccept;
 import com.ccs.web.domain.EventDomain;
 
 
-@RestController
+//@RestController
+@Controller
+@RequestMapping("/sgpt.do")
 public class SgptController {
 	
 	private static Logger log = Logger.getLogger(SgptController.class);
@@ -43,12 +43,14 @@ public class SgptController {
 	@Autowired
 	private IEventBO eventBO;
 
-    @RequestMapping(value = "/sgpt/getcategory", method = RequestMethod.GET, produces="application/json;charset=UTF-8")  
+//    @RequestMapping(value = "/sgpt/getcategory", method = RequestMethod.GET, produces="application/json;charset=UTF-8")  
+	@RequestMapping(params = "action=getcategory")
 	public @ResponseBody EventCategoryVO getEventCategoryByCode(@RequestParam String p) throws Exception{
 		return eventBO.getEventCategory(p);
 	}
     
-    @RequestMapping(value = "/sgpt/category/tree", method = RequestMethod.POST, produces="application/json;charset=UTF-8")  
+//    @RequestMapping(value = "/sgpt/category/tree", method = RequestMethod.POST, produces="application/json;charset=UTF-8") 
+    @RequestMapping(params = "action=categorytree")
 	public @ResponseBody List<EasyUiTree> getEventCategoryTree() throws Exception{
 		List<EventCategoryVO> list = eventBO.getEventCategory();
 		SgptCategoryTreeUtil util = new SgptCategoryTreeUtil(list);
@@ -60,9 +62,10 @@ public class SgptController {
     
     
     
-	 @RequestMapping(value = "/sgpt/bizaccept/save", method = RequestMethod.POST, produces="application/json;charset=UTF-8")  
-	 @ResponseBody
-	public Response acceptSgptSave(@RequestBody EventDomain domain, HttpSession session) throws Exception {
+//	 @RequestMapping(value = "/sgpt/bizaccept/save", method = RequestMethod.POST, produces="application/json;charset=UTF-8")  
+//	 @ResponseBody
+    @RequestMapping(params = "action=save")
+	public String acceptSgptSave(EventDomain domain, ModelMap model, HttpSession session) throws Exception {
 		 try {
 			 UserVO user = (UserVO) session.getAttribute(Constants.SESSION_USER_KEY);
 			
@@ -95,7 +98,7 @@ public class SgptController {
 			
 			EventVO eventVO = new EventVO();
 			eventVO.setEventSubject(domain.getEventSubject());
-			eventVO.setEventDate(DateUtil.format(domain.getEventDate(), FORMATE_CREATETIME));
+			eventVO.setEventDate(domain.getEventDate());
 			eventVO.setEventLocation(domain.getEventLocation());
 			eventVO.setEventContent(domain.getEventContent());
 			eventVO.setEventLevel(domain.getEventLevel());
@@ -119,13 +122,20 @@ public class SgptController {
 			eventBO.acceptSGPT(vo, eventVO);
 			
 			session.setAttribute("bizAccept", null);
-			Response res = new Response();
-	    	res.success();
-	    	return res;
+//			Response res = new Response();
+//	    	res.success();
+//	    	return res;
+			
+			if(!StringUtil.isNull(bizAccept.getPopupFlag())) {
+				return "common/selfclose";
+			} else {
+				return "redirect:bizaccept.do?action=old";
+			}
 		 }catch(Exception e) {
-	    		Response res = new Response();
-		    	res.failure("error!");
-	    		return res;
+//	    		Response res = new Response();
+//		    	res.failure("error!");
+//	    		return res;
+			 return "redirect:bizaccept.do?action=old";
 		 }
 	}
 	 
