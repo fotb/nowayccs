@@ -2,6 +2,9 @@ package com.ccs.services.vo;
 
 import java.io.Serializable;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("issueRelatedPeople") 
 public class IssueRelatedPeople implements Serializable {
 
 	/**

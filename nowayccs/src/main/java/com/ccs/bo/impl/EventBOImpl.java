@@ -113,7 +113,7 @@ public class EventBOImpl implements IEventBO {
 		        
 		        String xml = XmlUtil.toXml(uddVO);
 		        logger.warn("start to upload sgpt with event pid = " + vo.getPid());
-		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + xml);
+		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data>" + xml + "</data>");
 		        
 		        UnifiedDataDockingReturnVO uddReturnVO = XmlUtil.toBean(result, UnifiedDataDockingReturnVO.class);
 				if (UnifiedDataDockingReturnVO.RETURN_CODE_SUCCESS.equals(uddReturnVO.getResultCode())) {

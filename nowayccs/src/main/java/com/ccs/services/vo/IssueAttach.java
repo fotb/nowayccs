@@ -2,8 +2,11 @@ package com.ccs.services.vo;
 
 import java.io.Serializable;
 
-public //包裹单个附件标签
-class IssueAttach implements Serializable {
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+
+@XStreamAlias("issueAttach")
+public class IssueAttach implements Serializable {
 
 	/**
 	 * 
