@@ -30,7 +30,7 @@ $(document).ready(function(){
 
 function loadElevHelpInfo() {
     $('#elevHelpInfo').datagrid({
-        url:"elevbackvst.do?action=get",
+        url:"elevbackvst.do?action=get&randomNum="+Math.random(),
         columns:[[
             {field:'helpName',title:'求助者姓名', width:90},
             {field:'createTime',title:'求助时间', width:140},

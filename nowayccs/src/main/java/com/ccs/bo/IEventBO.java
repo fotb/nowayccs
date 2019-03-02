@@ -20,7 +20,7 @@ public interface IEventBO {
 	
 	public List<EventVO> getUnUploadEvent();
 	
-	void queryEvent(EventVO vo);
+//	void queryEvent(EventVO vo);
 	
 	void processEvent() throws Exception;
 
