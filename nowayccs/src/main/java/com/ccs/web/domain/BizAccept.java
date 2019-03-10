@@ -33,6 +33,16 @@ public class BizAccept implements Serializable {
 	
 	private String appInfoId;
 	
+	private String helpCategory; //求助内容类别，目前主要是生活类细分。
+	
+	public String getHelpCategory() {
+		return helpCategory;
+	}
+
+	public void setHelpCategory(String helpCategory) {
+		this.helpCategory = helpCategory;
+	}
+
 	public String getAppInfoId() {
 		return appInfoId;
 	}

@@ -83,6 +83,18 @@ public class InformationVO implements Serializable {
 	@Column(name = "CALLID")
 	private String callId;
 	
+	@Column(name = "HELPCATEGORY")
+	private String helpCategory;
+	
+	
+	public String getHelpCategory() {
+		return helpCategory;
+	}
+
+	public void setHelpCategory(String helpCategory) {
+		this.helpCategory = helpCategory;
+	}
+
 	public String getInfoId() {
 		return infoId;
 	}

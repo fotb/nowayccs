@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccs.bo.IAppReceiverBO;
 import com.ccs.bo.IBizAcceptBO;
+import com.ccs.bo.IBizLifeBO;
 import com.ccs.bo.IDictBO;
 import com.ccs.bo.IPowerInformationBO;
 import com.ccs.bo.IUserBO;
 import com.ccs.util.Constants;
 import com.ccs.util.DateUtil;
+import com.ccs.util.EasyUiTree;
+import com.ccs.util.LifeCategoryTreeUtil;
 import com.ccs.util.PageInfo;
 import com.ccs.util.StringUtil;
 import com.ccs.util.Utils;
@@ -36,11 +38,11 @@ import com.ccs.vo.BaseEntity;
 import com.ccs.vo.DictVO;
 import com.ccs.vo.EventVO;
 import com.ccs.vo.InformationVO;
+import com.ccs.vo.LifeCategoryVO;
 import com.ccs.vo.PowerInformationVO;
 import com.ccs.vo.PowerStaffVO;
 import com.ccs.vo.ReferInformationVO;
 import com.ccs.vo.UserVO;
-import com.ccs.web.domain.AppReceiverParam;
 import com.ccs.web.domain.BizAccept;
 import com.ccs.web.domain.InfoBean;
 
@@ -72,6 +74,9 @@ public class BizAcceptController {
 	
 	@Autowired
 	private IAppReceiverBO appReceiverBO;
+	
+	@Autowired
+	private IBizLifeBO bizLifeBO;
 	
 	
 	//http://$IP/?ANI=18958126977&logName=Administrator&password=&agentId =001&groupId=GD-SA& recordFile =&bpoHisId=&orgNumber=
@@ -291,6 +296,7 @@ public class BizAcceptController {
 		} else {
 			vo.setRecordFlag(Constants.SYS_YESNO_NO);
 		}
+		vo.setHelpCategory(bizAccept.getHelpCategory());
 		return vo;
 	}
 	
@@ -629,4 +635,17 @@ public class BizAcceptController {
 	 public String finish() {
 		 return "common/selfclose";
 	 }
+	
+	
+	
+    @RequestMapping(params = "action=lifecategorytree")
+	public @ResponseBody List<EasyUiTree> getLifeCategoryTree() throws Exception{
+		List<LifeCategoryVO> list = bizLifeBO.getLifeCategory();
+		LifeCategoryTreeUtil util = new LifeCategoryTreeUtil(list);
+		EasyUiTree easyUiTree = util.generateEasyUiTree("0");
+		List<EasyUiTree> tree = new ArrayList<EasyUiTree>();
+		tree.add(easyUiTree);
+		return tree;
+	}
+    
 }

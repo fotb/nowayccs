@@ -50,6 +50,12 @@ function btnnext_click(){
   	if(!isValidStringObj( form.helpArea,"求助区域",true)){
     	return;
   	}
+  	
+  	if("2" == $("#helpType").val()) {
+  		if(!isValidStringObj(form.helpCategory, "生活类求助分类", true)) {
+  			return;
+  		}
+  	}
     if("2" == $("#helpType").val()) {
   		$("#action").val("life");
   		$("form").submit();
@@ -144,6 +150,30 @@ $(document).ready(function(){
         required: true,
         showSeconds: true
     });
+			
+    $("#helpType").change(function(){
+    	if("2" == $("#helpType").val()) {
+    		$("#span_helpcategory").show();
+    	} else {
+    		$("#span_helpcategory").hide();
+    	}
+    });
+    
+    $('#helpCategory_temp').combotree({
+    	onBeforeSelect: function(node) {
+            if (!$(this).tree('isLeaf', node.target)) {
+                return false;
+            }
+        },
+        onClick: function(node) {
+            if (!$(this).tree('isLeaf', node.target)) {
+                $('#helpCategory_temp').combo('showPanel');
+            }
+        },
+    	onChange: function(node){
+    		$("#helpCategory").val($('#helpCategory_temp').combotree('getValue'));
+    	}
+	});
 });
 
 function getPhoneLevels(phone) {
@@ -343,6 +373,11 @@ function getLonelyFamily(phone) {
                 <form:option value=" ">选择</form:option>
                 <form:options items="${helpTypeMap}"/>
               </form:select>
+              <form:hidden path="helpCategory"/>
+              <span id="span_helpcategory" style="display:none;height:25px;width:100%">
+             	<select class="easyui-combotree" id="helpCategory_temp" name="helpCategory_temp" data-options="url: 'bizaccept.do?action=lifecategorytree', prompt:'请选择事件类别', required:true" style="height:100%;width: 180px;">
+            	</select>
+           	  </span>
             </td>
           </tr>
           <tr class="line">

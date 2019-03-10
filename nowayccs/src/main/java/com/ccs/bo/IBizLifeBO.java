@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ccs.util.PageInfo;
 import com.ccs.vo.InformationVO;
+import com.ccs.vo.LifeCategoryVO;
 import com.ccs.vo.LifeInformationVO;
 
 public interface IBizLifeBO {
@@ -22,4 +23,6 @@ public interface IBizLifeBO {
 	void del(String infoId, String userId);
 	
 	LifeInformationVO findLifeInfoByInfoId(String infoId);
+	
+	public List<LifeCategoryVO> getLifeCategory() throws Exception;
 }
