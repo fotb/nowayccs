@@ -88,7 +88,7 @@ public class EventBOImpl implements IEventBO {
 		        final String key = "4eeab5ba055127e6d781cd3f274897e3";
 				
 		        UnifiedDataDockingVO uddVO = new UnifiedDataDockingVO();
-		        uddVO.setKey(key);
+		        //uddVO.setKey(key);
 		        uddVO.setSubject(vo.getEventSubject());
 		        //uddVO.setOrgName("浙江省->嘉兴市->南湖区");
 		        uddVO.setOrgName("330402ZF260000");
@@ -113,7 +113,7 @@ public class EventBOImpl implements IEventBO {
 		        
 		        String xml = XmlUtil.toXml(uddVO);
 		        logger.warn("start to upload sgpt with event pid = " + vo.getPid());
-		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data>" + xml + "</data>");
+		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>"+key+"</key>" + xml + "</data>");
 		        
 		        UnifiedDataDockingReturnVO uddReturnVO = XmlUtil.toBean(result, UnifiedDataDockingReturnVO.class);
 				if (UnifiedDataDockingReturnVO.RETURN_CODE_SUCCESS.equals(uddReturnVO.getResultCode())) {

@@ -13,7 +13,7 @@ public class UnifiedDataDockingVO implements Serializable{
 	 */
 	private static final long serialVersionUID = 3130154428764134172L;
 
-	private String key;
+//	private String key;
 	
 	//事件名称
 	private String subject;
@@ -50,14 +50,14 @@ public class UnifiedDataDockingVO implements Serializable{
 	private List<IssueAttach> issueAttachs;
 	
 	
-	public String getKey() {
-		return key;
-	}
-
-
-	public void setKey(String key) {
-		this.key = key;
-	}
+//	public String getKey() {
+//		return key;
+//	}
+//
+//
+//	public void setKey(String key) {
+//		this.key = key;
+//	}
 
 
 	public String getSubject() {

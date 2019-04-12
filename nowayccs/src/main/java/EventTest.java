@@ -15,7 +15,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.ccs.bean.EventBean;
 import com.ccs.bean.EventReportBean;
 import com.ccs.bean.RelavancyBean;
+import com.ccs.services.client.UnifiedDataDockingWebServiceProxy;
+import com.ccs.services.vo.IssueAttach;
+import com.ccs.services.vo.IssueRelatedPeople;
+import com.ccs.services.vo.UnifiedDataDockingReturnVO;
+import com.ccs.services.vo.UnifiedDataDockingVO;
 import com.ccs.util.DateUtil;
+import com.ccs.util.XmlUtil;
 import com.ccs.vo.EventVO;
 
 public class EventTest {
@@ -27,23 +33,21 @@ public class EventTest {
 		
 		Date date = new Date();
 		vo.setEventSubject("嘉兴96345测试");
-		vo.setEventDate(String.valueOf(date.getTime()));
+		vo.setEventDate(DateUtil.format(new Date(), "yyyy-MM-dd HH:mm"));
 		vo.setEventLocation("测试地点");
 		vo.setEventContent("测试内容");
 		vo.setEventLevel("3");
 		vo.setEventSource("6");
 		vo.setIsImpPlase("0");
 		vo.setRelatePeopleCount("1");
-		vo.setFirstCategoryId("01");
-		vo.setSecondCategoryId("01001");
+		vo.setFirstCategoryId("综治工作");
+		vo.setSecondCategoryId("其他");
 		vo.setStatus("10");
 		vo.setOrganizationId("330402ZF260000");
 		vo.setObjName("测试人");
 		vo.setMobile("13805730000");
 		vo.setCreateTime(new Date());
 		
-		String serialNum = EventVO.EVENT_ORG_ID + DateUtil.format(new Date(), "yyMMdd") + vo.getSecondCategoryId() + test.genCode();
-		vo.setSerialNumber(serialNum);
 		
 		try {
 			test.pushEvent(vo);
@@ -53,106 +57,52 @@ public class EventTest {
 		}
 
 	}
-	 private String genCode() {
-		// 字符串
-	        String string = "";
-	        // 循环得到10个字母
-	        for (int i = 0; i < 7; i++) {
-	            // 得到随机字母
-	            char c = (char) ((Math.random() * 26) + 'A');
-	            // 拼接成字符串
-	            string += (c + "");
-	        }
-	       return string;
-	 }
 	
-	public void pushEvent(EventVO vo) throws Exception {
-		try {
-
-	        
-	        final String appKey = "KUAFWFVUSJOSCXUVWUBH";
-			
-	        //String url = "http://59.202.61.198:11100/api/cooperation/event/eventReport.json?bizContent=abc&appKey=abc";
-	       
-	        String url = "http://59.202.61.198:11100/api/cooperation/event/eventReport.json";
-	        
-	        EventBean bean = new EventBean();
-	        bean.setEventContent(vo.getEventContent());
-	        bean.setEventDate(vo.getEventDate());
-	        bean.setEventLevel(vo.getEventLevel());
-	        bean.setEventLocation(vo.getEventLocation());
-	        bean.setEventSource(vo.getEventSource());
-	        bean.setEventSubject(vo.getEventSubject());
-	        bean.setFirstCategoryId(vo.getFirstCategoryId());
-	        bean.setSecondCategoryId(vo.getSecondCategoryId());
-	        bean.setIsImpplace(vo.getIsImpPlase());
-	        bean.setLatiTude(vo.getLatitude());
-	        bean.setLongiTude(vo.getLongitude());
-	        bean.setMobile(vo.getMobile());
-	        bean.setRelatePeopleCount(vo.getRelatePeopleCount());
-	        bean.setStatus(vo.getStatus());
-	        bean.setUserId("bb4a9da366ed8dae0167068170db545b");
-	        bean.setCreateDate(String.valueOf(vo.getCreateTime().getTime()));
-	        //bean.setWhereTo("");
-	        
-	        bean.setLatiTude("0");
-	        bean.setLongiTude("0");
-	        bean.setSerialNumber(vo.getSerialNumber());
-	        bean.setWhereTo("赴县");
-	        
-	        List<RelavancyBean> relavancyList = new ArrayList<RelavancyBean>();
-	        RelavancyBean rBean = new RelavancyBean();
-	        rBean.setRclassIfIcation("1");
-	        rBean.setRclassIfIcationId("-1");
-	        rBean.setObjName(vo.getObjName());
-	        rBean.setmPhone(vo.getMobile());
-	        
-	        
-	        relavancyList.add(rBean);
-	        bean.setRelavancyList(relavancyList);
-	        
-	        EventReportBean erBean = new EventReportBean();
-	        erBean.setEvent(bean);
-	        String json = JSONObject.toJSONString(erBean);
-	        System.out.println(json);
-//	        jsonObj.
-	        
-//	        JSONArray array = new JSONArray();
-//	        for (AppInfoBean bean : list) {
-//	        	JSONObject json = new JSONObject();
-//				json.put("orderNumber", bean.getOrderNumber());
-//				json.put("ordersType", bean.getOrdersType());
-//				array.add(json);
-//			}
-	        
-	        String param = "bizContent="+json+ "&appKey=" + appKey;
+	
+	public void pushEvent(EventVO vo) {
+			try {
+		        final String key = "996ab5ba055127e6d781cd3f274897e3";
+				
+		        UnifiedDataDockingVO uddVO = new UnifiedDataDockingVO();
+		        //uddVO.setKey(key);
+		        uddVO.setSubject(vo.getEventSubject());
+		        //uddVO.setOrgName("浙江省->嘉兴市->南湖区");
+		        uddVO.setOrgName("333203");
+		        uddVO.setOccurLocation(vo.getEventLocation());
+		        uddVO.setOccurDate(vo.getEventDate());
+		        IssueRelatedPeople people = new IssueRelatedPeople();
+		        people.setIssueRelatedPeopleName(vo.getObjName());
+		        people.setIssueRelatedPeopleTelephone(vo.getMobile());
+		        List<IssueRelatedPeople> issueRelatedPeoples = new ArrayList<IssueRelatedPeople>();
+		        issueRelatedPeoples.add(people);
+		        uddVO.setIssueRelatedPeoples(issueRelatedPeoples);
 		        
-	        CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-	        HttpPost post = new HttpPost(url);
-			
-	        List<NameValuePair> nvps = new ArrayList<NameValuePair>();  
-	        nvps.add(new BasicNameValuePair("bizContent", json));  
-	        nvps.add(new BasicNameValuePair("appKey", appKey));
-	        post.setEntity(new UrlEncodedFormEntity(nvps,"utf-8")); 
-	        
-//	        StringEntity reqEntity = new StringEntity(param,Charset.forName("UTF-8"));
-//	        reqEntity.
-//	        HttpPost httppost = new HttpPost(url);  
-	        post.addHeader("Content-Type","application/x-www-form-urlencoded; charset=\"UTF-8\"");
-	        
-//	        post.setEntity(reqEntity);
-	        HttpResponse res = httpclient.execute(post);
-	        String result = EntityUtils.toString(res.getEntity());// 返回json格式：
-            System.out.println(result);
-//	        if(res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-////	        	logger.info("success to update status： " + list.toString());
-//	        } else {
-//	            logger.info("fail to update status: " + result);
-//	        }
-         
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-}
+		        uddVO.setRelatePeopleCount(vo.getRelatePeopleCount());
+		        uddVO.setIssueBigTypeName(vo.getFirstCategoryId());
+		        uddVO.setIssueSmallTypeName(vo.getSecondCategoryId());
+		        
+		        uddVO.setIssueContent(vo.getEventContent());
+		        uddVO.setDataOrigin("嘉兴市南湖区96345");
+		       // uddVO.setIssueAttachs(new ArrayList<IssueAttach>());
+		        
+		        UnifiedDataDockingWebServiceProxy proxy = new UnifiedDataDockingWebServiceProxy();
+		        
+		        String xml = XmlUtil.toXml(uddVO);
+		        System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>996ab5ba055127e6d781cd3f274897e3</key>" + xml + "</data>");
+		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>996ab5ba055127e6d781cd3f274897e3</key>" + xml + "</data>");
+		        System.out.println(result);
+		        UnifiedDataDockingReturnVO uddReturnVO = XmlUtil.toBean(result, UnifiedDataDockingReturnVO.class);
+				if (UnifiedDataDockingReturnVO.RETURN_CODE_SUCCESS.equals(uddReturnVO.getResultCode())) {
+					vo.setUpStatus(EventVO.UP_STATUS_1);
+					vo.setSerialNumber(uddReturnVO.getSerialNumber());
+				} else {
+					vo.setUpStatus(EventVO.UP_STATUS_0);
+				}
+		        
+		      //  eventDAO.update(vo);
+			}catch(Exception e) {
+				//logger.error(e);
+			}
+	}
 
 }
