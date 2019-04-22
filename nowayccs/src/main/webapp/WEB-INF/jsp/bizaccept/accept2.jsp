@@ -174,6 +174,11 @@ $(document).ready(function(){
     		$("#helpCategory").val($('#helpCategory_temp').combotree('getValue'));
     	}
 	});
+    
+	if("2" == $("#helpType").val()) {
+		$("#span_helpcategory").show();
+	} 
+	
 });
 
 function getPhoneLevels(phone) {

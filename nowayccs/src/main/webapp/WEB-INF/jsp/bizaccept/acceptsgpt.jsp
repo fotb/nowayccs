@@ -116,7 +116,7 @@ $("form").submit();
             <td>发生地点</td>
             <td style=""><input class="easyui-textbox" id="eventLocation" name="eventLocation" data-options="prompt:'请输入发生地点', required:true"  style="height:100%;width: 99%;"></td>
             <td >发生时间</td>
-            <td style=""><input class="easyui-datetimebox" id="eventDate"  name="eventDate" data-options="prompt:'请输入发生时间', required:true" style="height:100%;width: 220;"></td>
+            <td style=""><input class="easyui-datetimebox" id="eventDate"  name="eventDate" data-options="prompt:'请输入发生时间', required:true,showSeconds:false" style="height:100%;width: 220;"></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="4">            </td>
@@ -124,7 +124,7 @@ $("form").submit();
           <tr class="table_t1">
             <td>事件类别</td>
             <td style="" colspan="3">
-            <select class="easyui-combotree" id="firstCategoryId" name="firstCategoryId" data-options="url: 'sgpt.do?action=categorytree', prompt:'请选择事件类别', required:true" style="height:100%;width: 180px;">
+            <select class="easyui-combotree" id="firstCategoryId" name="firstCategoryId" data-options="url: 'sgpt.do?action=categorytree', prompt:'请选择事件类别', required:true" style="height:100%;width: 280px;">
             </select>
             <span id="detal"></span>
             </td>
@@ -148,7 +148,7 @@ $("form").submit();
           
           <tr class="table_t1">
             <td>涉及人数</td>
-            <td style=""><input class="easyui-textbox" id="relatePeopleCount" name="relatePeopleCount" data-options="prompt:'请输入涉及人数', required:true" style="height:100%;width: 99%;"></td>
+            <td style=""><input class="easyui-numberbox" id="relatePeopleCount" name="relatePeopleCount" data-options="prompt:'请输入涉及人数', required:true, min:0,precision:0" style="height:100%;width: 99%;"></td>
           	<td style="text-align: center;" colspan="2"></td>
           </tr>
           <tr class="line">

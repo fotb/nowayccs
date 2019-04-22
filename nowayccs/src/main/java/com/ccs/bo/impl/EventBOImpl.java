@@ -3,6 +3,7 @@ package com.ccs.bo.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.hibernate.type.Type;
@@ -10,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ccs.bo.IEventBO;
 import com.ccs.dao.IBaseDAO;
 import com.ccs.dao.IInformationDAO;
 import com.ccs.services.client.UnifiedDataDockingWebServiceProxy;
-import com.ccs.services.vo.IssueAttach;
 import com.ccs.services.vo.IssueRelatedPeople;
 import com.ccs.services.vo.UnifiedDataDockingReturnVO;
 import com.ccs.services.vo.UnifiedDataDockingVO;
@@ -85,13 +86,13 @@ public class EventBOImpl implements IEventBO {
 	@Override
 	public void pushEvent(EventVO vo) {
 			try {
-		        final String key = "4eeab5ba055127e6d781cd3f274897e3";
+		        final String key = "996ab5ba055127e6d781cd3f274897e3";
 				
 		        UnifiedDataDockingVO uddVO = new UnifiedDataDockingVO();
 		        //uddVO.setKey(key);
 		        uddVO.setSubject(vo.getEventSubject());
 		        //uddVO.setOrgName("浙江省->嘉兴市->南湖区");
-		        uddVO.setOrgName("330402ZF260000");
+		        uddVO.setOrgName("333203");
 		        uddVO.setOccurLocation(vo.getEventLocation());
 		        uddVO.setOccurDate(vo.getEventDate());
 		        IssueRelatedPeople people = new IssueRelatedPeople();
@@ -102,32 +103,35 @@ public class EventBOImpl implements IEventBO {
 		        uddVO.setIssueRelatedPeoples(issueRelatedPeoples);
 		        
 		        uddVO.setRelatePeopleCount(vo.getRelatePeopleCount());
-		        uddVO.setIssueBigTypeName(vo.getFirstCategoryId());
-		        uddVO.setIssueSmallTypeName(vo.getSecondCategoryId());
-		        
+		        EventCategoryVO ecVO = eventCategoryDAO.get(vo.getFirstCategoryId());
+		        uddVO.setIssueBigTypeName("综治工作");
+
+		        EventCategoryVO ecVO2 = eventCategoryDAO.get(vo.getSecondCategoryId());
+		        //uddVO.setIssueSmallTypeName(ecVO2.getName());
+		        uddVO.setIssueSmallTypeName("其他");
 		        uddVO.setIssueContent(vo.getEventContent());
 		        uddVO.setDataOrigin("嘉兴市南湖区96345");
-		        uddVO.setIssueAttachs(new ArrayList<IssueAttach>());
+		       // uddVO.setIssueAttachs(new ArrayList<IssueAttach>());
 		        
 		        UnifiedDataDockingWebServiceProxy proxy = new UnifiedDataDockingWebServiceProxy();
 		        
 		        String xml = XmlUtil.toXml(uddVO);
-		        logger.warn("start to upload sgpt with event pid = " + vo.getPid());
-		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>"+key+"</key>" + xml + "</data>");
-		        
+		        System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>996ab5ba055127e6d781cd3f274897e3</key>" + xml + "</data>");
+		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>"+ key +"</key>" + xml + "</data>");
+		        System.out.println(result);
+
 		        UnifiedDataDockingReturnVO uddReturnVO = XmlUtil.toBean(result, UnifiedDataDockingReturnVO.class);
 				if (UnifiedDataDockingReturnVO.RETURN_CODE_SUCCESS.equals(uddReturnVO.getResultCode())) {
-					logger.warn("Success to upload sgpt with event pid = " + vo.getPid());
 					vo.setUpStatus(EventVO.UP_STATUS_1);
-					vo.setSerialNumber(uddReturnVO.getSerialNumber());
+					vo.setSerialNumber(uddReturnVO.getIssueNew().getSerialNumber());
 				} else {
-					logger.warn("Fail to upload sgpt with event pid = " + vo.getPid());
 					vo.setUpStatus(EventVO.UP_STATUS_0);
 				}
 		        
-		        eventDAO.update(vo);
+				eventDAO.update(vo);
 			}catch(Exception e) {
 				logger.error(e);
+				System.out.println(e);
 			}
 	}
 	@Override

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -12,9 +13,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ccs.bean.EventBean;
-import com.ccs.bean.EventReportBean;
-import com.ccs.bean.RelavancyBean;
+import com.ccs.services.client.UnifiedDataDockingWebServiceProxy;
+import com.ccs.services.vo.IssueRelatedPeople;
+import com.ccs.services.vo.UnifiedDataDockingReturnVO;
+import com.ccs.services.vo.UnifiedDataDockingVO;
 import com.ccs.services.client.UnifiedDataDockingWebServiceProxy;
 import com.ccs.services.vo.IssueAttach;
 import com.ccs.services.vo.IssueRelatedPeople;
@@ -91,17 +93,18 @@ public class EventTest {
 		        System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>996ab5ba055127e6d781cd3f274897e3</key>" + xml + "</data>");
 		        String result = proxy.addIssue("<?xml version=\"1.0\" encoding=\"UTF-8\"?><data><key>996ab5ba055127e6d781cd3f274897e3</key>" + xml + "</data>");
 		        System.out.println(result);
+		        
 		        UnifiedDataDockingReturnVO uddReturnVO = XmlUtil.toBean(result, UnifiedDataDockingReturnVO.class);
 				if (UnifiedDataDockingReturnVO.RETURN_CODE_SUCCESS.equals(uddReturnVO.getResultCode())) {
 					vo.setUpStatus(EventVO.UP_STATUS_1);
-					vo.setSerialNumber(uddReturnVO.getSerialNumber());
+					vo.setSerialNumber(uddReturnVO.getIssueNew().getSerialNumber());
 				} else {
 					vo.setUpStatus(EventVO.UP_STATUS_0);
 				}
 		        
 		      //  eventDAO.update(vo);
 			}catch(Exception e) {
-				//logger.error(e);
+				System.out.println(e);
 			}
 	}
 

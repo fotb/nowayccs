@@ -2,11 +2,15 @@ package com.ccs.services.vo;
 
 import java.io.Serializable;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+@XStreamAlias("data")
 public class UnifiedDataDockingReturnVO implements Serializable {
 	
 	public static final String RETURN_CODE_SUCCESS = "200";
 	
 	public static final String RETURN_CODE_ERROR = "300";
+	
 
 	/**
 	 * 
@@ -17,9 +21,8 @@ public class UnifiedDataDockingReturnVO implements Serializable {
 	
 	private String resultMsg;
 	
-	private String issueNew;
+	private IssueNew issueNew;
 	
-	private String serialNumber;
 
 	public String getResultCode() {
 		return resultCode;
@@ -37,20 +40,12 @@ public class UnifiedDataDockingReturnVO implements Serializable {
 		this.resultMsg = resultMsg;
 	}
 
-	public String getIssueNew() {
+	public IssueNew getIssueNew() {
 		return issueNew;
 	}
 
-	public void setIssueNew(String issueNew) {
+	public void setIssueNew(IssueNew issueNew) {
 		this.issueNew = issueNew;
-	}
-
-	public String getSerialNumber() {
-		return serialNumber;
-	}
-
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
 	}
 
 }

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ccs.bo.IAppReceiverBO;
+import com.ccs.util.Constants;
 import com.ccs.util.StringUtil;
 import com.ccs.util.app.AppInfoResponse;
 import com.ccs.util.app.Meta;
@@ -90,6 +91,7 @@ public class GetAppInfoJob implements Job {
 			List<AppInfoBean> appInfoList = new ArrayList<AppInfoBean>();
 			for (AppInfoBean appInfoBean : list) {
 				System.out.println(appInfoBean.getHelpAddr());
+				appInfoBean.setHelpType(Constants.INFOMATION_HELPTYPE_LIFE);  //所有App求助都归到生活类
 				//如果订单号和状态为空，则丢弃数据
 				if(StringUtil.isNull(appInfoBean.getOrderNumber()) || StringUtil.isNull(appInfoBean.getOrderStatus())) {
 					continue;
