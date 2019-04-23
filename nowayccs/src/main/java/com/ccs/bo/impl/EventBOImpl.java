@@ -92,7 +92,7 @@ public class EventBOImpl implements IEventBO {
 		        //uddVO.setKey(key);
 		        uddVO.setSubject(vo.getEventSubject());
 		        //uddVO.setOrgName("浙江省->嘉兴市->南湖区");
-		        uddVO.setOrgName("3304021sq");
+		        uddVO.setOrgName("330402");
 		        uddVO.setOccurLocation(vo.getEventLocation());
 		        uddVO.setOccurDate(vo.getEventDate());
 		        IssueRelatedPeople people = new IssueRelatedPeople();
@@ -107,8 +107,8 @@ public class EventBOImpl implements IEventBO {
 		        uddVO.setIssueBigTypeName("综治工作");
 
 		        EventCategoryVO ecVO2 = eventCategoryDAO.get(vo.getSecondCategoryId());
-		        //uddVO.setIssueSmallTypeName(ecVO2.getName());
-		        uddVO.setIssueSmallTypeName("其他");
+		        uddVO.setIssueSmallTypeName(ecVO2.getName());
+//		        uddVO.setIssueSmallTypeName("其他");
 		        uddVO.setIssueContent(vo.getEventContent());
 		        uddVO.setDataOrigin("嘉兴市南湖区96345");
 		       // uddVO.setIssueAttachs(new ArrayList<IssueAttach>());
