@@ -92,7 +92,7 @@ public class EventBOImpl implements IEventBO {
 		        //uddVO.setKey(key);
 		        uddVO.setSubject(vo.getEventSubject());
 		        //uddVO.setOrgName("浙江省->嘉兴市->南湖区");
-		        uddVO.setOrgName("333203");
+		        uddVO.setOrgName("3304021sq");
 		        uddVO.setOccurLocation(vo.getEventLocation());
 		        uddVO.setOccurDate(vo.getEventDate());
 		        IssueRelatedPeople people = new IssueRelatedPeople();
