@@ -22,8 +22,8 @@ public class UnifiedDataDockingWebServiceImplServiceLocator extends org.apache.a
     }
 
     // Use to get a proxy class for UnifiedDataDockingWebServiceImplPort
-    //private java.lang.String UnifiedDataDockingWebServiceImplPort_address = "http://172.17.229.237:8088/services/unifiedDataDockingWebService";
-    private java.lang.String UnifiedDataDockingWebServiceImplPort_address = "http://anhaooray.oicp.net:24582/services/unifiedDataDockingWebService";
+    private java.lang.String UnifiedDataDockingWebServiceImplPort_address = "http://172.17.229.237:8088/services/unifiedDataDockingWebService";
+    //private java.lang.String UnifiedDataDockingWebServiceImplPort_address = "http://anhaooray.oicp.net:24582/services/unifiedDataDockingWebService";
 
     public java.lang.String getUnifiedDataDockingWebServiceImplPortAddress() {
         return UnifiedDataDockingWebServiceImplPort_address;
