@@ -42,8 +42,11 @@ $(document).ready(function(){
 	});
 
     $('#bt_save').on('click',function(){
-$("form").submit();
+	if($("#fm_sgpt").form('validate')){
+		$("form").submit();
+	}
 	/*
+
 	console.log($("#fm_sgpt").serializeObject());
 		if($("#fm_sgpt").form('validate')){
 			jQuery.support.cors = true;
@@ -67,6 +70,18 @@ $("form").submit();
 		}
 	*/
     });
+
+		$.extend($.fn.validatebox.defaults.rules, {
+        	　　　　　　datetime : {//验证时间格式是否类似2019-04-27 22:44
+        	       　　　　       validator : function(value){
+        	       　　　　     	 	var r = value.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2}) (\d{1,2}):(\d{1,2})$/);
+           							if (r == null) return false;
+            						var d = new Date(r[1], r[3] - 1, r[4], r[5], r[6]);
+            						return (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4] && d.getHours() == r[5] && d.getMinutes() == r[6]);
+        	         　　　　     },
+        	        　　　　      message : '时间格式不正确，请重新选择。'
+        	        　　　　  }
+        	　　});
 });
 
 
@@ -116,7 +131,7 @@ $("form").submit();
             <td>发生地点</td>
             <td style=""><input class="easyui-textbox" id="eventLocation" name="eventLocation" data-options="prompt:'请输入发生地点', required:true"  style="height:100%;width: 99%;"></td>
             <td >发生时间</td>
-            <td style=""><input class="easyui-datetimebox" id="eventDate"  name="eventDate" data-options="prompt:'请输入发生时间', required:true,showSeconds:false" style="height:100%;width: 220;"></td>
+            <td style=""><input class="easyui-datetimebox" id="eventDate"  name="eventDate" data-options="prompt:'请输入发生时间', validType:'datetime', required:true,showSeconds:false" style="height:100%;width: 220;"></td>
           </tr>
           <tr class="line">
             <td height="1" colspan="4">            </td>

@@ -116,7 +116,7 @@
         	        　　　　      message : '分类已经存在，请重新输入！'
         	        　　　　  }
         	　　});
-        })
+        });
         
         function check() {
         	$.post("lifecategory.do?action=check", {code: $("#code").val()},
