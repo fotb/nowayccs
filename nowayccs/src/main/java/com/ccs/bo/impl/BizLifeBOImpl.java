@@ -93,11 +93,13 @@ public class BizLifeBOImpl implements IBizLifeBO {
 		List<LifeCategoryVO> voList = new ArrayList<LifeCategoryVO>();
 		for (Object[] objs : list) {
 			LifeCategoryVO vo = new LifeCategoryVO();
-			vo.setPid(String.valueOf(objs[0]));
-			vo.setName(String.valueOf(objs[1]));
-			vo.setCode(String.valueOf(objs[2]));
-			vo.setParentCode(String.valueOf(objs[3]));
-			voList.add(vo);
+			if(!"1".equals(String.valueOf(objs[6]))) {
+				vo.setPid(String.valueOf(objs[0]));
+				vo.setName(String.valueOf(objs[1]));
+				vo.setCode(String.valueOf(objs[2]));
+				vo.setParentCode(String.valueOf(objs[3]));
+				voList.add(vo);
+			}
 		}
 		return voList;
 	}

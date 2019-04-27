@@ -43,7 +43,7 @@ public class EventTest {
 		vo.setIsImpPlase("0");
 		vo.setRelatePeopleCount("1");
 		vo.setFirstCategoryId("综治工作");
-		vo.setSecondCategoryId("其他-其他");
+		vo.setSecondCategoryId("其他");
 		vo.setStatus("10");
 		vo.setOrganizationId("330402ZF260000");
 		vo.setObjName("测试人");
@@ -69,7 +69,8 @@ public class EventTest {
 		        //uddVO.setKey(key);
 		        uddVO.setSubject(vo.getEventSubject());
 		        //uddVO.setOrgName("浙江省->嘉兴市->南湖区");
-		        uddVO.setOrgName("330402");
+//		        uddVO.setOrgName("330402");
+		        uddVO.setOrgName("333203");
 		        uddVO.setOccurLocation(vo.getEventLocation());
 		        uddVO.setOccurDate(vo.getEventDate());
 		        IssueRelatedPeople people = new IssueRelatedPeople();
