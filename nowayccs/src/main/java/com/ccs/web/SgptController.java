@@ -106,7 +106,7 @@ public class SgptController {
 			eventVO.setIsImpPlase(domain.getIsImpPlase());
 			eventVO.setRelatePeopleCount(domain.getRelatePeopleCount());
 			
-			eventVO.setFirstCategoryId(domain.getFirstCategoryId().substring(0, 2));
+			eventVO.setFirstCategoryId(domain.getFirstCategoryId());
 			eventVO.setSecondCategoryId(domain.getFirstCategoryId());  //事件编码
 			
 			eventVO.setStatus(EventVO.EVENT_STATUS_10);
@@ -135,6 +135,7 @@ public class SgptController {
 //	    		Response res = new Response();
 //		    	res.failure("error!");
 //	    		return res;
+			 log.error(e.getMessage());
 			 return "redirect:bizaccept.do?action=old";
 		 }
 	}
