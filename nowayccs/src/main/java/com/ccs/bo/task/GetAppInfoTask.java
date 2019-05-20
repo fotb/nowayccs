@@ -53,7 +53,7 @@ public class GetAppInfoTask {
 			List<AppInfoBean> manualList = new ArrayList<AppInfoBean>();
 			List<AppInfoBean> appInfoList = new ArrayList<AppInfoBean>();
 			for (AppInfoBean appInfoBean : list) {
-				System.out.println(appInfoBean.getHelpAddr());
+				//System.out.println(appInfoBean.getHelpAddr());
 				//如果订单号和状态为空，则丢弃数据
 				if(StringUtil.isNull(appInfoBean.getOrderNumber()) || StringUtil.isNull(appInfoBean.getOrderStatus())) {
 					continue;

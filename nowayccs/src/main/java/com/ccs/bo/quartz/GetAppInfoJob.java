@@ -90,7 +90,6 @@ public class GetAppInfoJob implements Job {
 			List<AppInfoBean> manualList = new ArrayList<AppInfoBean>();
 			List<AppInfoBean> appInfoList = new ArrayList<AppInfoBean>();
 			for (AppInfoBean appInfoBean : list) {
-				System.out.println(appInfoBean.getHelpAddr());
 				appInfoBean.setHelpType(Constants.INFOMATION_HELPTYPE_LIFE);  //所有App求助都归到生活类
 				//如果订单号和状态为空，则丢弃数据
 				if(StringUtil.isNull(appInfoBean.getOrderNumber()) || StringUtil.isNull(appInfoBean.getOrderStatus())) {
